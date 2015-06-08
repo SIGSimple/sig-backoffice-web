@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sig_backoffice">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SIG BackOffice | Colaborative Management SaaS.</title>
+
+	<!--STYLESHEET-->
+	<!--=================================================-->
+
+	<!--Open Sans Font [ OPTIONAL ] -->
+ 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet">
+
+
+	<!--Bootstrap Stylesheet [ REQUIRED ]-->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+	<!--Nifty Stylesheet [ REQUIRED ]-->
+	<link href="css/nifty.min.css" rel="stylesheet">
+
+	
+	<!--Font Awesome [ OPTIONAL ]-->
+	<link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+
+	<!--Switchery [ OPTIONAL ]-->
+	<link href="plugins/switchery/switchery.min.css" rel="stylesheet">
+
+
+	<!--Bootstrap Select [ OPTIONAL ]-->
+	<link href="plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+
+	<!--Bootstrap Validator [ OPTIONAL ]-->
+	<link href="plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+
+
+	<!--Bootstrap Select [ OPTIONAL ]-->
+	<link href="plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+
+	<!--Bootstrap Table [ OPTIONAL ]-->
+	<link href="plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+
+
+	<!--X-editable [ OPTIONAL ]-->
+	<link href="plugins/x-editable/css/bootstrap-editable.css" rel="stylesheet">
+
+
+	<!--Demo [ DEMONSTRATION ]-->
+	<link href="css/demo/nifty-demo.min.css" rel="stylesheet">
+
+	<!--SCRIPT-->
+	<!--=================================================-->
+
+	<!--Page Load Progress Bar [ OPTIONAL ]-->
+	<link href="plugins/pace/pace.min.css" rel="stylesheet">
+	<script src="plugins/pace/pace.min.js"></script>
+</head>
+
+<body>
+	<div id="container" class="effect mainnav-lg">
+		<!--NAVBAR-->
+		<!--===================================================-->
+		<header id="navbar">
+			<div id="navbar-container" class="boxed">
+				<?php include('navbar-brand.php'); ?>
+
+				<?php include('navbar-dropdown.php'); ?>
+			</div>
+		</header>
+		<!--===================================================-->
+		<!--END NAVBAR-->
+
+		<div class="boxed">
+			<!--CONTENT CONTAINER-->
+			<!--===================================================-->
+			<div id="content-container">
+				<?php include('page-title.php'); ?>
+
+				<?php include('breadcrumb.php'); ?>
+
+				<!--Page content-->
+				<!--===================================================-->
+				<div id="page-content">
+					<?php include($_GET['page'].'.php'); ?>
+				</div>
+				<!--===================================================-->
+				<!--End page content-->
+			</div>
+			<!--===================================================-->
+			<!--END CONTENT CONTAINER-->
+
+			<?php include('menu.php'); ?>
+		</div>
+
+		<?php include('footer.php'); ?>
+
+		<!-- SCROLL TOP BUTTON -->
+		<!--===================================================-->
+		<button id="scroll-top" class="btn"><i class="fa fa-chevron-up"></i></button>
+		<!--===================================================-->
+	</div>
+	<!--===================================================-->
+	<!-- END OF CONTAINER -->
+
+	<?php include('theme-settings.php'); ?>
+	
+	<!--JAVASCRIPT-->
+	<!--=================================================-->
+
+	<!--jQuery [ REQUIRED ]-->
+	<script src="js/jquery-2.1.1.min.js"></script>
+
+
+	<!--BootstrapJS [ RECOMMENDED ]-->
+	<script src="js/bootstrap.min.js"></script>
+
+
+	<!--Fast Click [ OPTIONAL ]-->
+	<script src="plugins/fast-click/fastclick.min.js"></script>
+
+	
+	<!--Nifty Admin [ RECOMMENDED ]-->
+	<script src="js/nifty.min.js"></script>
+
+
+	<!--Switchery [ OPTIONAL ]-->
+	<script src="plugins/switchery/switchery.min.js"></script>
+
+
+	<!--Bootstrap Select [ OPTIONAL ]-->
+	<script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
+
+
+	<!--Bootstrap Wizard [ OPTIONAL ]-->
+	<script src="plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+
+
+	<!--Bootstrap Validator [ OPTIONAL ]-->
+	<script src="plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+
+
+	<!--X-editable [ OPTIONAL ]-->
+	<script src="plugins/x-editable/js/bootstrap-editable.min.js"></script>
+
+
+	<!--Bootstrap Table [ OPTIONAL ]-->
+	<script src="plugins/bootstrap-table/bootstrap-table.min.js"></script>
+
+
+	<!--Bootstrap Table Extension [ OPTIONAL ]-->
+	<script src="plugins/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
+
+
+	<!--Demo script [ DEMONSTRATION ]-->
+	<script src="js/demo/nifty-demo.min.js"></script>
+
+	<!--Angular [ REQUIRED ]-->
+	<script src="bower_components/angular/angular.min.js"></script>
+
+	<script src="js/angular-app.js"></script>
+
+	<script src="js/controller/<?=($_GET['page'])?>.js"></script>
+</body>
+</html>
