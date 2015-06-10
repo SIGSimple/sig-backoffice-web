@@ -1,6 +1,6 @@
 <!--Custom Toolbar-->
 <!--===================================================-->
-<div class="panel">
+<div class="panel" ng-controller="ListColaboradoresCtrl">
 	<div class="panel-heading">
 		<h3 class="panel-title">Listagem de Colaboradores</h3>
 	</div>
@@ -9,7 +9,7 @@
 		
 		<table id="demo-custom-toolbar" class="demo-add-niftycheck" 
 			data-toggle="table"
-			data-url="data/bs-table.json"
+			data-url="http://localhost/sig-backoffice-api/colaboradores.json"
 			data-toolbar="#demo-delete-row"
 			data-search="true"
 			data-show-refresh="true"
@@ -22,13 +22,10 @@
 			data-show-pagination-switch="true">
 			<thead>
 				<tr>
-					<th data-field="state" 	data-checkbox="true">ID</th>
-					<th data-field="id" 	data-sortable="true" data-formatter="invoiceFormatter">ID</th>
-					<th data-field="name" 	data-sortable="true">Name</th>
-					<th data-field="date" 	data-sortable="true" data-formatter="dateFormatter">Order date</th>
-					<th data-field="amount" data-sortable="true" data-sorter="priceSorter" 			data-align="center">Balance</th>
-					<th data-field="status" data-sortable="true" data-formatter="statusFormatter" 	data-align="center">Status</th>
-					<th data-field="track" 	data-sortable="true" data-formatter="trackFormatter" 	data-align="center">Tracking Number</th>
+					<th data-field="num_matricula">Matricula</th>
+					<th data-field="nme_colaborador">Nome</th>
+					<th data-field="nme_fantasia">Contratante</th>
+					<th data-field="nme_departamento">Depto</th>
 				</tr>
 			</thead>
 		</table>

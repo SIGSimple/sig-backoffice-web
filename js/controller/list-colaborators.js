@@ -1,3 +1,8 @@
+app.controller('ListColaboradoresCtrl', function($scope){
+	
+});
+
+
 // EDITABLE - COMBINATION WITH X-EDITABLE
 // =================================================================
 // Require X-editable
@@ -9,41 +14,42 @@
 // Require X-editable Extension of Bootstrap Table
 // http://bootstrap-table.wenzhixin.net.cn/
 // =================================================================
-$('#demo-editable').bootstrapTable({
-	idField: 'id',
-	url: 'data/bs-table.json',
-	columns: [{
-		field: 'id',
-		formatter:'invoiceFormatter',
-		title: 'Invoice'
-	}, {
-		field: 'name',
-		title: 'Name',
-		editable: {
-			type: 'text'
-		}
-	}, {
-		field: 'date',
-		title: 'Order date'
-	}, {
-		field: 'amount',
-		title: 'Amount',
-		editable: {
-			type: 'text'
-		}
-	}, {
-		field: 'status',
-		align: 'center',
-		title: 'Status',
-		formatter:'statusFormatter'
-	}, {
-		field: 'track',
-		title: 'Tracking Number',
-		editable: {
-			type: 'text'
-		}
-	}]
-});
+
+// $('#demo-editable').bootstrapTable({
+// 	idField: 'id',
+// 	url: 'data/bs-table.json',
+// 	columns: [{
+// 		field: 'id',
+// 		formatter:'invoiceFormatter',
+// 		title: 'Invoice'
+// 	}, {
+// 		field: 'name',
+// 		title: 'Name',
+// 		editable: {
+// 			type: 'text'
+// 		}
+// 	}, {
+// 		field: 'date',
+// 		title: 'Order date'
+// 	}, {
+// 		field: 'amount',
+// 		title: 'Amount',
+// 		editable: {
+// 			type: 'text'
+// 		}
+// 	}, {
+// 		field: 'status',
+// 		align: 'center',
+// 		title: 'Status',
+// 		formatter:'statusFormatter'
+// 	}, {
+// 		field: 'track',
+// 		title: 'Tracking Number',
+// 		editable: {
+// 			type: 'text'
+// 		}
+// 	}]
+// });
 
 
 
@@ -55,13 +61,13 @@ $('#demo-editable').bootstrapTable({
 // Require Font Awesome
 // http://fortawesome.github.io/Font-Awesome/icons/
 // =================================================================
-$.fn.editableform.buttons =
-	'<button type="submit" class="btn btn-primary editable-submit">'+
-		'<i class="fa fa-fw fa-check"></i>'+
-	'</button>'+
-	'<button type="button" class="btn btn-default editable-cancel">'+
-		'<i class="fa fa-fw fa-times"></i>'+
-	'</button>';
+// $.fn.editableform.buttons =
+// 	'<button type="submit" class="btn btn-primary editable-submit">'+
+// 		'<i class="fa fa-fw fa-check"></i>'+
+// 	'</button>'+
+// 	'<button type="button" class="btn btn-default editable-cancel">'+
+// 		'<i class="fa fa-fw fa-times"></i>'+
+// 	'</button>';
 
 
 
@@ -71,10 +77,10 @@ $.fn.editableform.buttons =
 // =================================================================
 // Require nifty.js
 // =================================================================
-$(".demo-add-niftycheck").on('post-body.bs.table', function () {
-	$(this).find('input:checkbox').not('.form-checkbox input:checkbox').wrap('<label class="form-checkbox form-icon"></label>');
-	$(this).find('.form-checkbox').niftyCheck();
-});
+// $(".demo-add-niftycheck").on('post-body.bs.table', function () {
+// 	$(this).find('input:checkbox').not('.form-checkbox input:checkbox').wrap('<label class="form-checkbox form-icon"></label>');
+// 	$(this).find('.form-checkbox').niftyCheck();
+// });
 
 
 
@@ -83,10 +89,10 @@ $(".demo-add-niftycheck").on('post-body.bs.table', function () {
 // =================================================================
 // Require nifty.js
 // =================================================================
-$(".demo-add-niftyradio").on('post-body.bs.table', function () {
-	$(this).find('input:radio').wrap('<label class="form-radio form-icon"></label>');
-	$(this).find('.form-radio').niftyCheck();
-});
+// $(".demo-add-niftyradio").on('post-body.bs.table', function () {
+// 	$(this).find('input:radio').wrap('<label class="form-radio form-icon"></label>');
+// 	$(this).find('.form-radio').niftyCheck();
+// });
 
 
 
@@ -97,22 +103,22 @@ $(".demo-add-niftyradio").on('post-body.bs.table', function () {
 // Require Bootstrap Table
 // http://bootstrap-table.wenzhixin.net.cn/
 // =================================================================
-var $table = $('#demo-custom-toolbar'),	$remove = $('#demo-delete-row');
+// var $table = $('#demo-custom-toolbar'),	$remove = $('#demo-delete-row');
 
-$table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
-	$remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-});
+// $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
+// 	$remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+// });
 
-$remove.click(function () {
-	var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-		return row.id
-	});
-	$table.bootstrapTable('remove', {
-		field: 'id',
-		values: ids
-	});
-	$remove.prop('disabled', true);
-});
+// $remove.click(function () {
+// 	var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+// 		return row.id
+// 	});
+// 	$table.bootstrapTable('remove', {
+// 		field: 'id',
+// 		values: ids
+// 	});
+// 	$remove.prop('disabled', true);
+// });
 
 // FORMAT COLUMN
 // Use "data-formatter" on HTML to format the display of bootstrap table column.
