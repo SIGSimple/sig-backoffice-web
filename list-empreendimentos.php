@@ -19,8 +19,8 @@
 			data-show-pagination-switch="true">
 			<thead>
 				<tr>
-					<th data-visible="true" data-field="num_empreendimento">Número</th>
-					<th data-visible="true" data-field="nme_empreendimento">Nome</th>
+					<th data-visible="true" data-sortable="true" data-field="num_empreendimento">Número</th>
+					<th data-visible="true" data-sortable="true" data-field="nme_empreendimento">Nome</th>
 				</tr>
 			</thead>
 		</table>
