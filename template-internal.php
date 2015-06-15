@@ -40,6 +40,10 @@
 	<link href="plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 
 
+	<!--Bootstrap Timepicker [ OPTIONAL ]-->
+	<link href="plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+
+
 	<!--Bootstrap Table [ OPTIONAL ]-->
 	<link href="plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 
@@ -50,6 +54,10 @@
 
 	<!--Demo [ DEMONSTRATION ]-->
 	<link href="css/demo/nifty-demo.min.css" rel="stylesheet">
+
+
+	<!-- CUSTOM -->
+	<link href="css/custom.css" rel="stylesheet">
 
 	<!--SCRIPT-->
 	<!--=================================================-->
@@ -134,6 +142,10 @@
 	<script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
 
 
+	<!--Bootstrap Timepicker [ OPTIONAL ]-->
+	<script src="plugins/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+
+
 	<!--Bootstrap Wizard [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
 
@@ -159,6 +171,13 @@
 
 	<!--Angular [ REQUIRED ]-->
 	<script src="bower_components/angular/angular.min.js"></script>
+
+	<!--Moment [ REQUIRED ]-->
+	<script src="bower_components/moment/moment.js"></script>
+	<script src="bower_components/moment/locale/pt-br.js"></script>
+
+	<!--CUSTOM-->
+	<script src="js/custom.js"></script>
 
 	<script src="js/angular-app.js"></script>
 

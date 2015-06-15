@@ -1,6 +1,6 @@
 <!--MAIN NAVIGATION-->
 <!--===================================================-->
-<nav id="mainnav-container">
+<nav id="mainnav-container" ng-controller="MenuCtrl">
 	<div id="mainnav">
 		<!--Menu-->
 		<!--================================-->
@@ -31,7 +31,7 @@
 						<li class="list-header">Recursos Humanos</li>
 			
 						<!--Colaboradores-->
-						<li>
+						<li class="active-sub">
 							<a href="#">
 								<i class="fa fa-users"></i>
 								<span class="menu-title">Colaboradores</span>
@@ -39,9 +39,9 @@
 							</a>
 			
 							<!--Submenu-->
-							<ul class="collapse">
+							<ul class="collapse in">
 								<li><a href="#">Cadastro</a></li>
-								<li><a href="#">Consulta</a></li>
+								<li class="active-link"><a href="#">Consulta</a></li>
 								<li><a href="#">Movimentação</a></li>
 							</ul>
 						</li>
