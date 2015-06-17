@@ -28,7 +28,7 @@
 
 					<label class="control-label col-lg-1">Horário:</label>
 					<div class="col-lg-3">
-						<input type="text" class="form-control" disabled="disabled">
+						<input type="text" class="form-control" disabled="disabled" value="{{ txtEscalaTrabalho | uppercase }}">
 					</div>
 
 					<label class="control-label col-lg-1">Intervalo:</label>

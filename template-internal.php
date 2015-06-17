@@ -75,7 +75,11 @@
 			<div id="navbar-container" class="boxed">
 				<?php include('navbar-brand.php'); ?>
 
+				<!--Navbar Dropdown-->
+				<!--================================-->
 				<?php include('navbar-dropdown.php'); ?>
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<!--End Navbar Dropdown-->
 			</div>
 		</header>
 		<!--===================================================-->
@@ -188,9 +192,11 @@
 	<script src="js/custom.js"></script>
 
 	<script src="js/angular-app.js"></script>
+	<script src="js/service/user-logged.js"></script>
 	<script src="js/controller/menu.js"></script>
 	<script src="js/controller/page-title.js"></script>
 	<script src="js/controller/page-breadcrumb.js"></script>
+	<script src="js/controller/navbar-dropdown.js"></script>
 	<script src="js/controller/<?=($_GET['page'])?>.js"></script>
 </body>
 </html>

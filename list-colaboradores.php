@@ -1,17 +1,25 @@
 <div class="panel" ng-controller="ListColaboradoresCtrl">
 	<div class="panel-body">
+		<div id="toolbar">
+			<a href="?page=form-new-colaborador" class="btn btn-success btn-labeled fa fa-plus-square">
+				Cadastrar Novo
+			</a>
+		</div>
+
 		<table id="demo-custom-toolbar" class="demo-add-niftycheck" 
 			data-toggle="table"
 			data-url="http://localhost/sig-backoffice-api/colaboradores.json"
+			data-toolbar="#toolbar"
 			data-search="true"
 			data-show-refresh="true"
 			data-show-toggle="true"
 			data-show-columns="true"
-			data-page-list="[5, 10, 20]"
-			data-page-size="5"
+			data-page-list="[5, 10, 20, 50, 100]"
+			data-page-size="10"
 			data-pagination="true"
 			data-side-pagination="server"
-			data-show-pagination-switch="true">
+			data-show-pagination-switch="true"
+			formatSearch="Filtrar">
 			<thead>
 				<tr>
 					<th data-visible="true" data-sortable="true" data-field="num_matricula">Matricula</th>
@@ -23,7 +31,6 @@
 					<th data-visible="true" data-sortable="true" data-field="flg_cm">C/M</th>
 					<th data-visible="false" data-sortable="true" data-field="nme_local_trabalho">Local de Trabalho</th>
 					<th data-visible="false" data-sortable="true" data-field="nme_grade_horario">Horário</th>
-					<th data-visible="false" data-sortable="true" data-field="flg_ativo">0/1</th>
 					<th data-visible="true" data-sortable="true" data-field="dta_admissao">Dta. Admissão</th>
 					<th data-visible="false" data-sortable="true" data-field="dta_demissao">Dta. Demissão</th>
 					<th data-visible="false" data-sortable="true" data-field="num_ctps">CTPS</th>
@@ -55,6 +62,7 @@
 					<th data-visible="false" data-sortable="true" data-field="num_digito_conta_corrente">Número</th>
 					<th data-visible="false" data-sortable="true" data-field="nme_entidade">Entidade</th>
 					<th data-visible="false" data-sortable="true" data-field="num_entidade">Número</th>
+					<th data-visible="true" data-sortable="true" data-field="flg_ativo" data-formatter="ativoFormatter">Ativo?</th>
 				</tr>
 			</thead>
 		</table>

@@ -1,12 +1,25 @@
-app.controller('RegistroHorarioCtrl', function($scope, $http){
+app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
+	$scope.txtEscalaTrabalho 		= "";
 	$scope.mesVigente 				= moment().format("MMMM/2015");
 	$scope.qtdTempoIntervalo 		= "";
-	$scope.colaborador 				= {};
+	$scope.colaborador 				= UserSrvc.getUserLogged();
 	$scope.gradeHorarioColaborador 	= [];
 	$scope.arrDiasMes 				= getDaysArray(parseInt(moment().format('YYYY'), 10), parseInt(moment().format('M'),10));
 
 	$scope.getToday = function() {
 		return moment().format('D');
+	}
+
+	function calcEscalaTrabalhoColaborador() {
+		var primeiroDiaSemana 	= $scope.gradeHorarioColaborador[0];
+		var ultimoDiaSemana 	= $scope.gradeHorarioColaborador[($scope.gradeHorarioColaborador.length - 1)];
+
+		if(ultimoDiaSemana.hor_entrada == primeiroDiaSemana.hor_entrada 
+			&& ultimoDiaSemana.hor_saida == primeiroDiaSemana.hor_saida) {
+			$scope.txtEscalaTrabalho += primeiroDiaSemana.nme_mini_dia_semana + " a " + ultimoDiaSemana.nme_mini_dia_semana;
+			$scope.txtEscalaTrabalho += " das ";
+			$scope.txtEscalaTrabalho += primeiroDiaSemana.hor_entrada + " as " + primeiroDiaSemana.hor_saida;
+		}
 	}
 
 	function calcQtdHorasMes() {
@@ -28,22 +41,13 @@ app.controller('RegistroHorarioCtrl', function($scope, $http){
 		});
 	}
 
-	function getDadosColaborador() {
-		$http.get('http://localhost/sig-backoffice-api/colaboradores?cod_colaborador=109')
-			.success(function(data) {
-				if(data.rows.length > 0) {
-					$scope.colaborador = data.rows[0];
-					getProgramacaoGradeHorarioColaborador();
-				}
-			});
-	}
-
 	function getProgramacaoGradeHorarioColaborador() {
 		$http.get('http://localhost/sig-backoffice-api/grade-horario-programacao?cod_grade_horario='+ $scope.colaborador.cod_grade_horario)
 			.success(function(data) {
 				if(data.rows.length > 0) {
 					$scope.gradeHorarioColaborador = data.rows;
 					calcQtdHorasMes();
+					calcEscalaTrabalhoColaborador();
 				}
 			});
 	}
@@ -71,5 +75,5 @@ app.controller('RegistroHorarioCtrl', function($scope, $http){
 		return daysArray;
 	}
 
-	getDadosColaborador();
+	getProgramacaoGradeHorarioColaborador();
 });

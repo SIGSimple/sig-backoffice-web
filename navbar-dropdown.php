@@ -1,6 +1,4 @@
-<!--Navbar Dropdown-->
-<!--================================-->
-<div class="navbar-content clearfix">
+<div class="navbar-content clearfix" ng-controller="NavBarDropDownCtrl">
 	<ul class="nav navbar-top-links pull-left">
 		<!--Navigation toogle button-->
 		<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -21,7 +19,7 @@
 				<span class="pull-right">
 					<img class="img-circle img-user media-object" src="img/av1.png" alt="Profile Picture">
 				</span>
-				<div class="username hidden-xs">Filipe Coelho</div>
+				<div class="username hidden-xs">{{ usuario.nme_colaborador }}</div>
 			</a>
 
 			<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right with-arrow panel-default">
@@ -56,5 +54,3 @@
 		<!--End user dropdown-->
 	</ul>
 </div>
-<!--================================-->
-<!--End Navbar Dropdown-->
