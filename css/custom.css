@@ -2,3 +2,8 @@
 .table td.text-middle {
 	vertical-align: middle;
 }
+
+#mainnav-menu ul a,
+.menu-popover .sub-menu ul a {
+	padding: 10px 20px 12px 35px;
+}

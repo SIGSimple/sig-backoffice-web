@@ -11,7 +11,12 @@ app.controller('MenuCtrl', function($scope, $http){
 
 	$scope.activeLink = function(url) {
 		var query = getQueryParams(document.location.search);
-		return (query.page == url) ? 'active-link' : '';
+		var cssClass = (query.page == url) ? 'active-link' : '';
+		
+		if(cssClass != "")
+			$("li.active-link").parent().addClass("in").parent().addClass("active-sub active")
+
+		return cssClass;
 	}
 
 	function loadMenu() {

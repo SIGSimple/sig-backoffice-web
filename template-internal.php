@@ -85,17 +85,25 @@
 			<!--CONTENT CONTAINER-->
 			<!--===================================================-->
 			<div id="content-container">
+				<!--Page Title-->
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<?php include('page-title.php'); ?>
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<!--End page title-->
 
-				<?php include('breadcrumb.php'); ?>
+				<!--Breadcrumb-->
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<?php include('page-breadcrumb.php'); ?>
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<!--End breadcrumb-->
 
 				<!--Page content-->
 				<!--===================================================-->
 				<div id="page-content">
 					<?php include($_GET['page'].'.php'); ?>
 				</div>
-				<!--===================================================-->
-				<!--End page content-->
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<!--End Page content-->
 			</div>
 			<!--===================================================-->
 			<!--END CONTENT CONTAINER-->
@@ -181,6 +189,8 @@
 
 	<script src="js/angular-app.js"></script>
 	<script src="js/controller/menu.js"></script>
+	<script src="js/controller/page-title.js"></script>
+	<script src="js/controller/page-breadcrumb.js"></script>
 	<script src="js/controller/<?=($_GET['page'])?>.js"></script>
 </body>
 </html>
