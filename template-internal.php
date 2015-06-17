@@ -180,7 +180,7 @@
 	<script src="js/custom.js"></script>
 
 	<script src="js/angular-app.js"></script>
-
+	<script src="js/controller/menu.js"></script>
 	<script src="js/controller/<?=($_GET['page'])?>.js"></script>
 </body>
 </html>

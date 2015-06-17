@@ -7,97 +7,40 @@
 		<div id="mainnav-menu-wrap">
 			<div class="nano">
 				<div class="nano-content">
-					<ul id="mainnav-menu" class="list-group">						
-						<!--[ Gerenciamento ]-->
-						<li class="list-header">Gerenciamento & Controle</li>
+					<ul id="mainnav-menu" class="list-group">
+						<?php
 
-						<!--Contratos-->
-						<li>
-							<a href="#">
-								<i class="fa fa-copy"></i>
-								<span class="menu-title">Contratos</span>
-								<i class="arrow"></i>
-							</a>
-			
-							<!--Submenu-->
-							<ul class="collapse">
-								<li><a href="#">Cadastro</a></li>
-								<li><a href="#">Consulta</a></li>
-								<li><a href="#">Planejamento/Medições</a></li>
-							</ul>
-						</li>
+							include_once 'php.util/HttpUtil.php';
 
-						<!--[ Recursos Humanos ]-->
-						<li class="list-header">Recursos Humanos</li>
-			
-						<!--Colaboradores-->
-						<li class="active-sub">
-							<a href="#">
-								<i class="fa fa-users"></i>
-								<span class="menu-title">Colaboradores</span>
-								<i class="arrow"></i>
-							</a>
-			
-							<!--Submenu-->
-							<ul class="collapse in">
-								<li><a href="#">Cadastro</a></li>
-								<li class="active-link"><a href="#">Consulta</a></li>
-								<li><a href="#">Movimentação</a></li>
-							</ul>
-						</li>
+							$menuItems = json_decode(HttpUtil::doGetRequest('http://localhost/sig-backoffice-api/modulos', null));
 
-						<!--Tabelas Auxiliares-->
-						<li>
-							<a href="#">
-								<i class="fa fa-list"></i>
-								<span class="menu-title">Tabelas Auxiliares</span>
-								<i class="arrow"></i>
-							</a>
-			
-							<!--Submenu-->
-							<ul class="collapse">
-								<li><a href="#">Tabela INSS</a></li>
-								<li><a href="#">Tabela IRPF</a></li>
-								<li><a href="#">Locais de Trabalho</a></li>
-								<li><a href="#">Grades de Horário</a></li>
-								<li><a href="#">Sindicatos</a></li>
-								<li><a href="#">Departamentos</a></li>
-								<li><a href="#">Regimes de Contratação</a></li>
-								<li><a href="#">Entidades</a></li>
-								<li><a href="#">Funções</a></li>
-								<li><a href="#">Planos de Saúde</a></li>
-								<li><a href="#">Origens</a></li>
-							</ul>
-						</li>
-			
-						<li class="list-divider"></li>
+							foreach ($menuItems as $key => $value) {
+								echo '<li class="list-header">'. $value->nme_modulo .'</li>';
 
-						<!--[ Geral ]-->
-						<li class="list-header">Geral</li>
-			
-						<!--Empresas-->
-						<li>
-							<a href="index.html">
-								<i class="fa fa-university"></i>
-								<span class="menu-title">Empresas</span>
-							</a>
-						</li>
+								if(count($value->children) > 0) {
+									foreach ($value->children as $xkey => $xvalue) {
+										echo '<li class="active-sub active">';
+										echo 	'<a href="#">';
+										echo 		'<i class="fa fa-briefcase"></i>';
+										echo 		'<span class="menu-title">'. $xvalue->nme_modulo .'</span>';
+										echo 		'<i class="arrow"></i>';
+										echo 	'</a>';
 
-						<!--Empreendimentos-->
-						<li>
-							<a href="index.html">
-								<i class="fa fa-building"></i>
-								<span class="menu-title">Empreendimentos</span>
-							</a>
-						</li>
+										if(count($xvalue->children) > 0) {
+											echo '<ul class="collapse in">';
 
-						<!--Usuários-->
-						<li>
-							<a href="index.html">
-								<i class="fa fa-user-secret"></i>
-								<span class="menu-title">Usuários</span>
-							</a>
-						</li>
+											foreach ($xvalue->children as $ykey => $yvalue) {
+												echo '<li class="{{activeLink(\''. $yvalue->url_modulo .'\')}}"><a href="?page='. $yvalue->url_modulo .'">'. $yvalue->nme_modulo .'</a></li>';
+											}
+
+											echo '</ul>';
+										}
+
+										echo '</li>';
+									}
+								}
+							}
+						?>
 					</ul>
 				</div>
 			</div>
