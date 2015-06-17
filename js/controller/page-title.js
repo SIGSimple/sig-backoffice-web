@@ -2,10 +2,14 @@ app.controller('PageTitleCtrl', function($scope, $http){
 	$scope.page = {};
 
 	function loadPageDetails() {
-		$http.get('http://localhost/sig-backoffice-api/modulos')
-			.success(function(items) {
-				$scope.menuItems = items;
-				buildMenuTree();
+		var query = getQueryParams(document.location.search);
+		var thisPage = query.page;
+
+		$http.get('http://localhost/sig-backoffice-api/modulos?url_modulo='+ thisPage)
+			.success(function(pageData) {
+				$scope.page = pageData[0];
 			});
 	}
+
+	loadPageDetails();
 });
