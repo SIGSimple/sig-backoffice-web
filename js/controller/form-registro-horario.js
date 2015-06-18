@@ -84,7 +84,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 	}
 
 	function getProgramacaoGradeHorario() {
-		$http.get('http://localhost/sig-backoffice-api/grade-horario-programacao?cod_grade_horario='+ $scope.colaborador.cod_grade_horario)
+		$http.get('http://localhost/sig-backoffice-api/grade-horario/programacao?cod_grade_horario='+ $scope.colaborador.cod_grade_horario)
 			.success(function(data) {
 				if(data.rows.length > 0) {
 					$scope.colaborador.gradeHorario = data.rows;
