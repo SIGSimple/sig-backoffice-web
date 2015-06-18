@@ -1,11 +1,11 @@
 <!--Custom Toolbar-->
 <!--===================================================-->
-<div class="panel" ng-controller="ListColaboradoresCtrl">
+<div class="panel" ng-controller="ListEmpreendimentosCtrl">
 	<div class="panel-heading">
 		<h3 class="panel-title">Listagem de Empreendimentos</h3>
 	</div>
 	<div class="panel-body">
-		<table id="demo-custom-toolbar" class="demo-add-niftycheck" 
+		<table class="bootstrap-table" 
 			data-toggle="table"
 			data-url="http://localhost/sig-backoffice-api/empreendimentos.json"
 			data-search="true"
