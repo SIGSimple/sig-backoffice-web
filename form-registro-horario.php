@@ -51,19 +51,24 @@
 						class="{{ (item.flgWeekend) ? 'danger' : '' }} {{ (getToday() == item.numDate) ? 'warning' : '' }}">
 						<td class="text-center text-middle"><strong>{{ item.numDate }}</strong></td>
 						<td>
-							<input type="text" class="form-control input-sm text-center input-timepicker" ng-disabled="{{ item.flgWeekend }}" value="00:00 AM">
+							<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
+								ng-disabled="{{ item.flgWeekend }}" ng-model="item.hor_entrada">
 						</td>
 						<td>
-							<input type="text" class="form-control input-sm text-center input-timepicker" ng-disabled="{{ item.flgWeekend }}" value="00:00 AM">
+							<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
+								ng-disabled="{{ item.flgWeekend }}" ng-model="item.hor_entrada_intervalo">
 						</td>
 						<td>
-							<input type="text" class="form-control input-sm text-center input-timepicker" ng-disabled="{{ item.flgWeekend }}" value="00:00 AM">
+							<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
+								ng-disabled="{{ item.flgWeekend }}" ng-model="item.hor_retorno_intervalo">
 						</td>
 						<td>
-							<input type="text" class="form-control input-sm text-center input-timepicker" ng-disabled="{{ item.flgWeekend }}" value="00:00 AM">
+							<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
+								ng-disabled="{{ item.flgWeekend }}" ng-model="item.hor_saida" ng-blur="validaHoraExtra(item)">
 						</td>
 						<td>
-							<input type="text" class="form-control input-sm text-center input-timepicker" ng-disabled="{{ item.flgWeekend }}" value="00:00 AM">
+							<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
+								ng-disabled="{{ true }}" ng-model="item.hor_extra">
 						</td>
 						<td class="text-center text-middle">
 							<strong ng-show="{{ item.flgWeekend }}">{{ item.nmeDate | uppercase }}</strong>
