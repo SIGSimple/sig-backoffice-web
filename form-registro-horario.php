@@ -5,29 +5,24 @@
 			<form class="form form-horizontal">
 				<div class="form-group">
 					<label class="control-label col-lg-1">Matricula:</label>
-					<div class="col-lg-1">
+					<div class="col-lg-2">
 						<input type="text" class="form-control" disabled="disabled" value="{{ colaborador.num_matricula }}">
 					</div>
 
 					<label class="control-label col-lg-1">Nome:</label>
-					<div class="col-lg-5">
-						<input type="text" class="form-control" disabled="disabled" value="{{ colaborador.nme_colaborador }}">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="control-label col-lg-1">Período:</label>
-					<div class="col-lg-1">
-						<input type="text" class="form-control text-center" disabled="disabled" value="{{ mesVigente | uppercase }}">
+					<div class="col-lg-6">
+						<input type="text" class="form-control" disabled="disabled" value="{{ colaborador.nme_colaborador | uppercase }}">
 					</div>
 
 					<label class="control-label col-lg-1">Hr./Mês:</label>
 					<div class="col-lg-1">
 						<input type="text" class="form-control" disabled="disabled" value="{{ colaborador.qtd_horas_contratadas }}">
 					</div>
+				</div>
 
+				<div class="form-group">
 					<label class="control-label col-lg-1">Horário:</label>
-					<div class="col-lg-3">
+					<div class="col-lg-7">
 						<input type="text" class="form-control" disabled="disabled" value="{{ txtEscalaTrabalho | uppercase }}">
 					</div>
 
@@ -40,7 +35,7 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>Registro de Ponto</legend>
+			<legend>Registro de Ponto <span class="pull-right">{{ mesVigente | uppercase }}</span></legend>
 			<table class="table table-bordered table-striped table-hover table-condensed">
 				<thead>
 					<th class="text-center" width="50">Dia</th>

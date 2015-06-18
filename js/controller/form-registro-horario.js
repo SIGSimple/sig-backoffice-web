@@ -12,6 +12,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 
 	function calcEscalaTrabalhoColaborador() {
 		var primeiroDiaSemana 	= $scope.gradeHorarioColaborador[0];
+		var penultimoDiaSemana 	= $scope.gradeHorarioColaborador[($scope.gradeHorarioColaborador.length - 2)];
 		var ultimoDiaSemana 	= $scope.gradeHorarioColaborador[($scope.gradeHorarioColaborador.length - 1)];
 
 		if(ultimoDiaSemana.hor_entrada == primeiroDiaSemana.hor_entrada 
@@ -19,6 +20,15 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 			$scope.txtEscalaTrabalho += primeiroDiaSemana.nme_mini_dia_semana + " a " + ultimoDiaSemana.nme_mini_dia_semana;
 			$scope.txtEscalaTrabalho += " das ";
 			$scope.txtEscalaTrabalho += primeiroDiaSemana.hor_entrada + " as " + primeiroDiaSemana.hor_saida;
+		} else {
+			$scope.txtEscalaTrabalho += primeiroDiaSemana.nme_mini_dia_semana + " a " + penultimoDiaSemana.nme_mini_dia_semana;
+			$scope.txtEscalaTrabalho += " das ";
+			$scope.txtEscalaTrabalho += primeiroDiaSemana.hor_entrada + " as " + primeiroDiaSemana.hor_saida;
+
+			$scope.txtEscalaTrabalho += " - ";
+			$scope.txtEscalaTrabalho += ultimoDiaSemana.nme_mini_dia_semana;
+			$scope.txtEscalaTrabalho += " das ";
+			$scope.txtEscalaTrabalho += ultimoDiaSemana.hor_entrada + " as " + ultimoDiaSemana.hor_saida;
 		}
 	}
 
