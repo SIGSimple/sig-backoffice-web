@@ -6,7 +6,7 @@
 			</a>
 		</div>
 
-		<table id="demo-custom-toolbar" class="demo-add-niftycheck" 
+		<table class="bootstrap-table" 
 			data-toggle="table"
 			data-url="http://localhost/sig-backoffice-api/colaboradores.json"
 			data-toolbar="#toolbar"
