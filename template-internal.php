@@ -186,6 +186,9 @@
 	<!--Demo script [ DEMONSTRATION ]-->
 	<script src="js/demo/nifty-demo.min.js"></script>
 
+	<!--Underscore [ REQUIRED ]-->
+	<script src="js/underscore.min.js"></script>
+
 	<!--Angular [ REQUIRED ]-->
 	<script src="bower_components/angular/angular.min.js"></script>
 

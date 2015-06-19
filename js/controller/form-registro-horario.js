@@ -11,6 +11,12 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 	}
 
 	$scope.validaHoraExtra = function(item) {
+		if(item.hor_saida.indexOf(":") == -1)
+			if(item.hor_saida.length == 4)
+				item.hor_saida = item.hor_saida.substr(0,2) + ":" + item.hor_saida.substr(2,2);
+			else
+				item.hor_saida = item.hor_saida.substr(0,2) + ":00";
+
 		var programacaoTrabalhoDia 					= getProgramacaoTrabalhoDia(item.nmeDate);
 		var qtdHorasTrabalhoEfetivaProgramacaoDia 	= getQtdHorasTrabalhoDiario(programacaoTrabalhoDia).qtd_horas_efetivas_trabalho;
 		var qtdHorasTrabalhoEfetivaRegitro 			= getQtdHorasTrabalhoDiario(item).qtd_horas_efetivas_trabalho;
@@ -28,6 +34,79 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 
 			item.hor_extra = hours + ":"+ minutes;
 		}
+
+		// TODO: validar se o horário de saída ultrapassou o fim do dia
+		// e passar o dia seguinte como parametro pra função
+
+		console.log(getHorasTrabalho(moment(item.cptDate + ' ' + item.hor_entrada, 'YYYY/M/D HH:mm'), moment(item.cptDate + ' ' + item.hor_saida, 'YYYY/M/D HH:mm'), 9));
+	}
+
+	$scope.updateHorarioSaida = function() {
+		$(".txt-hor-saida").trigger("change");
+	}
+
+	function getHorasTrabalho(vHoraInicio, vHoraFim, vJornadaContratual) {
+		console.log(vHoraInicio, vHoraFim, vJornadaContratual);
+
+		// declares
+		var vHoraFimDiaInicio				= moment(vHoraInicio.format('YYYY-MM-DD') + ' 23:59:59', 'YYYY-MM-DD HH:mm');
+		var vHoraInicioAdicionalNoturno 	= moment(vHoraInicio.format('YYYY-MM-DD') + ' 22:00:00', 'YYYY-MM-DD HH:mm');
+		var vHoraInicioAuxiliar 			= moment(vHoraInicio.format('YYYY-MM-DD') + ' '+ vHoraInicio.format('HH:mm'), 'YYYY-MM-DD HH:mm');
+		var vHoraFimAdicionalNoturno 		= moment(vHoraInicioAuxiliar.add(1, 'd').format('YYYY-MM-DD') + ' 05:00:00', 'YYYY-MM-DD HH:mm');
+		var vDiffHoras 						= 0;
+		var vDataAuxiliar					= moment();
+		var vHoraTotalExtra 				= 0;
+		var vHoraExtraDiaIninicio 			= 0;
+		var vHoraExtraDiaFim	 			= 0;
+		var vAdicionalNoturno 				= 0;
+		var vMesmoDia 						= (vHoraInicio.format('YYYY-MM-DD') == vHoraFim.format('YYYY-MM-DD'));
+
+		vDiffHoras = vHoraFim.diff(vHoraInicio, 'hours');
+		vHoraTotalExtra = (vDiffHoras - vJornadaContratual);
+
+		if(vHoraExtraDiaIninicio > 0 && !vMesmoDia){
+			vHoraExtraDiaIninicio 	= (vHoraFimDiaInicio.diff(vHoraInicio, 'hours') - vJornadaContratual);
+			vHoraExtraDiaFim 		= (vHoraTotalExtra - vHoraExtraDiaIninicio);
+		}
+		else
+			vHoraExtraDiaFim = vHoraTotalExtra;
+
+		if(!vMesmoDia) {
+			if(vHoraInicio > vHoraInicioAdicionalNoturno)
+				vDataAuxiliar = vHoraInicio;
+			else
+				vDataAuxiliar = moment(vHoraInicio.format('YYYY-MM-DD') + ' ' + vHoraInicioAdicionalNoturno.format('HH:mm'), 'YYYY-MM-DD HH:mm');
+
+			vAdicionalNoturno = parseFloat((moment(vHoraFim.format('YYYY-MM-DD') + ' 00:00:00', 'YYYY-MM-DD HH:mm')).diff(vDataAuxiliar, 'hours', true).toFixed(2));
+
+			if(vHoraFim < vHoraFimAdicionalNoturno)
+				vDataAuxiliar = vHoraFim;
+			else
+				vDataAuxiliar = moment(vHoraFim.format('YYYY-MM-DD') + ' ' + vHoraFimAdicionalNoturno.format('HH:mm'), 'YYYY-MM-DD HH:mm');
+
+			vAdicionalNoturno += parseFloat(vDataAuxiliar.diff(moment(vHoraFim.format('YYYY-MM-DD') + ' 00:00:00', 'YYYY-MM-DD HH:mm'), 'hours', true).toFixed(2));
+		}
+		else {
+			vAdicionalNoturno = parseFloat(vHoraFim.diff(moment(vHoraInicio.format('YYYY-MM-DD') + ' ' + vHoraInicioAdicionalNoturno.format('HH:mm'), 'YYYY-MM-DD HH:mm'), 'hours', true).toFixed(2));
+			if(vAdicionalNoturno < 0)
+				vAdicionalNoturno = 0;
+		}
+
+		if(vHoraExtraDiaIninicio < 0)
+			vHoraExtraDiaIninicio = 0;
+
+		if(vAdicionalNoturno > 0 && vAdicionalNoturno < 1)
+			vAdicionalNoturno = 1;
+
+		return {
+			qtd_horas_trabalhadas: vDiffHoras,
+			flg_terminou_mesmo_dia: vMesmoDia,
+			flg_hora_extra: (vHoraTotalExtra > 0),
+			qtd_total_hora_extra: vHoraTotalExtra, 
+			qtd_hora_extra_dia_inicio: vHoraExtraDiaIninicio,
+			qtd_hora_extra_dia_fim: vHoraExtraDiaFim,
+			qtd_hora_adicional_noturno: vAdicionalNoturno
+		};
 	}
 
 	function getProgramacaoTrabalhoDia(diaSemana) {
