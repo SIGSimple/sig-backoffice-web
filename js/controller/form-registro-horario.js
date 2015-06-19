@@ -65,14 +65,14 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 
 	function getQtdHorasTrabalhoDiario(gradeHorarioDia) {
 		// transforma string em moment object
-		var hor_entrada 			= moment(gradeHorarioDia.hor_entrada, "hh:mm:ss");
-		var hor_entrada_intervalo 	= moment(gradeHorarioDia.hor_entrada_intervalo, "hh:mm:ss");
-		var hor_retorno_intervalo 	= moment(gradeHorarioDia.hor_retorno_intervalo, "hh:mm:ss");
-		var hor_saida 				= moment(gradeHorarioDia.hor_saida, "hh:mm:ss");
+		var hor_entrada 			= moment(gradeHorarioDia.hor_entrada, "HH:mm:ss");
+		var hor_entrada_intervalo 	= moment(gradeHorarioDia.hor_entrada_intervalo, "HH:mm:ss");
+		var hor_retorno_intervalo 	= moment(gradeHorarioDia.hor_retorno_intervalo, "HH:mm:ss");
+		var hor_saida 				= moment(gradeHorarioDia.hor_saida, "HH:mm:ss");
 
 		// calcula o tempo de cada escala
-		var diff_entrada_saida 		= hor_saida.diff(hor_entrada, "hours", true);
-		var diff_intervalo 			= hor_retorno_intervalo.diff(hor_entrada_intervalo, "hours", true);
+		var diff_entrada_saida 		= hor_saida.diff(hor_entrada, "hours", true, true);
+		var diff_intervalo 			= hor_retorno_intervalo.diff(hor_entrada_intervalo, "hours", true, true);
 
 		// calcula o tempo real de trabalho diário
 		var tmp_efetivo_diario 		= (diff_entrada_saida - diff_intervalo);
