@@ -38,25 +38,103 @@
 					<div class="panel-body">
 						<div class="tab-content">
 							<!--First tab-->
-							<div id="demo-cls-tab1" class="tab-pane">
-								<div class="form-group">
-									<label class="col-lg-3 control-label">Nome</label>
-									<div class="col-lg-7">
-										<input type="text" class="form-control" name="nme_login" placeholder="Nome">
-									</div>
-								</div>
-								
-								<div class="form-group">
-									<label class="col-lg-3 control-label">CEP</label>
-									<div class="col-lg-2">
-										<input type="text" class="form-control" name="end_email" placeholder="CEP">
+							<div id="demo-cls-tab1" class="tab-pane fade">
+								<form class="form form-horizontal">
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Matrícula</label> 
+										<div class="col-lg-1">
+											<input type="text" class="form-control">
+										</div>
 									</div>
 
-									<label class="col-lg-1 control-label">Endereço</label>
-									<div class="col-lg-4">
-										<input type="text" class="form-control" name="end_email" placeholder="Endereço">
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Nome</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control">
+										</div>
 									</div>
-								</div>
+
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Portador Necessidades Especiais?</label>
+										<div class="col-lg-2">
+											<div class="checkbox">
+												<label class="form-checkbox form-normal form-primary"><input type="checkbox"></label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-3 control-label">C/M?</label>
+										<div class="col-lg-1">
+											<div class="checkbox">
+												<label class="form-checkbox form-normal form-primary"><input type="checkbox"></label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Local de Trabalho</label>
+										<div class="col-lg-2">
+											<select class="form-control">
+											</select>
+										</div>
+
+										<label class="col-lg-2 control-label">Grade de Horário</label>
+										<div class="col-lg-2">
+											<select class="form-control">
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Ativo</label>
+										<div class="col-lg-1">
+											<div class="checkbox">
+												<label class="form-checkbox form-normal form-primary"><input type="checkbox"></label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Data de Admissão</label>
+										<div class="col-lg-2">
+											<input type="text" class="form-control">
+										</div>
+										<label class="col-lg-2 control-label">Data de Demissão</label>
+										<div class="col-lg-2">
+											<input type="text" class="form-control">
+										</div>
+									</div>									
+											
+
+
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Endereço</label>
+										<div class="col-lg-3">
+											<input type="text" class="form-control"> 
+										</div>
+										<label class="col-lg-1 control-label">Número</label>
+										<div class="col-lg-2">
+											<input type="text" class="form-control"> 
+										</div>
+									</div>
+
+									<div class="form-group">
+									<label class="col-lg-3 control-label">Complemento</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"> 
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Bairro</label>
+										<div class="col-lg-2">
+											<input type="text" class="form-control"> 
+										</div>
+									</div>
+
+
+								</form>
 							</div>
 
 							<!--Second tab-->
