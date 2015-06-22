@@ -1,15 +1,8 @@
 <?php
 
+include_once 'HttpUtil.php';
 session_start();
-
-$_SESSION['user_logged']['cod_colaborador'] = 109;
-$_SESSION['user_logged']['num_matricula'] = '003423';
-$_SESSION['user_logged']['nme_colaborador'] = 'Filipe Mendonça Coelho';
-$_SESSION['user_logged']['cod_grade_horario'] = 1;
-$_SESSION['user_logged']['qtd_horas_contratadas'] = 220;
-$_SESSION['user_logged']['flg_hora_extra'] = 1;
-$_SESSION['user_logged']['flg_trabalho_fim_semana'] = 1;
-
+$_SESSION['user_logged'] = json_decode(HttpUtil::doGetRequest('http://localhost/sig-backoffice-api/colaboradores?cod_colaborador=109', null))->rows[0];
+//$_SESSION['user_logged']->cod_sindicato = 8;
 var_dump($_SESSION);
-
 ?>

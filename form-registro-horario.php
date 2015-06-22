@@ -35,6 +35,25 @@
 		</fieldset>
 
 		<fieldset>
+			<legend>Totalizações</legend>
+			<form class="form form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-lg-2">Adicional Noturno</label>
+					<div class="col-lg-1">
+						<input type="text" class="form-control" disabled="disabled" value="{{ colaborador.qtd_horas_adicional_noturno }}">
+					</div>
+
+					<div ng-repeat="item in colaborador.horasExtras">
+						<label class="control-label col-lg-2">Horas Extras ({{ item.num_percentual_hora_extra }}%)</label>
+						<div class="col-lg-1">
+							<input type="text" class="form-control" disabled="disabled" value="{{ item.qtd_hora_extra }}">
+						</div>
+					</div>
+				</div>
+			</form>
+		</fieldset>
+
+		<fieldset>
 			<legend>Registro de Ponto <span class="pull-right">{{ mesVigente | uppercase }}</span></legend>
 			<table class="table table-bordered table-striped table-hover table-condensed">
 				<thead>
@@ -68,7 +87,7 @@
 						<td>
 							<input type="text" class="form-control input-sm text-center input-timepicker txt-hor-saida" value="00:00 AM"
 								ng-disabled="{{ (item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) }}" 
-								ng-model="item.hor_saida" ng-blur="validaHoraExtra(item)">
+								ng-model="item.hor_saida" ng-blur="validaHoraExtra(item, index)">
 						</td>
 						<td>
 							<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
