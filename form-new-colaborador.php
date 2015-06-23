@@ -13,7 +13,7 @@
 					</li>
 					<li class="col-xs-3 bg-info">
 						<a data-toggle="tab" href="#demo-cls-tab2">
-							<span class="icon-wrap icon-wrap-xs bg-trans-dark"><i class="fa fa-user"></i></span> Dados Físicos
+							<span class="icon-wrap icon-wrap-xs bg-trans-dark"><i class="fa fa-user"></i></span> Informações Complementares
 						</a>
 					</li>
 					<li class="col-xs-3 bg-info">
@@ -38,120 +38,246 @@
 					<div class="panel-body">
 						<div class="tab-content">
 							<!--First tab-->
+
 							<div id="demo-cls-tab1" class="tab-pane fade">
 								<form class="form form-horizontal">
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Matrícula</label> 
-										<div class="col-lg-1">
-											<input type="text" class="form-control">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Nome</label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Portador Necessidades Especiais?</label>
-										<div class="col-lg-2">
-											<div class="checkbox">
-												<label class="form-checkbox form-normal form-primary"><input type="checkbox"></label>
+									<fieldset>
+										<legend>Informações Básicas</legend>
+										
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Matrícula</label> 
+											<div class="col-lg-1">
+												<input type="text" class="form-control">
 											</div>
 										</div>
-									</div>
 
-									<div class="form-group">
-										<label class="col-lg-3 control-label">C/M?</label>
-										<div class="col-lg-1">
-											<div class="checkbox">
-												<label class="form-checkbox form-normal form-primary"><input type="checkbox"></label>
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Nome</label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control">
 											</div>
 										</div>
-									</div>
 
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Local de Trabalho</label>
-										<div class="col-lg-2">
-											<select class="form-control">
-											</select>
-										</div>
-
-										<label class="col-lg-2 control-label">Grade de Horário</label>
-										<div class="col-lg-2">
-											<select class="form-control">
-											</select>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Ativo</label>
-										<div class="col-lg-1">
-											<div class="checkbox">
-												<label class="form-checkbox form-normal form-primary"><input type="checkbox"></label>
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Data de Nascimento</label>
+											<div class="col-lg-2">
+												<div class="input-group date">
+													<input type="text" class="form-control">
+													<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+												</div>
 											</div>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Data de Admissão</label>
-										<div class="col-lg-2">
-											<input type="text" class="form-control">
-										</div>
-										<label class="col-lg-2 control-label">Data de Demissão</label>
-										<div class="col-lg-2">
-											<input type="text" class="form-control">
-										</div>
-									</div>									
 											
-
-
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Endereço</label>
-										<div class="col-lg-3">
-											<input type="text" class="form-control"> 
+											<label class="col-lg-2 control-label">Sexo</label>
+											<div class="col-lg-2">
+												<select class="form-control">
+													<option value=""></option>
+													<option value="M">Masculino</option>
+													<option value="F">Feminino</option>
+												</select>
+											</div>
+										</div>							
+											
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Sindicato</label>
+											<div class="col-lg-2">
+												<select class="form-control">
+												</select>
+											</div>
+											<label class="col-lg-2 control-label">Horas Contratadas</label>
+											<div class="col-lg-2">
+												<input type="text" class="form-control">
+											</div>
 										</div>
-										<label class="col-lg-1 control-label">Número</label>
-										<div class="col-lg-2">
-											<input type="text" class="form-control"> 
+
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Data de Admissão</label>
+											<div class="col-lg-2">
+												<div class="input-group date">
+													<input type="text" class="form-control">
+													<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+												</div>
+											</div>
+											<label class="col-lg-2 control-label">Data de Demissão</label>
+											<div class="col-lg-2">
+												<div class="input-group date">
+													<input type="text" class="form-control">
+													<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+												</div>
+											</div>
 										</div>
-									</div>
 
-									<div class="form-group">
-									<label class="col-lg-3 control-label">Complemento</label>
-										<div class="col-lg-6">
-											<input type="text" class="form-control"> 
+										<div class="form-group">
+											<label class="col-lg-3 control-label sr-only"></label>
+											<div class="col-lg-3">
+												<input type="checkbox" class="input-switch">
+												Portador Necessidades Especiais?
+											</div>
+											
+											<div class="col-lg-2">
+												<input type="checkbox" class="input-switch">
+												C/M?
+											</div>
+
+											<div class="col-lg-1">
+												<input type="checkbox" class="input-switch">
+												Ativo
+											</div>
 										</div>
-									</div>
+									</fieldset>
 
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Bairro</label>
-										<div class="col-lg-2">
-											<input type="text" class="form-control"> 
+									<fieldset>
+										<legend>Moradia</legend>
+
+										<div class="form-group">
+											<label class="col-lg-3 control-label">CEP</label>
+											<div class="col-lg-1">
+												<input type="text" class="form-control"> 
+											</div>
+											<label class="col-lg-1 control-label">Endereço</label>
+											<div class="col-lg-4">
+												<input type="text" class="form-control"> 
+											</div>
 										</div>
-									</div>
+										
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Número</label>
+											<div class="col-lg-1">
+												<input type="text" class="form-control"> 
+											</div>
+											<label class="col-lg-1 control-label">Complemento</label>
+											<div class="col-lg-4">
+												<input type="text" class="form-control"> 
+											</div>
+										</div>
 
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Bairro</label>
+											<div class="col-lg-4">
+												<input type="text" class="form-control"> 
+											</div>
+										</div>
 
+										<div class="form-group">
+											<label class="col-lg-3 control-label">UF</label>
+											<div class="col-lg-1">
+												<select class="form-control">
+												</select>
+											</div>
+											<label class="col-lg-1 control-label">Cidade</label>
+											<div class="col-lg-2">
+												<select class="form-control">
+												</select>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset>
+										<legend>Naturalidade</legend>
+										
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Estado</label>
+											<div class="col-lg-1">
+												<select class="form-control">
+												</select>
+											</div>
+
+											<label class="col-lg-1 control-label">Cidade</label>
+											<div class="col-lg-2">
+												<select class="form-control">
+												</select>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset>
+										<legend>Dados bancários</legend>
+
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Banco</label>
+											<div class="col-lg-4">
+												<select class="form-control">
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Agência</label>
+											<div class="col-lg-1">
+												<input type="text" class="form-control"> 
+											</div>
+											<label class="col-lg-1 control-label">Dígito</label>
+											<div class="col-lg-1">
+												<input type="text" class="form-control"> 
+											</div>
+										</div>
+										
+										<div class="form-group">
+											<label class="col-lg-3 control-label">Conta Corrente</label>
+											<div class="col-lg-1">
+												<input type="text" class="form-control"> 
+											</div>
+											<label class="col-lg-1 control-label">Dígito</label>
+											<div class="col-lg-1">
+												<input type="text" class="form-control"> 
+											</div>
+										</div>
+									</fieldset>
 								</form>
 							</div>
 
+
+					
 							<!--Second tab-->
 							<div id="demo-cls-tab2" class="tab-pane fade">
-								<div class="form-group">
-									<label class="col-lg-3 control-label">Nome Completo</label>
-									<div class="col-lg-7">
-										<input type="text" placeholder="Nome Completo" name="nme_colaborador" class="form-control">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-lg-3 control-label">Last name</label>
-									<div class="col-lg-7">
-										<input type="text" placeholder="Last name" name="lastName" class="form-control">
-									</div>
+								<form class="form form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-3 control-label">Empresa Contratante</label> 
+								<div class="col-lg-4">
+									<select class="form-control">
+									</select>
 								</div>
 							</div>
+							
+							<div class="form-group">
+								<label class="col-lg-3 control-label">Contrato</label>
+								<div class="col-lg-2">
+									<select class="form-control">
+									</select>
+								</div>
+								<label class="col-lg-3 control-label">Regime de Contratação</label>
+								<div class="col-lg-2">
+									<select class="form-control">
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-lg-3 control-label">Local de Trabalho</label>
+								<div class="col-lg-2">
+									<select class="form-control">
+									</select>
+								</div>
+								<label class="col-lg-3 control-label">Departamento</label>
+								<div class="col-lg-2">
+									<select class="form-control">
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-lg-3 control-label">Grade de Horário</label>
+								<div class="col-lg-2">
+									<select class="form-control">
+									</select>
+								</div>
+							</div>
+
+
+							</div>
+
+
+
+							
 
 							<!--Third tab-->
 							<div id="demo-cls-tab3" class="tab-pane">

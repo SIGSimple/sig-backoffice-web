@@ -40,6 +40,14 @@
 	<link href="plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 
 
+	<!--Switchery [ OPTIONAL ]-->
+	<link href="plugins/switchery/switchery.min.css" rel="stylesheet">
+
+
+	<!--Bootstrap Datepicker [ OPTIONAL ]-->
+	<link href="plugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet">
+	
+
 	<!--Bootstrap Timepicker [ OPTIONAL ]-->
 	<link href="plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
 
@@ -159,6 +167,10 @@
 	<script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
 
 
+	<!--Bootstrap Datepicker [ OPTIONAL ]-->
+	<script src="plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+
+
 	<!--Bootstrap Timepicker [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
 
@@ -178,6 +190,9 @@
 	<!--Bootstrap Table [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-table/bootstrap-table.min.js"></script>
 
+
+	<!--Switchery [ OPTIONAL ]-->
+	<script src="plugins/switchery/switchery.min.js"></script>
 
 	<!--Bootstrap Table Extension [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
