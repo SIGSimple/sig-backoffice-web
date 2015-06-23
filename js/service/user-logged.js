@@ -2,7 +2,7 @@ app.service('UserSrvc', function($http){
 	this.getUserLogged = function() {
 		var userLogged = {};
 		$.ajax({
-			url: 'http://localhost/sig-backoffice-web/php.util/session.php',
+			url: 'http://192.168.0.12/sig-backoffice-web/php.util/session.php',
 			async: false,
 			success: function(userData){
 				userLogged = userData;

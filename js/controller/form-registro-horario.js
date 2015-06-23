@@ -306,7 +306,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 	function getEscalaHoraExtraSindicato() {
 		$scope.colaborador.escalaHoraExtra = [];
 
-		$http.get('http://localhost/sig-backoffice-api/sindicato/hora-extra/escala?cod_sindicato='+ $scope.colaborador.cod_sindicato)
+		$http.get('http://192.168.0.12/sig-backoffice-api/sindicato/hora-extra/escala?cod_sindicato='+ $scope.colaborador.cod_sindicato)
 			.success(function(data) {
 				$scope.colaborador.escalaHoraExtra = data;
 				if(data.length > 0) {
@@ -329,7 +329,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 	function getFaixaHoraExtraSindicato() {
 		$scope.colaborador.faixaHoraExtra = [];
 
-		$http.get('http://localhost/sig-backoffice-api/sindicato/hora-extra/faixa?cod_sindicato='+ $scope.colaborador.cod_sindicato)
+		$http.get('http://192.168.0.12/sig-backoffice-api/sindicato/hora-extra/faixa?cod_sindicato='+ $scope.colaborador.cod_sindicato)
 			.success(function(data) {
 				if(data.length > 0) {
 					$scope.colaborador.faixaHoraExtra = data;
@@ -351,7 +351,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 	}
 
 	function getProgramacaoGradeHorario() {
-		$http.get('http://localhost/sig-backoffice-api/grade-horario/programacao?cod_grade_horario='+ $scope.colaborador.cod_grade_horario)
+		$http.get('http://192.168.0.12/sig-backoffice-api/grade-horario/programacao?cod_grade_horario='+ $scope.colaborador.cod_grade_horario)
 			.success(function(data) {
 				if(data.rows.length > 0) {
 					$scope.colaborador.gradeHorario = data.rows;

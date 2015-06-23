@@ -8,7 +8,7 @@
 
 		<table class="bootstrap-table" 
 			data-toggle="table"
-			data-url="http://localhost/sig-backoffice-api/colaboradores.json"
+			data-url="http://192.168.0.12/sig-backoffice-api/colaboradores.json"
 			data-toolbar="#toolbar"
 			data-search="true"
 			data-show-refresh="true"
@@ -18,8 +18,7 @@
 			data-page-size="10"
 			data-pagination="true"
 			data-side-pagination="server"
-			data-show-pagination-switch="true"
-			formatSearch="Filtrar">
+			data-show-pagination-switch="true">
 			<thead>
 				<tr>
 					<th data-visible="true" data-sortable="true" data-field="num_matricula">Matricula</th>
