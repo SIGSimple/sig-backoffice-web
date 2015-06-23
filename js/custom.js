@@ -9,6 +9,12 @@ $(function(){
 		showSeconds: false,
 		showMeridian: false
 	});
+
+	$('.input-group.date').datepicker({autoclose:true});
+
+	$.each($('.input-switch'), function(i, el){
+		new Switchery(el);
+	});
 })
 
 function configBootstrapTable() {
