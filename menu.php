@@ -11,7 +11,7 @@
 						<?php
 							include_once 'php.util/HttpUtil.php';
 
-							$menuItems = json_decode(HttpUtil::doGetRequest('http://192.168.0.12/sig-backoffice-api/modulos', null));
+							$menuItems = json_decode(HttpUtil::doGetRequest('http://localhost/sig-backoffice-api/modulos', null));
 
 							foreach ($menuItems as $key => $value) {
 								echo '<li class="list-header"><i class="'. $value->icn_modulo .'"></i>'. $value->nme_modulo .'</li>';

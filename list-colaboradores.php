@@ -8,7 +8,7 @@
 
 		<table class="bootstrap-table" 
 			data-toggle="table"
-			data-url="http://192.168.0.12/sig-backoffice-api/colaboradores.json"
+			data-url="http://localhost/sig-backoffice-api/colaboradores.json"
 			data-toolbar="#toolbar"
 			data-search="true"
 			data-show-refresh="true"

@@ -29,3 +29,66 @@ $('#demo-cls-wz').bootstrapWizard({
 		}
 	}
 });
+
+app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
+	
+	$scope.dadosColaborador = {
+		num_matricula: "",
+		nme_colaborador: "",
+		flg_portador_necessidades_especiais: 0,
+		cod_empresa_contratante: 0,
+		cod_contrato: 0,
+		cod_contrato: 0,
+		cod_regime_contratacao: 0,
+		cod_departamento: 0,
+		flg_cm: 0,
+		cod_local_trabalho: 0,
+		cod_grade_horario: 0,
+		flg_ativo: 0,
+		dta_admissao: "",
+		dta_demissao: "",
+		num_ctps: "",
+		num_serie_ctps: "",
+		cod_estado_ctps: 0,
+		dta_emissao_ctps: "",
+		num_rg: "",
+		num_cpf: "",
+		num_pis: "",
+		num_titulo_eleitor: "",
+		num_zona_eleitoral: "",
+		num_secao_eleitoral: "",
+		num_reservista: "",
+		dsc_endereco: "",
+		num_endereco: "",
+		nme_bairro: "",
+		dsc_complemento: "",
+		cod_cidade_moradia: 0,
+		cod_estado_moradia: 0,
+		cod_cidade_naturalidade: 0,
+		cod_estado_naturalidade: 0,
+		cod_estado_moradia: 0,
+		num_cep: "",
+		dta_nascimento: "",
+		num_cnh: "",
+		nme_categoria_cnh: "",
+		dta_validade_cnh: "",
+		flg_sexo: 0,
+		cod_banco: 0,
+		num_agencia: "",
+		num_digito_agencia: "",
+		num_conta_corrente: "",
+		num_digito_conta_corrente: "",
+		cod_sindicato: 0,
+		pth_arquivo_cnh: "",
+		pth_arquivo_rg: "",
+		pth_arquivo_foto: "",
+		pth_arquivo_cpf: "",
+		pth_arquivo_entidade: "",
+		pth_arquivo_curriculo: "",
+		pth_arquivo_reservista: "",
+		cod_entidade: 0,
+		num_entidade: ""
+
+	};
+
+});

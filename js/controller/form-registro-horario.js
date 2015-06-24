@@ -306,7 +306,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc){
 	function getEscalaHoraExtraSindicato() {
 		$scope.colaborador.escalaHoraExtra = [];
 
-		$http.get('http://192.168.0.12/sig-backoffice-api/sindicato/hora-extra/escala?cod_sindicato='+ $scope.colaborador.cod_sindicato)
+		$http.get('http://localhost/sig-backoffice-api/sindicato/hora-extra/escala?cod_sindicato='+ $scope.colaborador.cod_sindicato)
 			.success(function(data) {
 				$scope.colaborador.escalaHoraExtra = data;
 				if(data.length > 0) {

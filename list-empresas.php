@@ -4,7 +4,7 @@
 	<div class="panel-body">
 		<table class="bootstrap-table" 
 			data-toggle="table"
-			data-url="http://192.168.0.12/sig-backoffice-api/empresas.json"
+			data-url="http://localhost/sig-backoffice-api/empresas.json"
 			data-search="true"
 			data-show-refresh="true"
 			data-show-toggle="true"
