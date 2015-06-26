@@ -31,7 +31,7 @@ $('#demo-cls-wz').bootstrapWizard({
 });
 
 app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
-	
+	// Definição de variáveis de uso da tela
 	$scope.dadosColaborador = {
 		num_matricula: "",
 		nme_colaborador: "",
@@ -72,7 +72,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		num_cnh: "",
 		nme_categoria_cnh: "",
 		dta_validade_cnh: "",
-		flg_sexo: 0,
+		flg_sexo: "",
 		cod_banco: 0,
 		num_agencia: "",
 		num_digito_agencia: "",
@@ -88,7 +88,51 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		pth_arquivo_reservista: "",
 		cod_entidade: 0,
 		num_entidade: ""
-
 	};
+	$scope.ufs = [];
+	$scope.cidadesMoradia = [];
+	$scope.cidadesNaturalidade = [];
+	$scope.empresasContratante = [];
 
+	// Definição de funções de utilização da tela
+	$scope.getCidades = function(el_destino) {
+		$(".loading-cidade-" + el_destino).removeClass("hide");
+
+		var cod_estado = 0;
+
+		if(el_destino === 'moradia')
+			cod_estado = $scope.dadosColaborador.cod_estado_moradia;
+		else if(el_destino === 'naturalidade')
+			cod_estado = $scope.dadosColaborador.cod_estado_naturalidade;
+	
+		$http.get('http://localhost/sig-backoffice-api/cidades?cod_estado='+ cod_estado)
+			.success(function(items){
+				if(el_destino === 'moradia')
+					$scope.cidadesMoradia = items;
+				else if(el_destino === 'naturalidade')
+					$scope.cidadesNaturalidade = items;
+
+				$(".loading-cidade-" + el_destino).addClass("hide");
+				$('.selectpicker').selectpicker('refresh');
+			});
+	}
+
+	// Definição de funções auxiliares
+	function loadUfs() {
+		$http.get('http://localhost/sig-backoffice-api/estados')
+			.success(function(items){
+				$scope.ufs = items;
+			});
+	}
+
+	function loadEmpresas() {
+			$http.get('http://localhost/sig-backoffice-api/empresas')
+			.success(function(items){
+				$scope.empresasContratante = items.rows;
+			});
+	}
+
+	// Chamada às funções de inicialização
+	loadUfs();
+	loadEmpresas();
 });

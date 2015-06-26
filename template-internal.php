@@ -36,10 +36,6 @@
 	<link href="plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
 
 
-	<!--Bootstrap Select [ OPTIONAL ]-->
-	<link href="plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
-
-
 	<!--Switchery [ OPTIONAL ]-->
 	<link href="plugins/switchery/switchery.min.css" rel="stylesheet">
 
@@ -209,6 +205,10 @@
 
 	<!--Moment [ REQUIRED ]-->
 	<script src="bower_components/moment/moment.js"></script>
+	<script src="bower_components/moment/locale/pt-br.js"></script>
+
+	<!--Moment [ REQUIRED ]-->
+	<script src="bower_components/bootstrap-select/bootstrap-select.min.js"></script>
 	<script src="bower_components/moment/locale/pt-br.js"></script>
 
 	<!--CUSTOM-->

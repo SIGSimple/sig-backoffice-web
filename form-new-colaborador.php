@@ -65,7 +65,7 @@
 								
 								<label class="col-lg-2 control-label">Sexo</label>
 								<div class="col-lg-2">
-									<select class="form-control" ng-model="dadosColaborador.flg_sexo">
+									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.flg_sexo">
 										<option value="M" label="Masculino"></option>
 										<option value="F" label="Feminino"></option>
 									</select>
@@ -125,13 +125,16 @@
 							<div class="form-group">
 								<label class="col-lg-2 control-label">UF</label>
 								<div class="col-lg-1">
-									<select class="form-control" ng-model="dadosColaborador.cod_estado_moradia">
+									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_estado_moradia" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia')">
 									</select>
 								</div>
 								<label class="col-lg-1 control-label">Cidade</label>
 								<div class="col-lg-2">
-									<select class="form-control" ng-model="dadosColaborador.cod_cidade_moradia">
+									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_cidade_moradia" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia">
 									</select>
+									<span class="loading-cidade-moradia hide">
+										<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
+									</span>
 								</div>
 							</div>
 						</fieldset>
@@ -142,14 +145,17 @@
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Estado</label>
 								<div class="col-lg-1">
-									<select class="form-control" ng-model="dadosColaborador.cod_estado_naturalidade">
+									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_estado_naturalidade" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('naturalidade')">
 									</select>
 								</div>
 
 								<label class="col-lg-1 control-label">Cidade</label>
 								<div class="col-lg-2">
-									<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade">
+									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_cidade_naturalidade" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
 									</select>
+									<span class="loading-cidade-naturalidade hide">
+										<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
+									</span>
 								</div>
 							</div>
 						</fieldset>
@@ -160,13 +166,14 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Empresa Contratante</label> 
 							<div class="col-lg-4">
-								<select class="form-control" ng-model="dadosColaborador.cod_empresa_contratante">
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_empresa_contratante">
+									<option ng-repeat="item in empresasContratante" value="{{ item.cod_empresa }}" label="{{ item.nme_fantasia }}">{{ item.nme_fantasia }}</option>
 								</select>
 							</div>
 
 							<label class="col-lg-2 control-label">Regime de Contratação</label>
 							<div class="col-lg-1">
-								<select class="form-control" ng-model="dadosColaborador.cod_regime_contratacao">
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_regime_contratacao">
 								</select>
 							</div>
 						</div>
@@ -174,13 +181,13 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Local de Trabalho</label>
 							<div class="col-lg-3">
-								<select class="form-control" ng-model="dadosColaborador.cod_local_trabalho">
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_local_trabalho">
 								</select>
 							</div>
 
 							<label class="col-lg-2 control-label">Departamento</label>
 							<div class="col-lg-1">
-								<select class="form-control" ng-model="dadosColaborador.cod_departamento">
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_departamento">
 								</select>
 							</div>
 						</div>
@@ -188,13 +195,13 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Contrato</label>
 							<div class="col-lg-3">
-								<select class="form-control" ng-model="dadosColaborador.cod_contrato">
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_contrato">
 								</select>
 							</div>
 							
 							<label class="col-lg-2 control-label">Grade de Horário</label>
 							<div class="col-lg-2">
-								<select class="form-control" ng-model="dadosColaborador.cod_grade_horario">
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_grade_horario">
 								</select>
 							</div>
 						</div>
@@ -202,7 +209,7 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Sindicato</label>
 							<div class="col-lg-4">
-								<select class="form-control" ng-model="dadosColaborador.cod_sindicato">
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_sindicato">
 								</select>
 							</div>
 
@@ -235,7 +242,7 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Banco</label>
 							<div class="col-lg-6">
-								<select class="form-control" ng-model="dadosColaborador.cod_banco">
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_banco">
 								</select>
 							</div>
 						</div>
@@ -307,8 +314,7 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Entidade</label>
 							<div class="col-lg-1">
-								<select class="form-control" ng-model="dadosColaborador.cod_entidade">
-								<!--	<option value="C" label="CREA"></option> -->
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_entidade">
 								</select>
 							</div>
 							<label class="col-lg-1 control-label">Número</label>
@@ -336,35 +342,7 @@
 						
 							<label class="col-lg-1 control-label">Estado</label>
 							<div class="col-lg-1">
-								<select class="form-control" ng-model="dadosColaborador.cod_estado_ctps">
-								<!--<option value="AC" label="Acre"></option>
-									<option value="AL" label="Alagoas"></option>
-									<option value="AM" label="Amazonas"></option>
-									<option value="AP" label="Amapá"></option>
-									<option value="BA" label="Bahia"></option>
-									<option value="CE" label="Ceará"></option>
-									<option value="DF" label="Distrito Federal"></option>
-									<option value="ES" label="Espírito Santo"></option>
-									<option value="GO" label="Goiás"></option>
-									<option value="MA" label="Maranhão"></option>
-									<option value="MG" label="Minas Gerais"></option>
-									<option value="MS" label="Mato Grosso do Sul"></option>
-									<option value="MT" label="Mato Groso"></option>
-									<option value="PA" label="Pará"></option>
-									<option value="PB" label="Paraíba"></option>
-									<option value="PE" label="Pernambuco"></option>
-									<option value="PI" label="Piauí"></option>
-									<option value="PR" label="Paraná"></option>
-									<option value="RJ" label="Rio de Janeiro"></option>
-									<option value="RN" label="Rio Grande do Norte"></option>
-									<option value="RO" label="Rondônia"></option>
-									<option value="RR" label="Roraima"></option>
-									<option value="RS" label="Rio Grande do Sul"></option>
-									<option value="SC" label="Santa Catarina"></option>
-									<option value="SE" label="Sergipe"></option>
-									<option value="SP" label="São Paulo"></option>
-									<option value="TO" label="Tocantis"></option> -->
-
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_estado_ctps" ng-options="item.cod_estado as item.sgl_estado for item in ufs">
 								</select>
 							</div>
 
@@ -440,8 +418,6 @@
 						</div>
 						
 					</div>
-
-				<pre>{{ dadosColaborador }}</pre>
 			</div>
 
 			<!--Footer button-->
