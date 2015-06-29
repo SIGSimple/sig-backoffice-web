@@ -66,12 +66,13 @@
 								<label class="col-lg-2 control-label">Sexo</label>
 								<div class="col-lg-2">
 									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.flg_sexo">
-										<option value="M" label="Masculino"></option>
-										<option value="F" label="Feminino"></option>
+									 	<option value="M" label="Masculino"></option>
+										<option value="F" label="Feminino"></option> 
 									</select>
 								</div>
 							</div>
 
+							
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Portador Necessidades Especiais?</label>
 								<div class="col-lg-1">
@@ -174,6 +175,7 @@
 							<label class="col-lg-2 control-label">Regime de Contratação</label>
 							<div class="col-lg-1">
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_regime_contratacao">
+									<option ng-repeat="item in regimesContratacao" value="{{ item.cod_regime_contratacao }}" label="{{ item.dsc_regime_contratacao }}">{{ item.dsc_regime_contratacao }}</option>
 								</select>
 							</div>
 						</div>
@@ -182,12 +184,14 @@
 							<label class="col-lg-2 control-label">Local de Trabalho</label>
 							<div class="col-lg-3">
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_local_trabalho">
+									<option ng-repeat="item in locaisTrabalho" value="{{ item.cod_local_trabalho }}" label="{{ item.nme_local_trabalho }}">{{ item.nme_local_trabalho }}</option>
 								</select>
 							</div>
 
 							<label class="col-lg-2 control-label">Departamento</label>
 							<div class="col-lg-1">
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_departamento">
+									<option ng-repeat="item in departamentos" value="{{ item.cod_departamento }}" label="{{ item.nme_departamento }}">{{ item.nme_departamento }}</option>
 								</select>
 							</div>
 						</div>
@@ -196,12 +200,14 @@
 							<label class="col-lg-2 control-label">Contrato</label>
 							<div class="col-lg-3">
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_contrato">
+									<option ng-repeat="item in contratos" value="{{ item.cod_colaborador }}" label="{{ item.cod_contrato }}">{{ item.cod_contrato }}</option>
 								</select>
 							</div>
 							
 							<label class="col-lg-2 control-label">Grade de Horário</label>
 							<div class="col-lg-2">
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_grade_horario">
+									<option ng-repeat="item in gradesHorario" value="{{ item.cod_grade_horario }}" label="{{ item.nme_grade_horario }}">{{ item.nme_grade_horario }}</option>
 								</select>
 							</div>
 						</div>
@@ -210,6 +216,7 @@
 							<label class="col-lg-2 control-label">Sindicato</label>
 							<div class="col-lg-4">
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_sindicato">
+									<option ng-repeat="item in sindicatos" value="{{ item.cod_sindicato }}" label="{{ item.nme_sindicato }}">{{ item.nme_sindicato }}</option>
 								</select>
 							</div>
 
@@ -243,6 +250,7 @@
 							<label class="col-lg-2 control-label">Banco</label>
 							<div class="col-lg-6">
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_banco">
+									<option ng-repeat="item in bancos" value="{{ item.cod_banco }}" label="{{ item.nme_banco }}">{{ item.nme_banco }}</option>
 								</select>
 							</div>
 						</div>
@@ -315,6 +323,7 @@
 							<label class="col-lg-2 control-label">Entidade</label>
 							<div class="col-lg-1">
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_entidade">
+									<option ng-repeat="item in entidades" value="{{ item.cod_entidade }}" label="{{ item.nme_entidade }}">{{ item.nme_entidade }}</option>
 								</select>
 							</div>
 							<label class="col-lg-1 control-label">Número</label>
