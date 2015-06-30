@@ -1,6 +1,4 @@
 <div class="panel" ng-controller="CadastroColaboradorCtrl">
-	<!-- Classic Form Wizard -->
-	<!--===================================================-->
 	<div id="demo-cls-wz">
 		<!--Nav-->
 		<ul class="wz-nav-off wz-icon-inline">
@@ -126,12 +124,12 @@
 							<div class="form-group">
 								<label class="col-lg-2 control-label">UF</label>
 								<div class="col-lg-1">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_estado_moradia" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia')">
+									<select class="form-control" ng-model="dadosColaborador.cod_estado_moradia" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia')">
 									</select>
 								</div>
 								<label class="col-lg-1 control-label">Cidade</label>
 								<div class="col-lg-2">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_cidade_moradia" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia">
+									<select class="form-control" ng-model="dadosColaborador.cod_cidade_moradia" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia">
 									</select>
 									<span class="loading-cidade-moradia hide">
 										<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
@@ -146,13 +144,13 @@
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Estado</label>
 								<div class="col-lg-1">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_estado_naturalidade" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('naturalidade')">
+									<select class="form-control" ng-model="dadosColaborador.cod_estado_naturalidade" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('naturalidade')">
 									</select>
 								</div>
 
 								<label class="col-lg-1 control-label">Cidade</label>
 								<div class="col-lg-2">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_cidade_naturalidade" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
+									<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
 									</select>
 									<span class="loading-cidade-naturalidade hide">
 										<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
@@ -167,18 +165,31 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Empresa Contratante</label> 
 							<div class="col-lg-4">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_empresa_contratante">
-									<option ng-repeat="item in empresasContratante" value="{{ item.cod_empresa }}" label="{{ item.nme_fantasia }}">{{ item.nme_fantasia }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" ng-model="dadosColaborador.empresaContratante.nme_fantasia">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('empresas')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 
 							<label class="col-lg-2 control-label">Regime de Contratação</label>
 							<div class="col-lg-1">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_regime_contratacao">
+								<div class="input-group">
+									<input type="text" class="form-control" ng-model="dadosColaborador.cod_regime_contratacao.dsc_regime_contratacao">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('regimes-contratacao')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+
+									<!--<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_regime_contratacao">
 									<option ng-repeat="item in regimesContratacao" value="{{ item.cod_regime_contratacao }}" label="{{ item.dsc_regime_contratacao }}">{{ item.dsc_regime_contratacao }}</option>
-								</select>
+								</select> -->
+								</div>
 							</div>
-						</div>
 
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Local de Trabalho</label>
@@ -199,8 +210,8 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Contrato</label>
 							<div class="col-lg-3">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_contrato">
-									<option ng-repeat="item in contratos" value="{{ item.cod_colaborador }}" label="{{ item.cod_contrato }}">{{ item.cod_contrato }}</option>
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_origem">
+									<option ng-repeat="item in contratos" value="{{ item.cod_origem }}" label="{{ item.dsc_origem }}">{{ item.dsc_origem }}</option>
 								</select>
 							</div>
 							
@@ -439,6 +450,60 @@
 			</div>
 		</form>
 	</div>
-	<!--===================================================-->
-	<!-- End Classic Form Wizard -->
+
+	<div class="modal fade" id="modalItems" tabindex="-1" role="dialog" aria-labelledby="modalItemsLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalItemsLabel">{{ modalOptions.title }}</h4>
+				</div>
+				<div class="modal-body">
+					<!-- <table class="table table-bordered table-condensed table-hover table-striped">
+						<thead>
+							<th ng-repeat="column in modalOptions.columns" class="{{ column.class }}">{{ column.title }}</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="linha in modalOptions.values">
+								<td ng-repeat="value in linha">{{ value }}</td>
+							</tr>
+						</tbody>
+					</table> -->
+
+					<table class="bootstrap-table" 
+						data-toggle="table"
+						data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/empresas.json"
+						data-search="true"
+						data-show-refresh="true"
+						data-show-toggle="true"
+						data-show-columns="true"
+						data-page-list="[5, 10, 20, 50, 100]"
+						data-page-size="10"
+						data-pagination="true"
+						data-side-pagination="server"
+						data-show-pagination-switch="true">
+						<thead>
+							<tr>
+								<th data-visible="true" data-sortable="true" data-field="num_cnpj">CNPJ</th>
+								<th data-visible="true" data-sortable="true" data-field="nme_razao_social">Razão Social</th>
+								<th data-visible="true" data-sortable="true" data-field="nme_fantasia">Nome Fantasia</th>
+								<th data-visible="false" data-sortable="true" data-field="num_inscricao_estadual">I.E.</th>
+								<th data-visible="true" data-sortable="true" data-field="dsc_endereco">Endereço</th>
+								<th data-visible="false" data-sortable="true" data-field="nme_bairro">Bairro</th>
+								<th data-visible="false" data-sortable="true" data-field="num_cep">CEP</th>
+								<th data-visible="true" data-sortable="true" data-field="nme_cidade">Cidade</th>
+								<th data-visible="true" data-sortable="true" data-field="sgl_estado">UF</th>
+								<th data-visible="true" data-sortable="true" data-field="flg_ativo" data-formatter="ativoFormatter">Ativo?</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="modal-footer clearfix">
+					<div class="pull-right">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
