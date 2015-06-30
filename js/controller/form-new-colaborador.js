@@ -93,6 +93,15 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.cidadesMoradia = [];
 	$scope.cidadesNaturalidade = [];
 	$scope.empresasContratante = [];
+	$scope.regimesContratacao = [];
+	$scope.locaisTrabalho = [];
+	$scope.departamentos = [];
+	$scope.contratos = [];
+	$scope.gradesHorario = [];
+	$scope.sindicatos = [];
+	$scope.bancos = [];
+	$scope.entidades = [];
+	
 
 	// Definição de funções de utilização da tela
 	$scope.getCidades = function(el_destino) {
@@ -132,7 +141,73 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
+	function loadRegimesContratacao() {
+			$http.get('http://localhost/sig-backoffice-api/regimes-contratacao')
+			.success(function(items){
+				$scope.regimesContratacao = items.rows;
+			});
+	}
+
+		function loadLocaisTrabalho() {
+			$http.get('http://localhost/sig-backoffice-api/locais-trabalho')
+			.success(function(items){
+				$scope.locaisTrabalho = items.rows;
+			});
+	}
+
+	function loadDepartamentos() {
+			$http.get('http://localhost/sig-backoffice-api/departamentos')
+			.success(function(items){
+				$scope.departamentos = items.rows;
+			});
+	}
+
+		function loadContratos() {
+			$http.get('http://localhost/sig-backoffice-api/colaboradores')
+			.success(function(items){
+				$scope.contratos = items.rows;
+			});
+	}
+
+	function loadGradesHorario() {
+			$http.get('http://localhost/sig-backoffice-api/grades-horario')
+			.success(function(items){
+				$scope.gradesHorario = items.rows;
+			});
+	}
+
+	function loadSindicatos() {
+			$http.get('http://localhost/sig-backoffice-api/sindicatos')
+			.success(function(items){
+				$scope.sindicatos = items.rows;
+			});
+	}
+
+	function loadBancos() {
+			$http.get('http://localhost/sig-backoffice-api/bancos')
+			.success(function(items){
+				$scope.bancos = items.rows;
+			});
+	}
+
+	function loadEntidades() {
+			$http.get('http://localhost/sig-backoffice-api/entidades')
+			.success(function(items){
+				$scope.entidades = items.rows;
+			});
+	}
+
+	
+
 	// Chamada às funções de inicialização
 	loadUfs();
 	loadEmpresas();
+	loadRegimesContratacao();
+	loadLocaisTrabalho();
+	loadDepartamentos();
+	loadContratos();
+	loadGradesHorario();
+	loadSindicatos();
+	loadBancos();
+	loadEntidades();
 });
