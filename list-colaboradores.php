@@ -5,10 +5,9 @@
 				Cadastrar Novo
 			</a>
 		</div>
-
 		<table class="bootstrap-table" 
 			data-toggle="table"
-			data-url="http://localhost/sig-backoffice-api/colaboradores.json"
+			data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/colaboradores.json"
 			data-toolbar="#toolbar"
 			data-search="true"
 			data-show-refresh="true"

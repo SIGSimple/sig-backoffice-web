@@ -57,36 +57,37 @@
 			<legend>Registro de Ponto <span class="pull-right">{{ mesVigente | uppercase }}</span></legend>
 			<table class="table table-bordered table-striped table-hover table-condensed">
 				<thead>
-					<th class="text-center" width="50">Dia</th>
-					<th class="text-center">Entrada</th>
-					<th class="text-center">Saída p/ Intervalo</th>
-					<th class="text-center">Retorno do Intervalo</th>
-					<th class="text-center">Saída</th>
-					<th class="text-center">Extras</th>
-					<th class="text-center" width="200">Visto</th>
+					<th class="text-center text-middle" width="50">Dia</th>
+					<th class="text-center text-middle">Entrada</th>
+					<th class="text-center text-middle">Saída p/ Intervalo</th>
+					<th class="text-center text-middle">Retorno do Intervalo</th>
+					<th class="text-center text-middle">Saída</th>
+					<th class="text-center text-middle">Extras</th>
+					<th class="text-center text-middle" width="200">Visto</th>
+					<th class="text-center text-middle" width="200">Marcar como</th>
 				</thead>
 				<tbody>
-					<tr ng-repeat="(index, item) in arrDiasMes" 
-						class="{{ (item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) ? 'danger' : '' }} {{ (getToday() == item.numDate) ? 'warning' : '' }}">
+					<tr ng-repeat="(index, item) in arrDiasMes"
+						class="{{ ((item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) || (item.flgHoliday && colaborador.flg_trabalho_feriado == 0) || (item.flgBridgeDay && colaborador.flg_trabalho_feriado == 0)) ? 'danger' : '' }} {{ (getToday() == item.numDate) ? 'warning' : '' }}">
 						<td class="text-center text-middle"><strong>{{ item.numDate }}</strong></td>
 						<td>
 							<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
-								ng-disabled="{{ (item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) }}"
+								ng-disabled="{{ ((item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) || (item.flgHoliday && colaborador.flg_trabalho_feriado == 0))}}"
 								ng-model="item.hor_entrada">
 						</td>
 						<td>
 							<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
-								ng-disabled="{{ (item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) }}"
+								ng-disabled="{{ ((item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) || (item.flgHoliday && colaborador.flg_trabalho_feriado == 0))}}"
 								ng-model="item.hor_entrada_intervalo">
 						</td>
 						<td>
 							<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
-								ng-disabled="{{ (item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) }}"
+								ng-disabled="{{ ((item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) || (item.flgHoliday && colaborador.flg_trabalho_feriado == 0))}}"
 								ng-model="item.hor_retorno_intervalo">
 						</td>
 						<td>
 							<input type="text" class="form-control input-sm text-center input-timepicker txt-hor-saida" value="00:00 AM"
-								ng-disabled="{{ (item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) }}" 
+								ng-disabled="{{ ((item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) || (item.flgHoliday && colaborador.flg_trabalho_feriado == 0))}}" 
 								ng-model="item.hor_saida" ng-blur="validaHoraExtra(item, index)">
 						</td>
 						<td>
@@ -94,8 +95,30 @@
 								ng-disabled="{{ true }}" ng-model="item.hor_extra">
 						</td>
 						<td class="text-center text-middle">
-							<strong ng-show="{{ item.flgWeekend }}">{{ item.nmeDate | uppercase }}</strong>
+							<strong ng-show="{{ item.flgWeekend }}">
+								{{ item.nmeDate | uppercase }}
+							</strong>
+							<strong ng-show="{{ item.flgHoliday }}" tooltip="{{ item.nmeTipoHoliday | uppercase }}">
+								{{ item.nmeHoliday | uppercase }}
+							</strong>
+							<strong ng-show="{{ item.flgBridgeDay }}">
+								{{ item.nmeBridgeDay | uppercase }}
+							</strong>
+							<strong ng-show="{{ item.flgCompensation }}">
+								{{ item.nmeCompensation | uppercase }}
+							</strong>
 							<strong ng-show="{{ (getToday() == item.numDate) }}">{{ (getToday() == item.numDate) ? 'HOJE' : '' }}</strong>
+						</td>
+						<td class="text-center text-middle">
+							<select class="form-control"
+								ng-model="item.cod_tipo_registro_horario"
+								ng-hide="{{ ((item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) || (item.flgHoliday && colaborador.flg_trabalho_feriado == 0)) }}">
+								<option
+									ng-repeat="tipo in tiposRegistroHorario" 
+									value="{{ tipo.cod_tipo_registro_horario }}" ng-selected="{{ item.cod_tipo_registro_horario == tipo.cod_tipo_registro_horario }}"
+									label="{{ tipo.nme_tipo_registro_horario }}">
+								</option>
+							</select>
 						</td>
 					</tr>
 				</tbody>

@@ -5,7 +5,7 @@ app.controller('PageTitleCtrl', function($scope, $http){
 		var query = getQueryParams(document.location.search);
 		var thisPage = query.page;
 
-		$http.get('http://localhost/sig-backoffice-api/modulos?url_modulo='+ thisPage)
+		$http.get(baseUrlApi()+'modulos?url_modulo='+ thisPage)
 			.success(function(pageData) {
 				$scope.page = pageData[0];
 			});

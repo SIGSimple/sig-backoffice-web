@@ -1,5 +1,17 @@
 $(function(){
 	moment.locale('pt-br');
+	initializeTimepickerInputs();
+
+	$('.input-group.date').datepicker({autoclose:true});
+
+	$.each($('.input-switch'), function(i, el){
+		new Switchery(el);
+	});
+
+	$('[data-toggle="tooltip"]').tooltip();
+})
+
+function initializeTimepickerInputs() {
 	$('.input-timepicker').timepicker({
 		minuteStep: 1,
 		secondStep: 5,
@@ -9,13 +21,7 @@ $(function(){
 		showSeconds: false,
 		showMeridian: false
 	});
-
-	$('.input-group.date').datepicker({autoclose:true});
-
-	$.each($('.input-switch'), function(i, el){
-		new Switchery(el);
-	});
-})
+}
 
 function configBootstrapTable() {
 	$('.bootstrap-table').bootstrapTable({

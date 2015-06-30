@@ -105,7 +105,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		else if(el_destino === 'naturalidade')
 			cod_estado = $scope.dadosColaborador.cod_estado_naturalidade;
 	
-		$http.get('http://localhost/sig-backoffice-api/cidades?cod_estado='+ cod_estado)
+		$http.get(baseUrlApi()+'cidades?cod_estado='+ cod_estado)
 			.success(function(items){
 				if(el_destino === 'moradia')
 					$scope.cidadesMoradia = items;
@@ -119,14 +119,14 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	// Definição de funções auxiliares
 	function loadUfs() {
-		$http.get('http://localhost/sig-backoffice-api/estados')
+		$http.get(baseUrlApi()+'estados')
 			.success(function(items){
 				$scope.ufs = items;
 			});
 	}
 
 	function loadEmpresas() {
-			$http.get('http://localhost/sig-backoffice-api/empresas')
+			$http.get(baseUrlApi()+'empresas')
 			.success(function(items){
 				$scope.empresasContratante = items.rows;
 			});

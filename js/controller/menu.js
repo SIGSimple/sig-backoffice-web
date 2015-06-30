@@ -20,7 +20,7 @@ app.controller('MenuCtrl', function($scope, $http){
 	}
 
 	function loadMenu() {
-		$http.get('http://localhost/sig-backoffice-api/modulos')
+		$http.get(baseUrlApi()+'modulos')
 			.success(function(items) {
 				$scope.menuItems = items;
 				buildMenuTree();

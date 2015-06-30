@@ -44,7 +44,7 @@
 
 				<!-- Dropdown footer -->
 				<div class="pad-all text-right">
-					<a href="pages-login.html" class="btn btn-danger">
+					<a href="template-external.php?page=form-login" class="btn btn-danger">
 						<i class="fa fa-sign-out fa-fw"></i> Sair
 					</a>
 				</div>

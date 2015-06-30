@@ -84,5 +84,13 @@ app.controller('FolhaPagamentoCtrl', function($scope, $http, UserSrvc){
 		$scope.folhaPagamento.vlrSalarioLiquido = ($scope.folhaPagamento.vlrTotalProventos - $scope.folhaPagamento.vlrTotalDescontos);
 	}
 
-	calcTotais();
+	function getUltimaFuncaoColaborador() {
+		$http.get(baseUrlApi()+'colaborador/ultima/funcao/' + $scope.colaborador.cod_colaborador)
+			.success(function(objData) {
+				$scope.colaborador.funcao = objData;
+			});
+	}
+
+	// calcTotais();
+	getUltimaFuncaoColaborador();
 });

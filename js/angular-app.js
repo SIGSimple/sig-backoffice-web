@@ -1,1 +1,1 @@
-var app = angular.module('sig_backoffice', []);
+var app = angular.module('sig_backoffice', ['ui.bootstrap']);

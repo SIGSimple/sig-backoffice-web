@@ -7,7 +7,7 @@
 	<div class="panel-body">
 		<table class="bootstrap-table" 
 			data-toggle="table"
-			data-url="http://localhost/sig-backoffice-api/empreendimentos.json"
+			data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/empreendimentos.json"
 			data-search="true"
 			data-show-refresh="true"
 			data-show-toggle="true"

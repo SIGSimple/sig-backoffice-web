@@ -2,7 +2,7 @@ app.controller('PageBreadCrumbCtrl', function($scope, $http){
 	$scope.menuItems = [];
 
 	function loadMenu() {
-		$http.get('http://localhost/sig-backoffice-api/modulos')
+		$http.get(baseUrlApi()+'modulos')
 			.success(function(items) {
 				$scope.menuItems = items;
 				buildMenuTree($scope.menuItems);

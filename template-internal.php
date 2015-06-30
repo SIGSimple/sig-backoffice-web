@@ -203,6 +203,11 @@
 	<!--Angular [ REQUIRED ]-->
 	<script src="bower_components/angular/angular.min.js"></script>
 
+
+	<!--Angular [ REQUIRED ]-->
+	<script src="js/ui-bootstrap-custom-0.13.0.min.js"></script>
+	<script src="js/ui-bootstrap-custom-tpls-0.13.0.min.js"></script>
+
 	<!--Moment [ REQUIRED ]-->
 	<script src="bower_components/moment/moment.js"></script>
 	<script src="bower_components/moment/locale/pt-br.js"></script>
@@ -213,6 +218,7 @@
 
 	<!--CUSTOM-->
 	<script src="js/custom.js"></script>
+	<script src="js/extras.js"></script>
 
 	<script src="js/angular-app.js"></script>
 	<script src="js/service/user-logged.js"></script>
