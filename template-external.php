@@ -36,6 +36,10 @@
 	<link href="plugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet">
 
 
+	<!-- CUSTOM -->
+	<link href="css/custom.css" rel="stylesheet">
+
+
 	<!--SCRIPT-->
 	<!--=================================================-->
 

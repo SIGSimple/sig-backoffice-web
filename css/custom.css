@@ -11,3 +11,7 @@
 .two-lines {
 	padding-top: 0px !important;
 }
+
+.widget-header.no-image {
+	min-height: inherit;
+}
