@@ -96,12 +96,47 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.regimesContratacao = [];
 	$scope.locaisTrabalho = [];
 	$scope.departamentos = [];
-	$scope.contratos = [];
 	$scope.gradesHorario = [];
 	$scope.sindicatos = [];
 	$scope.bancos = [];
 	$scope.entidades = [];
-	
+	$scope.contratos = [];
+
+	var modalTablesColumns = {
+		"empresas": [
+			{
+				field: 'nme_fantasia',
+				title: 'Nome Fantasia'
+			}
+		],
+		"locais-trabalho": [
+			{
+				field: 'nme_local_trabalho',
+				title: 'Nome Local'
+			}
+
+		],
+		"sindicatos": [
+			{
+				field: 'nme_sindicato',
+				title: 'Nome Sindicato'
+			}
+
+		],
+		"grades-horario": [
+			{
+				field: 'nme_grade_horario',
+				title: 'Grade de Horário'
+			}
+
+		],
+		"entidades": [
+			{
+				field: 'nme_entidade',
+				title: 'Nome'
+			}
+		]
+	};
 
 	// Definição de funções de utilização da tela
 	$scope.getCidades = function(el_destino) {
@@ -126,6 +161,30 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
+	$scope.abreModal = function(rota, atributo) {
+		$("#modalItemsLabel").text("LISTAGEM DE " + rota.replace("-"," de ").toUpperCase());
+		$("#modalItems").modal("show");
+		$('#mytable').bootstrapTable({
+			url: "http://localhost/sig-backoffice-api/"+ rota +".json",
+			search: true,
+			showRefresh: true,
+			showToggle: true,
+			showColumns: true,
+			pageList: "[5, 10, 20, 50, 100, All]",
+			pageSize: "5",
+			pagination: true,
+			sidePagination: "server",
+			showPaginationSwitch: true,
+			columns: modalTablesColumns[rota],
+			onClickRow: function(row, $element) {
+				$scope.dadosColaborador[atributo] = row;
+				$scope.$apply();
+				$('#mytable').bootstrapTable('destroy');
+				$("#modalItems").modal("hide");
+			}
+		});
+	}
+
 	// Definição de funções auxiliares
 	function loadUfs() {
 		$http.get(baseUrlApi()+'estados')
@@ -135,63 +194,63 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	function loadEmpresas() {
-			$http.get(baseUrlApi()+'empresas')
+			$http.get(baseUrlApi()+'empresas?nolimit=1')
 			.success(function(items){
 				$scope.empresasContratante = items.rows;
 			});
 	}
 
 	function loadRegimesContratacao() {
-			$http.get('http://localhost/sig-backoffice-api/regimes-contratacao')
+			$http.get(baseUrlApi()+'regimes-contratacao?nolimit=1')
 			.success(function(items){
 				$scope.regimesContratacao = items.rows;
 			});
 	}
 
 		function loadLocaisTrabalho() {
-			$http.get('http://localhost/sig-backoffice-api/locais-trabalho')
+			$http.get(baseUrlApi()+'locais-trabalho?nolimit=1')
 			.success(function(items){
 				$scope.locaisTrabalho = items.rows;
 			});
 	}
 
 	function loadDepartamentos() {
-			$http.get('http://localhost/sig-backoffice-api/departamentos')
+			$http.get(baseUrlApi()+'departamentos?nolimit=1')
 			.success(function(items){
 				$scope.departamentos = items.rows;
 			});
 	}
 
-		function loadContratos() {
-			$http.get('http://localhost/sig-backoffice-api/colaboradores')
+		function loadOrigens() {
+			$http.get(baseUrlApi()+'origens?nolimit=1')
 			.success(function(items){
 				$scope.contratos = items.rows;
 			});
 	}
 
 	function loadGradesHorario() {
-			$http.get('http://localhost/sig-backoffice-api/grades-horario')
+			$http.get(baseUrlApi()+'grades-horario?nolimit=1')
 			.success(function(items){
 				$scope.gradesHorario = items.rows;
 			});
 	}
 
 	function loadSindicatos() {
-			$http.get('http://localhost/sig-backoffice-api/sindicatos')
+			$http.get(baseUrlApi()+'sindicatos?nolimit=1')
 			.success(function(items){
 				$scope.sindicatos = items.rows;
 			});
 	}
 
 	function loadBancos() {
-			$http.get('http://localhost/sig-backoffice-api/bancos')
+			$http.get(baseUrlApi()+'bancos?nolimit=1')
 			.success(function(items){
 				$scope.bancos = items.rows;
 			});
 	}
 
 	function loadEntidades() {
-			$http.get('http://localhost/sig-backoffice-api/entidades')
+			$http.get(baseUrlApi()+'entidades?nolimit=1')
 			.success(function(items){
 				$scope.entidades = items.rows;
 			});
@@ -205,9 +264,9 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	loadRegimesContratacao();
 	loadLocaisTrabalho();
 	loadDepartamentos();
-	loadContratos();
 	loadGradesHorario();
 	loadSindicatos();
 	loadBancos();
 	loadEntidades();
+	loadOrigens();
 });

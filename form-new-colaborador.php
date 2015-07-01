@@ -1,6 +1,4 @@
 <div class="panel" ng-controller="CadastroColaboradorCtrl">
-	<!-- Classic Form Wizard -->
-	<!--===================================================-->
 	<div id="demo-cls-wz">
 		<!--Nav-->
 		<ul class="wz-nav-off wz-icon-inline">
@@ -65,10 +63,10 @@
 								
 								<label class="col-lg-2 control-label">Sexo</label>
 								<div class="col-lg-2">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.flg_sexo">
+									<select class="form-control"  ng-model="dadosColaborador.flg_sexo">
 									 	<option value="M" label="Masculino"></option>
 										<option value="F" label="Feminino"></option> 
-									</select>
+									</select> 
 								</div>
 							</div>
 
@@ -126,12 +124,12 @@
 							<div class="form-group">
 								<label class="col-lg-2 control-label">UF</label>
 								<div class="col-lg-1">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_estado_moradia" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia')">
+									<select class="form-control" ng-model="dadosColaborador.cod_estado_moradia" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia')">
 									</select>
 								</div>
 								<label class="col-lg-1 control-label">Cidade</label>
 								<div class="col-lg-2">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_cidade_moradia" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia">
+									<select class="form-control" ng-model="dadosColaborador.cod_cidade_moradia" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia">
 									</select>
 									<span class="loading-cidade-moradia hide">
 										<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
@@ -146,13 +144,13 @@
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Estado</label>
 								<div class="col-lg-1">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_estado_naturalidade" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('naturalidade')">
+									<select class="form-control" ng-model="dadosColaborador.cod_estado_naturalidade" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('naturalidade')">
 									</select>
 								</div>
 
 								<label class="col-lg-1 control-label">Cidade</label>
 								<div class="col-lg-2">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_cidade_naturalidade" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
+									<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
 									</select>
 									<span class="loading-cidade-naturalidade hide">
 										<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
@@ -167,25 +165,35 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Empresa Contratante</label> 
 							<div class="col-lg-4">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_empresa_contratante">
-									<option ng-repeat="item in empresasContratante" value="{{ item.cod_empresa }}" label="{{ item.nme_fantasia }}">{{ item.nme_fantasia }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{ dadosColaborador.empresaContratante.nme_fantasia }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('empresas', 'empresaContratante')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 
 							<label class="col-lg-2 control-label">Regime de Contratação</label>
 							<div class="col-lg-1">
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_regime_contratacao">
 									<option ng-repeat="item in regimesContratacao" value="{{ item.cod_regime_contratacao }}" label="{{ item.dsc_regime_contratacao }}">{{ item.dsc_regime_contratacao }}</option>
-								</select>
+								</select> 
+								</div>
 							</div>
-						</div>
 
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Local de Trabalho</label>
 							<div class="col-lg-3">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_local_trabalho">
-									<option ng-repeat="item in locaisTrabalho" value="{{ item.cod_local_trabalho }}" label="{{ item.nme_local_trabalho }}">{{ item.nme_local_trabalho }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{ dadosColaborador.localTrabalho.nme_local_trabalho }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('locais-trabalho', 'localTrabalho')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 
 							<label class="col-lg-2 control-label">Departamento</label>
@@ -199,25 +207,35 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Contrato</label>
 							<div class="col-lg-3">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_contrato">
-									<option ng-repeat="item in contratos" value="{{ item.cod_colaborador }}" label="{{ item.cod_contrato }}">{{ item.cod_contrato }}</option>
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_origem">
+									<option ng-repeat="item in contratos" value="{{ item.cod_origem }}" label="{{ item.dsc_origem }}">{{ item.dsc_origem }}</option>
 								</select>
 							</div>
 							
 							<label class="col-lg-2 control-label">Grade de Horário</label>
 							<div class="col-lg-2">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_grade_horario">
-									<option ng-repeat="item in gradesHorario" value="{{ item.cod_grade_horario }}" label="{{ item.nme_grade_horario }}">{{ item.nme_grade_horario }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.gradeHorario.nme_grade_horario }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('grades-horario', 'gradeHorario')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Sindicato</label>
 							<div class="col-lg-4">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_sindicato">
-									<option ng-repeat="item in sindicatos" value="{{ item.cod_sindicato }}" label="{{ item.nme_sindicato }}">{{ item.nme_sindicato }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.sindicato.nme_sindicato }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('sindicatos', 'sindicato')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 
 							<label class="col-lg-2 control-label">Horas Contratadas</label>
@@ -322,9 +340,14 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Entidade</label>
 							<div class="col-lg-1">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_entidade">
-									<option ng-repeat="item in entidades" value="{{ item.cod_entidade }}" label="{{ item.nme_entidade }}">{{ item.nme_entidade }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.entidade.nme_entidade }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('entidades', 'entidade')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 							<label class="col-lg-1 control-label">Número</label>
 							<div class="col-lg-2">
@@ -439,6 +462,23 @@
 			</div>
 		</form>
 	</div>
-	<!--===================================================-->
-	<!-- End Classic Form Wizard -->
+
+	<div class="modal fade" id="modalItems" tabindex="-1" role="dialog" aria-labelledby="modalItemsLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalItemsLabel"></h4>
+				</div>
+				<div class="modal-body">
+					<table id="mytable"></table>
+				</div>
+				<div class="modal-footer clearfix">
+					<div class="pull-right">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
