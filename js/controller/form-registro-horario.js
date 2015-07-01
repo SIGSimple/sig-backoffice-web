@@ -7,7 +7,8 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	$scope.arrDiasMes 				= [];
 	$scope.tiposRegistroHorario 	= [];
 	$scope.feriados 				= [];
-	$scope.programacaoDiasPonte 	= [];
+	$scope.diasPonte 				= [];
+	$scope.programacaoCompensacoes 	= [];
 
 	$scope.getToday = function() {
 		return moment().format('D');
@@ -34,13 +35,17 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 		var qtdTempoIntervalo 	= getQtdHorasTrabalhoDiario(item).qtd_tempo_intervalo;
 		var dtaEntrada 			= moment(item.cptDate + ' ' + item.hor_entrada, 'YYYY/M/D HH:mm');
 		var dtaSaida 			= moment(item.cptDate + ' ' + item.hor_saida, 'YYYY/M/D HH:mm');
+		var qtdTempoCompensacao = 0;
+
+		if(item.flgCompensation)
+			qtdTempoCompensacao = item.qtdTempoCompensation;
 
 		if(dtaEntrada.unix() != dtaSaida.unix()) {
 			item.cod_tipo_registro_horario = 1;
 			if(parseInt(item.hor_saida.split(":")[0]) <= parseInt(item.hor_entrada.split(":")[0]))
 				dtaSaida.add(1, 'd');
 
-			var summaryOfDay = getHorasTrabalho(dtaEntrada, dtaSaida, (qtdHorasTrabalhoTotalProgramacao-qtdTempoIntervaloProgramacao), qtdTempoIntervalo);
+			var summaryOfDay = getHorasTrabalho(dtaEntrada, dtaSaida, (qtdHorasTrabalhoTotalProgramacao-qtdTempoIntervaloProgramacao), qtdTempoIntervalo, qtdTempoCompensacao);
 
 			$.extend(item, summaryOfDay);
 
@@ -69,6 +74,10 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 		}
 
 		calcTotaisHoraExtra();
+	}
+
+	$scope.clearAttachment = function(item) {
+		item.anexo = null;
 	}
 
 	function formatHoraExtra(qtdHoraExtra, isNegativeValue) {
@@ -103,7 +112,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 		return value;
 	}
 
-	function getHorasTrabalho(vHoraInicio, vHoraFim, vJornadaContratual, vIntervalo) {
+	function getHorasTrabalho(vHoraInicio, vHoraFim, vJornadaContratual, vIntervalo, vCompensacao) {
 		// declares
 		var vHoraFimDiaInicio				= moment(vHoraInicio.format('YYYY-MM-DD') + ' 23:59:59', 'YYYY-MM-DD HH:mm');
 		var vHoraInicioAdicionalNoturno 	= moment(vHoraInicio.format('YYYY-MM-DD') + ' 22:00:00', 'YYYY-MM-DD HH:mm');
@@ -126,7 +135,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 			vJornadaContratual = 0;
 		}
 		else
-			vHoraTotalExtra = (vDiffHoras - vJornadaContratual);
+			vHoraTotalExtra = (vDiffHoras - vJornadaContratual - vCompensacao);
 
 		if(vHoraExtraDiaInicio == 0 && !vMesmoDia){
 			vHoraExtraDiaInicio 	= parseFloat((vHoraFimDiaInicio.diff(vHoraInicio, 'hours', true) - vJornadaContratual).toFixed(2));
@@ -426,17 +435,17 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 		$http.get(baseUrlApi()+'feriados/'+ numMes +'/'+ codEstado +'/'+ codCidade)
 			.success(function(items){
 				$scope.feriados = items;
-				getProgramacaoDiasPonte();
+				getDiasPonte();
 			})
 			.error(function(data, status, headers, config){
 				if(status === 404) {
-					getProgramacaoDiasPonte();
+					getDiasPonte();
 				}
 			});
 	}
 
 	function loadDayFields() {
-		$scope.arrDiasMes = getDaysArray(parseInt(moment().format('YYYY'), 10), parseInt(moment().format('M'),10), $scope.feriados, $scope.programacaoDiasPonte);
+		$scope.arrDiasMes = getDaysArray(parseInt(moment().format('YYYY'), 10), parseInt(moment().format('M'),10), $scope.feriados, $scope.diasPonte, $scope.programacaoCompensacoes);
 
 		$timeout(function() {
 			if($('.input-timepicker').length > 0) {
@@ -446,16 +455,29 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	}
 
 	function getTiposRegistroHorario() {
-		$http.get(baseUrlApi()+'tipos-registro/horario?flg_somente_administrador=0')
+		$http.get(baseUrlApi()+'tipos-registro/horario')
 			.success(function(items) {
 				$scope.tiposRegistroHorario = items;
 			});
 	}
 
-	function getProgramacaoDiasPonte() {
-		$http.get(baseUrlApi()+'dia-ponte/programacao?col->cod_colaborador=' + $scope.colaborador.cod_colaborador +"&dta_dia_ponte[exp]=between '"+ moment().startOf('month').format('YYYY-MM-DD') +"' and '"+ moment().endOf('month').format('YYYY-MM-DD') +"'")
+	function getDiasPonte() {
+		$http.get(baseUrlApi()+'dia-ponte/programacao?col->cod_colaborador=' + $scope.colaborador.cod_colaborador +"&dta_dia_ponte[exp]=BETWEEN '"+ moment().startOf('month').format('YYYY-MM-DD') +"' and '"+ moment().endOf('month').format('YYYY-MM-DD') +"'")
 			.success(function(items) {
-				$scope.programacaoDiasPonte = items;
+				$scope.diasPonte = items;
+				getProgramacaoCompensacoes();
+			})
+			.error(function(data, status, headers, config){
+				if(status === 404) {
+					getProgramacaoCompensacoes();
+				}
+			});
+	}
+
+	function getProgramacaoCompensacoes() {
+		$http.get(baseUrlApi()+'dia-ponte/programacao?col->cod_colaborador=' + $scope.colaborador.cod_colaborador +"&'"+ moment().format('MM') +"'[exp]=BETWEEN DATE_FORMAT(pdp.dta_inicio_compensacao, '%m') AND DATE_FORMAT(pdp.dta_termino_compensacao, '%m')")
+			.success(function(items) {
+				$scope.programacaoCompensacoes = items;
 				loadDayFields();
 			})
 			.error(function(data, status, headers, config){
@@ -465,7 +487,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 			});
 	}
 
-	function getDaysArray(year, month, feriados, diasPonte) {
+	function getDaysArray(year, month, feriados, diasPonte, compensacoes) {
 		var numDaysInMonth, daysInWeek, daysIndex, index, i, l, daysArray;
 
 		numDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -520,17 +542,18 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 			if (index == 7) index = 0;
 		}
 
-		if(diasPonte.length > 0) {
-			$.each(diasPonte, function(z, diaPonte) {
-				var valIni = parseInt(moment(diaPonte.dta_inicio_compensacao, 'YYYY-MM-DD').format("D"),10)-1;
-				var valFim = parseInt(moment(diaPonte.dta_termino_compensacao, 'YYYY-MM-DD').format("D"),10)-1;
+		if(compensacoes.length > 0) {
+			$.each(compensacoes, function(z, compensacao) {
+				var valIni = parseInt(moment(compensacao.dta_inicio_compensacao, 'YYYY-MM-DD').format("D"),10)-1;
+				var valFim = parseInt(moment(compensacao.dta_termino_compensacao, 'YYYY-MM-DD').format("D"),10)-1;
 
 				for(var i = valIni; i <= valFim; i++) {
 					var objDay = daysArray[i];
 
 					if(!objDay.flgWeekend && !objDay.flgHoliday) {
-						objDay.flgCompensation = true;
-						objDay.nmeCompensation = "COMPENSAÇÃO ("+ diaPonte.qtd_horas_dia_compensacao +" h)";
+						objDay.flgCompensation 		= true;
+						objDay.nmeCompensation 		= "COMPENSAÇÃO ("+ compensacao.qtd_horas_dia_compensacao +" h)";
+						objDay.qtdTempoCompensation = parseInt(compensacao.qtd_horas_dia_compensacao, 10);
 					}
 
 					daysArray[i] = objDay;

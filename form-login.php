@@ -6,21 +6,21 @@ unset($_SESSION['user_logged']);
 ?>
 <!-- LOGIN FORM -->
 <!--===================================================-->
-<div class="cls-content-sm panel">
+<div class="cls-content-sm panel" ng-controller="LoginCtrl">
 	<div class="panel-body">
 		<p class="pad-btm">Entre com seus dados</p>
-		<form action="index.html">
+		<form class="form" role="form">
 			<div class="form-group">
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-user"></i></div>
-					<input type="text" class="form-control" placeholder="usuário">
+					<input type="text" class="form-control" placeholder="usuário" ng-model="dadosLogin.nme_login">
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
-					<input type="password" class="form-control" placeholder="Senha">
+					<input type="password" class="form-control" placeholder="Senha" ng-model="dadosLogin.nme_senha">
 				</div>
 			</div>
 
@@ -32,15 +32,10 @@ unset($_SESSION['user_logged']);
 				</div>
 				<div class="col-xs-4">
 					<div class="form-group text-right">
-					<button class="btn btn-success text-uppercase" type="submit">Entrar</button>
+					<button class="btn btn-success text-uppercase" type="submit" ng-click="login()">Entrar</button>
 					</div>
 				</div>
 			</div>
-
-			<!-- <div class="mar-btm"><em>- ou -</em></div>
-			<button class="btn btn-primary btn-lg btn-block" type="button">
-				<i class="fa fa-facebook fa-fw"></i> Entrar com Facebook
-			</button> -->
 		</form>
 	</div>
 </div>

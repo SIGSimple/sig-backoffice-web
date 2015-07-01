@@ -65,6 +65,7 @@
 					<th class="text-center text-middle">Extras</th>
 					<th class="text-center text-middle" width="200">Visto</th>
 					<th class="text-center text-middle" width="200">Marcar como</th>
+					<th class="text-center text-middle" width="200">Anexos</th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="(index, item) in arrDiasMes"
@@ -115,10 +116,22 @@
 								ng-hide="{{ ((item.flgWeekend && colaborador.flg_trabalho_fim_semana == 0) || (item.flgHoliday && colaborador.flg_trabalho_feriado == 0)) }}">
 								<option
 									ng-repeat="tipo in tiposRegistroHorario" 
-									value="{{ tipo.cod_tipo_registro_horario }}" ng-selected="{{ item.cod_tipo_registro_horario == tipo.cod_tipo_registro_horario }}"
+									ng-selected="{{ item.cod_tipo_registro_horario == tipo.cod_tipo_registro_horario }}"
+									value="{{ tipo.cod_tipo_registro_horario }}"
 									label="{{ tipo.nme_tipo_registro_horario }}">
 								</option>
 							</select>
+						</td>
+						<td class="text-middle">
+							<span class="pull-left btn btn-default btn-file" 
+								ng-show="(item.cod_tipo_registro_horario == '3' || item.cod_tipo_registro_horario == '5' && !item.anexo)">
+								Selecionar... <input type="file" ng-model="item.anexo" app-filereader>
+							</span>
+							<button type="button" class="btn btn-xs btn-default"
+								ng-show="(item.anexo)" ng-click="clearAttachment(item)">
+								<i class="fa fa-times-circle"></i>
+							</button>&nbsp;
+							{{ item.anexo.file_obj.name }}
 						</td>
 					</tr>
 				</tbody>

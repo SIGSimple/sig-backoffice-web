@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="sig_backoffice">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +26,15 @@
 
 	<!--Demo [ DEMONSTRATION ]-->
 	<link href="css/demo/nifty-demo.min.css" rel="stylesheet">
+
+	
+	<!--Bootstrap Timepicker [ OPTIONAL ]-->
+	<link href="plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+
+
+	<!--Bootstrap Datepicker [ OPTIONAL ]-->
+	<link href="plugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet">
+
 
 	<!--SCRIPT-->
 	<!--=================================================-->
@@ -97,5 +106,39 @@
 
 	<!--Background Image [ DEMONSTRATION ]-->
 	<script src="js/demo/bg-images.js"></script>
+
+
+	<!--Bootstrap Timepicker [ OPTIONAL ]-->
+	<script src="plugins/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+
+
+	<!--Bootstrap Datepicker [ OPTIONAL ]-->
+	<script src="plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+
+	<!--Underscore [ REQUIRED ]-->
+	<script src="js/underscore.min.js"></script>
+
+	<!--Angular [ REQUIRED ]-->
+	<script src="bower_components/angular/angular.min.js"></script>
+
+	<!--Angular [ REQUIRED ]-->
+	<script src="js/ui-bootstrap-custom-0.13.0.min.js"></script>
+	<script src="js/ui-bootstrap-custom-tpls-0.13.0.min.js"></script>
+
+	<!--Moment [ REQUIRED ]-->
+	<script src="bower_components/moment/moment.js"></script>
+	<script src="bower_components/moment/locale/pt-br.js"></script>
+
+	<!--Moment [ REQUIRED ]-->
+	<script src="bower_components/bootstrap-select/bootstrap-select.min.js"></script>
+	<script src="bower_components/moment/locale/pt-br.js"></script>
+
+	<!--CUSTOM-->
+	<script src="js/custom.js"></script>
+	<script src="js/extras.js"></script>
+
+	<script src="js/angular-app.js"></script>
+	<script src="js/service/user-logged.js"></script>
+	<script src="js/controller/<?=($_GET['page'])?>.js"></script>
 </body>
 </html>
