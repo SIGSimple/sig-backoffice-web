@@ -63,10 +63,10 @@
 								
 								<label class="col-lg-2 control-label">Sexo</label>
 								<div class="col-lg-2">
-									<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.flg_sexo">
+									<select class="form-control"  ng-model="dadosColaborador.flg_sexo">
 									 	<option value="M" label="Masculino"></option>
 										<option value="F" label="Feminino"></option> 
-									</select>
+									</select> 
 								</div>
 							</div>
 
@@ -166,9 +166,9 @@
 							<label class="col-lg-2 control-label">Empresa Contratante</label> 
 							<div class="col-lg-4">
 								<div class="input-group">
-									<input type="text" class="form-control" ng-model="dadosColaborador.empresaContratante.nme_fantasia">
+									<input type="text" class="form-control" readonly="readonly" value="{{ dadosColaborador.empresaContratante.nme_fantasia }}">
 									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" ng-click="abreModal('empresas')">
+										<button class="btn btn-default" type="button" ng-click="abreModal('empresas', 'empresaContratante')">
 											<i class="fa fa-search"></i>
 										</button>
 									</span>
@@ -177,26 +177,23 @@
 
 							<label class="col-lg-2 control-label">Regime de Contratação</label>
 							<div class="col-lg-1">
-								<div class="input-group">
-									<input type="text" class="form-control" ng-model="dadosColaborador.cod_regime_contratacao.dsc_regime_contratacao">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" ng-click="abreModal('regimes-contratacao')">
-											<i class="fa fa-search"></i>
-										</button>
-									</span>
-
-									<!--<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_regime_contratacao">
+								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_regime_contratacao">
 									<option ng-repeat="item in regimesContratacao" value="{{ item.cod_regime_contratacao }}" label="{{ item.dsc_regime_contratacao }}">{{ item.dsc_regime_contratacao }}</option>
-								</select> -->
+								</select> 
 								</div>
 							</div>
 
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Local de Trabalho</label>
 							<div class="col-lg-3">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_local_trabalho">
-									<option ng-repeat="item in locaisTrabalho" value="{{ item.cod_local_trabalho }}" label="{{ item.nme_local_trabalho }}">{{ item.nme_local_trabalho }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{ dadosColaborador.localTrabalho.nme_local_trabalho }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('locais-trabalho', 'localTrabalho')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 
 							<label class="col-lg-2 control-label">Departamento</label>
@@ -217,18 +214,28 @@
 							
 							<label class="col-lg-2 control-label">Grade de Horário</label>
 							<div class="col-lg-2">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_grade_horario">
-									<option ng-repeat="item in gradesHorario" value="{{ item.cod_grade_horario }}" label="{{ item.nme_grade_horario }}">{{ item.nme_grade_horario }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.gradeHorario.nme_grade_horario }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('grades-horario', 'gradeHorario')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Sindicato</label>
 							<div class="col-lg-4">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_sindicato">
-									<option ng-repeat="item in sindicatos" value="{{ item.cod_sindicato }}" label="{{ item.nme_sindicato }}">{{ item.nme_sindicato }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.sindicato.nme_sindicato }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('sindicatos', 'sindicato')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 
 							<label class="col-lg-2 control-label">Horas Contratadas</label>
@@ -333,9 +340,14 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Entidade</label>
 							<div class="col-lg-1">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_entidade">
-									<option ng-repeat="item in entidades" value="{{ item.cod_entidade }}" label="{{ item.nme_entidade }}">{{ item.nme_entidade }}</option>
-								</select>
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.entidade.nme_entidade }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('entidades', 'entidade')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 							<label class="col-lg-1 control-label">Número</label>
 							<div class="col-lg-2">
@@ -456,47 +468,10 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="modalItemsLabel">{{ modalOptions.title }}</h4>
+					<h4 class="modal-title" id="modalItemsLabel"></h4>
 				</div>
 				<div class="modal-body">
-					<!-- <table class="table table-bordered table-condensed table-hover table-striped">
-						<thead>
-							<th ng-repeat="column in modalOptions.columns" class="{{ column.class }}">{{ column.title }}</th>
-						</thead>
-						<tbody>
-							<tr ng-repeat="linha in modalOptions.values">
-								<td ng-repeat="value in linha">{{ value }}</td>
-							</tr>
-						</tbody>
-					</table> -->
-
-					<table class="bootstrap-table" 
-						data-toggle="table"
-						data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/empresas.json"
-						data-search="true"
-						data-show-refresh="true"
-						data-show-toggle="true"
-						data-show-columns="true"
-						data-page-list="[5, 10, 20, 50, 100]"
-						data-page-size="10"
-						data-pagination="true"
-						data-side-pagination="server"
-						data-show-pagination-switch="true">
-						<thead>
-							<tr>
-								<th data-visible="true" data-sortable="true" data-field="num_cnpj">CNPJ</th>
-								<th data-visible="true" data-sortable="true" data-field="nme_razao_social">Razão Social</th>
-								<th data-visible="true" data-sortable="true" data-field="nme_fantasia">Nome Fantasia</th>
-								<th data-visible="false" data-sortable="true" data-field="num_inscricao_estadual">I.E.</th>
-								<th data-visible="true" data-sortable="true" data-field="dsc_endereco">Endereço</th>
-								<th data-visible="false" data-sortable="true" data-field="nme_bairro">Bairro</th>
-								<th data-visible="false" data-sortable="true" data-field="num_cep">CEP</th>
-								<th data-visible="true" data-sortable="true" data-field="nme_cidade">Cidade</th>
-								<th data-visible="true" data-sortable="true" data-field="sgl_estado">UF</th>
-								<th data-visible="true" data-sortable="true" data-field="flg_ativo" data-formatter="ativoFormatter">Ativo?</th>
-							</tr>
-						</thead>
-					</table>
+					<table id="mytable"></table>
 				</div>
 				<div class="modal-footer clearfix">
 					<div class="pull-right">

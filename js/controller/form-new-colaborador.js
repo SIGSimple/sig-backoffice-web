@@ -102,19 +102,41 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.entidades = [];
 	$scope.contratos = [];
 
-	$scope.modalOptions = {
-		title: "Listagem de Empresas",
-		columns: [
-			{title: "#"},
-			{title: "Descrição"}
+	var modalTablesColumns = {
+		"empresas": [
+			{
+				field: 'nme_fantasia',
+				title: 'Nome Fantasia'
+			}
 		],
-		values: [
-			[0, "Filipe"],
-			[1, "Danilo"],
-			[2, "Eduardo"]
+		"locais-trabalho": [
+			{
+				field: 'nme_local_trabalho',
+				title: 'Nome Local'
+			}
+
+		],
+		"sindicatos": [
+			{
+				field: 'nme_sindicato',
+				title: 'Nome Sindicato'
+			}
+
+		],
+		"grades-horario": [
+			{
+				field: 'nme_grade_horario',
+				title: 'Grade de Horário'
+			}
+
+		],
+		"entidades": [
+			{
+				field: 'nme_entidade',
+				title: 'Nome'
+			}
 		]
 	};
-	
 
 	// Definição de funções de utilização da tela
 	$scope.getCidades = function(el_destino) {
@@ -139,8 +161,28 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
-	$scope.abreModal = function(tabela) {
+	$scope.abreModal = function(rota, atributo) {
+		$("#modalItemsLabel").text("LISTAGEM DE " + rota.replace("-"," de ").toUpperCase());
 		$("#modalItems").modal("show");
+		$('#mytable').bootstrapTable({
+			url: "http://localhost/sig-backoffice-api/"+ rota +".json",
+			search: true,
+			showRefresh: true,
+			showToggle: true,
+			showColumns: true,
+			pageList: "[5, 10, 20, 50, 100, All]",
+			pageSize: "5",
+			pagination: true,
+			sidePagination: "server",
+			showPaginationSwitch: true,
+			columns: modalTablesColumns[rota],
+			onClickRow: function(row, $element) {
+				$scope.dadosColaborador[atributo] = row;
+				$scope.$apply();
+				$('#mytable').bootstrapTable('destroy');
+				$("#modalItems").modal("hide");
+			}
+		});
 	}
 
 	// Definição de funções auxiliares
