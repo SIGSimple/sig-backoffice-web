@@ -33,6 +33,7 @@
 		<form class="form-horizontal">
 			<div class="panel-body" style="padding-top: 10px;">
 				<div class="tab-content">
+
 					<!--First tab-->
 					<div id="demo-cls-tab1" class="tab-pane fade">
 						<fieldset>
@@ -77,11 +78,7 @@
 									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_portador_necessidades_especiais">
 								</div>
 								
-								<label class="col-lg-1 control-label">C/M?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_cm">
-								</div>
-
+								
 								<label class="col-lg-1 control-label">Ativo?</label>
 								<div class="col-lg-1">
 									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ativo">
@@ -157,6 +154,52 @@
 									</span>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Telefones</label>
+								<div class="col-lg-2">
+									<table class="table table-bordered table-condensed table-hover table-striped">
+										<thead>
+											<th>DDD</th>
+											<th>Número</th>
+											<th>Tipo</th>
+											<th width="20">
+												<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalTelefone()">
+													<i class="fa fa-plus-circle"></i>
+												</button>
+											</th>
+										</thead>
+										<tbody>
+											<tr ng-repeat="telefone in dadosColaborador.telefones">
+												<td>{{ telefone.num_ddd }}</td>
+												<td>{{ telefone.num_telefone }}</td>
+												<td colspan="2">{{ telefone.tipoTelefone.nme_tipo_telefone }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								<label class="col-lg-2 control-label">E-mails</label>
+								<div class="col-lg-2">
+									<table class="table table-bordered table-condensed table-hover table-striped">
+										<thead>
+											<th>Endereço de E-mail</th>
+											<th width="20">
+													<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalEmail()">
+														<i class="fa fa-plus-circle"></i>
+													</button>
+										</thead>
+										<tbody>
+											<tr ng-repeat="email in dadosColaborador.emails">
+												<td>{{ email.end_email }}</td>
+												
+												</th>
+									
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</fieldset>
 					</div>
 			
@@ -177,11 +220,14 @@
 
 							<label class="col-lg-2 control-label">Regime de Contratação</label>
 							<div class="col-lg-1">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_regime_contratacao">
-									<option ng-repeat="item in regimesContratacao" value="{{ item.cod_regime_contratacao }}" label="{{ item.dsc_regime_contratacao }}">{{ item.dsc_regime_contratacao }}</option>
-								</select> 
-								</div>
+								<select class="form-control"  ng-model="dadosColaborador.dsc_regime_contratacao">
+									<option value="C" label="CLT"></option>
+									<option value="E" label="Estagiário"></option>
+									<option value="M" label="Menor Aprendiz"></option> 
+									<option value="P" label="PJ"></option>
+								</select>
 							</div>
+						</div>
 
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Local de Trabalho</label>
@@ -198,22 +244,27 @@
 
 							<label class="col-lg-2 control-label">Departamento</label>
 							<div class="col-lg-1">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_departamento">
-									<option ng-repeat="item in departamentos" value="{{ item.cod_departamento }}" label="{{ item.nme_departamento }}">{{ item.nme_departamento }}</option>
+								<select class="form-control"  ng-model="dadosColaborador.nme_departamento">
+									<option value="AL" label="AL"></option>
+									<option value="BQ" label="BQ"></option>
+									<option value="DEP" label="DEP"></option> 
+									<option value="DES" label="DES"></option>
+									<option value="DGO" label="DGO"></option>
+									<option value="DOF" label="DOF"></option>
+									<option value="GEO" label="GEO"></option>
+									<option value="OM" label="OM"></option>
+									<option value="PJU" label="PJU"></option>
+									<option value="SCG" label="SCG"></option>
+									<option value="SEC" label="SEC"></option>
+									<option value="SGA" label="SGA"></option>
+									<option value="SUP" label="SUP"></option>
 								</select>
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label class="col-lg-2 control-label">Contrato</label>
-							<div class="col-lg-3">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_origem">
-									<option ng-repeat="item in contratos" value="{{ item.cod_origem }}" label="{{ item.dsc_origem }}">{{ item.dsc_origem }}</option>
-								</select>
-							</div>
-							
+						<div class="form-group">							
 							<label class="col-lg-2 control-label">Grade de Horário</label>
-							<div class="col-lg-2">
+							<div class="col-lg-3">
 								<div class="input-group">
 									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.gradeHorario.nme_grade_horario }}">
 									<span class="input-group-btn">
@@ -222,6 +273,10 @@
 										</button>
 									</span>
 								</div>
+							</div>
+							<label class="col-lg-2 control-label">Horas Contratadas</label>
+							<div class="col-lg-1">
+								<input type="text" class="form-control" ng-model="dadosColaborador.qtd_horas_contratadas">
 							</div>
 						</div>
 
@@ -236,12 +291,7 @@
 										</button>
 									</span>
 								</div>
-							</div>
-
-							<label class="col-lg-2 control-label">Horas Contratadas</label>
-							<div class="col-lg-1">
-								<input type="text" class="form-control" ng-model="dadosColaborador.qtd_horas_contratadas">
-							</div>
+							</div>				
 						</div>
 
 						<div class="form-group">
@@ -266,12 +316,18 @@
 					<div id="demo-cls-tab3" class="tab-pane">
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Banco</label>
-							<div class="col-lg-6">
-								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_banco">
-									<option ng-repeat="item in bancos" value="{{ item.cod_banco }}" label="{{ item.nme_banco }}">{{ item.nme_banco }}</option>
-								</select>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<input type="text" class="form-control" readonly="readonly" value="{{ dadosColaborador.banco.num_banco }} | {{ dadosColaborador.banco.nme_banco }}">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" ng-click="abreModal('bancos', 'banco')">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
+
 
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Agência</label>
@@ -478,6 +534,50 @@
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAddTelefone" tabindex="-1" role="dialog" aria-labelledby="modalAddTelefoneLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalAddTelefoneLabel">Inclusão de Telefone</h4>
+				</div>
+				<form class="form form-horizontal" role="form">
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Tipo</label>
+							<div class="col-lg-9">
+								<select class="form-control" ng-model="tmpTelefone.tipoTelefone" ng-options="item as item.nme_tipo_telefone for item in tiposTelefone"></select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">DDD</label>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" ng-model="tmpTelefone.num_ddd">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Número</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" ng-model="tmpTelefone.num_telefone">
+							</div>
+						</div>
+					</div>
+
+
+
+					<div class="modal-footer clearfix">
+						<div class="pull-right">
+							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addTelefone()">Salvar</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

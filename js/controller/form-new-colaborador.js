@@ -33,6 +33,7 @@ $('#demo-cls-wz').bootstrapWizard({
 app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	// Definição de variáveis de uso da tela
 	$scope.dadosColaborador = {
+		telefones: [],
 		num_matricula: "",
 		nme_colaborador: "",
 		flg_portador_necessidades_especiais: 0,
@@ -101,7 +102,15 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.bancos = [];
 	$scope.entidades = [];
 	$scope.contratos = [];
+	$scope.tiposTelefone = [];
 
+	$scope.tmpTelefone = {
+		num_ddd: "",
+		num_telefone: "",
+		tipoTelefone: {}
+	};
+
+	
 	var modalTablesColumns = {
 		"empresas": [
 			{
@@ -133,6 +142,16 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		"entidades": [
 			{
 				field: 'nme_entidade',
+				title: 'Nome'
+			}
+		],
+		"bancos": [
+			{
+				field: 'num_banco',
+				title: 'Número'
+			},
+			{
+				field: 'nme_banco',
 				title: 'Nome'
 			}
 		]
@@ -185,6 +204,24 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		});
 	}
 
+	$scope.abreModalTelefone = function() {
+		$("#modalAddTelefone").modal("show");
+	}
+
+	$scope.abreModalEmail = function() {
+		$("#modalAddEmail").modal("show");
+	}
+
+	$scope.addTelefone = function(){
+		$scope.dadosColaborador.telefones.push( angular.copy($scope.tmpTelefone) );
+		$scope.tmpTelefone = {
+			num_ddd: "",
+			num_telefone: "",
+			tipoTelefone: {}
+		};
+		$("#modalAddTelefone").modal("hide");
+	}
+
 	// Definição de funções auxiliares
 	function loadUfs() {
 		$http.get(baseUrlApi()+'estados')
@@ -207,7 +244,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
-		function loadLocaisTrabalho() {
+	function loadLocaisTrabalho() {
 			$http.get(baseUrlApi()+'locais-trabalho?nolimit=1')
 			.success(function(items){
 				$scope.locaisTrabalho = items.rows;
@@ -221,7 +258,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
-		function loadOrigens() {
+	function loadOrigens() {
 			$http.get(baseUrlApi()+'origens?nolimit=1')
 			.success(function(items){
 				$scope.contratos = items.rows;
@@ -256,8 +293,18 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
-	
+	function loadTiposTelefone() {
+		$http.get(baseUrlApi()+'tipos/telefone')
+			.success(function(items){
+				$scope.tiposTelefone = items;
+			});
+	}
 
+
+
+
+
+	
 	// Chamada às funções de inicialização
 	loadUfs();
 	loadEmpresas();
@@ -269,4 +316,5 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	loadBancos();
 	loadEntidades();
 	loadOrigens();
+	loadTiposTelefone();
 });

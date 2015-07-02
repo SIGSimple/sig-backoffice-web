@@ -24,9 +24,7 @@
 					<th data-visible="true" data-sortable="true" data-field="nme_colaborador">Nome</th>
 					<th data-visible="true" data-sortable="true" data-field="nme_fantasia">Contratante</th>
 					<th data-visible="true" data-sortable="true" data-field="nme_departamento">Depto</th>
-					<th data-visible="false" data-sortable="true" data-field="dsc_origem">Origem</th>
-					<th data-visible="false" data-sortable="true" data-field="dsc_regime_contratacao">Contratação</th>
-					<th data-visible="true" data-sortable="true" data-field="flg_cm">C/M</th>
+					<th data-visible="false" data-sortable="true" data-field="dsc_origem">Origem</th>							
 					<th data-visible="false" data-sortable="true" data-field="nme_local_trabalho">Local de Trabalho</th>
 					<th data-visible="false" data-sortable="true" data-field="nme_grade_horario">Horário</th>
 					<th data-visible="true" data-sortable="true" data-field="dta_admissao">Dta. Admissão</th>
