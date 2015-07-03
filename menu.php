@@ -10,8 +10,8 @@
 					<ul id="mainnav-menu" class="list-group">
 						<?php
 							include_once 'php.util/HttpUtil.php';
-
-							$menuItems = json_decode(HttpUtil::doGetRequest('http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/modulos', null));
+							$cod_perfil = $_SESSION['user_logged']['user']->cod_perfil;
+							$menuItems = json_decode(HttpUtil::doGetRequest('http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/modulos?tmp->cod_perfil='. $cod_perfil, null));
 
 							foreach ($menuItems as $key => $value) {
 								echo '<li class="list-header"><i class="'. $value->icn_modulo .'"></i>'. $value->nme_modulo .'</li>';

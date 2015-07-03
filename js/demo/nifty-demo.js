@@ -215,6 +215,7 @@ $(document).ready(function() {
                 })
             };
         $("#demo-reset-settings").on("click", function() {
+            console.log('entrou'),
             i.niftyCheck("toggleOn"), nifty.container.removeClass(n).addClass("effect"), a.selectpicker("val", "effect"), o.niftyCheck("toggleOff"), $.niftyNav("staticPosition"), s.niftyCheck("toggleOff"), $.niftyNav("expand"), nifty.container.removeClass("mainnav-in mainnav-out mainnav-sm"), f.selectpicker("val", "none"), c.niftyCheck("toggleOff"), $.niftyAside("hide"), d.niftyCheck("toggleOff"), $.niftyAside("staticPosition"), l.niftyCheck("toggleOff"), $.niftyAside("alignRight"), r.niftyCheck("toggleOff"), $.niftyAside("darkTheme"), g.niftyCheck("toggleOff"), nifty.container.removeClass("navbar-fixed"), nifty.mainNav.niftyAffix("update"), nifty.aside.niftyAffix("update"), y.niftyCheck("toggleOff"), nifty.container.removeClass("footer-fixed"), $("#theme").remove(), $(".demo-theme").removeClass("disabled").filter('[data-type="mainnav"]').filter('[data-theme="theme-navy"]').addClass("disabled"), C(), $.niftyNoty({
                 icon: "fa fa-check fa-lg",
                 type: "success",

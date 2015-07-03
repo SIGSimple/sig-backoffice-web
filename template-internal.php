@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en" ng-app="sig_backoffice">
 <head>
@@ -95,7 +100,10 @@
 			<div id="content-container">
 				<!--Page Title-->
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-				<?php include('page-title.php'); ?>
+				<?php
+					if(isset($_GET['page']) && $_GET['page'] != "home")
+						include('page-title.php');
+				?>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End page title-->
 
@@ -195,7 +203,7 @@
 
 
 	<!--Demo script [ DEMONSTRATION ]-->
-	<script src="js/demo/nifty-demo.min.js"></script>
+	<script src="js/demo/nifty-demo.js"></script>
 
 	<!--Underscore [ REQUIRED ]-->
 	<script src="js/underscore.min.js"></script>
@@ -207,6 +215,11 @@
 	<!--Angular [ REQUIRED ]-->
 	<script src="js/ui-bootstrap-custom-0.13.0.min.js"></script>
 	<script src="js/ui-bootstrap-custom-tpls-0.13.0.min.js"></script>
+
+	<!--Flow.js [ REQUIRED ]-->
+	<script src="bower_components/flow.js/dist/flow.min.js"></script>
+	<script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
+
 
 	<!--Moment [ REQUIRED ]-->
 	<script src="bower_components/moment/moment.js"></script>

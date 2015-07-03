@@ -5,7 +5,7 @@
 				<div class="col-lg-12">
 					<div class="form-group">
 						<label class="control-label sr-only"></label>
-						<input type="text" class="form-control text-center text-bold" disabled="disabled" value="{{ colaborador.num_matricula }} - {{ colaborador.nme_colaborador }}">
+						<input type="text" class="form-control text-center text-bold" disabled="disabled" value="{{ colaborador.cooperator.num_matricula }} - {{ colaborador.cooperator.nme_colaborador }}">
 					</div>
 				</div>
 			</div>
@@ -14,14 +14,14 @@
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label class="control-label text-bold">Cargo:</label>
-						<input type="text" class="form-control" disabled="disabled" value="{{ colaborador.funcao.nme_funcao }}">
+						<input type="text" class="form-control" disabled="disabled" value="{{ colaborador.cooperator.funcao.nme_funcao }}">
 					</div>
 				</div>
 
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label class="control-label text-bold">Salário:</label>
-						<input type="text" class="form-control text-right" disabled="disabled" value="{{ colaborador.funcao.vlr_salario | currency : 'R$ ' : 2 }}">
+						<input type="text" class="form-control text-right" disabled="disabled" value="{{ colaborador.cooperator.funcao.vlr_salario | currency : 'R$ ' : 2 }}">
 					</div>
 				</div>
 			</div>

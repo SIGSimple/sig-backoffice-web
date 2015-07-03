@@ -11,6 +11,42 @@ $(function(){
 	$('[data-toggle="tooltip"]').tooltip();
 })
 
+function showNotification(title, message, icon, container, status) {
+	var alertType = "";
+
+	switch(status) {
+		case 200:
+		case 201:
+			title = "Pronto!";
+			alertType = 'success';
+			icon = 'fa-check-circle fa-lg';
+			break;
+		case 404:
+		case 500:
+			title = "Ocorreu um erro!";
+			alertType = 'danger';
+			icon = 'fa-times-circle fa-lg';
+			break;
+		case 406:
+			title = "Ops!";
+			alertType = 'warning';
+			icon = 'fa-warning fa-lg';
+			break;
+		default:
+			alertType = 'dark';
+			break;
+	}
+
+	$.niftyNoty({
+		type: alertType,
+		container: container,
+		icon: 'fa ' + icon,
+		title : title,
+		message : message,
+		timer : 5000
+	});
+}
+
 function initializeTimepickerInputs() {
 	$('.input-timepicker').timepicker({
 		minuteStep: 1,
@@ -68,4 +104,18 @@ function getQueryParams(qs) {
 	}
 
 	return params;
+}
+
+// Applying a theme
+// ================================
+function changeTheme(themeName, type){
+	var themeCSS = $('#theme'),
+	filename = 'css/themes/type-'+type+'/'+themeName+'.min.css';
+
+	if (themeCSS.length) {
+		themeCSS.prop('href', filename);
+	}else{
+		themeCSS = '<link id="theme" href="'+filename+'" rel="stylesheet">';
+		$('head').append(themeCSS);
+	}
 }

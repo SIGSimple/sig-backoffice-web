@@ -17,16 +17,16 @@
 		<li id="dropdown-user" class="dropdown">
 			<a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
 				<span class="pull-right">
-					<img class="img-circle img-user media-object" src="img/av1.png" alt="Profile Picture">
+					<img class="img-circle img-user media-object" src="img/{{ (usuario.user.flg_sexo == 'F') ? 'av6' : (usuario.user.flg_sexo == 'M') ? 'av2' : 'av3' }}.png" alt="Profile Picture">
 				</span>
-				<div class="username hidden-xs">{{ usuario.nme_colaborador }}</div>
+				<div class="username hidden-xs">{{ getFirstAndLastName(usuario.user.nme_usuario) }}</div>
 			</a>
 
 			<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right with-arrow panel-default">
 				<!-- User dropdown menu -->
 				<ul class="head-list">
 					<li>
-						<a href="pages-profile.html">
+						<a href="#">
 							<i class="fa fa-user fa-fw fa-lg"></i> Perfil
 						</a>
 					</li>
@@ -36,7 +36,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="pages-lock-screen.html">
+						<a href="#">
 							<i class="fa fa-lock fa-fw fa-lg"></i> Bloquear
 						</a>
 					</li>

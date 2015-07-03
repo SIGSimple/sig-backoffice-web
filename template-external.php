@@ -52,7 +52,7 @@
 	<div id="container" class="cls-container">
 		<!-- BACKGROUND IMAGE -->
 		<!--===================================================-->
-		<div id="bg-overlay" class="bg-img img-balloon"></div>
+		<div id="bg-overlay" class="bg-img img-bridge"></div>
 		
 		<!-- HEADER -->
 		<!--===================================================-->
@@ -71,19 +71,19 @@
 		
 		<!-- DEMO PURPOSE ONLY -->
 		<!--===================================================-->
-		<div class="demo-bg">
+		<!-- <div class="demo-bg">
 			<div id="demo-bg-list">
 				<div class="demo-loading"><i class="fa fa-refresh"></i></div>
 				<img class="demo-chg-bg bg-trans" src="img/bg-img/thumbs/bg-trns.jpg" alt="Background Image">
 				<img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-1.jpg" alt="Background Image">
-				<img class="demo-chg-bg active" src="img/bg-img/thumbs/bg-img-2.jpg" alt="Background Image">
+				<img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-2.jpg" alt="Background Image">
 				<img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-3.jpg" alt="Background Image">
 				<img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-4.jpg" alt="Background Image">
-				<img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-5.jpg" alt="Background Image">
+				<img class="demo-chg-bg active" src="img/bg-img/thumbs/bg-img-5.jpg" alt="Background Image">
 				<img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-6.jpg" alt="Background Image">
 				<img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-7.jpg" alt="Background Image">
 			</div>
-		</div>
+		</div> -->
 		<!--===================================================-->
 	</div>
 	<!--===================================================-->
@@ -119,11 +119,20 @@
 	<!--Bootstrap Datepicker [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 
+
+	<!--Demo script [ DEMONSTRATION ]-->
+	<script src="js/demo/nifty-demo.js"></script>
+	
+
 	<!--Underscore [ REQUIRED ]-->
 	<script src="js/underscore.min.js"></script>
 
 	<!--Angular [ REQUIRED ]-->
 	<script src="bower_components/angular/angular.min.js"></script>
+
+	<!--Flow.js [ REQUIRED ]-->
+	<script src="bower_components/flow.js/dist/flow.min.js"></script>
+	<script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
 
 	<!--Angular [ REQUIRED ]-->
 	<script src="js/ui-bootstrap-custom-0.13.0.min.js"></script>

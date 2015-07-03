@@ -1,9 +1,9 @@
-app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout){
+app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout, $window){
 	$scope.txtEscalaTrabalho 		= "";
 	$scope.mesVigente 				= moment().format("MMMM/2015");
 	$scope.qtdTempoIntervalo 		= "";
 	$scope.colaborador 				= UserSrvc.getUserLogged();
-	$scope.colaborador.gradeHorario = [];
+	$scope.colaborador.cooperator.gradeHorario = [];
 	$scope.arrDiasMes 				= [];
 	$scope.tiposRegistroHorario 	= [];
 	$scope.feriados 				= [];
@@ -12,6 +12,14 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 
 	$scope.getToday = function() {
 		return moment().format('D');
+	}
+
+	$scope.fileUploaded = function(item, message) {
+		var parsedObj = JSON.parse(message);
+
+		item.nme_anexo 		= parsedObj.flowFileName;
+		item.pth_anexo 		= parsedObj.flowFilePath;
+		item.dsc_tipo_anexo = parsedObj.flowFileType;
 	}
 
 	$scope.validaHoraExtra = function(item, index) {
@@ -37,10 +45,12 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 		var dtaSaida 			= moment(item.cptDate + ' ' + item.hor_saida, 'YYYY/M/D HH:mm');
 		var qtdTempoCompensacao = 0;
 
-		if(item.flgCompensation)
-			qtdTempoCompensacao = item.qtdTempoCompensation;
+		if(item.flg_compensacao)
+			qtdTempoCompensacao = item.qtd_tempo_compensacao;
 
 		if(dtaEntrada.unix() != dtaSaida.unix()) {
+			item.flg_registrado = true;
+
 			item.cod_tipo_registro_horario = 1;
 			if(parseInt(item.hor_saida.split(":")[0]) <= parseInt(item.hor_entrada.split(":")[0]))
 				dtaSaida.add(1, 'd');
@@ -71,13 +81,75 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 			item.qtd_hora_extra_dia_inicio = 0;
 			item.qtd_horas_trabalhadas = 0;
 			item.qtd_total_hora_extra = 0;
+			item.flg_registrado = false;
 		}
 
 		calcTotaisHoraExtra();
 	}
 
 	$scope.clearAttachment = function(item) {
-		item.anexo = null;
+		$http.get(baseUrl()+'file-delete.php?file-path=' + item.pth_anexo)
+			.success(function(message, status, headers, config) {
+				item.nme_anexo 		= "";
+				item.pth_anexo 		= "";
+				item.dsc_tipo_anexo = "";
+			})
+			.error(function(message, status, headers, config) {
+				showNotification(null, message, null, 'floating', status);
+			});
+	}
+
+	$scope.saveRecords = function () {
+		var alteracoes = false;
+		var itemsToSave = [];
+		var itemsToUpdate = [];
+		var countx = 0;
+		var county = 0;
+
+		$.each($scope.arrDiasMes, function(i, item) {
+			if(item.flg_registrado && item.cod_registro_horario === 0) {
+				item.cod_colaborador = $scope.colaborador.cooperator.cod_colaborador;
+				item.dta_registro = moment(item.cptDate, 'YYYY/M/D').format('YYYY-MM-DD');
+				itemsToSave.push(item);
+			}
+			else if(item.cod_registro_horario !== 0 && $scope.colaborador.cooperator.flg_ajusta_folha_ponto === "1")
+				itemsToUpdate.push(item);
+		});
+
+		if(itemsToSave.length > 0) {
+			countx++;
+			alteracoes = true;
+			$http.post(baseUrlApi()+'colaborador/registro/horario/new', { records: itemsToSave })
+				.success(function(message, status, headers, config){
+					showNotification(null, message, null, 'page', status);
+					county++;
+
+					if(county == countx)
+						$window.location.reload();
+				})
+				.error(function(message, status, headers, config){
+					showNotification(null, message, null, 'page', status);
+				});
+		}
+
+		if(itemsToUpdate.length > 0) {
+			alteracoes = true;
+			countx++;
+			$http.post(baseUrlApi()+'colaborador/registro/horario/update', { records: itemsToUpdate })
+				.success(function(message, status, headers, config){
+					showNotification(null, message, null, 'page', status);
+					county++;
+
+					if(county == countx)
+						$window.location.reload();
+				})
+				.error(function(message, status, headers, config){
+					showNotification(null, message, null, 'page', status);
+				});
+		}
+
+		if(!alteracoes)
+			showNotification(null, 'Nenhuma alteração realizada!', null, 'floating', 406);
 	}
 
 	function formatHoraExtra(qtdHoraExtra, isNegativeValue) {
@@ -130,7 +202,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 
 		vDiffHoras = vHoraFim.diff(vHoraInicio, 'hours', true) - vIntervalo;
 
-		if(dadosDiaInicio.flgHoliday){
+		if(dadosDiaInicio.flg_feriado){
 			vHoraTotalExtra = vDiffHoras;
 			vJornadaContratual = 0;
 		}
@@ -188,7 +260,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	function getProgramacaoTrabalhoDia(diaSemana) {
 		var programacaoTrabalhoDia;
 		
-		$.each($scope.colaborador.gradeHorario, function(i, item) {
+		$.each($scope.colaborador.cooperator.gradeHorario, function(i, item) {
 			if(diaSemana.toUpperCase() == item.nme_completo_dia_semana)
 				programacaoTrabalhoDia = item;
 		});
@@ -199,7 +271,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	function getIndexHoraExtra(field, value) {
 		var index;
 		
-		$.each($scope.colaborador.horasExtras, function(i, item) {
+		$.each($scope.colaborador.cooperator.horasExtras, function(i, item) {
 			if(value == item[field])
 				index = i;
 		});
@@ -218,52 +290,63 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 		return index;
 	}
 
+	function getIndexInArray(array, field, value) {
+		var index;
+		
+		$.each(array, function(i, item) {
+			if(value == item[field])
+				index = i;
+		});
+
+		return index;
+	}
+
 	function calcTotaisHoraExtra() {
 		// limpa os valores para a recontagem
-		$.each($scope.colaborador.horasExtras, function(i, item) {
-			$scope.colaborador.horasExtras[i].qtdHoraExtra = 0;
-			$scope.colaborador.horasExtras[i].qtd_hora_extra = formatHoraExtra(0);
-			$scope.colaborador.horasAdicionalNoturno = 0;
-			$scope.colaborador.qtd_horas_adicional_noturno = formatHoraExtra(0);
+		$.each($scope.colaborador.cooperator.horasExtras, function(i, item) {
+			$scope.colaborador.cooperator.horasExtras[i].qtdHoraExtra = 0;
+			$scope.colaborador.cooperator.horasExtras[i].qtd_hora_extra = formatHoraExtra(0);
+			$scope.colaborador.cooperator.horasAdicionalNoturno = 0;
+			$scope.colaborador.cooperator.qtd_horas_adicional_noturno = formatHoraExtra(0);
 		});
 
 		// calcula as horas extras
 		// valida se as horas extras são por escala de dia da semana
-		if($scope.colaborador.escalaHoraExtra.length > 0) {
+		if($scope.colaborador.cooperator.escalaHoraExtra.length > 0) {
 			$.each($scope.arrDiasMes, function(i, item) {
-				$.each($scope.colaborador.escalaHoraExtra, function(x, xitem) {
+				$.each($scope.colaborador.cooperator.escalaHoraExtra, function(x, xitem) {
 					if(item.nmeDate.toUpperCase() == xitem.nme_completo_dia_semana) {
 						if(item.qtd_total_hora_extra) {
 							var idxHE = 0;
 
-							if(item.flgHoliday)
+							if(item.flg_feriado)
 								idxHE = getIndexHoraExtra('num_percentual_hora_extra', 100);
 							else
 								idxHE = getIndexHoraExtra('num_percentual_hora_extra', xitem.num_percentual_hora_extra);
 
 							if(!item.flg_terminou_mesmo_dia) {
 								if(item.qtd_hora_extra_dia_inicio > 0) {
-									$scope.colaborador.horasExtras[idxHE].qtdHoraExtra += item.qtd_hora_extra_dia_inicio;
-									$scope.colaborador.horasExtras[idxHE].qtd_hora_extra = formatHoraExtra($scope.colaborador.horasExtras[idxHE].qtdHoraExtra);
+									$scope.colaborador.cooperator.horasExtras[idxHE].qtdHoraExtra += item.qtd_hora_extra_dia_inicio;
+									$scope.colaborador.cooperator.horasExtras[idxHE].qtd_hora_extra = formatHoraExtra($scope.colaborador.cooperator.horasExtras[idxHE].qtdHoraExtra);
 
-									if($scope.colaborador.horasExtras[idxHE+1]) {
-										$scope.colaborador.horasExtras[idxHE+1].qtdHoraExtra += item.qtd_hora_extra_dia_fim;
-										$scope.colaborador.horasExtras[idxHE+1].qtd_hora_extra = formatHoraExtra($scope.colaborador.horasExtras[idxHE+1].qtdHoraExtra);
+									if($scope.colaborador.cooperator.horasExtras[idxHE+1]) {
+										$scope.colaborador.cooperator.horasExtras[idxHE+1].qtdHoraExtra += item.qtd_hora_extra_dia_fim;
+										$scope.colaborador.cooperator.horasExtras[idxHE+1].qtd_hora_extra = formatHoraExtra($scope.colaborador.cooperator.horasExtras[idxHE+1].qtdHoraExtra);
 									}
 									else {
 										idxHE = 0;
-										$scope.colaborador.horasExtras[idxHE].qtdHoraExtra += item.qtd_hora_extra_dia_fim;
-										$scope.colaborador.horasExtras[idxHE].qtd_hora_extra = formatHoraExtra($scope.colaborador.horasExtras[idxHE].qtdHoraExtra);
+										$scope.colaborador.cooperator.horasExtras[idxHE].qtdHoraExtra += item.qtd_hora_extra_dia_fim;
+										$scope.colaborador.cooperator.horasExtras[idxHE].qtd_hora_extra = formatHoraExtra($scope.colaborador.cooperator.horasExtras[idxHE].qtdHoraExtra);
 									}
 								}
 								else {
-									$scope.colaborador.horasExtras[idxHE].qtdHoraExtra += item.qtd_hora_extra_dia_fim;
-									$scope.colaborador.horasExtras[idxHE].qtd_hora_extra = formatHoraExtra($scope.colaborador.horasExtras[idxHE].qtdHoraExtra);
+									$scope.colaborador.cooperator.horasExtras[idxHE].qtdHoraExtra += item.qtd_hora_extra_dia_fim;
+									$scope.colaborador.cooperator.horasExtras[idxHE].qtd_hora_extra = formatHoraExtra($scope.colaborador.cooperator.horasExtras[idxHE].qtdHoraExtra);
 								}
 							}
 							else {
-								$scope.colaborador.horasExtras[idxHE].qtdHoraExtra += item.qtd_total_hora_extra;
-								$scope.colaborador.horasExtras[idxHE].qtd_hora_extra = formatHoraExtra($scope.colaborador.horasExtras[idxHE].qtdHoraExtra);
+								$scope.colaborador.cooperator.horasExtras[idxHE].qtdHoraExtra += item.qtd_total_hora_extra;
+								$scope.colaborador.cooperator.horasExtras[idxHE].qtd_hora_extra = formatHoraExtra($scope.colaborador.cooperator.horasExtras[idxHE].qtdHoraExtra);
 							}
 						}
 					}
@@ -271,7 +354,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 			});
 		}
 		// valida se as horas extras são por faixa de horário
-		else if($scope.colaborador.faixaHoraExtra.length > 0) {
+		else if($scope.colaborador.cooperator.faixaHoraExtra.length > 0) {
 			var qtdTotalHoraExtra = 0;
 
 			$.each($scope.arrDiasMes, function(i, item) {
@@ -281,21 +364,21 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 
 			if(qtdTotalHoraExtra > 0) {
 				if(qtdTotalHoraExtra == 1) {
-					$scope.colaborador.horasExtras[0].qtdHoraExtra += qtdTotalHoraExtra;
-					$scope.colaborador.horasExtras[0].qtd_hora_extra = formatHoraExtra($scope.colaborador.horasExtras[0].qtdHoraExtra);
+					$scope.colaborador.cooperator.horasExtras[0].qtdHoraExtra += qtdTotalHoraExtra;
+					$scope.colaborador.cooperator.horasExtras[0].qtd_hora_extra = formatHoraExtra($scope.colaborador.cooperator.horasExtras[0].qtdHoraExtra);
 				} else {
-					$.each($scope.colaborador.horasExtras, function(i, faixa){
+					$.each($scope.colaborador.cooperator.horasExtras, function(i, faixa){
 						if(qtdTotalHoraExtra >= faixa.qtd_hora_extra_de && faixa.qtd_hora_extra_ate <= qtdTotalHoraExtra) {
 							if(faixa.qtd_hora_extra_ate == null)
-								$scope.colaborador.horasExtras[i].qtdHoraExtra += (qtdTotalHoraExtra - $scope.colaborador.horasExtras[i-1].qtd_hora_extra_ate);
+								$scope.colaborador.cooperator.horasExtras[i].qtdHoraExtra += (qtdTotalHoraExtra - $scope.colaborador.cooperator.horasExtras[i-1].qtd_hora_extra_ate);
 							else{
-								if(!$scope.colaborador.horasExtras[i-1])
-									$scope.colaborador.horasExtras[i].qtdHoraExtra += (faixa.qtd_hora_extra_ate - faixa.qtd_hora_extra_de);
+								if(!$scope.colaborador.cooperator.horasExtras[i-1])
+									$scope.colaborador.cooperator.horasExtras[i].qtdHoraExtra += (faixa.qtd_hora_extra_ate - faixa.qtd_hora_extra_de);
 								else
-									$scope.colaborador.horasExtras[i].qtdHoraExtra += faixa.qtd_hora_extra_de;
+									$scope.colaborador.cooperator.horasExtras[i].qtdHoraExtra += faixa.qtd_hora_extra_de;
 							}
 
-							$scope.colaborador.horasExtras[i].qtd_hora_extra = formatHoraExtra($scope.colaborador.horasExtras[i].qtdHoraExtra);
+							$scope.colaborador.cooperator.horasExtras[i].qtd_hora_extra = formatHoraExtra($scope.colaborador.cooperator.horasExtras[i].qtdHoraExtra);
 						}
 					})
 				}
@@ -305,16 +388,16 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 		// calcula as horas noturnas
 		$.each($scope.arrDiasMes, function(i, item) {
 			if(item.qtd_hora_adicional_noturno)
-				$scope.colaborador.horasAdicionalNoturno += item.qtd_hora_adicional_noturno;
+				$scope.colaborador.cooperator.horasAdicionalNoturno += item.qtd_hora_adicional_noturno;
 		});
 
-		$scope.colaborador.qtd_horas_adicional_noturno = formatHoraExtra($scope.colaborador.horasAdicionalNoturno);
+		$scope.colaborador.cooperator.qtd_horas_adicional_noturno = formatHoraExtra($scope.colaborador.cooperator.horasAdicionalNoturno);
 	}
 
 	function calcEscalaTrabalhoColaborador() {
-		var primeiroDiaSemana 	= $scope.colaborador.gradeHorario[0];
-		var penultimoDiaSemana 	= $scope.colaborador.gradeHorario[($scope.colaborador.gradeHorario.length - 2)];
-		var ultimoDiaSemana 	= $scope.colaborador.gradeHorario[($scope.colaborador.gradeHorario.length - 1)];
+		var primeiroDiaSemana 	= $scope.colaborador.cooperator.gradeHorario[0];
+		var penultimoDiaSemana 	= $scope.colaborador.cooperator.gradeHorario[($scope.colaborador.cooperator.gradeHorario.length - 2)];
+		var ultimoDiaSemana 	= $scope.colaborador.cooperator.gradeHorario[($scope.colaborador.cooperator.gradeHorario.length - 1)];
 
 		if(ultimoDiaSemana.hor_entrada == primeiroDiaSemana.hor_entrada 
 			&& ultimoDiaSemana.hor_saida == primeiroDiaSemana.hor_saida) {
@@ -336,13 +419,13 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	function getQtdHorasTrabalhoDiario(gradeHorarioDia) {
 		// transforma string em moment object
 		var hor_entrada 			= moment(gradeHorarioDia.hor_entrada, "HH:mm:ss");
-		var hor_entrada_intervalo 	= moment(gradeHorarioDia.hor_entrada_intervalo, "HH:mm:ss");
+		var hor_saida_intervalo 	= moment((gradeHorarioDia.hor_entrada_intervalo != null) ? gradeHorarioDia.hor_entrada_intervalo : gradeHorarioDia.hor_saida_intervalo, "HH:mm:ss");
 		var hor_retorno_intervalo 	= moment(gradeHorarioDia.hor_retorno_intervalo, "HH:mm:ss");
 		var hor_saida 				= moment(gradeHorarioDia.hor_saida, "HH:mm:ss");
 
 		// calcula o tempo de cada escala
 		var diff_entrada_saida 		= hor_saida.diff(hor_entrada, "hours", true, true);
-		var diff_intervalo 			= hor_retorno_intervalo.diff(hor_entrada_intervalo, "hours", true, true);
+		var diff_intervalo 			= hor_retorno_intervalo.diff(hor_saida_intervalo, "hours", true, true);
 
 		// calcula o tempo real de trabalho diário
 		var tmp_efetivo_diario 		= (diff_entrada_saida - diff_intervalo);
@@ -355,21 +438,21 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	}
 
 	function getEscalaHoraExtraSindicato() {
-		$scope.colaborador.escalaHoraExtra = [];
+		$scope.colaborador.cooperator.escalaHoraExtra = [];
 
-		$http.get(baseUrlApi()+'sindicato/hora-extra/escala?cod_sindicato='+ $scope.colaborador.cod_sindicato)
+		$http.get(baseUrlApi()+'sindicato/hora-extra/escala?cod_sindicato='+ $scope.colaborador.cooperator.cod_sindicato)
 			.success(function(data) {
-				$scope.colaborador.escalaHoraExtra = data;
+				$scope.colaborador.cooperator.escalaHoraExtra = data;
 				if(data.length > 0) {
-					$scope.colaborador.horasExtras = [$scope.colaborador.escalaHoraExtra[0]];
+					$scope.colaborador.cooperator.horasExtras = [$scope.colaborador.cooperator.escalaHoraExtra[0]];
 					
 					$.each(data, function(i,item) {
-						$.each($scope.colaborador.horasExtras, function(x, xitem) {
-							$scope.colaborador.horasExtras[x].qtdHoraExtra = 0;
+						$.each($scope.colaborador.cooperator.horasExtras, function(x, xitem) {
+							$scope.colaborador.cooperator.horasExtras[x].qtdHoraExtra = 0;
 
 							if(xitem.num_percentual_hora_extra != item.num_percentual_hora_extra){
 								item.qtdHoraExtra = 0;
-								$scope.colaborador.horasExtras.push(item);
+								$scope.colaborador.cooperator.horasExtras.push(item);
 							}
 						});
 					});
@@ -378,22 +461,22 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	}
 
 	function getFaixaHoraExtraSindicato() {
-		$scope.colaborador.faixaHoraExtra = [];
+		$scope.colaborador.cooperator.faixaHoraExtra = [];
 
-		$http.get(baseUrlApi()+'sindicato/hora-extra/faixa?cod_sindicato='+ $scope.colaborador.cod_sindicato)
+		$http.get(baseUrlApi()+'sindicato/hora-extra/faixa?cod_sindicato='+ $scope.colaborador.cooperator.cod_sindicato)
 			.success(function(data) {
 				if(data.length > 0) {
-					$scope.colaborador.faixaHoraExtra = data;
+					$scope.colaborador.cooperator.faixaHoraExtra = data;
 
-					$scope.colaborador.horasExtras = [$scope.colaborador.faixaHoraExtra[0]];
+					$scope.colaborador.cooperator.horasExtras = [$scope.colaborador.cooperator.faixaHoraExtra[0]];
 
 					$.each(data, function(i,item) {
-						$.each($scope.colaborador.horasExtras, function(x, xitem) {
-							$scope.colaborador.horasExtras[x].qtdHoraExtra = 0;
+						$.each($scope.colaborador.cooperator.horasExtras, function(x, xitem) {
+							$scope.colaborador.cooperator.horasExtras[x].qtdHoraExtra = 0;
 
 							if(xitem.num_percentual_hora_extra != item.num_percentual_hora_extra) {
 								item.qtdHoraExtra = 0;
-								$scope.colaborador.horasExtras.push(item);
+								$scope.colaborador.cooperator.horasExtras.push(item);
 							}
 						});
 					});
@@ -402,12 +485,12 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	}
 
 	function getProgramacaoGradeHorario() {
-		$http.get(baseUrlApi()+'grade-horario/programacao?cod_grade_horario='+ $scope.colaborador.cod_grade_horario)
+		$http.get(baseUrlApi()+'grade-horario/programacao?cod_grade_horario='+ $scope.colaborador.cooperator.cod_grade_horario)
 			.success(function(data) {
 				if(data.rows.length > 0) {
-					$scope.colaborador.gradeHorario = data.rows;
+					$scope.colaborador.cooperator.gradeHorario = data.rows;
 
-					var qtdTempoIntervalo = getQtdHorasTrabalhoDiario($scope.colaborador.gradeHorario[0]).qtd_tempo_intervalo;
+					var qtdTempoIntervalo = getQtdHorasTrabalhoDiario($scope.colaborador.cooperator.gradeHorario[0]).qtd_tempo_intervalo;
 						qtdTempoIntervalo = (qtdTempoIntervalo < 1) ? (qtdTempoIntervalo * 60) + " minuto(s) p/ intervalo" : qtdTempoIntervalo + " hora(s) p/ intervalo";
 
 					$scope.qtdTempoIntervalo = qtdTempoIntervalo;
@@ -418,10 +501,10 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	}
 	
 	function getDadosLocalTrabalhoColaborador() {
-		$http.get(baseUrlApi()+'locais-trabalho?tlt->cod_local_trabalho=' + $scope.colaborador.cod_local_trabalho)
+		$http.get(baseUrlApi()+'locais-trabalho?tlt->cod_local_trabalho=' + $scope.colaborador.cooperator.cod_local_trabalho)
 			.success(function(data){
 				if(data.total > 0) {
-					$scope.colaborador.localTrabalho = data.rows[0];
+					$scope.colaborador.cooperator.localTrabalho = data.rows[0];
 					getFeriadosMes();
 				}
 			});
@@ -429,8 +512,8 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 
 	function getFeriadosMes() {
 		var numMes = parseInt(moment().format('M'),10);
-		var codEstado = $scope.colaborador.localTrabalho.cod_estado;
-		var codCidade = $scope.colaborador.localTrabalho.cod_cidade;
+		var codEstado = $scope.colaborador.cooperator.localTrabalho.cod_estado;
+		var codCidade = $scope.colaborador.cooperator.localTrabalho.cod_cidade;
 
 		$http.get(baseUrlApi()+'feriados/'+ numMes +'/'+ codEstado +'/'+ codCidade)
 			.success(function(items){
@@ -447,6 +530,8 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	function loadDayFields() {
 		$scope.arrDiasMes = getDaysArray(parseInt(moment().format('YYYY'), 10), parseInt(moment().format('M'),10), $scope.feriados, $scope.diasPonte, $scope.programacaoCompensacoes);
 
+		getRegistrosHorarioColaborador();
+
 		$timeout(function() {
 			if($('.input-timepicker').length > 0) {
 				initializeTimepickerInputs();
@@ -462,7 +547,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	}
 
 	function getDiasPonte() {
-		$http.get(baseUrlApi()+'dia-ponte/programacao?col->cod_colaborador=' + $scope.colaborador.cod_colaborador +"&dta_dia_ponte[exp]=BETWEEN '"+ moment().startOf('month').format('YYYY-MM-DD') +"' and '"+ moment().endOf('month').format('YYYY-MM-DD') +"'")
+		$http.get(baseUrlApi()+'dia-ponte/programacao?col->cod_colaborador=' + $scope.colaborador.cooperator.cod_colaborador +"&dta_dia_ponte[exp]=BETWEEN '"+ moment().startOf('month').format('YYYY-MM-DD') +"' and '"+ moment().endOf('month').format('YYYY-MM-DD') +"'")
 			.success(function(items) {
 				$scope.diasPonte = items;
 				getProgramacaoCompensacoes();
@@ -475,7 +560,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	}
 
 	function getProgramacaoCompensacoes() {
-		$http.get(baseUrlApi()+'dia-ponte/programacao?col->cod_colaborador=' + $scope.colaborador.cod_colaborador +"&'"+ moment().format('MM') +"'[exp]=BETWEEN DATE_FORMAT(pdp.dta_inicio_compensacao, '%m') AND DATE_FORMAT(pdp.dta_termino_compensacao, '%m')")
+		$http.get(baseUrlApi()+'dia-ponte/programacao?col->cod_colaborador=' + $scope.colaborador.cooperator.cod_colaborador +"&'"+ moment().format('MM') +"'[exp]=BETWEEN DATE_FORMAT(pdp.dta_inicio_compensacao, '%m') AND DATE_FORMAT(pdp.dta_termino_compensacao, '%m')")
 			.success(function(items) {
 				$scope.programacaoCompensacoes = items;
 				loadDayFields();
@@ -484,6 +569,30 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 				if(status === 404) {
 					loadDayFields();
 				}
+			});
+	}
+
+	function getRegistrosHorarioColaborador() {
+		$http.get(baseUrlApi()+'colaborador/registros/horario?cod_colaborador=' + $scope.colaborador.cooperator.cod_colaborador)
+			.success(function(items) {
+				$.each($scope.arrDiasMes, function(idxDiaMes, diaMes) {
+					var idxItem = getIndexInArray(items, 'dta_registro', moment(diaMes.cptDate + ' 00:00:00', 'YYYY/M/D HH:mm:ss').format("YYYY-MM-DD HH:mm:ss"));
+
+					if(idxItem != null && idxItem != -1) {
+						$scope.arrDiasMes[idxDiaMes]['flg_registrado'] = true;
+						var recordOfDiaMes = items[idxItem];
+
+						$.each(diaMes, function(fieldOfDiaMes, valueOfDiaMes) {
+							$.each(recordOfDiaMes, function(fieldOfRecord, valueOfRecord) {
+								if(fieldOfDiaMes === fieldOfRecord){
+									$scope.arrDiasMes[idxDiaMes][fieldOfDiaMes] = valueOfRecord;
+								}
+							});
+						});
+					}
+				});
+
+				calcTotaisHoraExtra();
 			});
 	}
 
@@ -500,22 +609,36 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 			idx = index++;
 
 			var objDay = {
+				cod_registro_horario: 0,
 				hor_entrada: "0:00",
-				hor_entrada_intervalo: "0:00",
+				hor_saida_intervalo: "0:00",
 				hor_retorno_intervalo: "0:00",
 				hor_saida: "0:00",
 				hor_extra: "0:00",
 				numDate: (i + 1),
 				nmeDate: daysInWeek[idx],
 				cptDate: year + '/' + month + '/' + (i + 1),
-				flgWeekend: (daysInWeek[idx] == 'Sábado' || daysInWeek[idx] == 'Domingo'),
-				flgHoliday: false
+				flg_fim_semana: (daysInWeek[idx] == 'Sábado' || daysInWeek[idx] == 'Domingo'),
+				flg_feriado: false,
+				flg_registrado: false,
+				flg_compensacao: false,
+				qtd_tempo_compensacao: 0,
+				qtd_hora_adicional_noturno: 0,
+				qtd_hora_extra_dia_inicio: 0,
+				qtd_hora_extra_dia_fim: 0,
+				qtd_horas_trabalhadas: 0,
+				qtd_total_hora_extra: 0,
+				flg_hora_extra: false,
+				flg_terminou_mesmo_dia: false,
+				nme_anexo: "",
+				pth_anexo: "",
+				dsc_tipo_anexo: ""
 			};
 
 			if(feriados.length > 0) {
 				$.each(feriados, function(y, feriado) {
 					if(parseInt(feriado.num_dia_feriado, 10) === objDay.numDate) {
-						objDay.flgHoliday = true;
+						objDay.flg_feriado = true;
 						objDay.nmeHoliday = feriado.nme_feriado;
 						objDay.nmeTipoHoliday = feriado.nme_tipo_feriado;
 						objDay.cod_tipo_registro_horario = 2;
@@ -550,10 +673,10 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 				for(var i = valIni; i <= valFim; i++) {
 					var objDay = daysArray[i];
 
-					if(!objDay.flgWeekend && !objDay.flgHoliday) {
-						objDay.flgCompensation 		= true;
+					if(!objDay.flg_fim_semana && !objDay.flg_feriado && !objDay.flgBridgeDay) {
+						objDay.flg_compensacao 		= true;
 						objDay.nmeCompensation 		= "COMPENSAÇÃO ("+ compensacao.qtd_horas_dia_compensacao +" h)";
-						objDay.qtdTempoCompensation = parseInt(compensacao.qtd_horas_dia_compensacao, 10);
+						objDay.qtd_tempo_compensacao = parseInt(compensacao.qtd_horas_dia_compensacao, 10);
 					}
 
 					daysArray[i] = objDay;
