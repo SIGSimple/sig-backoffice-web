@@ -31,9 +31,13 @@ $('#demo-cls-wz').bootstrapWizard({
 });
 
 app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
+	$scope.colaborador = UserSrvc.getUserLogged();
+
 	// Definição de variáveis de uso da tela
 	$scope.dadosColaborador = {
+		funcoes:[],
 		telefones: [],
+		emails: [],
 		num_matricula: "",
 		nme_colaborador: "",
 		flg_portador_necessidades_especiais: 0,
@@ -109,6 +113,18 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		num_telefone: "",
 		tipoTelefone: {}
 	};
+
+	$scope.tmpEmail = {
+		end_email: ""
+	};
+
+	$scope.tmpFuncao = {
+		num_funcao: "",
+		nme_funcao: "",
+		dsc_funcao: "",
+		cod_empreendimento: $scope.colaborador.user.cod_empreendimento
+	};
+
 
 	
 	var modalTablesColumns = {
@@ -209,7 +225,11 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	$scope.abreModalEmail = function() {
-		$("#modalAddEmail").modal("show");
+		$("#modalAddEmail").modal("show");	
+	}
+
+	$scope.abreModalFuncao = function() {
+		$("#modalAddFuncao").modal("show");
 	}
 
 	$scope.addTelefone = function(){
@@ -222,6 +242,25 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$("#modalAddTelefone").modal("hide");
 	}
 
+	$scope.addEmail = function(){
+		$scope.dadosColaborador.emails.push( angular.copy($scope.tmpEmail) );
+		$scope.tmpEmail = {
+			end_email: ""
+		};
+		$("#modalAddEmail").modal("hide");
+	}
+
+	$scope.addFuncao = function(){
+		$scope.dadosColaborador.funcoes.push( angular.copy($scope.tmpFuncao) );
+		$scope.tmpFuncao = {
+			num_funcao: "",
+			nme_funcao: "",
+			dsc_funcao: "",
+			cod_empreendimento: {}
+		};
+		$("#modalAddFuncao").modal("hide");
+	}
+
 	// Definição de funções auxiliares
 	function loadUfs() {
 		$http.get(baseUrlApi()+'estados')
@@ -231,7 +270,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	function loadEmpresas() {
-			$http.get(baseUrlApi()+'empresas?nolimit=1')
+			$http.get(baseUrlApi()+'empresas?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.empresasContratante = items.rows;
 			});
@@ -245,35 +284,35 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	function loadLocaisTrabalho() {
-			$http.get(baseUrlApi()+'locais-trabalho?nolimit=1')
+			$http.get(baseUrlApi()+'locais-trabalho?nolimit=1&tlt->cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.locaisTrabalho = items.rows;
 			});
 	}
 
 	function loadDepartamentos() {
-			$http.get(baseUrlApi()+'departamentos?nolimit=1')
+			$http.get(baseUrlApi()+'departamentos?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.departamentos = items.rows;
 			});
 	}
 
 	function loadOrigens() {
-			$http.get(baseUrlApi()+'origens?nolimit=1')
+			$http.get(baseUrlApi()+'origens?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.contratos = items.rows;
 			});
 	}
 
 	function loadGradesHorario() {
-			$http.get(baseUrlApi()+'grades-horario?nolimit=1')
+			$http.get(baseUrlApi()+'grades-horario?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.gradesHorario = items.rows;
 			});
 	}
 
 	function loadSindicatos() {
-			$http.get(baseUrlApi()+'sindicatos?nolimit=1')
+			$http.get(baseUrlApi()+'sindicatos?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.sindicatos = items.rows;
 			});
@@ -287,7 +326,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	function loadEntidades() {
-			$http.get(baseUrlApi()+'entidades?nolimit=1')
+			$http.get(baseUrlApi()+'entidades?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.entidades = items.rows;
 			});
@@ -299,8 +338,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				$scope.tiposTelefone = items;
 			});
 	}
-
-
 
 
 

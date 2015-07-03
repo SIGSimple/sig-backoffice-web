@@ -188,13 +188,11 @@
 													<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalEmail()">
 														<i class="fa fa-plus-circle"></i>
 													</button>
+											</th>
 										</thead>
 										<tbody>
 											<tr ng-repeat="email in dadosColaborador.emails">
-												<td>{{ email.end_email }}</td>
-												
-												</th>
-									
+												<td colspan="2">{{ email.end_email }}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -310,7 +308,32 @@
 								</div>
 							</div>
 						</div>
+
+						
+					<div class="form-group">
+						<label class="col-lg-2 control-label">Função</label>
+								<div class="col-lg-2">
+									<table class="table table-bordered table-condensed table-hover table-striped">
+										<thead>
+											<th></th>
+											<th width="20">
+													<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalFuncao()">
+														<i class="fa fa-plus-circle"></i>
+													</button>
+											</th>
+										</thead>
+										<tbody>
+											<tr ng-repeat="funcao in dadosColaborador.funcoes">
+												<td>{{ funcao.num_funcao }}</td>
+												<td>{{ funcao.nme_funcao }}</td>
+												<td>{{ funcao.dsc_funcao }}</td>
+												<td colspan="2">{{ funcao.cod_empreendimento }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 					</div>
+				</div>					
 
 					<!--Third tab-->
 					<div id="demo-cls-tab3" class="tab-pane">
@@ -581,4 +604,79 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="modalAddEmail" tabindex="-1" role="dialog" aria-labelledby="modalAddEmailLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalAddEmailLabel">Inclusão do Email</h4>
+				</div>
+
+				<form class="form form-horizontal" role="form">
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Endereço</label>
+							<div class="col-lg-9">
+								<input type="text" class="form-control" ng-model="tmpEmail.end_email">
+							</div> 
+						</div>
+					</div>
+
+					<div class="modal-footer clearfix">
+						<div class="pull-right">
+							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addEmail()">Salvar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="modalAddFuncao" tabindex="-1" role="dialog" aria-labelledby="modalAddFuncaoLabel">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalAddFuncaoLabel">Inclusão da Função</h4>
+				</div>
+
+				<form class="form form-horizontal" role="form">
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Número CBO/Código</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" ng-model="tmpFuncao.num_funcao">
+							</div> 
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Nome</label>
+							<div class="col-lg-9">
+								<input type="text" class="form-control" ng-model="tmpFuncao.nme_funcao">
+							</div> 
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Descrição</label>
+							<div class="col-lg-9">
+								<textarea class="form-control" ng-model="tmpFuncao.dsc_funcao"></textarea>
+							</div> 
+						</div>
+					</div>
+
+					<div class="modal-footer clearfix">
+						<div class="pull-right">
+							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addFuncao()">Salvar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
 </div>
