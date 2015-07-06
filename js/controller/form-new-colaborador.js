@@ -30,6 +30,12 @@ $('#demo-cls-wz').bootstrapWizard({
 	}
 });
 
+$("#modalItems").on("hidden.bs.modal", function(e){
+	$('#mytable').bootstrapTable('destroy');
+});
+
+
+
 app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.colaborador = UserSrvc.getUserLogged();
 
@@ -94,6 +100,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		cod_entidade: 0,
 		num_entidade: ""
 	};
+	$scope.motivosAlteracaoFuncao = [];
+	$scope.funcoes = [];
 	$scope.ufs = [];
 	$scope.cidadesMoradia = [];
 	$scope.cidadesNaturalidade = [];
@@ -108,24 +116,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.contratos = [];
 	$scope.tiposTelefone = [];
 
-	$scope.tmpTelefone = {
-		num_ddd: "",
-		num_telefone: "",
-		tipoTelefone: {}
-	};
-
-	$scope.tmpEmail = {
-		end_email: ""
-	};
-
-	$scope.tmpFuncao = {
-		num_funcao: "",
-		nme_funcao: "",
-		dsc_funcao: "",
-		cod_empreendimento: $scope.colaborador.user.cod_empreendimento
-	};
-
-
+	$scope.tmpModal = {};
 	
 	var modalTablesColumns = {
 		"empresas": [
@@ -233,31 +224,20 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	$scope.addTelefone = function(){
-		$scope.dadosColaborador.telefones.push( angular.copy($scope.tmpTelefone) );
-		$scope.tmpTelefone = {
-			num_ddd: "",
-			num_telefone: "",
-			tipoTelefone: {}
-		};
+		$scope.dadosColaborador.telefones.push( angular.copy($scope.tmpModal) );
+		$scope.tmpModal = {};
 		$("#modalAddTelefone").modal("hide");
 	}
 
 	$scope.addEmail = function(){
-		$scope.dadosColaborador.emails.push( angular.copy($scope.tmpEmail) );
-		$scope.tmpEmail = {
-			end_email: ""
-		};
+		$scope.dadosColaborador.emails.push( angular.copy($scope.tmpModal) );
+		$scope.tmpModal = {};
 		$("#modalAddEmail").modal("hide");
 	}
 
 	$scope.addFuncao = function(){
-		$scope.dadosColaborador.funcoes.push( angular.copy($scope.tmpFuncao) );
-		$scope.tmpFuncao = {
-			num_funcao: "",
-			nme_funcao: "",
-			dsc_funcao: "",
-			cod_empreendimento: {}
-		};
+		$scope.dadosColaborador.funcoes.push( angular.copy($scope.tmpModal) );
+		$scope.tmpModal = {};
 		$("#modalAddFuncao").modal("hide");
 	}
 
@@ -270,63 +250,63 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	function loadEmpresas() {
-			$http.get(baseUrlApi()+'empresas?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
+		$http.get(baseUrlApi()+'empresas?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.empresasContratante = items.rows;
 			});
 	}
 
 	function loadRegimesContratacao() {
-			$http.get(baseUrlApi()+'regimes-contratacao?nolimit=1')
+		$http.get(baseUrlApi()+'regimes-contratacao?nolimit=1')
 			.success(function(items){
 				$scope.regimesContratacao = items.rows;
 			});
 	}
 
 	function loadLocaisTrabalho() {
-			$http.get(baseUrlApi()+'locais-trabalho?nolimit=1&tlt->cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
+		$http.get(baseUrlApi()+'locais-trabalho?nolimit=1&tlt->cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.locaisTrabalho = items.rows;
 			});
 	}
 
 	function loadDepartamentos() {
-			$http.get(baseUrlApi()+'departamentos?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
+		$http.get(baseUrlApi()+'departamentos?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.departamentos = items.rows;
 			});
 	}
 
 	function loadOrigens() {
-			$http.get(baseUrlApi()+'origens?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
+		$http.get(baseUrlApi()+'origens?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.contratos = items.rows;
 			});
 	}
 
 	function loadGradesHorario() {
-			$http.get(baseUrlApi()+'grades-horario?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
+		$http.get(baseUrlApi()+'grades-horario?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.gradesHorario = items.rows;
 			});
 	}
 
 	function loadSindicatos() {
-			$http.get(baseUrlApi()+'sindicatos?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
+		$http.get(baseUrlApi()+'sindicatos?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.sindicatos = items.rows;
 			});
 	}
 
 	function loadBancos() {
-			$http.get(baseUrlApi()+'bancos?nolimit=1')
+		$http.get(baseUrlApi()+'bancos?nolimit=1')
 			.success(function(items){
 				$scope.bancos = items.rows;
 			});
 	}
 
 	function loadEntidades() {
-			$http.get(baseUrlApi()+'entidades?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
+		$http.get(baseUrlApi()+'entidades?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
 				$scope.entidades = items.rows;
 			});
@@ -336,6 +316,20 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$http.get(baseUrlApi()+'tipos/telefone')
 			.success(function(items){
 				$scope.tiposTelefone = items;
+			});
+	}
+
+	function loadFuncoes() {
+		$http.get(baseUrlApi()+'funcoes?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
+			.success(function(items){
+				$scope.funcoes = items.rows;
+			});
+	}
+
+	function loadMotivosAlteracaoFuncao(){
+		$http.get(baseUrlApi()+'alteracao/funcao/motivos')
+			.success(function(items){
+				$scope.motivosAlteracaoFuncao = items;
 			});
 	}
 
@@ -354,4 +348,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	loadEntidades();
 	loadOrigens();
 	loadTiposTelefone();
+	loadFuncoes();
+	loadMotivosAlteracaoFuncao();
 });
