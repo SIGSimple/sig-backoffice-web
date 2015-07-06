@@ -33,7 +33,7 @@ if($data) {
 	$user_values = array('user' => $user, 'cooperator' => $cooperator);
 	session_start();
 	$_SESSION['user_logged'] = $user_values;
-	header('location: template-internal.php?page=home');
+	header('location: home');
 }
 
 ?>

@@ -5,7 +5,7 @@ function printDiv(id, pg) {
 	contentToPrint = window.document.getElementById(id).innerHTML;
 	printWindow = window.open(pg);
 
-    printWindow.document.write("<link href='bootstrap/css/bootstrap.min.css' rel='stylesheet'>");
+  printWindow.document.write("<link href='bootstrap/css/bootstrap.min.css' rel='stylesheet'>");
 	printWindow.document.write("<link href='css/font-awesome.min.css' rel='stylesheet'>");
 	printWindow.document.write("<link href='css/pace.css' rel='stylesheet'>");
 	printWindow.document.write("<link href='css/endless.min.css' rel='stylesheet'>");
@@ -375,11 +375,10 @@ function baseUrlApi(){
 	else if(location.hostname == 'localhost')
 		return "http://localhost/sig-backoffice-api/";
 	else {
-		var a = document.URL;
-		a = a.split(".br");
-
-		return a[0] + ".br/api/";
-
+		//var a = document.URL;
+		//a = a.split(".br");
+		//return a[0] + ".br/api/";
+    return document.URL.split("/")[0] + "//" + document.URL.split("/")[2] + "/api";
 		//return 'http://www.consorciointermultiplas.com.br/api/';
 	}
 }

@@ -72,22 +72,22 @@
 							<td class="text-center text-middle"><strong>{{ item.numDate }}</strong></td>
 							<td class="text-center text-middle">
 								<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
-									ng-disabled="((item.cod_registro_horario > 0 && colaborador.cooperator.flg_ajusta_folha_ponto == 0) || (item.flg_fim_semana && colaborador.cooperator.flg_trabalho_fim_semana == 0) || (item.flg_feriado && colaborador.cooperator.flg_trabalho_feriado == 0))"
+									ng-disabled="((item.flg_fim_semana && colaborador.cooperator.flg_trabalho_fim_semana == 0) || (item.flg_feriado && colaborador.cooperator.flg_trabalho_feriado == 0) || (item.flgBridgeDay && colaborador.cooperator.flg_trabalho_feriado == 0) || (item.cod_registro_horario > 0 && colaborador.cooperator.flg_ajusta_folha_ponto == 0))"
 									ng-model="item.hor_entrada">
 							</td>
 							<td class="text-center text-middle">
 								<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
-									ng-disabled="((item.cod_registro_horario > 0 && colaborador.cooperator.flg_ajusta_folha_ponto == 0) || (item.flg_fim_semana && colaborador.cooperator.flg_trabalho_fim_semana == 0) || (item.flg_feriado && colaborador.cooperator.flg_trabalho_feriado == 0))"
+									ng-disabled="((item.flg_fim_semana && colaborador.cooperator.flg_trabalho_fim_semana == 0) || (item.flg_feriado && colaborador.cooperator.flg_trabalho_feriado == 0) || (item.flgBridgeDay && colaborador.cooperator.flg_trabalho_feriado == 0) || (item.cod_registro_horario > 0 && colaborador.cooperator.flg_ajusta_folha_ponto == 0))"
 									ng-model="item.hor_saida_intervalo">
 							</td>
 							<td class="text-center text-middle">
 								<input type="text" class="form-control input-sm text-center input-timepicker" value="00:00 AM"
-									ng-disabled="((item.cod_registro_horario > 0 && colaborador.cooperator.flg_ajusta_folha_ponto == 0) || (item.flg_fim_semana && colaborador.cooperator.flg_trabalho_fim_semana == 0) || (item.flg_feriado && colaborador.cooperator.flg_trabalho_feriado == 0))"
+									ng-disabled="((item.flg_fim_semana && colaborador.cooperator.flg_trabalho_fim_semana == 0) || (item.flg_feriado && colaborador.cooperator.flg_trabalho_feriado == 0) || (item.flgBridgeDay && colaborador.cooperator.flg_trabalho_feriado == 0) || (item.cod_registro_horario > 0 && colaborador.cooperator.flg_ajusta_folha_ponto == 0))"
 									ng-model="item.hor_retorno_intervalo">
 							</td>
 							<td class="text-center text-middle">
 								<input type="text" class="form-control input-sm text-center input-timepicker txt-hor-saida" value="00:00 AM"
-									ng-disabled="((item.cod_registro_horario > 0 && colaborador.cooperator.flg_ajusta_folha_ponto == 0) || (item.flg_fim_semana && colaborador.cooperator.flg_trabalho_fim_semana == 0) || (item.flg_feriado && colaborador.cooperator.flg_trabalho_feriado == 0))"
+									ng-disabled="((item.flg_fim_semana && colaborador.cooperator.flg_trabalho_fim_semana == 0) || (item.flg_feriado && colaborador.cooperator.flg_trabalho_feriado == 0) || (item.flgBridgeDay && colaborador.cooperator.flg_trabalho_feriado == 0) || (item.cod_registro_horario > 0 && colaborador.cooperator.flg_ajusta_folha_ponto == 0))"
 									ng-model="item.hor_saida" ng-blur="validaHoraExtra(item, index)">
 							</td>
 							<td class="text-center text-middle">

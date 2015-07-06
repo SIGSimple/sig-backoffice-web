@@ -540,7 +540,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	}
 
 	function getTiposRegistroHorario() {
-		$http.get(baseUrlApi()+'tipos-registro/horario')
+		$http.get(baseUrlApi()+'tipos/registro/horario')
 			.success(function(items) {
 				$scope.tiposRegistroHorario = items;
 			});

@@ -66,5 +66,12 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 			});
 	}
 
+	function isUnlocked() {
+		var error = (getUrlVars()['e']) ? getUrlVars()['e'] : null;
+		if(parseInt(error, 10) === 1001)
+			$scope.errorMessage = "Você deve estar logado para acessar o sistema!";
+	}
+
 	$("#demo-reset-settings").trigger("click");
+	isUnlocked();
 });

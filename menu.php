@@ -30,7 +30,7 @@
 
 											foreach ($xvalue->children as $ykey => $yvalue) {
 												echo '<li class="{{activeLink(\''. $yvalue->url_modulo .'\')}}">';
-												echo 	'<a href="?page='. $yvalue->url_modulo .'">';
+												echo 	'<a href="'. $yvalue->url_modulo .'">';
 												echo 		'<i class="'. $yvalue->icn_modulo .'"></i>'. $yvalue->nme_modulo;
 												echo 	'</a>';
 												echo '</li>';

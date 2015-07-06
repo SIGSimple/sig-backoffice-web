@@ -53,7 +53,7 @@ unset($_SESSION['user_logged']);
 		<p class="pad-btm"><i class="fa fa-user"></i> Selecione o perfil que deseja utilizar</p>
 
 		<div class="row">
-			<div class="col-lg-4" ng-repeat="user in users">
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" ng-repeat="user in users">
 				<div class="panel widget">
 					<div class="widget-header bg-{{ (user.flg_sexo == 'F') ? 'pink' : (user.flg_sexo == 'M') ? 'primary' : 'success' }} no-image"></div>
 					<div class="widget-body text-center">
