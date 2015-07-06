@@ -56,8 +56,9 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 	function getUltimaFuncao() {
 		$http.get(baseUrlApi()+'colaborador/ultima/funcao/' + $scope.users[0].cod_colaborador)
 			.success(function(data) {
-				$.each($scope.users, function(i, item) {
-					$scope.users[i].funcao = data;
+				$.each($scope.users, function(i, user) {
+					if(parseInt(user.cod_perfil, 10) === 4)
+						$scope.users[i].funcao = data;
 				});
 			})
 			.error(function(data, status, headers, config){
