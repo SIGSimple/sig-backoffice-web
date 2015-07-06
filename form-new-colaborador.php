@@ -295,7 +295,7 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Data de Admissão</label>
 							<div class="col-lg-2">
-								<div class="input-group date">
+								<div class="input-group date">																
 									<input type="text" class="form-control" ng-model="dadosColaborador.dta_admissao">
 									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 								</div>
@@ -315,19 +315,24 @@
 								<div class="col-lg-2">
 									<table class="table table-bordered table-condensed table-hover table-striped">
 										<thead>
-											<th></th>
+											<th>Núm./Código</th>
+											<th>Função</th>
+											<th>Salário</th>
+											<th>Motivo</th>
+											<th>Data</th>
 											<th width="20">
-													<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalFuncao()">
-														<i class="fa fa-plus-circle"></i>
-													</button>
+												<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalFuncao()">
+													<i class="fa fa-plus-circle"></i>
+												</button>
 											</th>
 										</thead>
 										<tbody>
 											<tr ng-repeat="funcao in dadosColaborador.funcoes">
-												<td>{{ funcao.num_funcao }}</td>
-												<td>{{ funcao.nme_funcao }}</td>
-												<td>{{ funcao.dsc_funcao }}</td>
-												<td colspan="2">{{ funcao.cod_empreendimento }}</td>
+												<td>{{ funcao.funcao.num_funcao }}</td>
+												<td>{{ funcao.funcao.nme_funcao }}</td>
+												<td>{{ funcao.vlr_salario }}</td>
+												<td>{{ funcao.motivoAlteracaoFuncao.nme_motivo_alteracao_funcao }}</td>
+												<td colspan="2">{{ funcao.dta_alteracao }}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -573,21 +578,21 @@
 						<div class="form-group">
 							<label class="col-lg-3 control-label">Tipo</label>
 							<div class="col-lg-9">
-								<select class="form-control" ng-model="tmpTelefone.tipoTelefone" ng-options="item as item.nme_tipo_telefone for item in tiposTelefone"></select>
+								<select class="form-control" ng-model="tmpModal.tipoTelefone" ng-options="item as item.nme_tipo_telefone for item in tiposTelefone"></select>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-lg-3 control-label">DDD</label>
 							<div class="col-lg-3">
-								<input type="text" class="form-control" ng-model="tmpTelefone.num_ddd">
+								<input type="text" class="form-control" ng-model="tmpModal.num_ddd">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-lg-3 control-label">Número</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" ng-model="tmpTelefone.num_telefone">
+								<input type="text" class="form-control" ng-model="tmpModal.num_telefone">
 							</div>
 						</div>
 					</div>
@@ -618,7 +623,7 @@
 						<div class="form-group">
 							<label class="col-lg-3 control-label">Endereço</label>
 							<div class="col-lg-9">
-								<input type="text" class="form-control" ng-model="tmpEmail.end_email">
+								<input type="text" class="form-control" ng-model="tmpModal.end_email">
 							</div> 
 						</div>
 					</div>
@@ -646,23 +651,33 @@
 				<form class="form form-horizontal" role="form">
 					<div class="modal-body">
 						<div class="form-group">
-							<label class="col-lg-3 control-label">Número CBO/Código</label>
+							<label class="col-lg-3 control-label">Função</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" ng-model="tmpFuncao.num_funcao">
+								<select class="form-control" ng-model="tmpModal.funcao" ng-options="item as item.num_funcao + ' - ' + item.nme_funcao for item in funcoes"></select>
 							</div> 
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-3 control-label">Nome</label>
-							<div class="col-lg-9">
-								<input type="text" class="form-control" ng-model="tmpFuncao.nme_funcao">
+							<label class="col-lg-3 control-label">Salário</label>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" ng-model="tmpModal.vlr_salario">
 							</div> 
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-3 control-label">Descrição</label>
-							<div class="col-lg-9">
-								<textarea class="form-control" ng-model="tmpFuncao.dsc_funcao"></textarea>
+							<label class="col-lg-3 control-label">Motivo</label>
+							<div class="col-lg-5">
+								<select class="form-control" ng-model="tmpModal.motivoAlteracaoFuncao" ng-options="item as item.nme_motivo_alteracao_funcao for item in motivosAlteracaoFuncao"></select>
+							</div> 
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Data Alteração</label>
+							<div class="col-lg-4">
+								<div class="input-group date">
+									<input type="text" class="form-control" ng-model="tmpModal.dta_alteracao">
+									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+								</div>
 							</div> 
 						</div>
 					</div>

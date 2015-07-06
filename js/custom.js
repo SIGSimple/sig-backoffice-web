@@ -2,7 +2,10 @@ $(function(){
 	moment.locale('pt-br');
 	initializeTimepickerInputs();
 
-	$('.input-group.date').datepicker({autoclose:true});
+	$('.input-group.date').datepicker({
+		format: 'dd/mm/yyyy',
+		autoclose: true
+	});
 
 	$.each($('.input-switch'), function(i, el){
 		new Switchery(el);
