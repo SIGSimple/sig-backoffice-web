@@ -3,6 +3,7 @@ $(function(){
 	initializeTimepickerInputs();
 
 	$('.input-group.date').datepicker({
+		language: 'pt-BR',
 		format: 'dd/mm/yyyy',
 		autoclose: true
 	});
@@ -12,6 +13,12 @@ $(function(){
 	});
 
 	$('[data-toggle="tooltip"]').tooltip();
+
+	var feedbackValidatorIcons = {
+		valid: 'fa fa-check-circle fa-lg text-success',
+		invalid: 'fa fa-times-circle fa-lg',
+		validating: 'fa fa-refresh'
+	};
 })
 
 function showNotification(title, message, icon, container, status) {

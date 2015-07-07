@@ -9,6 +9,17 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 	$scope.feriados 				= [];
 	$scope.diasPonte 				= [];
 	$scope.programacaoCompensacoes 	= [];
+	$scope.fechamentoMensal 		= { 
+		cod_colaborador: $scope.colaborador.cooperator.cod_colaborador,
+		dta_referencia: moment().format('YYYY-MM-DD'),
+		qtd_dias_trabalhados: 0,
+		qtd_adicional_noturno: 0,
+		qtd_faltas_justificadas: 0,
+		qtd_faltas_injustificadas: 0,
+		qtd_atrasos_justificados: 0,
+		qtd_atrasos_injustificados: 0,
+		qtd_total_horas_extras: 0
+	};
 
 	$scope.getToday = function() {
 		return moment().format('D');
@@ -103,10 +114,15 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 		var alteracoes = false;
 		var itemsToSave = [];
 		var itemsToUpdate = [];
+		var qtdDiasMes = $scope.arrDiasMes.length;
+		var qtdItensRegistrados = 0;
 		var countx = 0;
 		var county = 0;
 
 		$.each($scope.arrDiasMes, function(i, item) {
+			if(item.flg_registrado)
+				qtdItensRegistrados++;
+
 			if(item.flg_registrado && item.cod_registro_horario === 0) {
 				item.cod_colaborador = $scope.colaborador.cooperator.cod_colaborador;
 				item.dta_registro = moment(item.cptDate, 'YYYY/M/D').format('YYYY-MM-DD');
@@ -150,6 +166,9 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 
 		if(!alteracoes)
 			showNotification(null, 'Nenhuma alteração realizada!', null, 'floating', 406);
+
+		if(qtdItensRegistrados === qtdDiasMes)
+			calcFechamentoMensal();
 	}
 
 	function formatHoraExtra(qtdHoraExtra, isNegativeValue) {
@@ -245,8 +264,11 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 
 		if(vAdicionalNoturno > 0 && vAdicionalNoturno < 1)
 			vAdicionalNoturno = 1;
+		else if(vAdicionalNoturno > 1)
+			vAdicionalNoturno = parseFloat(((vAdicionalNoturno / 52.5) * 60).toFixed(2))
 
 		return {
+			qtd_horas_negativas: parseFloat((vDiffHoras - (vJornadaContratual + vCompensacao)).toFixed(2)),
 			qtd_horas_trabalhadas: vDiffHoras,
 			flg_terminou_mesmo_dia: vMesmoDia,
 			flg_hora_extra: (vHoraTotalExtra > 0),
@@ -392,6 +414,34 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 		});
 
 		$scope.colaborador.cooperator.qtd_horas_adicional_noturno = formatHoraExtra($scope.colaborador.cooperator.horasAdicionalNoturno);
+	}
+
+	function calcFechamentoMensal() {
+		$.each($scope.arrDiasMes, function(i, item) {
+			// Se tiver hora extra, totaliza
+			if(item.qtd_total_hora_extra)
+				$scope.fechamentoMensal.qtd_total_horas_extras += item.qtd_total_hora_extra;
+
+			// Se tiver adicional noturno, totaliza
+			if(item.qtd_hora_adicional_noturno)
+				$scope.fechamentoMensal.qtd_adicional_noturno += $scope.colaborador.cooperator.horasAdicionalNoturno;
+
+			// Se tiver falta justificada, totaliza
+			if(parseInt(item.cod_tipo_registro_horario, 10) === 3)
+				$scope.fechamentoMensal.qtd_faltas_justificadas++;
+
+			// Se tiver falta injustificada, totaliza
+			if(parseInt(item.cod_tipo_registro_horario, 10) === 4)
+				$scope.fechamentoMensal.qtd_faltas_injustificadas++;
+
+			// Se houver atrasos justificados, totaliza
+			if(item.qtd_horas_negativas > 0 && parseInt(item.cod_tipo_registro_horario,10) === 5)
+				$scope.fechamentoMensal.qtd_atrasos_justificados += item.qtd_horas_negativas;
+
+			// Se houver atrasos justificados, totaliza
+			if(item.qtd_horas_negativas > 0 && parseInt(item.cod_tipo_registro_horario,10) !== 5)
+				$scope.fechamentoMensal.qtd_atrasos_injustificados += item.qtd_horas_negativas;
+		});
 	}
 
 	function calcEscalaTrabalhoColaborador() {
@@ -628,6 +678,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 				qtd_hora_extra_dia_fim: 0,
 				qtd_horas_trabalhadas: 0,
 				qtd_total_hora_extra: 0,
+				qtd_horas_negativas: 0,
 				flg_hora_extra: false,
 				flg_terminou_mesmo_dia: false,
 				nme_anexo: "",

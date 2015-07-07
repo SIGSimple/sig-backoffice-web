@@ -174,6 +174,7 @@ restrict();
 
 	<!--Bootstrap Datepicker [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+	<script src="plugins/bootstrap-datepicker/bootstrap-datepicker.pt-BR.js"></script>
 
 
 	<!--Bootstrap Timepicker [ OPTIONAL ]-->

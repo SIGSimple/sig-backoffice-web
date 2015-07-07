@@ -1,7 +1,8 @@
 $('#demo-cls-wz').bootstrapWizard({
-	tabClass		: 'wz-classic',
-	nextSelector	: '.next',
+	tabClass			: 'wz-classic',
+	nextSelector		: '.next',
 	previousSelector	: '.previous',
+	finishSelector		: '.finish',
 	onTabClick: function(tab, navigation, index) {
 		return false;
 	},
@@ -23,10 +24,15 @@ $('#demo-cls-wz').bootstrapWizard({
 			$('#demo-cls-wz').find('.next').hide();
 			$('#demo-cls-wz').find('.finish').show();
 			$('#demo-cls-wz').find('.finish').prop('disabled', false);
+			if($current > $total)
+				this.finish();
 		} else {
 			$('#demo-cls-wz').find('.next').show();
 			$('#demo-cls-wz').find('.finish').hide().prop('disabled', true);
 		}
+	},
+	onFinish: function() {
+		console.log('entrou!');
 	}
 });
 

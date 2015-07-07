@@ -10,8 +10,8 @@ app.controller('MenuCtrl', function($scope, $http){
 	}
 
 	$scope.activeLink = function(url) {
-		var query = getQueryParams(document.location.search);
-		var cssClass = (query.page == url) ? 'active-link' : '';
+		var thisPage = document.location.pathname.split('/')[2];
+		var cssClass = (thisPage === url) ? 'active-link' : '';
 		
 		if(cssClass != "")
 			$("li.active-link").parent().addClass("in").parent().addClass("active-sub active")

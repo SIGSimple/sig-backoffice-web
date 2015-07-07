@@ -2,8 +2,7 @@ app.controller('PageTitleCtrl', function($scope, $http){
 	$scope.page = {};
 
 	function loadPageDetails() {
-		var query = getQueryParams(document.location.search);
-		var thisPage = query.page;
+		var thisPage = document.location.pathname.split('/')[2];
 
 		$http.get(baseUrlApi()+'modulos?url_modulo='+ thisPage)
 			.success(function(pageData) {

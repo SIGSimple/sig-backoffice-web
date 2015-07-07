@@ -33,7 +33,6 @@
 		<form class="form-horizontal">
 			<div class="panel-body" style="padding-top: 10px;">
 				<div class="tab-content">
-
 					<!--First tab-->
 					<div id="demo-cls-tab1" class="tab-pane fade">
 						<fieldset>
@@ -260,7 +259,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">							
+						<div class="form-group">
 							<label class="col-lg-2 control-label">Grade de Horário</label>
 							<div class="col-lg-3">
 								<div class="input-group">
@@ -308,37 +307,36 @@
 								</div>
 							</div>
 						</div>
-
 						
-					<div class="form-group">
-						<label class="col-lg-2 control-label">Função</label>
-								<div class="col-lg-2">
-									<table class="table table-bordered table-condensed table-hover table-striped">
-										<thead>
-											<th>Núm./Código</th>
-											<th>Função</th>
-											<th>Salário</th>
-											<th>Motivo</th>
-											<th>Data</th>
-											<th width="20">
-												<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalFuncao()">
-													<i class="fa fa-plus-circle"></i>
-												</button>
-											</th>
-										</thead>
-										<tbody>
-											<tr ng-repeat="funcao in dadosColaborador.funcoes">
-												<td>{{ funcao.funcao.num_funcao }}</td>
-												<td>{{ funcao.funcao.nme_funcao }}</td>
-												<td>{{ funcao.vlr_salario }}</td>
-												<td>{{ funcao.motivoAlteracaoFuncao.nme_motivo_alteracao_funcao }}</td>
-												<td colspan="2">{{ funcao.dta_alteracao }}</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Função</label>
+							<div class="col-lg-2">
+								<table class="table table-bordered table-condensed table-hover table-striped">
+									<thead>
+										<th>Núm./Código</th>
+										<th>Função</th>
+										<th>Salário</th>
+										<th>Motivo</th>
+										<th>Data</th>
+										<th width="20">
+											<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalFuncao()">
+												<i class="fa fa-plus-circle"></i>
+											</button>
+										</th>
+									</thead>
+									<tbody>
+										<tr ng-repeat="funcao in dadosColaborador.funcoes">
+											<td>{{ funcao.funcao.num_funcao }}</td>
+											<td>{{ funcao.funcao.nme_funcao }}</td>
+											<td>{{ funcao.vlr_salario }}</td>
+											<td>{{ funcao.motivoAlteracaoFuncao.nme_motivo_alteracao_funcao }}</td>
+											<td colspan="2">{{ funcao.dta_alteracao }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
-				</div>					
 
 					<!--Third tab-->
 					<div id="demo-cls-tab3" class="tab-pane">
@@ -355,7 +353,6 @@
 								</div>
 							</div>
 						</div>
-
 
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Agência</label>
@@ -444,10 +441,12 @@
 							<div class="col-lg-1">
 								<input type="text" class="form-control" ng-model="dadosColaborador.num_ctps"> 
 							</div>
+
 							<label class="col-lg-1 control-label">Série</label>
 							<div class="col-lg-1">
 								<input type="text" class="form-control" ng-model="dadosColaborador.num_serie_ctps"> 
 							</div>
+
 							<label class="col-lg-1 control-label">Emissão CTPS</label>
 							<div class="col-lg-2">
 								<div class="input-group date">
@@ -461,13 +460,11 @@
 								<select class="form-control selectpicker" data-live-search="true" ng-model="dadosColaborador.cod_estado_ctps" ng-options="item.cod_estado as item.sgl_estado for item in ufs">
 								</select>
 							</div>
-
 							<div class="col-lg-1">
 								<span class="pull-left btn btn-default btn-file">
 								Selecionar... <input type="file">
 								</span>
 							</div>
-						
 						</div>
 
 						<div class="form-group">
@@ -485,7 +482,6 @@
 							<div class="col-lg-1">
 								<input type="text" class="form-control" ng-model="dadosColaborador.num_secao_eleitoral"> 
 							</div>
-
 							<div class="col-lg-2">
 								<span class="pull-left btn btn-default btn-file">
 								Selecionar... <input type="file">
@@ -524,7 +520,6 @@
 							<div class="col-lg-2">
 								<input type="text" class="form-control" ng-model="dadosColaborador.num_reservista"> 
 							</div>
-						
 
 							<div class="col-lg-3">
 								<span class="pull-left btn btn-default btn-file">
@@ -532,8 +527,8 @@
 								</span>
 							</div>
 						</div>
-						
 					</div>
+				</div>
 			</div>
 
 			<!--Footer button-->
@@ -638,7 +633,6 @@
 			</div>
 		</div>
 	</div>
-
 
 	<div class="modal fade" id="modalAddFuncao" tabindex="-1" role="dialog" aria-labelledby="modalAddFuncaoLabel">
 		<div class="modal-dialog modal-md" role="document">
