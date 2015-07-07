@@ -31,7 +31,7 @@
 					<th data-visible="false" data-sortable="true" data-field="dta_demissao">Dta. Demissão</th>
 					<th data-visible="false" data-sortable="true" data-field="num_ctps">CTPS</th>
 					<th data-visible="false" data-sortable="true" data-field="num_serie_ctps">Serie CTPS</th>
-					<th data-visible="false" data-sortable="true" data-field="sgl_estado">Estado</th>
+					<th data-visible="false" data-sortable="true" data-field="sgl_estado_ctps">Estado</th>
 					<th data-visible="false" data-sortable="true" data-field="dta_emissao_ctps">Emissão CTPS</th>
 					<th data-visible="true" data-sortable="true" data-field="num_rg">RG</th>
 					<th data-visible="true" data-sortable="true" data-field="num_cpf">CPF</th>	
@@ -44,7 +44,7 @@
 					<th data-visible="false" data-sortable="true" data-field="num_endereco">Número</th>
 					<th data-visible="false" data-sortable="true" data-field="nme_bairro">Bairro</th>
 					<th data-visible="false" data-sortable="true" data-field="dsc_complemento">Complemento</th>
-					<th data-visible="false" data-sortable="true" data-field="nme_cidade">Cidade</th>
+					<th data-visible="false" data-sortable="true" data-field="nme_cidade_moradia">Cidade</th>
 					<th data-visible="false" data-sortable="true" data-field="num_cep">CEP</th>
 					<th data-visible="false" data-sortable="true" data-field="dta_nascimento">Nascimento</th>
 					<th data-visible="false" data-sortable="true" data-field="num_cnh">CNH</th>

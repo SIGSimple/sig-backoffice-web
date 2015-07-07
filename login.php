@@ -27,6 +27,30 @@ if($data) {
 			if($data) {
 				$cooperator->funcao = json_decode($data);
 			}
+
+			// Recupera os telefones do colaborador
+			$url = 'http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/colaborador/telefones?cod_colaborador='.$user->cod_colaborador;
+			$data = HttpUtil::doGetRequest($url, null);
+
+			if($data) {
+				$cooperator->telefones = json_decode($data);
+			}
+
+			// Recupera os emails do colaborador
+			$url = 'http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/colaborador/emails?cod_colaborador='.$user->cod_colaborador;
+			$data = HttpUtil::doGetRequest($url, null);
+
+			if($data) {
+				$cooperator->emails = json_decode($data);
+			}
+
+			// Recupera os dependentes do colaborador
+			$url = 'http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/colaborador/dependentes?cod_colaborador='.$user->cod_colaborador;
+			$data = HttpUtil::doGetRequest($url, null);
+
+			if($data) {
+				$cooperator->dependentes = json_decode($data);
+			}
 		}
 	}
 
