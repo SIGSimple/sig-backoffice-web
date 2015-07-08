@@ -2,12 +2,30 @@ $('#demo-cls-wz').bootstrapWizard({
 	tabClass			: 'wz-classic',
 	nextSelector		: '.next',
 	previousSelector	: '.previous',
-	finishSelector		: '.finish',
 	onTabClick: function(tab, navigation, index) {
 		return false;
 	},
 	onInit : function(){
 		$('#demo-cls-wz').find('.finish').hide().prop('disabled', true);
+	},
+	onNext: function(tab, navigation, actualIndex) {
+		$.each($(tab.find("a")[0].hash + " .form-control"), function(i, el){
+			console.log($scope[$(el).attr('ng-model')]);
+		});
+
+		/*var previousIndex = (actualIndex-1);
+
+		switch(previousIndex) {
+			case 0: // Dados Cadastrais
+				//$scope.dadosColaborador.num_matricula
+				break;
+			case 1: // Informações complementares
+				break;
+			case 2: // Dados Bancários
+				break;
+			case 3: // Documentos/Anexos
+				break;
+		}*/
 	},
 	onTabShow: function(tab, navigation, index) {
 		var $total 		= navigation.find('li').length;
@@ -30,17 +48,12 @@ $('#demo-cls-wz').bootstrapWizard({
 			$('#demo-cls-wz').find('.next').show();
 			$('#demo-cls-wz').find('.finish').hide().prop('disabled', true);
 		}
-	},
-	onFinish: function() {
-		console.log('entrou!');
 	}
 });
 
 $("#modalItems").on("hidden.bs.modal", function(e){
 	$('#mytable').bootstrapTable('destroy');
 });
-
-
 
 app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.colaborador = UserSrvc.getUserLogged();
