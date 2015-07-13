@@ -516,7 +516,7 @@
 	</div>
 	<div class="panel-footer clearfix">
 		<div class="pull-right">
-			<button class="btn btn-success btn-labeled fa fa-save" ng-click="enviarDadosParaAtualizacao()">Enviar dados p/ atualização</button>
+			<button class="btn btn-success btn-labeled fa fa-save" ng-click="enviarDadosParaAtualizacao()" data-loading-text="Aguarde, enviando...">Enviar dados p/ atualização</button>
 		</div>
 	</div>
 

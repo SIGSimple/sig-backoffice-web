@@ -10,7 +10,7 @@ app.controller('MenuCtrl', function($scope, $http){
 	}
 
 	$scope.activeLink = function(url) {
-		var thisPage = document.location.pathname.split('/')[2];
+		var thisPage = document.location.pathname.split('/')[document.location.pathname.split('/').length-1];
 		var cssClass = (thisPage === url) ? 'active-link' : '';
 		
 		if(cssClass != "")

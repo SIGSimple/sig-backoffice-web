@@ -4,12 +4,14 @@ app.controller('ConferenciaDadosPessoaisCtrl', function($scope, $http, UserSrvc)
 	$scope.tmpModal = { flg_removido: false };
 
 	$scope.enviarDadosParaAtualizacao = function() {
+		$("button.btn-success.fa-save").button('loading');
 		$http.post(baseUrlApi()+'colaborador/conferencia/dados', $scope.colaborador)
 			.success(function(message, status, headers, config){
-				console.log(message);
+				$("button.btn-success.fa-save").button('reset');
 			})
 			.error(function(message, status, headers, config){
-				console.log(message, status);
+				$("button.btn-success.fa-save").button('reset');
+				showNotification(null, message, null, 'page', status);
 			})
 	}
 
