@@ -8,25 +8,6 @@ $('#demo-cls-wz').bootstrapWizard({
 	onInit : function(){
 		$('#demo-cls-wz').find('.finish').hide().prop('disabled', true);
 	},
-	onNext: function(tab, navigation, actualIndex) {
-		$.each($(tab.find("a")[0].hash + " .form-control"), function(i, el){
-			console.log($scope[$(el).attr('ng-model')]);
-		});
-
-		/*var previousIndex = (actualIndex-1);
-
-		switch(previousIndex) {
-			case 0: // Dados Cadastrais
-				//$scope.dadosColaborador.num_matricula
-				break;
-			case 1: // Informações complementares
-				break;
-			case 2: // Dados Bancários
-				break;
-			case 3: // Documentos/Anexos
-				break;
-		}*/
-	},
 	onTabShow: function(tab, navigation, index) {
 		var $total 		= navigation.find('li').length;
 		var $current 	= index + 1;
@@ -184,6 +165,35 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	};
 
 	// Definição de funções de utilização da tela
+	$scope.validateFieldValues = function() {
+		$("form.form-fields").validate({
+			rules: {
+				num_matricula: {
+					maxlength: 100,
+					required: true
+				},
+				nme_colaborador: {
+					maxlength: 100,
+					required: true
+				}
+			}
+		},
+		errorElement: 'span',
+		errorClass: 'help-block',
+		highlight: function(element) {
+			$(element).closest('.form-group').addClass('has-error');
+		},
+		unhighlight: function(element) {
+			$(element).closest('.form-group').removeClass('has-error');
+		},
+		errorPlacement: function(error, element) {
+			if(element.parent('.input-group').length)
+				error.insertAfter(element.parent());
+			else
+				error.insertAfter(element);
+		});
+	}
+
 	$scope.getCidades = function(el_destino) {
 		$(".loading-cidade-" + el_destino).removeClass("hide");
 
