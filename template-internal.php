@@ -222,6 +222,8 @@ restrict();
 	<script src="bower_components/flow.js/dist/flow.min.js"></script>
 	<script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
 
+	<!--RealCrowd AngularJS Utilities [ REQUIRED ]-->
+	<script src="js/angularjs-utilities/src/modules/rcWizard.js"></script>
 
 	<!--Moment [ REQUIRED ]-->
 	<script src="bower_components/moment/moment.js"></script>
