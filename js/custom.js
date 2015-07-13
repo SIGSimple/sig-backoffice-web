@@ -21,24 +21,27 @@ $(function(){
 	};
 })
 
-function showNotification(title, message, icon, container, status) {
+function showNotification(title, message, icon, container, status, time) {
 	var alertType = "";
 
 	switch(status) {
 		case 200:
 		case 201:
-			title = "Pronto!";
+			if(title == "")
+				title = "Pronto!";
 			alertType = 'success';
 			icon = 'fa-check-circle fa-lg';
 			break;
 		case 404:
 		case 500:
-			title = "Ocorreu um erro!";
+			if(title == "")
+				title = "Ocorreu um erro!";
 			alertType = 'danger';
 			icon = 'fa-times-circle fa-lg';
 			break;
 		case 406:
-			title = "Ops!";
+			if(title == "")
+				title = "Ops!";
 			alertType = 'warning';
 			icon = 'fa-warning fa-lg';
 			break;
@@ -47,13 +50,16 @@ function showNotification(title, message, icon, container, status) {
 			break;
 	}
 
+	if(time === 0)
+		time = 5000;
+
 	$.niftyNoty({
 		type: alertType,
 		container: container,
 		icon: 'fa ' + icon,
 		title : title,
 		message : message,
-		timer : 5000
+		timer : time
 	});
 }
 

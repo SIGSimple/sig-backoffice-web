@@ -635,7 +635,7 @@ app.controller('RegistroHorarioCtrl', function($scope, $http, UserSrvc, $timeout
 						$.each(diaMes, function(fieldOfDiaMes, valueOfDiaMes) {
 							$.each(recordOfDiaMes, function(fieldOfRecord, valueOfRecord) {
 								if(fieldOfDiaMes === fieldOfRecord){
-									$scope.arrDiasMes[idxDiaMes][fieldOfDiaMes] = valueOfRecord;
+									$scope.arrDiasMes[idxDiaMes][fieldOfDiaMes] = (typeof(valueOfRecord) == "string" && valueOfRecord.split(":").length > 1) ? valueOfRecord.split(":")[0] + ":" + valueOfRecord.split(":")[1] : valueOfRecord;
 								}
 							});
 						});

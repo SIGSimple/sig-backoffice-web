@@ -378,7 +378,7 @@ function baseUrlApi(){
 		//var a = document.URL;
 		//a = a.split(".br");
 		//return a[0] + ".br/api/";
-    return document.URL.split("/")[0] + "//" + document.URL.split("/")[2] + "/api";
+    return document.URL.split("/")[0] + "//" + document.URL.split("/")[2] + "/api/";
 		//return 'http://www.consorciointermultiplas.com.br/api/';
 	}
 }

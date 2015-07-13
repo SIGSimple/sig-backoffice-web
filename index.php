@@ -1,7 +1,9 @@
 <?php
 
-include_once 'php.util/restrict.php';
-restrict();
-header('location: home');
+@session_start();
+if(isset($_SESSION['user_logged']))
+	header('location: home');
+else
+	header('location: form-login');
 
 ?>

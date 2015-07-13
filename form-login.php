@@ -12,14 +12,14 @@ unset($_SESSION['user_logged']);
 		<div class="form-group">
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-user"></i></div>
-				<input type="text" class="form-control" placeholder="usuário" ng-model="dadosLogin.nme_login">
+				<input type="text" class="form-control" placeholder="usuário" ng-model="dadosLogin.nme_login" ng-enter="login()">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
-				<input type="password" class="form-control" placeholder="Senha" ng-model="dadosLogin.nme_senha">
+				<input type="password" class="form-control" placeholder="Senha" ng-model="dadosLogin.nme_senha" ng-enter="login()">
 			</div>
 		</div>
 
@@ -33,14 +33,14 @@ unset($_SESSION['user_logged']);
 		<div class="form-group">
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
-				<input type="password" class="form-control" placeholder="Informe a nova senha" ng-model="novaSenha.nme_senha">
+				<input type="password" class="form-control" placeholder="Informe a nova senha" ng-model="novaSenha.nme_senha" ng-enter="desbloquearSenha()">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
-				<input type="password" class="form-control" placeholder="Repita a nova senha" ng-model="novaSenha.nme_senha_repete">
+				<input type="password" class="form-control" placeholder="Repita a nova senha" ng-model="novaSenha.nme_senha_repete" ng-enter="desbloquearSenha()">
 			</div>
 		</div>
 

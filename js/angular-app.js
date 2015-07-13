@@ -38,67 +38,20 @@ var app = angular.module('sig_backoffice', ['ui.bootstrap', 'flow'], function($h
 	}];
 });
 
-app.directive("fileread", [function () {
-	return {
-		scope: {
-			fileread: "="
-		},
-		link: function (scope, element, attributes) {
-			element.bind("change", function (changeEvent) {
-				var reader = new FileReader();
-				reader.onload = function (loadEvent) {
-					scope.$apply(function () {
-						scope.fileread = loadEvent.target.result;
-					});
-				}
-				reader.readAsDataURL(changeEvent.target.files[0]);
-			});
-		}
-	}
-}]);
-
-app.directive('appFilereader', function($q) {
-	var slice = Array.prototype.slice;
-
-	return {
-		restrict: 'A',
-		require: '?ngModel',
-		link: function(scope, element, attrs, ngModel) {
-				if (!ngModel) return;
-
-				ngModel.$render = function() {};
-
-				element.bind('change', function(e) {
-					var element = e.target;
-
-					$q.all(slice.call(element.files, 0).map(readFile))
-						.then(function(values) {
-							if (element.multiple) ngModel.$setViewValue(values);
-							else ngModel.$setViewValue(values.length ? values[0] : null);
-						});
-
-					function readFile(file) {
-						var deferred = $q.defer();
-
-						var reader = new FileReader();
-						reader.onload = function(e) {
-							var data = {
-								file_data: e.target.result,
-								file_obj: file
-							};
-							
-							deferred.resolve(data);
-						};
-						reader.onerror = function(e) {
-							deferred.reject(e);
-						};
-						reader.readAsDataURL(file);
-
-						return deferred.promise;
-					}
-
-				}); //change
-
-			} //link
-	}; //return
+app.directive('ngEnter', function () {
+	return function (scope, element, attrs) {
+		element.bind("keydown keypress", function (event) {
+			if(event.which === 13) {
+				scope.$apply(function (){
+					scope.$eval(attrs.ngEnter);
+				});
+				
+				event.preventDefault();
+			}
+		});
+	};
 });
+
+setTimeout(function() {
+	showNotification('Atenção!!!', 'O sistema está em fase de avaliação, portanto, caso encontre qualquer erro, favor enviar e-mail para <strong>filipe.mendonca.coelho@gmail.com</strong>', null, 'page', 500, 10000);
+}, 3000);
