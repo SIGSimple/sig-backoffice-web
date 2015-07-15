@@ -41,7 +41,7 @@
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Matrícula</label> 
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula" name="num_matricula" maxlength="100">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula" name="num_matricula" maxlength="100" data-error="Apenas letra" required>
 								</div>
 							</div>
 
@@ -56,7 +56,7 @@
 								<label class="col-lg-2 control-label">Data de Nascimento</label>
 								<div class="col-lg-2">
 									<div class="input-group date">
-										<input type="text" class="form-control" ng-model="dadosColaborador.dta_nascimento" name="dta.nascimento">
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_nascimento" name="dta_nascimento">
 										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 									</div>
 								</div>
@@ -169,7 +169,7 @@
 
 								<label class="col-lg-1 control-label">Cidade</label>
 								<div class="col-lg-2">
-									<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade" name="cod_cidade" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
+									<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade" name="cod_cidade_naturalidade" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
 									</select>
 									<span class="loading-cidade-naturalidade hide">
 										<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
@@ -244,7 +244,7 @@
 
 							<label class="col-lg-2 control-label">Regime de Contratação</label>
 							<div class="col-lg-1">
-								<select class="form-control"  ng-model="dadosColaborador.dsc_regime_contratacao" name="dsc_regime">
+								<select class="form-control"  ng-model="dadosColaborador.dsc_regime_contratacao" name="dsc_regime_contratacao">
 									<option value="C" label="CLT"></option>
 									<option value="E" label="Estagiário"></option>
 									<option value="M" label="Menor Aprendiz"></option> 

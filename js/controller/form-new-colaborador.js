@@ -166,31 +166,229 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	// Definição de funções de utilização da tela
 	$scope.validateFieldValues = function() {
+	
 		$("form.form-fields").validate({
 			rules: {
 				num_matricula: {
 					maxlength: 100,
+					number: true,
 					required: true
 				},
 				nme_colaborador: {
 					maxlength: 100,
 					required: true
-				}
+				},
+				dta_nascimento: {
+					date:true,
+					required: true
+				},
+				flg_sexo: {
+					maxlength: 1,
+					required: true
+				},
+				num_cep: {
+					maxlenght: 10,
+					number: true,
+					required: true
+				},
+				dsc_endereco: {
+					maxlength: 100,
+					required: true
+				},
+				num_endereco: {
+					maxlength: 10,
+					required: true
+				},
+				dsc_complemento: {
+					maxlength: 100,
+					required: true
+				},
+				nme_bairro: {
+					maxlength: 100,
+					required: true
+				},
+				cod_estado_moradia: {
+					maxlength: 1,
+					required: true
+				},
+				cod_cidade_moradia: {
+					maxlength: 1,
+					required: true
+				},
+				cod_estado_naturalidade: {
+					maxlength: 1,
+					required: true
+				},
+				cod_cidade_naturalidade: {
+					maxlength: 1,
+					required: true
+				},
+				tipo_telefone: {
+					maxlength: 1,
+					required: true
+				},
+				num_ddd: {
+					maxlength: 2,
+					number: true,
+					required: true
+				},
+				num_telefone: {
+					maxlength: 11,
+					number: true,
+					required: true
+				},
+				end_email: {
+					maxlength: 100,
+					email: true,
+					required: true
+				},
+				dsc_regime_contratacao: {
+					maxlength: 1,
+					required: true
+				},
+				nme_departamento: {
+					maxlength: 1,
+					required: true
+				},
+				qtd_horas_contratadas: {
+					maxlength: 11,
+					required: true	
+				},
+				dta_admissao: {
+					date:true,
+					required: true
+				},
+				dta_demissao: {
+					date:true,
+					required: true
+				},
+				funcao: {
+					maxlength: 1,
+					required: true
+				},
+				vlr_salario: {
+					maxlength: 7,
+					required: true
+				},
+				motivoAlteracaoFuncao: {
+					maxlength: 1,
+					required: true
+				},
+				dta_alteracao: {
+					date:true,
+					required: true
+				},
+				num_agencia: {
+					maxlength: 10,
+					number: true,
+					required: true
+				},
+				num_digito_agencia:{
+					maxlength: 5,
+					digits: true,
+					required: true
+				},
+				num_conta_corrente:{
+					maxlength: 20,
+					number: true,
+					required: true
+				},	
+				num_digito_conta_corrente: {
+					maxlength: 5,
+					digits: true,
+					required: true
+				},
+					
+				num_rg: {
+					maxlength: 20,
+					number: true,
+					required: true
+				},
+				num_cpf: {
+					maxlength: 20,
+					number: true,
+					required: true
+				},
+				num_pis: {
+					maxlength: 20,
+					number: true,
+					required: true
+				},
+				num_entidade: {
+					maxlength: 20,
+					number: true,
+					required: true
+				},
+				num_ctps: {
+					maxlength: 50,
+					number: true,
+					required: true
+				},
+				num_serie_ctps: {
+					maxlength: 50,
+					number: true,
+					required: true
+				},
+				dta_emissao_ctps: {
+					date:true,
+					required: true
+				},
+				cod_estado_ctps: {
+					maxlength: 1,
+					required: true
+				},
+				num_titulo_eleitor: {
+					maxlength: 20,
+					number: true,
+					required: true
+				},
+				num_zona_eleitoral: {
+					maxlength: 10,
+					number: true,
+					required: true
+				},
+				num_secao_eleitoral: {
+					maxlength: 10,
+					number: true,
+					required: true
+				},
+				num_cnh: {
+					maxlength: 20,
+					number: true,
+					required: true
+				},
+				dta_validade_cnh: {
+					date:true,
+					required: true
+				},
+				nme_categoria_cnh: {
+					maxlength: 10,
+					required: true
+				},
+				num_reservista: {
+					maxlength: 20,
+					required: true
+				},
+				dta_aso: {
+					date: true,
+					required: true
+				},
+			
+			},
+			errorElement: 'span',
+			errorClass: 'help-block',
+			highlight: function(element) {
+				$(element).closest('.form-group').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error');
+			},
+			errorPlacement: function(error, element) {
+				if(element.parent('.input-group').length)
+					error.insertAfter(element.parent());
+				else
+					error.insertAfter(element);
 			}
-		},
-		errorElement: 'span',
-		errorClass: 'help-block',
-		highlight: function(element) {
-			$(element).closest('.form-group').addClass('has-error');
-		},
-		unhighlight: function(element) {
-			$(element).closest('.form-group').removeClass('has-error');
-		},
-		errorPlacement: function(error, element) {
-			if(element.parent('.input-group').length)
-				error.insertAfter(element.parent());
-			else
-				error.insertAfter(element);
 		});
 	}
 
