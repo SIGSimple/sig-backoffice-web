@@ -226,9 +226,13 @@ restrict();
 	<script src="bower_components/moment/moment.js"></script>
 	<script src="bower_components/moment/locale/pt-br.js"></script>
 
-	<!--Moment [ REQUIRED ]-->
+	<!--Bootstrap Select [ REQUIRED ]-->
 	<script src="bower_components/bootstrap-select/bootstrap-select.min.js"></script>
 	<script src="bower_components/moment/locale/pt-br.js"></script>
+
+	<!--jQuery Validation [ REQUIRED ]-->
+	<script src="bower_components/jquery-validation/jquery.validate.min.js"></script>
+	<script src="bower_components/jquery-validation/additional-methods.min.js"></script>
 
 	<!--CUSTOM-->
 	<script src="js/custom.js"></script>

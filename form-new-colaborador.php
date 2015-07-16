@@ -41,7 +41,7 @@
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Matrícula</label> 
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula" name="num_matricula" maxlength="100" data-error="Apenas letra" required>
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula" name="num_matricula" maxlength="100" data-error="Apenas número" required>
 								</div>
 							</div>
 

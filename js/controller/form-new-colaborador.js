@@ -172,7 +172,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				num_matricula: {
 					maxlength: 100,
 					number: true,
-					required: true
+					required: true,
+					message: 'Apenas número'
 				},
 				nme_colaborador: {
 					maxlength: 100,
@@ -180,6 +181,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				},
 				dta_nascimento: {
 					date:true,
+					format: 'DD/MM/YYYY',
 					required: true
 				},
 				flg_sexo: {
@@ -256,10 +258,12 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				},
 				dta_admissao: {
 					date:true,
+					format: 'DD/MM/YYYY',
 					required: true
 				},
 				dta_demissao: {
 					date:true,
+					format: 'DD/MM/YYYY',
 					required: true
 				},
 				funcao: {
@@ -276,6 +280,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				},
 				dta_alteracao: {
 					date:true,
+					format: 'DD/MM/YYYY',
 					required: true
 				},
 				num_agencia: {
@@ -331,6 +336,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				},
 				dta_emissao_ctps: {
 					date:true,
+					format: 'DD/MM/YYYY',
 					required: true
 				},
 				cod_estado_ctps: {
@@ -371,6 +377,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				},
 				dta_aso: {
 					date: true,
+					format: 'DD/MM/YYYY',
 					required: true
 				},
 			
