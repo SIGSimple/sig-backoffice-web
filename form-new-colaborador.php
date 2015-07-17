@@ -41,7 +41,7 @@
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Matrícula</label> 
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula" name="num_matricula" maxlength="100" data-error="Apenas número" required>
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula" name="num_matricula" maxlength="100">
 								</div>
 							</div>
 
@@ -556,7 +556,7 @@
 								<div class="input-group date">
 									<input type="text" class="form-control" ng-model="dadosColaborador.dta_aso" name="dta_aso">
 									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
-								
+									
 									<div class="col-lg-3">
 										<span class="pull-left btn btn-default btn-file">
 										Selecionar... <input type="file">
