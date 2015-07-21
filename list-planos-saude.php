@@ -21,7 +21,7 @@
 			data-show-pagination-switch="true">
 			<thead>
 				<tr>
-					<th data-visible="true" data-sortable="true" data-field="cod_empreendimento">Empresa</th>
+					<th data-visible="true" data-sortable="true" data-field="nme_fantasia">Empresa</th>
 					<th data-visible="true" data-sortable="true" data-field="nme_plano_saude">Plano de Saúde</th>
 					<th data-visible="true" data-sortable="true" data-field="vlr_custo_empresa">Valor empresa</th>
 					<th data-visible="true" data-sortable="true" data-field="vlr_custo_colaborador">Valor colaborador</th>
