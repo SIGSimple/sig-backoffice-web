@@ -3,7 +3,7 @@
 <div class="panel" ng-controller="ListPlanosdeSaudeCtrl">
 	<div class="panel-body">
 		<div id="toolbar">
-			<a href="?page=form-new-colaborador" class="btn btn-success btn-labeled fa fa-plus-square">
+			<a href="?page=form-new-planos-saude" class="btn btn-success btn-labeled fa fa-plus-square">
 				Cadastrar Novo
 			</a>
 		</div>
