@@ -16,7 +16,7 @@ if($data) {
 	// Se o usuário é um colaborador
 	if($user->cod_colaborador && $user->cod_colaborador > 0) {
 		if( $_SERVER['HTTP_HOST'] === "localhost" )
-			$user->pth_arquivo_foto = str_replace("/home/consorciointermultip/public_html/files/", "../sig-backoffice-files/", $user->pth_arquivo_foto);
+			$user->pth_arquivo_foto = str_replace("/home/consorciointermultip/public_html/files/docs", "../sig-backoffice-files/", $user->pth_arquivo_foto);
 		else
 			$user->pth_arquivo_foto = str_replace("/home/consorciointermultip/public_html/", "", $user->pth_arquivo_foto);
 		
