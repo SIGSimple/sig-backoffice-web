@@ -8,6 +8,7 @@ app.controller('ConferenciaDadosPessoaisCtrl', function($scope, $http, UserSrvc)
 		$http.post(baseUrlApi()+'colaborador/conferencia/dados', $scope.colaborador)
 			.success(function(message, status, headers, config){
 				$("button.btn-success.fa-save").button('reset');
+				showNotification("Enviado!", message, null, 'page', status);
 			})
 			.error(function(message, status, headers, config){
 				$("button.btn-success.fa-save").button('reset');
@@ -23,10 +24,34 @@ app.controller('ConferenciaDadosPessoaisCtrl', function($scope, $http, UserSrvc)
 		$("#modalAddEmail").modal("show");	
 	}
 
+	$scope.abreModalDependente = function(isEditMode, item) {
+		if(isEditMode){
+			$scope.tmpModal = angular.copy(item);
+			$scope.tmpModal.$$hashKey = item.$$hashKey;
+		}
+		$("#modalAddDependente").modal("show");	
+	}
+
 	$scope.addTelefone = function(){
 		$scope.colaborador.cooperator.telefones.push( angular.copy($scope.tmpModal) );
 		$scope.tmpModal = {};
 		$("#modalAddTelefone").modal("hide");
+	}
+
+	$scope.addDependente = function(){		
+		if($scope.tmpModal.$$hashKey == "") {
+			$scope.colaborador.cooperator.dependentes.push( angular.copy($scope.tmpModal) );
+		}
+		else {
+			for (var i = 0; i < $scope.colaborador.cooperator.dependentes.length; i++) {
+				if($scope.colaborador.cooperator.dependentes[i].$$hashKey == $scope.tmpModal.$$hashKey)
+					$scope.colaborador.cooperator.dependentes[i] = angular.copy($scope.tmpModal);
+			};
+		}
+
+		$scope.tmpModal = {};
+		resetSwitchInput();
+		$("#modalAddDependente").modal("hide");
 	}
 
 	$scope.desabilitaItem = function(item) {
@@ -66,6 +91,22 @@ app.controller('ConferenciaDadosPessoaisCtrl', function($scope, $http, UserSrvc)
 			});
 	}
 
+	function loadTiposDependencia() {
+		$http.get(baseUrlApi()+'tipos/dependencia')
+			.success(function(items){
+				$scope.tiposDependencia = items;
+			});
+	}
+
+	function loadPlanosSaude() {
+		$http.get(baseUrlApi()+'planos-saude?nolimit=1')
+			.success(function(items){
+				$scope.planosSaude = items.rows;
+			});
+	}
+
 	loadTiposTelefone();
+	loadTiposDependencia();
+	loadPlanosSaude();
 	habilitaTodosOsItens();
 });

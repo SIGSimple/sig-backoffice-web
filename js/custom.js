@@ -8,9 +8,7 @@ $(function(){
 		autoclose: true
 	});
 
-	$.each($('.input-switch'), function(i, el){
-		new Switchery(el);
-	});
+	resetSwitchInput();
 
 	$('[data-toggle="tooltip"]').tooltip();
 
@@ -20,6 +18,13 @@ $(function(){
 		validating: 'fa fa-refresh'
 	};
 })
+
+function resetSwitchInput() {
+	$("span.switchery").remove();
+	$.each($('.input-switch'), function(i, el){
+		new Switchery(el);
+	});
+}
 
 function showNotification(title, message, icon, container, status, time) {
 	var alertType = "";
@@ -50,7 +55,7 @@ function showNotification(title, message, icon, container, status, time) {
 			break;
 	}
 
-	if(time === 0)
+	if(time === 0 || time == null)
 		time = 5000;
 
 	$.niftyNoty({

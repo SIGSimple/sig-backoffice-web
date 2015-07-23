@@ -55,15 +55,15 @@ unset($_SESSION['user_logged']);
 		<div class="row">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" ng-repeat="user in users">
 				<div class="panel widget">
-					<div class="widget-header bg-{{ (user.flg_sexo == 'F') ? 'pink' : (user.flg_sexo == 'M') ? 'primary' : 'success' }} no-image"></div>
+					<div class="widget-header bg-{{ (user.cod_perfil === 1) ? 'success' : (user.flg_sexo == 'F') ? 'pink' : (user.flg_sexo == 'M') ? 'primary' : 'success' }} no-image"></div>
 					<div class="widget-body text-center">
-						<img class="widget-img img-border img-circle" src="img/{{ (user.flg_sexo == 'F') ? 'av6' : (user.flg_sexo == 'M') ? 'av2' : 'av3' }}.png"></img>
+						<img class="widget-img img-border img-circle" src="{{ (user.pth_arquivo_foto != '') ? user.pth_arquivo_foto : (user.cod_perfil === 1) ? 'img/av3.png' : (user.flg_sexo == 'F') ? 'img/av6.png' : (user.flg_sexo == 'M') ? 'img/av2.png' : 'img/av3.png' }}"></img>
 						<h4 class="mar-no">{{ getFirstAndLastName(user.nme_usuario) }}</h4>
 						<p class="text-muted mar-btm">{{ (user.funcao != null) ? user.funcao.nme_funcao : user.nme_perfil }}</p>
 						<h5 class="text-muted mar-btm text-bold">{{ user.nme_empreendimento }}</h5>
 						<div class="pad-ver">
 							<a href="login.php?cod_usuario={{ user.cod_usuario }}&cod_perfil={{ user.cod_perfil }}&cod_empreendimento={{ user.cod_empreendimento }}" 
-								class="btn btn-{{ (user.flg_sexo == 'F') ? 'pink' : (user.flg_sexo == 'M') ? 'primary' : 'success' }}">
+								class="btn btn-{{ (user.cod_perfil === 1) ? 'success' : (user.flg_sexo == 'F') ? 'pink' : (user.flg_sexo == 'M') ? 'primary' : 'success' }}">
 								Utilizar este perfil
 							</a>
 

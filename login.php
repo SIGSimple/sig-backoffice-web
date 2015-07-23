@@ -15,6 +15,11 @@ if($data) {
 
 	// Se o usuário é um colaborador
 	if($user->cod_colaborador && $user->cod_colaborador > 0) {
+		if( $_SERVER['HTTP_HOST'] === "localhost" )
+			$user->pth_arquivo_foto = str_replace("/home/consorciointermultip/public_html/files/", "../sig-backoffice-files/", $user->pth_arquivo_foto);
+		else
+			$user->pth_arquivo_foto = str_replace("/home/consorciointermultip/public_html/", "", $user->pth_arquivo_foto);
+		
 		// Recupera as informações do colaborador
 		$url = 'http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/colaboradores?col->cod_colaborador='.$user->cod_colaborador;
 		$data = HttpUtil::doGetRequest($url, null);
@@ -55,6 +60,7 @@ if($data) {
 	}
 
 	$user_values = array('user' => $user, 'cooperator' => $cooperator);
+
 	session_start();
 	$_SESSION['user_logged'] = $user_values;
 	header('location: home');

@@ -10,6 +10,14 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 		$http.get(baseUrlApi()+'usuarios?nme_login='+$scope.dadosLogin.nme_login+'&nme_senha='+$scope.dadosLogin.nme_senha)
 			.success(function(items) {
 				$scope.users = items.rows;
+
+				$.each($scope.users, function(index, user) {
+					if(window.location.hostname == "localhost")
+						$scope.users[index]['pth_arquivo_foto'] = user.pth_arquivo_foto.replace('/home/consorciointermultip/public_html/files/', '../sig-backoffice-files/');
+					else
+						$scope.users[index]['pth_arquivo_foto'] = user.pth_arquivo_foto.replace('/home/consorciointermultip/public_html/', '');
+				});
+
 				$scope.flg_senha_bloqueada = ($scope.users[0].flg_senha_bloqueada == 1);
 				if($scope.users[0].cod_colaborador != null && $scope.users[0].cod_colaborador > 0)
 					getUltimaFuncao();
@@ -28,7 +36,7 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 				.success(function(message, status) {
 					$scope.errorMessage = "";
 					$scope.flg_senha_bloqueada 	= false;
-					showNotification(null, message, null, 'floating', status);
+					showNotification("Pronto!", message, null, 'floating', status);
 				})
 				.error(function(message, status, headers, config){
 					if(status === 404)

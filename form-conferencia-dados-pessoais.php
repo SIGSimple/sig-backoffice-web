@@ -11,7 +11,7 @@
 				</div>
 
 				<div class="col-lg-5">
-					<input class="form-control" ng-model="colaborador.novosDados.num_matricula" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+					<!-- <input class="form-control" ng-model="colaborador.novosDados.num_matricula" placeholder="Caso haja alteração ou inconsistência, informe aqui"> -->
 				</div>
 			</div>
 
@@ -27,7 +27,7 @@
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Função</label>
+				<label class="col-lg-2 control-label">Função CTPS</label>
 				<div class="col-lg-5">
 					<input class="form-control" disabled="disabled" value="{{ colaborador.cooperator.funcao.nme_funcao }}">
 				</div>
@@ -44,18 +44,14 @@
 				</div>
 
 				<div class="col-lg-5">
-					<input class="form-control" ng-model="colaborador.novosDados.nme_departamento" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+					<!-- <input class="form-control" ng-model="colaborador.novosDados.nme_departamento" placeholder="Caso haja alteração ou inconsistência, informe aqui"> -->
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Local de Trabalho</label>
-				<div class="col-lg-5">
-					<input class="form-control" disabled="disabled" value="{{ colaborador.cooperator.nme_local_trabalho }}">
-				</div>
-
-				<div class="col-lg-5">
-					<input class="form-control" ng-model="colaborador.novosDados.nme_local_trabalho" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+				<div class="col-lg-10">
+					<input class="form-control" ng-model="colaborador.novosDados.nme_local_trabalho" placeholder="Digite aqui o endereço do seu local de trabalho">
 				</div>
 			</div>
 
@@ -66,7 +62,7 @@
 				</div>
 
 				<div class="col-lg-5">
-					<input class="form-control" ng-model="colaborador.novosDados.nme_grade_horario" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+					<input class="form-control" ng-model="colaborador.novosDados.nme_grade_horario" placeholder="Coloque aqui o seu horário efetivo de trabalho">
 				</div>
 			</div>
 
@@ -82,7 +78,7 @@
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">CTPS</label>
+				<label class="col-lg-2 control-label">No. CTPS</label>
 				<div class="col-lg-5">
 					<input class="form-control" disabled="disabled" value="{{ colaborador.cooperator.num_ctps }}">
 				</div>
@@ -93,7 +89,7 @@
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Serie CTPS</label>
+				<label class="col-lg-2 control-label">No. Serie CTPS</label>
 				<div class="col-lg-5">
 					<input class="form-control" disabled="disabled" value="{{ colaborador.cooperator.num_serie_ctps }}">
 				</div>
@@ -313,7 +309,7 @@
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Categoria</label>
+				<label class="col-lg-2 control-label">Categoria CNH</label>
 				<div class="col-lg-5">
 					<input class="form-control" disabled="disabled" value="{{ colaborador.cooperator.nme_categoria_cnh }}">
 				</div>
@@ -324,7 +320,7 @@
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Validade</label>
+				<label class="col-lg-2 control-label">Validade CNH</label>
 				<div class="col-lg-5">
 					<input class="form-control" disabled="disabled" value="{{ colaborador.cooperator.dta_validade_cnh | date : 'dd/MM/yyyy' }}">
 				</div>
@@ -363,11 +359,11 @@
 				</div>
 
 				<div class="col-lg-4">
-					<input class="form-control" ng-model="colaborador.novosDados.num_agencia" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+					<input class="form-control" ng-model="colaborador.novosDados.num_agencia" placeholder="Número da Agência">
 				</div>
 
 				<div class="col-lg-1">
-					<input class="form-control" ng-model="colaborador.novosDados.num_digito_agencia" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+					<input class="form-control" ng-model="colaborador.novosDados.num_digito_agencia" placeholder="Dígito">
 				</div>
 			</div>
 
@@ -378,11 +374,11 @@
 				</div>
 
 				<div class="col-lg-4">
-					<input class="form-control" ng-model="colaborador.novosDados.num_conta_corrente" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+					<input class="form-control" ng-model="colaborador.novosDados.num_conta_corrente" placeholder="Número da Conta-Corrente/Poupança/Salário">
 				</div>
 
 				<div class="col-lg-1">
-					<input class="form-control" ng-model="colaborador.novosDados.num_digito_conta_corrente" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+					<input class="form-control" ng-model="colaborador.novosDados.num_digito_conta_corrente" placeholder="Dígito">
 				</div>
 			</div>
 
@@ -393,23 +389,23 @@
 				</div>
 
 				<div class="col-lg-5">
-					<input class="form-control" ng-model="colaborador.novosDados.nme_sindicato" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+					<!-- <input class="form-control" ng-model="colaborador.novosDados.nme_sindicato" placeholder="Caso haja alteração ou inconsistência, informe aqui"> -->
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Entidade</label>
-				<div class="col-lg-5">
+				<label class="col-lg-2 control-label">Entidade de Classe</label>
+				<div class="col-lg-4">
 					<input class="form-control" disabled="disabled" value="{{ colaborador.cooperator.nme_entidade }}">
 				</div>
 
-				<div class="col-lg-5">
-					<input class="form-control" ng-model="colaborador.novosDados.nme_entidade" placeholder="Caso haja alteração ou inconsistência, informe aqui">
+				<div class="col-lg-6">
+					<input class="form-control" ng-model="colaborador.novosDados.nme_entidade" placeholder="Se pertencer a alguma entidade de classe, informe aqui (ex. CREA)">
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Número</label>
+				<label class="col-lg-2 control-label">No. Entidade Classe</label>
 				<div class="col-lg-5">
 					<input class="form-control" disabled="disabled" value="{{ colaborador.cooperator.num_entidade }}">
 				</div>
@@ -493,12 +489,12 @@
 						<tbody>
 							<tr ng-repeat="dependente in colaborador.cooperator.dependentes | filter: { flg_removido: false }">
 								<td class="text-middle">{{ dependente.nme_dependente }}</td>
-								<td class="text-center text-middle">{{ dependente.nme_tipo_dependencia }}</td>
+								<td class="text-center text-middle">{{ (dependente.tipoDependencia) ? dependente.tipoDependencia.nme_tipo_dependencia : dependente.nme_tipo_dependencia }}</td>
 								<td class="text-center text-middle">{{ dependente.dta_nascimento | date : 'dd/MM/yyyy'}}</td>
-								<td class="text-center text-middle">{{ (dependente.flg_plano_saude === '1') ? dependente.nme_plano_saude : 'Não optante' }}</td>
+								<td class="text-center text-middle">{{ ((dependente.planoSaude) ? dependente.planoSaude.nme_plano_saude : (dependente.nme_plano_saude !== null) ? dependente.nme_plano_saude : 'Não optante') }}</td>
 								<td class="text-center text-middle">{{ (dependente.flg_curso_superior) ? 'Sim' : 'Não' }}</td>
 								<td class="text-center text-middle">
-									<button type="button" class="btn btn-xs btn-warning" ng-click="editDependente(dependente)">
+									<button type="button" class="btn btn-xs btn-warning" ng-click="abreModalDependente(true, dependente)">
 										<i class="fa fa-edit"></i>
 									</button>
 								</td>
@@ -569,7 +565,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="modalAddEmailLabel">Inclusão do Email</h4>
+					<h4 class="modal-title" id="modalAddEmailLabel">Inclusão de Email</h4>
 				</div>
 
 				<form class="form form-horizontal" role="form">
@@ -586,6 +582,68 @@
 						<div class="pull-right">
 							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
 							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addEmail()">Salvar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAddDependente" tabindex="-1" role="dialog" aria-labelledby="modalAddDependenteLabel">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalAddDependenteLabel">Inclusão de Dependente</h4>
+				</div>
+
+				<form class="form form-horizontal" role="form">
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Nome</label>
+							<div class="col-lg-9">
+								<input class="form-control" ng-model="tmpModal.nme_dependente">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Grau de Parentesco</label>
+							<div class="col-lg-3">
+								<select class="form-control" ng-model="tmpModal.tipoDependencia" ng-options="item as item.nme_tipo_dependencia for item in tiposDependencia"></select>
+							</div>
+
+							<label class="col-lg-2 control-label">Nascimento</label>
+							<div class="col-lg-4">
+								<div class="input-group date">
+									<input type="text" class="form-control" ng-model="tmpModal.dta_nascimento">
+									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Plano de Saúde</label>
+							<div class="col-lg-9">
+								<select class="form-control" ng-model="tmpModal.planoSaude" ng-options="item as (item.nme_fantasia + ' - ' + item.nme_plano_saude) for item in planosSaude"></select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Cursa Faculdade?</label>
+							<div class="col-lg-4">
+								<div class="checkbox">
+									<label class="form-checkbox form-normal form-primary form-text {{ (tmpModal.flg_curso_superior) ? 'active' : '' }}">
+										<input type="checkbox" ng-model="tmpModal.flg_curso_superior">
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer clearfix">
+						<div class="pull-right">
+							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addDependente()">Salvar</button>
 						</div>
 					</div>
 				</form>
