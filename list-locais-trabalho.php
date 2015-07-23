@@ -2,6 +2,11 @@
 <!--===================================================-->
 <div class="panel" ng-controller="ListLocaisTrabalhoCtrl">
 	<div class="panel-body">
+		<div id="toolbar">
+			<a href="?page=form-new-colaborador" class="btn btn-success btn-labeled fa fa-plus-square">
+				Cadastrar Novo
+			</a>
+		</div>
 		<table class="bootstrap-table" 
 			data-toggle="table"
 			data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/locais-trabalho.json"
@@ -18,7 +23,9 @@
 				<tr>
 					<th data-visible="true" data-sortable="true" data-field="nme_local_trabalho">Nome</th>
 					<th data-visible="true" data-sortable="true" data-field="dsc_complemento">Complemento</th>
-					<th data-visible="true" data-sortable="true" data-field="nme_colaborador">Representante</th>
+					<th data-visible="true" data-sortable="true" data-field="nme_endereco">Endereço</th>
+					<th data-visible="true" data-sortable="true" data-field="nme_bairro">Bairro</th>
+					<th data-visible="true" data-sortable="true" data-field="nme_complemento_endereco">Complemento do Endereço</th>
 				</tr>
 			</thead>
 		</table>

@@ -2,6 +2,11 @@
 <!--===================================================-->
 <div class="panel" ng-controller="ListGradesHorarioCtrl">
 	<div class="panel-body">
+		<div id="toolbar">
+			<a href="?page=form-new-colaborador" class="btn btn-success btn-labeled fa fa-plus-square">
+				Cadastrar Novo
+			</a>
+		</div>
 		<table class="bootstrap-table" 
 			data-toggle="table"
 			data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/grades-horario.json"
