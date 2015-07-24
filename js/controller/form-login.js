@@ -12,7 +12,7 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 				$scope.users = items.rows;
 
 				$.each($scope.users, function(index, user) {
-					if(user.pth_arquivo_foto != "") {
+					if(user.pth_arquivo_foto != null && user.pth_arquivo_foto != "") {
 						if(window.location.hostname == "localhost")
 							$scope.users[index]['pth_arquivo_foto'] = user.pth_arquivo_foto.replace('/home/consorciointermultip/public_html/files/docs/', '../sig-backoffice-files/');
 						else

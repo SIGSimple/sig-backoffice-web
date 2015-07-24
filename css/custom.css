@@ -15,3 +15,7 @@
 .widget-header.no-image {
 	min-height: inherit;
 }
+
+.img-profile-table {
+	max-height: 50px !important;
+}
