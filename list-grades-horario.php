@@ -3,7 +3,7 @@
 <div class="panel" ng-controller="ListGradesHorarioCtrl">
 	<div class="panel-body">
 		<div id="toolbar">
-			<a href="?page=form-new-grades-horario" class="btn btn-success btn-labeled fa fa-plus-square">
+			<a href="form-new-grades-horario" class="btn btn-success btn-labeled fa fa-plus-square">
 				Cadastrar Novo
 			</a>
 		</div>

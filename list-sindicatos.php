@@ -3,7 +3,7 @@
 <div class="panel" ng-controller="ListSindicatosCtrl">
 	<div class="panel-body">
 		<div id="toolbar">
-			<a href="?page=form-new-sindicatos" class="btn btn-success btn-labeled fa fa-plus-square">
+			<a href="form-new-sindicatos" class="btn btn-success btn-labeled fa fa-plus-square">
 				Cadastrar Novo
 			</a>
 		</div>

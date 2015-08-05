@@ -2,6 +2,11 @@
 <!--===================================================-->
 <div class="panel" ng-controller="ListEntidadesCtrl">
 	<div class="panel-body">
+		<div id="toolbar">
+			<a href="form-new-entidades" class="btn btn-success btn-labeled fa fa-plus-square">
+				Cadastrar Novo
+			</a>
+		</div>
 		<table class="bootstrap-table" 
 			data-toggle="table"
 			data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/entidades.json"
