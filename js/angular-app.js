@@ -53,5 +53,5 @@ app.directive('ngEnter', function () {
 });
 
 setTimeout(function() {
-	showNotification('Atenção!!!', 'O sistema está em fase de avaliação, portanto, caso encontre qualquer erro, favor enviar e-mail para <strong>filipe.mendonca.coelho@gmail.com</strong>', null, 'page', 500, 10000);
+	showNotification('Atenção!!!', 'O sistema está em fase de avaliação, portanto, caso encontre qualquer erro, favor enviar e-mail para <strong>filipe.coelho@intermultiplas.com.br</strong>', null, 'page', 500, 10000);
 }, 3000);

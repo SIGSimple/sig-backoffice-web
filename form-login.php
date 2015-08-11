@@ -78,7 +78,7 @@ unset($_SESSION['user_logged']);
 		<div class="pull-right">
 			<button type="button" class="btn btn-default text-uppercase btn-labeled fa fa-times-circle" ng-show="users.length > 0" ng-click="cancelLogin()">Cancelar</button>
 			<button type="button" class="btn btn-mint text-uppercase btn-labeled fa fa-unlock" ng-show="( users.length > 0 && flg_senha_bloqueada )" ng-click="desbloquearSenha()">Desbloquear senha</button>
-			<button type="button" class="btn btn-success text-uppercase btn-labeled fa fa-sign-in" ng-show="( users.length === 0 && flg_senha_bloqueada )" ng-click="login()">Entrar</button>
+			<button type="button" class="btn btn-success text-uppercase btn-labeled fa fa-sign-in" ng-show="( users.length === 0 && flg_senha_bloqueada )" ng-click="login()" data-loading-text="Aguarde...">Entrar</button>
 		</div>
 	</div>
 </div>

@@ -6,6 +6,7 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 	$scope.flg_senha_bloqueada 	= true;
 
 	$scope.login = function() {
+		$("button.btn.fa-sign-in").button("loading");
 		$scope.errorMessage = "";
 		$http.get(baseUrlApi()+'usuarios?nme_login='+$scope.dadosLogin.nme_login+'&nme_senha='+$scope.dadosLogin.nme_senha)
 			.success(function(items) {
@@ -23,8 +24,10 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 				$scope.flg_senha_bloqueada = ($scope.users[0].flg_senha_bloqueada == 1);
 				if($scope.users[0].cod_colaborador != null && $scope.users[0].cod_colaborador > 0)
 					getUltimaFuncao();
+				$("button.btn.fa-sign-in").button("reset");
 			})
 			.error(function(message, status, headers, config){
+				$("button.btn.fa-sign-in").button("reset");
 				if(status === 404)
 					$scope.errorMessage = message;
 				else
