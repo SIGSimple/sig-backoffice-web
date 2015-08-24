@@ -24,7 +24,9 @@
 						<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 					</div>
 				</div>
+			</div>
 				
+			<div class="form-group">
 				<label class="col-lg-2 control-label">Data de Vencimento</label>
 				<div class="col-lg-2">
 					<div class="input-group date">
@@ -32,9 +34,7 @@
 						<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 					</div>
 				</div>
-			</div>
 			
-			<div class="form-group">
 				<label class="col-lg-2 control-label">Data de Pagamento</label>
 				<div class="col-lg-2">
 					<div class="input-group date">
@@ -42,7 +42,9 @@
 						<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 					</div>
 				</div>
+			</div>
 
+			<div class="form-group">
 				<label class="col-lg-2 control-label">Número do Banco</label> 
 				<div class="col-lg-4">
 					<input type="text" class="form-control" ng-model="financeiro.num_documento_banco">
@@ -64,9 +66,9 @@
 			</div>
 
 			<div class="form-group">
-				<label class="radio-inline"><input type="radio" name="optradio">Empresa</label>
-				<label class="radio-inline"><input type="radio" name="optradio">Colaborador</label>
-				<label class="radio-inline"><input type="radio" name="optradio">Terceiros</label>
+				<label class="radio-inline"><input type="radio" ng-click="favorecido = 'empresas'" ng-checked="(favorecido == 'empresas')">Empresa</label>
+				<label class="radio-inline"><input type="radio" ng-click="favorecido = 'colaboradores'" ng-checked="(favorecido == 'colaboradores')">Colaborador</label>
+				<label class="radio-inline"><input type="radio" ng-click="favorecido = 'terceiros'" ng-checked="(favorecido == 'terceiros')">Terceiros</label>
 				<div class="col-lg-2">
 				</div>
 			</div>
@@ -75,9 +77,9 @@
 				<label class="col-lg-2 control-label">Favorecido</label>
 				<div class="col-lg-4">
 					<div class="input-group">
-						<input type="text" class="form-control" readonly="readonly">
+						<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.favorecido.label }}">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" ng-click="abreModal('', '')">
+							<button class="btn btn-default" type="button" ng-click="abreModal('FAVORECIDO')">
 								<i class="fa fa-search"></i>
 							</button>
 						</span>
@@ -86,9 +88,9 @@
 			</div>
 
 			<div class="form-group">
-				<label class="radio-inline"><input type="radio" name="optradio">Empresa</label>
-				<label class="radio-inline"><input type="radio" name="optradio">Colaborador</label>
-				<label class="radio-inline"><input type="radio" name="optradio">Terceiros</label>
+				<label class="radio-inline"><input type="radio" ng-click="titularMovimento = 'empresas'" ng-checked="(titularMovimento == 'empresas')">Empresa</label>
+				<label class="radio-inline"><input type="radio" ng-click="titularMovimento = 'colaboradores'" ng-checked="(titularMovimento == 'colaboradores')">Colaborador</label>
+				<label class="radio-inline"><input type="radio" ng-click="titularMovimento = 'terceiros'" ng-checked="(titularMovimento == 'terceiros')">Terceiros</label>
 				<div class="col-lg-2">
 				</div>
 			</div>
@@ -97,9 +99,9 @@
 				<label class="col-lg-2 control-label">Titular do Movimento</label>
 				<div class="col-lg-4">
 					<div class="input-group">
-						<input type="text" class="form-control" readonly="readonly" value="{{ financeiro.terceiro.cod_terceiro }}">
+						<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.titularMovimento.label }}">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" ng-click="abreModal('terceiros', 'terceiro')">
+							<button class="btn btn-default" type="button" ng-click="abreModal('TITULAR_MOVIMENTO')">
 								<i class="fa fa-search"></i>
 							</button>
 						</span>
@@ -117,31 +119,40 @@
 
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Valor Previsto</label> 
-				<div class="col-lg-3">
+				<div class="col-lg-2">
 					<input type="text" class="form-control" ng-model="financeiro.vlr_previsto">
 				</div>
 
 				<label class="col-lg-2 control-label">Valor Realizado</label> 
-				<div class="col-lg-3">
+				<div class="col-lg-2">
 					<input type="text" class="form-control" ng-model="financeiro.vlr_realizado">
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="comment">Observações</label>
-				<textarea class="form-control" rows="5" id="comment"></textarea>
+				<label class="col-lg-2 control-label">Observações</label>
+				<div class="col-lg-6">
+					<textarea class="form-control" rows="5"></textarea>
+				</div>
 			</div>
 
 			<div class="form-group">
-				<h3>Anexos</h3>
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>Nome do Arquivo</th>        				
-							<th><button>Upload</button></th>
-						</tr>
-					</thead>
-				</table>
+				<label class="col-lg-2 control-label">Anexos</label> 
+				<div class="col-lg-6">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Nome do Arquivo</th>        				
+								<th>
+									<div class="col-lg-3">
+										<span class="pull-left btn btn-default btn-file">
+										Selecionar... <input type="file">
+										</span>
+								</th>		
+							</tr>
+						</thead>
+					</table>
+				</div>
 			</div>
 		</div>
 
