@@ -108,7 +108,7 @@
 					</div>
 				</div>
 			</div>
-
+			
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Origem Despesa</label>
 				<div class="col-lg-2">
@@ -116,7 +116,7 @@
 					</select>
 				</div>
 			</div>
-
+			
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Valor Previsto</label> 
 				<div class="col-lg-2">
