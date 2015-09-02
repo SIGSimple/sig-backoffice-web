@@ -3,8 +3,13 @@
 		<div class="panel-body">
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Número da Nota/Fatura</label> 
-				<div class="col-lg-4">
+				<div class="col-lg-1">
 					<input type="text" class="form-control" ng-model="financeiro.num_nota_fatura">
+				</div>
+
+				<label class="col-lg-2 control-label">Número do Banco</label> 
+				<div class="col-lg-1">
+					<input type="text" class="form-control" ng-model="financeiro.num_documento_banco">
 				</div>
 			</div>
 
@@ -43,21 +48,22 @@
 					</div>
 				</div>
 			</div>
-
+		
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Número do Banco</label> 
+				<label class="col-lg-2 control-label">Natureza</label>
 				<div class="col-lg-4">
-					<input type="text" class="form-control" ng-model="financeiro.num_documento_banco">
+					<div class="input-group">
+						<input type="text" class="form-control" readonly="readonly" value="{{ cadastroNatureza.financeiro.cod_natureza_operacao }}">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" ng-click="abreModal('financeiros', 'financeiro')">
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Natureza</label>
-				<div class="col-lg-2">
-					<select class="form-control" ng-model="financeiro.cod_natureza_operacao">
-					</select>
-				</div>
-
 				<label class="col-lg-2 control-label">Conta Contábil</label>
 				<div class="col-lg-2">
 					<select class="form-control" ng-model="financeiro.cod_conta_contabil">
