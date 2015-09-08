@@ -713,7 +713,7 @@
 							<label class="col-lg-3 control-label">Motivo</label>
 							<div class="col-lg-5">
 								<select class="form-control" ng-model="tmpModal.motivoAlteracaoFuncao" ng-options="item as item.nme_motivo_alteracao_funcao for item in motivosAlteracaoFuncao"></select>
-							</div> 
+							</div>
 						</div>
 
 						<div class="form-group">
