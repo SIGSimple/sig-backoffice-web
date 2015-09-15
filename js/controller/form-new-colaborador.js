@@ -47,14 +47,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		num_matricula: "",
 		nme_colaborador: "",
 		flg_portador_necessidades_especiais: 0,
-		cod_empresa_contratante: 0,
-		cod_contrato: 0,
-		cod_contrato: 0,
-		cod_regime_contratacao: 0,
 		cod_departamento: 0,
 		flg_cm: 0,
-		cod_local_trabalho: 0,
-		cod_grade_horario: 0,
 		flg_ativo: 0,
 		dta_admissao: "",
 		dta_demissao: "",
@@ -89,7 +83,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		num_digito_agencia: "",
 		num_conta_corrente: "",
 		num_digito_conta_corrente: "",
-		cod_sindicato: 0,
 		pth_arquivo_cnh: "",
 		pth_arquivo_rg: "",
 		pth_arquivo_foto: "",
@@ -97,7 +90,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		pth_arquivo_entidade: "",
 		pth_arquivo_curriculo: "",
 		pth_arquivo_reservista: "",
-		cod_entidade: 0,
 		num_entidade: ""
 	};
 	$scope.motivosAlteracaoFuncao = [];
@@ -166,7 +158,28 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	// Definição de funções de utilização da tela
 	$scope.validateFieldValues = function() {
-		console.log($scope.dadosColaborador);
+		$scope.dadosColaborador.flg_trabalho_fim_semana 			= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_trabalho_feriado 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_ajusta_folha_ponto 				= ($('.input-switch[ng-model="dadosColaborador.flg_ajusta_folha_ponto"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_ensino_superior 				= ($('.input-switch[ng-model="dadosColaborador.flg_ensino_superior"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_portador_necessidades_especiais = ($('.input-switch[ng-model="dadosColaborador.flg_portador_necessidades_especiais"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_ativo 							= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
+
+		$http.post(baseUrlApi()+'colaborador/new', $scope.dadosColaborador)
+			.success(function(message, status, headers, config){
+				console.log(message, status, headers, config);
+			})
+			.error(function(message, status, headers, config){
+				if(status == 406){
+					// Do anything
+				}
+				else {
+					// Do anything else
+				}
+
+				console.log(message, status, headers, config);
+			});
 	}
 
 	$scope.getCidades = function(el_destino) {
@@ -280,6 +293,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				$scope.departamentos = items.rows;
 			});
 	}
+
 
 	function loadOrigens() {
 		$http.get(baseUrlApi()+'origens?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
