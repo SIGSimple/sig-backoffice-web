@@ -84,30 +84,30 @@
 								</div>
 
 							</div>
-
+							
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Hora Extra?</label>
 								<div class="col-lg-1">
 									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_hora_extra" name="flg_hora_extra">
 								</div>
-
+								
 								<label class="col-lg-1 control-label">Trabalho de Fim de Semana?</label>
 								<div class="col-lg-1">
 									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_fim_semana" name="flg_trabalho_fim_semana">
 								</div>
-
+								
 								<label class="col-lg-1 control-label">Trabalho Feriado?</label>
 								<div class="col-lg-1">
 									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_feriado" name="flg_trabalho_feriado">
 								</div>
-
+								
 								<label class="col-lg-1 control-label">Folha de Ponto?</label>
 								<div class="col-lg-1">
 									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ajusta_folha_ponto" name="flg_ajusta_folha_ponto">
 								</div>
 							</div>
 						</fieldset>
-
+						
 						<fieldset>
 							<legend>Moradia</legend>
 
@@ -244,11 +244,7 @@
 
 							<label class="col-lg-2 control-label">Regime de Contratação</label>
 							<div class="col-lg-1">
-								<select class="form-control"  ng-model="dadosColaborador.dsc_regime_contratacao" name="dsc_regime_contratacao">
-									<option value="C" label="CLT"></option>
-									<option value="E" label="Estagiário"></option>
-									<option value="M" label="Menor Aprendiz"></option> 
-									<option value="P" label="PJ"></option>
+								<select class="form-control"  ng-model="dadosColaborador.cod_regime_contratacao" ng-options="item.cod_regime_contratacao as item.dsc_regime_contratacao for item in regimesContratacao">
 								</select>
 							</div>
 						</div>
@@ -267,21 +263,8 @@
 							</div>
 
 							<label class="col-lg-2 control-label">Departamento</label>
-							<div class="col-lg-1">
-								<select class="form-control"  ng-model="dadosColaborador.nme_departamento" name="nme_departamento">
-									<option value="AL" label="AL"></option>
-									<option value="BQ" label="BQ"></option>
-									<option value="DEP" label="DEP"></option> 
-									<option value="DES" label="DES"></option>
-									<option value="DGO" label="DGO"></option>
-									<option value="DOF" label="DOF"></option>
-									<option value="GEO" label="GEO"></option>
-									<option value="OM" label="OM"></option>
-									<option value="PJU" label="PJU"></option>
-									<option value="SCG" label="SCG"></option>
-									<option value="SEC" label="SEC"></option>
-									<option value="SGA" label="SGA"></option>
-									<option value="SUP" label="SUP"></option>
+							<div class="col-lg-2">
+								<select class="form-control" ng-model="dadosColaborador.cod_departamento" name="cod_departamento" ng-options="item.cod_departamento as item.sgl_departamento for item in departamentos">
 								</select>
 							</div>
 						</div>

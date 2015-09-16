@@ -47,14 +47,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		num_matricula: "",
 		nme_colaborador: "",
 		flg_portador_necessidades_especiais: 0,
-		cod_empresa_contratante: 0,
-		cod_contrato: 0,
-		cod_contrato: 0,
-		cod_regime_contratacao: 0,
 		cod_departamento: 0,
 		flg_cm: 0,
-		cod_local_trabalho: 0,
-		cod_grade_horario: 0,
 		flg_ativo: 0,
 		dta_admissao: "",
 		dta_demissao: "",
@@ -84,12 +78,11 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		nme_categoria_cnh: "",
 		dta_validade_cnh: "",
 		flg_sexo: "",
-		cod_banco: 0,
+		banco: {},
 		num_agencia: "",
 		num_digito_agencia: "",
 		num_conta_corrente: "",
 		num_digito_conta_corrente: "",
-		cod_sindicato: 0,
 		pth_arquivo_cnh: "",
 		pth_arquivo_rg: "",
 		pth_arquivo_foto: "",
@@ -97,7 +90,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		pth_arquivo_entidade: "",
 		pth_arquivo_curriculo: "",
 		pth_arquivo_reservista: "",
-		cod_entidade: 0,
 		num_entidade: ""
 	};
 	$scope.motivosAlteracaoFuncao = [];
@@ -166,237 +158,28 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	// Definição de funções de utilização da tela
 	$scope.validateFieldValues = function() {
-	
-		$("form.form-fields").validate({
-			rules: {
-				num_matricula: {
-					maxlength: 100,
-					number: true,
-					required: true,
-					message: 'Apenas número'
-				},
-				nme_colaborador: {
-					maxlength: 100,
-					required: true
-				},
-				dta_nascimento: {
-					date:true,
-					format: 'DD/MM/YYYY',
-					required: true
-				},
-				flg_sexo: {
-					maxlength: 1,
-					required: true
-				},
-				num_cep: {
-					maxlenght: 10,
-					number: true,
-					required: true
-				},
-				dsc_endereco: {
-					maxlength: 100,
-					required: true
-				},
-				num_endereco: {
-					maxlength: 10,
-					required: true
-				},
-				dsc_complemento: {
-					maxlength: 100,
-					required: true
-				},
-				nme_bairro: {
-					maxlength: 100,
-					required: true
-				},
-				cod_estado_moradia: {
-					maxlength: 1,
-					required: true
-				},
-				cod_cidade_moradia: {
-					maxlength: 1,
-					required: true
-				},
-				cod_estado_naturalidade: {
-					maxlength: 1,
-					required: true
-				},
-				cod_cidade_naturalidade: {
-					maxlength: 1,
-					required: true
-				},
-				tipo_telefone: {
-					maxlength: 1,
-					required: true
-				},
-				num_ddd: {
-					maxlength: 2,
-					number: true,
-					required: true
-				},
-				num_telefone: {
-					maxlength: 11,
-					number: true,
-					required: true
-				},
-				end_email: {
-					maxlength: 100,
-					email: true,
-					required: true
-				},
-				dsc_regime_contratacao: {
-					maxlength: 1,
-					required: true
-				},
-				nme_departamento: {
-					maxlength: 1,
-					required: true
-				},
-				qtd_horas_contratadas: {
-					maxlength: 11,
-					required: true	
-				},
-				dta_admissao: {
-					date:true,
-					format: 'DD/MM/YYYY',
-					required: true
-				},
-				dta_demissao: {
-					date:true,
-					format: 'DD/MM/YYYY',
-					required: true
-				},
-				funcao: {
-					maxlength: 1,
-					required: true
-				},
-				vlr_salario: {
-					maxlength: 7,
-					required: true
-				},
-				motivoAlteracaoFuncao: {
-					maxlength: 1,
-					required: true
-				},
-				dta_alteracao: {
-					date:true,
-					format: 'DD/MM/YYYY',
-					required: true
-				},
-				num_agencia: {
-					maxlength: 10,
-					number: true,
-					required: true
-				},
-				num_digito_agencia:{
-					maxlength: 5,
-					digits: true,
-					required: true
-				},
-				num_conta_corrente:{
-					maxlength: 20,
-					number: true,
-					required: true
-				},	
-				num_digito_conta_corrente: {
-					maxlength: 5,
-					digits: true,
-					required: true
-				},
-					
-				num_rg: {
-					maxlength: 20,
-					number: true,
-					required: true
-				},
-				num_cpf: {
-					maxlength: 20,
-					number: true,
-					required: true
-				},
-				num_pis: {
-					maxlength: 20,
-					number: true,
-					required: true
-				},
-				num_entidade: {
-					maxlength: 20,
-					number: true,
-					required: true
-				},
-				num_ctps: {
-					maxlength: 50,
-					number: true,
-					required: true
-				},
-				num_serie_ctps: {
-					maxlength: 50,
-					number: true,
-					required: true
-				},
-				dta_emissao_ctps: {
-					date:true,
-					format: 'DD/MM/YYYY',
-					required: true
-				},
-				cod_estado_ctps: {
-					maxlength: 1,
-					required: true
-				},
-				num_titulo_eleitor: {
-					maxlength: 20,
-					number: true,
-					required: true
-				},
-				num_zona_eleitoral: {
-					maxlength: 10,
-					number: true,
-					required: true
-				},
-				num_secao_eleitoral: {
-					maxlength: 10,
-					number: true,
-					required: true
-				},
-				num_cnh: {
-					maxlength: 20,
-					number: true,
-					required: true
-				},
-				dta_validade_cnh: {
-					date:true,
-					required: true
-				},
-				nme_categoria_cnh: {
-					maxlength: 10,
-					required: true
-				},
-				num_reservista: {
-					maxlength: 20,
-					required: true
-				},
-				dta_aso: {
-					date: true,
-					format: 'DD/MM/YYYY',
-					required: true
-				},
-			
-			},
-			errorElement: 'span',
-			errorClass: 'help-block',
-			highlight: function(element) {
-				$(element).closest('.form-group').addClass('has-error');
-			},
-			unhighlight: function(element) {
-				$(element).closest('.form-group').removeClass('has-error');
-			},
-			errorPlacement: function(error, element) {
-				if(element.parent('.input-group').length)
-					error.insertAfter(element.parent());
-				else
-					error.insertAfter(element);
-			}
-		});
+		$scope.dadosColaborador.flg_trabalho_fim_semana 			= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_trabalho_feriado 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_ajusta_folha_ponto 				= ($('.input-switch[ng-model="dadosColaborador.flg_ajusta_folha_ponto"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_ensino_superior 				= ($('.input-switch[ng-model="dadosColaborador.flg_ensino_superior"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_portador_necessidades_especiais = ($('.input-switch[ng-model="dadosColaborador.flg_portador_necessidades_especiais"]')[0].checked) ? 1 : 0;
+		$scope.dadosColaborador.flg_ativo 							= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
+
+		$http.post(baseUrlApi()+'colaborador/new', $scope.dadosColaborador)
+			.success(function(message, status, headers, config){
+				console.log(message, status, headers, config);
+			})
+			.error(function(message, status, headers, config){
+				if(status == 406){
+					// Do anything
+				}
+				else {
+					// Do anything else
+				}
+
+				console.log(message, status, headers, config);
+			});
 	}
 
 	$scope.getCidades = function(el_destino) {
@@ -510,6 +293,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				$scope.departamentos = items.rows;
 			});
 	}
+
 
 	function loadOrigens() {
 		$http.get(baseUrlApi()+'origens?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
