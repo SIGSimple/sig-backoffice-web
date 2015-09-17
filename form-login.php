@@ -12,7 +12,7 @@ unset($_SESSION['user_logged']);
 		<div class="form-group">
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-user"></i></div>
-				<input type="text" class="form-control" placeholder="usuário" ng-model="dadosLogin.nme_login" ng-enter="login()">
+				<input type="text" class="form-control" placeholder="Usuário" ng-model="dadosLogin.nme_login" ng-enter="login()">
 			</div>
 		</div>
 
