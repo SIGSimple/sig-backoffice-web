@@ -385,7 +385,7 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Função</label>
 								<div class="col-lg-2">
-									<table class="table table-bordered table-condensed table-hover table-striped">
+									<table class="table table-bordered table-condensed table-hover table-striped" name="funcoes">
 										<thead>
 											<th>Núm./Código</th>
 											<th>Função</th>
@@ -477,7 +477,7 @@
 
 							<div class="element-group">	
 								<div class="col-lg-3">
-									<span class="pull-left btn btn-default btn-file">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_rg">
 									Selecionar... <input type="file">
 									</span>
 								</div>
@@ -494,7 +494,7 @@
 
 							<div class="element-group">	
 								<div class="col-lg-3">
-									<span class="pull-left btn btn-default btn-file">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_cpf">
 									Selecionar... <input type="file">
 									</span>
 								</div>
@@ -511,7 +511,7 @@
 							
 							<div class="element-group">									
 								<div class="col-lg-3">
-									<span class="pull-left btn btn-default btn-file">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_pis">
 									Selecionar... <input type="file">
 									</span>
 								</div>
@@ -599,7 +599,7 @@
 
 							<div class="element-group">											
 								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_titulo_eleitor">
 									Selecionar... <input type="file">
 									</span>
 								</div>
@@ -633,7 +633,7 @@
 
 							<div class="element-group">											
 								<div class="col-lg-1">
-									<span class="pull-left btn btn-default btn-file">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_cnh">
 									Selecionar... <input type="file">
 									</span>
 								</div>
@@ -650,7 +650,7 @@
 
 							<div class="element-group">
 								<div class="col-lg-3">
-									<span class="pull-left btn btn-default btn-file">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_reservista" >
 									Selecionar... <input type="file">
 									</span>
 								</div>
