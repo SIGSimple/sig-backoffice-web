@@ -158,6 +158,9 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	// Definição de funções de utilização da tela
 	$scope.validateFieldValues = function() {
+		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
+		$(".element-group").removeClass("has-error");
+
 		$scope.dadosColaborador.flg_trabalho_fim_semana 			= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
 		$scope.dadosColaborador.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
 		$scope.dadosColaborador.flg_trabalho_feriado 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
@@ -171,8 +174,15 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				console.log(message, status, headers, config);
 			})
 			.error(function(message, status, headers, config){
-				if(status == 406){
-					// Do anything
+				if(status == 406){ // Not-Acceptable
+					$.each(message, function(index, value) {
+						var element = ($("[ng-model='dadosColaborador."+ index +"']").length > 0) ? $("[ng-model='dadosColaborador."+ index +"']") : $("[name='"+ index +"']");
+
+				    	element.attr("data-toggle","tooltip").attr("data-placement","top").attr("title", value).attr("data-original-title", value);
+				    	element.closest(".element-group").addClass("has-error");
+					});
+
+					$('[data-toggle="tooltip"]').tooltip();
 				}
 				else {
 					// Do anything else
