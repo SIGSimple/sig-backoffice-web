@@ -160,6 +160,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.validateFieldValues = function() {
 		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
 		$(".element-group").removeClass("has-error");
+		$("table thead").css("background-color","none").css("color","#515151");
+		$("span").css("border-color","#CDD6E1").css("color","#515151");
 
 		$scope.dadosColaborador.flg_trabalho_fim_semana 			= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
 		$scope.dadosColaborador.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
@@ -178,8 +180,13 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 					$.each(message, function(index, value) {
 						var element = ($("[ng-model='dadosColaborador."+ index +"']").length > 0) ? $("[ng-model='dadosColaborador."+ index +"']") : $("[name='"+ index +"']");
 
-				    	element.attr("data-toggle","tooltip").attr("data-placement","top").attr("title", value).attr("data-original-title", value);
-				    	element.closest(".element-group").addClass("has-error");
+						if(element.is("table"))
+				    		$(element).find("thead").css("background-color","#A94442").css("color","#FFFFFF");
+				    	else if(element.is("span"))
+				    		$(element).css("border-color","#A94442").css("color","#A94442");
+
+			    		element.attr("data-toggle","tooltip").attr("data-placement","top").attr("title", value).attr("data-original-title", value);
+			    		element.closest(".element-group").addClass("has-error");
 					});
 
 					$('[data-toggle="tooltip"]').tooltip();
@@ -251,12 +258,54 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	$scope.addTelefone = function(){
-		$scope.dadosColaborador.telefones.push( angular.copy($scope.tmpModal) );
-		$scope.tmpModal = {};
-		$("#modalAddTelefone").modal("hide");
+		$("#modalAddTelefone .form-group").removeClass("has-error");
+
+		var elTipoTelefone = $("[ng-model='tmpModal.tipoTelefone'] option:selected");
+		var elNumDDD = $("[ng-model='tmpModal.num_ddd']");
+		var elNumTelefone = $("[ng-model='tmpModal.num_telefone']");
+
+		var hasError = false;
+
+		if(elTipoTelefone.val() == "?") {
+			hasError = true;
+			elTipoTelefone.closest(".form-group").addClass("has-error");
+		}
+
+		if(elNumDDD.val().length == 0) {
+			hasError = true;
+			elNumDDD.closest(".form-group").addClass("has-error");
+		}
+
+		if(elNumTelefone.val().length == 0) {
+			hasError = true;
+			elNumTelefone.closest(".form-group").addClass("has-error");
+		}
+
+		if(!hasError) {
+			$scope.dadosColaborador.telefones.push( angular.copy($scope.tmpModal) );
+			$scope.tmpModal = {};
+			$("#modalAddTelefone").modal("hide");
+		}
 	}
 
 	$scope.addEmail = function(){
+		$("#modalAddEmail.form-group").removeClass("has-error");
+
+		var elEndereco = $("[ng-model='tmpModal.end_email'] option:selected");
+
+		var hasError = false;
+
+		if(elTipoTelefone.val() == "?") {
+			hasError = true;
+			elEndereco.closest(".form-group").addClass("has-error");
+		}
+
+		if(!hasError) {
+			$scope.dadosColaborador.emails.push( angular.copy($scope.tmpModal) );
+			$scope.tmpModal = {};
+			$("#modalAddEmail").modal("hide");
+		}
+
 		$scope.dadosColaborador.emails.push( angular.copy($scope.tmpModal) );
 		$scope.tmpModal = {};
 		$("#modalAddEmail").modal("hide");
