@@ -39,71 +39,89 @@
 							<legend>Informações Básicas</legend>
 							
 							<div class="form-group">
-								<label class="col-lg-2 control-label">Matrícula</label> 
-								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula" name="num_matricula" maxlength="100">
+								<div class="element-group">
+									<label class="col-lg-2 control-label">Matrícula</label> 
+									<div class="col-lg-1">
+										<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula"  maxlength="100">
+									</div>
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-lg-2 control-label">Nome</label>
-								<div class="col-lg-6">
-									<input type="text" class="form-control" ng-model="dadosColaborador.nme_colaborador" name="nme_colaborador" maxlength="100">
+								<div class="element-group">
+									<label class="col-lg-2 control-label">Nome</label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control" ng-model="dadosColaborador.nme_colaborador"  maxlength="100">
+									</div>
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-lg-2 control-label">Data de Nascimento</label>
-								<div class="col-lg-2">
-									<div class="input-group date">
-										<input type="text" class="form-control" ng-model="dadosColaborador.dta_nascimento" name="dta_nascimento">
-										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+								<div class="element-group">
+									<label class="col-lg-2 control-label">Data de Nascimento</label>
+									<div class="col-lg-2">
+										<div class="input-group date">
+											<input type="text" class="form-control" ng-model="dadosColaborador.dta_nascimento" >
+											<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+										</div>
+									</div>
+								</div>
+							
+								<div class="element-group">
+									<label class="col-lg-2 control-label">Sexo</label>
+									<div class="col-lg-2">
+										<select class="form-control"  ng-model="dadosColaborador.flg_sexo"  maxlength="1">
+									 		<option value="M" label="Masculino"></option>
+											<option value="F" label="Feminino"></option> 
+										</select> 
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="element-group">
+									<label class="col-lg-2 control-label">Portador Necessidades Especiais?</label>
+									<div class="col-lg-1">
+										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_portador_necessidades_especiais" >
 									</div>
 								</div>
 								
-								<label class="col-lg-2 control-label">Sexo</label>
-								<div class="col-lg-2">
-									<select class="form-control"  ng-model="dadosColaborador.flg_sexo" name="flg_sexo" maxlength="1">
-									 	<option value="M" label="Masculino"></option>
-										<option value="F" label="Feminino"></option> 
-									</select> 
+								<div class="element-group">
+									<label class="col-lg-1 control-label">Ativo?</label>
+									<div class="col-lg-1">
+										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ativo" >
+									</div>
 								</div>
 							</div>
+	
 
-							
 							<div class="form-group">
-								<label class="col-lg-2 control-label">Portador Necessidades Especiais?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_portador_necessidades_especiais" name="flg_portador_necessidades_especiais">
+								<div class="element-group">
+									<label class="col-lg-2 control-label">Hora Extra?</label>
+									<div class="col-lg-1">
+										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_hora_extra" >
+									</div>
 								</div>
 								
+								<div class="element-group">
+									<label class="col-lg-1 control-label">Trabalho de Fim de Semana?</label>
+									<div class="col-lg-1">
+										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_fim_semana" >
+									</div>
+								</div>	
 								
-								<label class="col-lg-1 control-label">Ativo?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ativo" name="flg_ativo">
+								<div class="element-group">
+									<label class="col-lg-1 control-label">Trabalho Feriado?</label>
+									<div class="col-lg-1">
+										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_feriado" >
+									</div>
 								</div>
 
-							</div>
-							
-							<div class="form-group">
-								<label class="col-lg-2 control-label">Hora Extra?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_hora_extra" name="flg_hora_extra">
-								</div>
-								
-								<label class="col-lg-1 control-label">Trabalho de Fim de Semana?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_fim_semana" name="flg_trabalho_fim_semana">
-								</div>
-								
-								<label class="col-lg-1 control-label">Trabalho Feriado?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_feriado" name="flg_trabalho_feriado">
-								</div>
-								
-								<label class="col-lg-1 control-label">Folha de Ponto?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ajusta_folha_ponto" name="flg_ajusta_folha_ponto">
+								<div class="element-group">
+									<label class="col-lg-1 control-label">Folha de Ponto?</label>
+									<div class="col-lg-1">
+										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ajusta_folha_ponto" >
+									</div>
 								</div>
 							</div>
 						</fieldset>
@@ -112,68 +130,89 @@
 							<legend>Moradia</legend>
 
 							<div class="form-group">
-								<label class="col-lg-2 control-label">CEP</label>
-								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_cep" name="num_cep" maxlength="10"> 
+								<div class="element-group">
+									<label class="col-lg-2 control-label">CEP</label>
+									<div class="col-lg-1">
+										<input type="text" class="form-control" ng-model="dadosColaborador.num_cep"  maxlength="10"> 
+									</div>
 								</div>
-								<label class="col-lg-1 control-label">Endereço</label>
-								<div class="col-lg-4">
-									<input type="text" class="form-control" ng-model="dadosColaborador.dsc_endereco" name="dsc_endereco" maxlength="100"> 
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label class="col-lg-2 control-label">Número</label>
-								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_endereco" name="num_endereco" maxlength="10"> 
-								</div>
-								<label class="col-lg-1 control-label">Complemento</label>
-								<div class="col-lg-4">
-									<input type="text" class="form-control" ng-model="dadosColaborador.dsc_complemento" name="dsc_complemento" maxlength="100"> 
+
+								<div class="element-group">
+									<label class="col-lg-1 control-label">Endereço</label>
+									<div class="col-lg-4">
+										<input type="text" class="form-control" ng-model="dadosColaborador.dsc_endereco"  maxlength="100"> 
+									</div>
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-lg-2 control-label">Bairro</label>
-								<div class="col-lg-4">
-									<input type="text" class="form-control" ng-model="dadosColaborador.nme_bairro" name="nme_bairro" maxlength="100"> 
+								<div class="element-group">
+									<label class="col-lg-2 control-label">Número</label>
+									<div class="col-lg-1">
+										<input type="text" class="form-control" ng-model="dadosColaborador.num_endereco"  maxlength="10"> 
+									</div>
+								</div>
+
+								<div class="element-group">
+									<label class="col-lg-1 control-label">Complemento</label>
+									<div class="col-lg-4">
+										<input type="text" class="form-control" ng-model="dadosColaborador.dsc_complemento"  maxlength="100"> 
+									</div>
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-lg-2 control-label">UF</label>
-								<div class="col-lg-1">
-									<select class="form-control" ng-model="dadosColaborador.cod_estado_moradia"  name="cod_estado_moradia" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia') ">
-									</select>
-								</div>
-								<label class="col-lg-1 control-label">Cidade</label>
-								<div class="col-lg-2">
-									<select class="form-control" ng-model="dadosColaborador.cod_cidade_moradia"  name="cod_cidade_moradia" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia">
-									</select>
-									<span class="loading-cidade-moradia hide">
-										<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
-									</span>
+								<div class="element-group">
+									<label class="col-lg-2 control-label">Bairro</label>
+									<div class="col-lg-4">
+										<input type="text" class="form-control" ng-model="dadosColaborador.nme_bairro"  maxlength="100"> 
+									</div>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<div class="element-group">
+									<label class="col-lg-2 control-label">UF</label>
+									<div class="col-lg-1">
+										<select class="form-control" ng-model="dadosColaborador.cod_estado_moradia"   ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia') ">
+										</select>
+									</div>
+								</div>
+								
+								<div class="element-group">
+									<label class="col-lg-1 control-label">Cidade</label>
+									<div class="col-lg-2">
+										<select class="form-control" ng-model="dadosColaborador.cod_cidade_moradia"   ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia">
+										</select>
+										<span class="loading-cidade-moradia hide">
+											<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
+										</span>
+									</div>
+								</div>
+							</div>	
 						</fieldset>
 
 						<fieldset>
 							<legend>Naturalidade</legend>
 							
 							<div class="form-group">
-								<label class="col-lg-2 control-label">Estado</label>
-								<div class="col-lg-1">
-									<select class="form-control" ng-model="dadosColaborador.cod_estado_naturalidade" name="cod_estado_naturalidade" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('naturalidade')">
-									</select>
+								<div class="element-group">
+									<label class="col-lg-2 control-label">Estado</label>
+									<div class="col-lg-1">
+										<select class="form-control" ng-model="dadosColaborador.cod_estado_naturalidade"  ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('naturalidade')">
+										</select>
+									</div>
 								</div>
-
-								<label class="col-lg-1 control-label">Cidade</label>
-								<div class="col-lg-2">
-									<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade" name="cod_cidade_naturalidade" ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
-									</select>
-									<span class="loading-cidade-naturalidade hide">
-										<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
-									</span>
+								
+								<div class="element-group">	
+									<label class="col-lg-1 control-label">Cidade</label>
+									<div class="col-lg-2">
+										<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade"  ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
+										</select>
+										<span class="loading-cidade-naturalidade hide">
+											<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
+										</span>
+									</div>
 								</div>
 							</div>
 						</fieldset>
@@ -182,46 +221,50 @@
 							<legend>Dados de Contato</legend>
 
 							<div class="form-group">
-								<label class="col-lg-2 control-label">Telefones</label>
-								<div class="col-lg-2">
-									<table class="table table-bordered table-condensed table-hover table-striped">
-										<thead>
-											<th>DDD</th>
-											<th>Número</th>
-											<th>Tipo</th>
-											<th width="20">
-												<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalTelefone()">
-													<i class="fa fa-plus-circle"></i>
-												</button>
-											</th>
-										</thead>
-										<tbody>
-											<tr ng-repeat="telefone in dadosColaborador.telefones">
-												<td>{{ telefone.num_ddd }}</td>
-												<td>{{ telefone.num_telefone }}</td>
-												<td colspan="2">{{ telefone.tipoTelefone.nme_tipo_telefone }}</td>
-											</tr>
-										</tbody>
-									</table>
+								<div class="element-group">
+									<label class="col-lg-2  control-label">Telefones</label>
+									<div class="col-lg-2">
+										<table class="table table-bordered table-condensed table-hover table-striped" name="telefones">
+											<thead>
+												<th>DDD</th>
+												<th>Número</th>
+												<th>Tipo</th>
+												<th width="20">
+													<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalTelefone()">
+														<i class="fa fa-plus-circle"></i>
+													</button>
+												</th>
+											</thead>
+											<tbody>
+												<tr ng-repeat="telefone in dadosColaborador.telefones">
+													<td>{{ telefone.num_ddd }}</td>
+													<td>{{ telefone.num_telefone }}</td>
+													<td colspan="2">{{ telefone.tipoTelefone.nme_tipo_telefone }}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 								</div>
-						
-								<label class="col-lg-2 control-label">E-mails</label>
-								<div class="col-lg-2">
-									<table class="table table-bordered table-condensed table-hover table-striped">
-										<thead>
-											<th>Endereço de E-mail</th>
-											<th width="20">
+								
+								<div class="element-group">
+									<label class="col-lg-2 control-label">E-mails</label>
+									<div class="col-lg-2">
+										<table class="table table-bordered table-condensed table-hover table-striped">
+											<thead>
+												<th>Endereço de E-mail</th>
+												<th width="20">
 													<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalEmail()">
 														<i class="fa fa-plus-circle"></i>
 													</button>
-											</th>
-										</thead>
-										<tbody>
-											<tr ng-repeat="email in dadosColaborador.emails">
-												<td colspan="2">{{ email.end_email }}</td>
-											</tr>
-										</tbody>
-									</table>
+												</th>
+											</thead>
+											<tbody>
+												<tr ng-repeat="email in dadosColaborador.emails">
+													<td colspan="2">{{ email.end_email }}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</fieldset>
@@ -230,159 +273,193 @@
 					<!--Second tab-->
 					<div id="demo-cls-tab2" class="tab-pane fade">
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Empresa Contratante</label> 
-							<div class="col-lg-4">
-								<div class="input-group">
-									<input type="text" class="form-control" readonly="readonly" value="{{ dadosColaborador.empresaContratante.nme_fantasia }}">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" ng-click="abreModal('empresas', 'empresaContratante')">
-											<i class="fa fa-search"></i>
-										</button>
-									</span>
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Empresa Contratante</label> 
+								<div class="col-lg-4">
+									<div class="input-group">
+										<input type="text" class="form-control" name="empresaContratante" readonly="readonly" value="{{ dadosColaborador.empresaContratante.nme_fantasia }}">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" ng-click="abreModal('empresas', 'empresaContratante')">
+												<i class="fa fa-search"></i>
+											</button>
+										</span>
+									</div>
 								</div>
 							</div>
 
-							<label class="col-lg-2 control-label">Regime de Contratação</label>
-							<div class="col-lg-1">
-								<select class="form-control"  ng-model="dadosColaborador.cod_regime_contratacao" ng-options="item.cod_regime_contratacao as item.dsc_regime_contratacao for item in regimesContratacao">
-								</select>
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Regime de Contratação</label>
+								<div class="col-lg-1">
+									<select class="form-control"  ng-model="dadosColaborador.cod_regime_contratacao" ng-options="item.cod_regime_contratacao as item.dsc_regime_contratacao for item in regimesContratacao">
+									</select>
+								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Local de Trabalho</label>
-							<div class="col-lg-3">
-								<div class="input-group">
-									<input type="text" class="form-control" readonly="readonly" value="{{ dadosColaborador.localTrabalho.nme_local_trabalho }}">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" ng-click="abreModal('locais-trabalho', 'localTrabalho')">
-											<i class="fa fa-search"></i>
-										</button>
-									</span>
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Local de Trabalho</label>
+								<div class="col-lg-3">
+									<div class="input-group">
+										<input type="text" class="form-control" name="localTrabalho" readonly="readonly" value="{{ dadosColaborador.localTrabalho.nme_local_trabalho }}">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" ng-click="abreModal('locais-trabalho', 'localTrabalho')">
+												<i class="fa fa-search"></i>
+											</button>
+										</span>
+									</div>
 								</div>
 							</div>
 
-							<label class="col-lg-2 control-label">Departamento</label>
-							<div class="col-lg-2">
-								<select class="form-control" ng-model="dadosColaborador.cod_departamento" name="cod_departamento" ng-options="item.cod_departamento as item.sgl_departamento for item in departamentos">
-								</select>
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Departamento</label>
+								<div class="col-lg-2">
+									<select class="form-control" ng-model="dadosColaborador.cod_departamento"  ng-options="item.cod_departamento as item.sgl_departamento for item in departamentos">
+									</select>
+								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Grade de Horário</label>
-							<div class="col-lg-3">
-								<div class="input-group">
-									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.gradeHorario.nme_grade_horario }}">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" ng-click="abreModal('grades-horario', 'gradeHorario')">
-											<i class="fa fa-search"></i>
-										</button>
-									</span>
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Grade de Horário</label>
+								<div class="col-lg-3">
+									<div class="input-group">
+										<input type="text" class="form-control" name="gradeHorario" readonly="readonly" value="{{dadosColaborador.gradeHorario.nme_grade_horario }}">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" ng-click="abreModal('grades-horario', 'gradeHorario')">
+												<i class="fa fa-search"></i>
+											</button>
+										</span>
+									</div>
 								</div>
 							</div>
-							<label class="col-lg-2 control-label">Horas Contratadas</label>
-							<div class="col-lg-1">
-								<input type="text" class="form-control" ng-model="dadosColaborador.qtd_horas_contratadas" maxlength="11" name="qtd_horas_contratadas">
+
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Horas Contratadas</label>
+								<div class="col-lg-1">
+									<input type="text" class="form-control" ng-model="dadosColaborador.qtd_horas_contratadas" maxlength="11" >
+								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Sindicato</label>
-							<div class="col-lg-4">
-								<div class="input-group">
-									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.sindicato.nme_sindicato }}">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" ng-click="abreModal('sindicatos', 'sindicato')">
-											<i class="fa fa-search"></i>
-										</button>
-									</span>
-								</div>
-							</div>				
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Sindicato</label>
+								<div class="col-lg-4">
+									<div class="input-group">
+										<input type="text" class="form-control" name="sindicato" readonly="readonly" value="{{dadosColaborador.sindicato.nme_sindicato }}">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" ng-click="abreModal('sindicatos', 'sindicato')">
+												<i class="fa fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>				
+							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Data de Admissão</label>
-							<div class="col-lg-2">
-								<div class="input-group date">																
-									<input type="text" class="form-control" ng-model="dadosColaborador.dta_admissao">
-									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Data de Admissão</label>
+								<div class="col-lg-2">
+									<div class="input-group date">																
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_admissao">
+										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+									</div>
 								</div>
 							</div>
-							<label class="col-lg-2 control-label">Data de Demissão</label>
-							<div class="col-lg-2">
-								<div class="input-group date">
-									<input type="text" class="form-control" ng-model="dadosColaborador.dta_demissao" name="dta_demissao">
-									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Data de Demissão</label>
+								<div class="col-lg-2">
+									<div class="input-group date">
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_demissao" >
+										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+									</div>
 								</div>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Função</label>
-							<div class="col-lg-2">
-								<table class="table table-bordered table-condensed table-hover table-striped">
-									<thead>
-										<th>Núm./Código</th>
-										<th>Função</th>
-										<th>Salário</th>
-										<th>Motivo</th>
-										<th>Data</th>
-										<th width="20">
-											<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalFuncao()">
-												<i class="fa fa-plus-circle"></i>
-											</button>
-										</th>
-									</thead>
-									<tbody>
-										<tr ng-repeat="funcao in dadosColaborador.funcoes">
-											<td>{{ funcao.funcao.num_funcao }}</td>
-											<td>{{ funcao.funcao.nme_funcao }}</td>
-											<td>{{ funcao.vlr_salario }}</td>
-											<td>{{ funcao.motivoAlteracaoFuncao.nme_motivo_alteracao_funcao }}</td>
-											<td colspan="2">{{ funcao.dta_alteracao }}</td>
-										</tr>
-									</tbody>
-								</table>
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Função</label>
+								<div class="col-lg-2">
+									<table class="table table-bordered table-condensed table-hover table-striped">
+										<thead>
+											<th>Núm./Código</th>
+											<th>Função</th>
+											<th>Salário</th>
+											<th>Motivo</th>
+											<th>Data</th>
+											<th width="20">
+												<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalFuncao()">
+													<i class="fa fa-plus-circle"></i>
+												</button>
+											</th>
+										</thead>
+										<tbody>
+											<tr ng-repeat="funcao in dadosColaborador.funcoes">
+												<td>{{ funcao.funcao.num_funcao }}</td>
+												<td>{{ funcao.funcao.nme_funcao }}</td>
+												<td>{{ funcao.vlr_salario }}</td>
+												<td>{{ funcao.motivoAlteracaoFuncao.nme_motivo_alteracao_funcao }}</td>
+												<td colspan="2">{{ funcao.dta_alteracao }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
-					</div>
+					</div>	
 
 					<!--Third tab-->
 					<div id="demo-cls-tab3" class="tab-pane">
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Banco</label>
-							<div class="col-lg-4">
-								<div class="input-group">
-									<input type="text" class="form-control" readonly="readonly" value="{{ dadosColaborador.banco.num_banco }} | {{ dadosColaborador.banco.nme_banco }}">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" ng-click="abreModal('bancos', 'banco')">
-											<i class="fa fa-search"></i>
-										</button>
-									</span>
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Banco</label>
+								<div class="col-lg-4">
+									<div class="input-group">
+										<input type="text" class="form-control" name="banco" readonly="readonly" value="{{ dadosColaborador.banco.num_banco }} | {{ dadosColaborador.banco.nme_banco }}">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" ng-click="abreModal('bancos', 'banco')">
+												<i class="fa fa-search"></i>
+											</button>
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Agência</label>
-							<div class="col-lg-2">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_agencia" maxlength="10" name="num_agencia"> 
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Agência</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_agencia" maxlength="10" > 
+								</div>
 							</div>
-							<label class="col-lg-1 control-label">Dígito</label>
-							<div class="col-lg-1">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_digito_agencia" maxlength="5" name="num_digito_agencia"> 
+
+							<div class="element-group">
+								<label class="col-lg-1 control-label">Dígito</label>
+								<div class="col-lg-1">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_digito_agencia" maxlength="5" > 
+								</div>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Conta Corrente</label>
-							<div class="col-lg-2">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_conta_corrente" maxlength="20" name="num_conta_corrente">  
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Conta Corrente</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_conta_corrente" maxlength="20" >  
+								</div>
 							</div>
-							<label class="col-lg-1 control-label">Dígito</label>
-							<div class="col-lg-1">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_digito_conta_corrente" maxlength="5" name="num_digito_conta_corrente"> 
+							
+							<div class="element-group">	
+								<label class="col-lg-1 control-label">Dígito</label>
+								<div class="col-lg-1">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_digito_conta_corrente" maxlength="5" > 
+								</div>
 							</div>
 						</div>
 					</div>
@@ -390,157 +467,205 @@
 					<!--Fourth tab-->
 					<div id="demo-cls-tab4" class="tab-pane">
 						<div class="form-group">
-							<label class="col-lg-2 control-label">RG</label>
-							<div class="col-lg-2">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_rg" maxlength="20" name="num_rg"> 
+							<div class="element-group">
+								<label class="col-lg-2 control-label">RG</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_rg" maxlength="20" > 
+								</div>
 							</div>
+							
 
-							<div class="col-lg-3">
-								<span class="pull-left btn btn-default btn-file">
-								Selecionar... <input type="file">
-								</span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-lg-2 control-label">CPF</label>
-							<div class="col-lg-2">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_cpf" maxlength="20" name="num_cpf"> 
-							</div>
-
-							<div class="col-lg-3">
-								<span class="pull-left btn btn-default btn-file">
-								Selecionar... <input type="file">
-								</span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-lg-2 control-label">PIS</label>
-							<div class="col-lg-2">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_pis" maxlength="20" name="num_pis"> 
-							</div>
-
-							<div class="col-lg-3">
-								<span class="pull-left btn btn-default btn-file">
-								Selecionar... <input type="file">
-								</span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-lg-2 control-label">Entidade</label>
-							<div class="col-lg-1">
-								<div class="input-group">
-									<input type="text" class="form-control" readonly="readonly" value="{{dadosColaborador.entidade.nme_entidade }}">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" ng-click="abreModal('entidades', 'entidade')">
-											<i class="fa fa-search"></i>
-										</button>
+							<div class="element-group">	
+								<div class="col-lg-3">
+									<span class="pull-left btn btn-default btn-file">
+									Selecionar... <input type="file">
 									</span>
 								</div>
 							</div>
-							<label class="col-lg-1 control-label">Número</label>
-							<div class="col-lg-2">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_entidade" maxlength="20" name="num_entidade"> 
-							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">CTPS</label>
-							<div class="col-lg-1">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_ctps" maxlength="50" name="num_ctps"> 
-							</div>
-
-							<label class="col-lg-1 control-label">Série</label>
-							<div class="col-lg-1">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_serie_ctps" maxlength="50" name="num_serie_ctps"> 
-							</div>
-
-							<label class="col-lg-1 control-label">Emissão CTPS</label>
-							<div class="col-lg-2">
-								<div class="input-group date">
-									<input type="text" class="form-control" ng-model="dadosColaborador.dta_emissao_ctps" name="dta_emissao_ctps">
-									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
-								</div>
-							</div>
-						
-							<label class="col-lg-2 control-label">Estado</label>
-							<div class="col-lg-1">
-								<select class="form-control" ng-model="dadosColaborador.cod_estado_ctps" ng-options="item.cod_estado as item.sgl_estado for item in ufs" name="cod_estado_ctps">
-								</select>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-lg-2 control-label">Título de Eleitor</label>
-							<div class="col-lg-2">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_titulo_eleitor" maxlength="20" name="num_titulo_eleitor"> 
-							</div>
-
-							<label class="col-lg-1 control-label">Zona</label>
-							<div class="col-lg-1">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_zona_eleitoral" maxlength="10" name="num_zona_eleitoral"> 
-							</div>
-
-							<label class="col-lg-1 control-label">Seção</label>
-							<div class="col-lg-1">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_secao_eleitoral" maxlength="10" name="num_secao_eleitoral"> 
-							</div>
-							<div class="col-lg-2">
-								<span class="pull-left btn btn-default btn-file">
-								Selecionar... <input type="file">
-								</span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-lg-2 control-label">CNH</label>
-							<div class="col-lg-2">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_cnh" maxlength="20" name="num_cnh"> 
-							</div>
-
-							<label class="col-lg-1 control-label">Validade</label>
-							<div class="col-lg-2">
-								<div class="input-group date">
-									<input type="text" class="form-control" ng-model="dadosColaborador.dta_validade_cnh" name="dta_validade_cnh">
-									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+							<div class="element-group">	
+								<label class="col-lg-2 control-label">CPF</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_cpf" maxlength="20" > 
 								</div>
 							</div>
 
-							<label class="col-lg-1 control-label">Categoria</label>
-							<div class="col-lg-1">
-								<input type="text" class="form-control" ng-model="dadosColaborador.nme_categoria_cnh" maxlength="10" name="nme_categoria_cnh">
-							</div>
-
-							<div class="col-lg-1">
-								<span class="pull-left btn btn-default btn-file">
-								Selecionar... <input type="file">
-								</span>
+							<div class="element-group">	
+								<div class="col-lg-3">
+									<span class="pull-left btn btn-default btn-file">
+									Selecionar... <input type="file">
+									</span>
+								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Reservista</label>
-							<div class="col-lg-2">
-								<input type="text" class="form-control" ng-model="dadosColaborador.num_reservista" maxlength="20" name="num_reservista"> 
+							<div class="element-group">	
+								<label class="col-lg-2 control-label">PIS</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_pis" maxlength="20" > 
+								</div>
 							</div>
-
-							<div class="col-lg-3">
-								<span class="pull-left btn btn-default btn-file">
-								Selecionar... <input type="file">
-								</span>
+							
+							<div class="element-group">									
+								<div class="col-lg-3">
+									<span class="pull-left btn btn-default btn-file">
+									Selecionar... <input type="file">
+									</span>
+								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">ASO</label>
-							<div class="col-lg-3">
-								<div class="input-group date">
-									<input type="text" class="form-control" ng-model="dadosColaborador.dta_aso" name="dta_aso">
-									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+							<div class="element-group">									
+								<label class="col-lg-2 control-label">Entidade</label>
+								<div class="col-lg-1">
+									<div class="input-group">
+										<input type="text" class="form-control" name="entidade" readonly="readonly" value="{{dadosColaborador.entidade.nme_entidade }}">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" ng-click="abreModal('entidades', 'entidade')">
+												<i class="fa fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="element-group">									
+								<label class="col-lg-1 control-label">Número</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_entidade" maxlength="20" > 
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">									
+								<label class="col-lg-2 control-label">CTPS</label>
+								<div class="col-lg-1">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_ctps" maxlength="50" > 
+								</div>
+							</div>
+							
+							<div class="element-group">										
+								<label class="col-lg-1 control-label">Série</label>
+								<div class="col-lg-1">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_serie_ctps" maxlength="50" > 
+								</div>
+							</div>
+
+							<div class="element-group">										
+								<label class="col-lg-1 control-label">Emissão CTPS</label>
+								<div class="col-lg-2">
+									<div class="input-group date">
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_emissao_ctps" >
+										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+									</div>
+								</div>
+							</div>
+
+							<div class="element-group">										
+								<label class="col-lg-2 control-label">Estado</label>
+								<div class="col-lg-1">
+									<select class="form-control" ng-model="dadosColaborador.cod_estado_ctps" ng-options="item.cod_estado as item.sgl_estado for item in ufs" >
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">										
+								<label class="col-lg-2 control-label">Título de Eleitor</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_titulo_eleitor" maxlength="20" > 
+								</div>
+							</div>
+								
+							<div class="element-group">										
+								<label class="col-lg-1 control-label">Zona</label>
+								<div class="col-lg-1">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_zona_eleitoral" maxlength="10" > 
+								</div>
+							</div>
+							
+							<div class="element-group">											
+								<label class="col-lg-1 control-label">Seção</label>
+								<div class="col-lg-1">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_secao_eleitoral" maxlength="10" > 
+								</div>
+							</div>
+
+							<div class="element-group">											
+								<div class="col-lg-2">
+									<span class="pull-left btn btn-default btn-file">
+									Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">
+								<label class="col-lg-2 control-label">CNH</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_cnh" maxlength="20" > 
+								</div>
+							</div>
+
+							<div class="element-group">											
+								<label class="col-lg-1 control-label">Validade</label>
+								<div class="col-lg-2">
+									<div class="input-group date">
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_validade_cnh" >
+										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+									</div>
+								</div>
+							</div>
+
+							<div class="element-group">											
+								<label class="col-lg-1 control-label">Categoria</label>
+								<div class="col-lg-1">
+									<input type="text" class="form-control" ng-model="dadosColaborador.nme_categoria_cnh" maxlength="10" >
+								</div>
+							</div>
+
+							<div class="element-group">											
+								<div class="col-lg-1">
+									<span class="pull-left btn btn-default btn-file">
+									Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Reservista</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_reservista" maxlength="20" > 
+								</div>
+							</div>
+
+							<div class="element-group">
+								<div class="col-lg-3">
+									<span class="pull-left btn btn-default btn-file">
+									Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">
+								<label class="col-lg-2 control-label">ASO</label>
+								<div class="col-lg-3">
+									<div class="input-group date">
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_aso" >
+										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 									
-									<div class="col-lg-3">
+										<div class="col-lg-3">
 										<span class="pull-left btn btn-default btn-file">
 										Selecionar... <input type="file">
 										</span>
@@ -550,20 +675,23 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Possui ensino Superior?</label>
-							<div class="col-lg-1">
-								<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ensino_superior" name="flg_ensino_superior">
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Possui ensino Superior?</label>
+								<div class="col-lg-1">
+									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ensino_superior" >
+								</div>
 							</div>
 
-							<div class="col-lg-3">
-								<span class="pull-left btn btn-default btn-file">
-								Selecionar... <input type="file">
-								</span>
+							<div class="element-group">
+								<div class="col-lg-3">
+									<span class="pull-left btn btn-default btn-file">
+									Selecionar... <input type="file">
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
 			<!--Footer button-->
 			<div class="panel-footer text-right">
