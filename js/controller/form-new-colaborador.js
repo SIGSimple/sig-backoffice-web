@@ -44,6 +44,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		funcoes:[],
 		telefones: [],
 		emails: [],
+		funcoes: [],
 		num_matricula: "",
 		nme_colaborador: "",
 		flg_portador_necessidades_especiais: 0,
@@ -258,6 +259,9 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	$scope.addTelefone = function(){
+		if(!$("#modalAddTelefone p.text-danger").hasClass("hide"))
+			$("#modalAddTelefone p.text-danger").addClass("hide");
+
 		$("#modalAddTelefone .form-group").removeClass("has-error");
 
 		var elTipoTelefone = $("[ng-model='tmpModal.tipoTelefone'] option:selected");
@@ -286,16 +290,21 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			$scope.tmpModal = {};
 			$("#modalAddTelefone").modal("hide");
 		}
+		else
+			$("#modalAddTelefone p.text-danger").removeClass("hide");
 	}
 
 	$scope.addEmail = function(){
-		$("#modalAddEmail.form-group").removeClass("has-error");
+		if(!$("#modalAddEmail p.text-danger").hasClass("hide"))
+			$("#modalAddEmail p.text-danger").addClass("hide");
 
-		var elEndereco = $("[ng-model='tmpModal.end_email'] option:selected");
+		$("#modalAddEmail .form-group").removeClass("has-error");
+
+		var elEndereco = $("[ng-model='tmpModal.end_email']");
 
 		var hasError = false;
 
-		if(elTipoTelefone.val() == "?") {
+		if(elEndereco.val() == "") {
 			hasError = true;
 			elEndereco.closest(".form-group").addClass("has-error");
 		}
@@ -305,16 +314,51 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			$scope.tmpModal = {};
 			$("#modalAddEmail").modal("hide");
 		}
+		else
+			$("#modalAddEmail p.text-danger").removeClass("hide");
 
-		$scope.dadosColaborador.emails.push( angular.copy($scope.tmpModal) );
-		$scope.tmpModal = {};
-		$("#modalAddEmail").modal("hide");
 	}
 
 	$scope.addFuncao = function(){
-		$scope.dadosColaborador.funcoes.push( angular.copy($scope.tmpModal) );
-		$scope.tmpModal = {};
-		$("#modalAddFuncao").modal("hide");
+		if(!$("#modalAddFuncao p.text-danger").hasClass("hide"))
+			$("#modalAddFuncao p.text-danger").addClass("hide");
+
+		$("#modalAddFuncao .form-group").removeClass("has-error");
+
+		var elFuncao 	= $("[ng-model='tmpModal.funcao'] option:selected");
+		var elSalario 	= $("[ng-model='tmpModal.vlr_salario']");
+		var elMotivo 	= $("[ng-model='tmpModal.motivoAlteracaoFuncao'] option:selected");
+		var elData 		= $("[ng-model='tmpModal.dta_alteracao']");
+
+		var hasError = false;
+
+		if(elFuncao.val() == "?") {
+			hasError = true;
+			elFuncao.closest(".form-group").addClass("has-error");
+		}
+
+		if(elSalario.val().length == 0) {
+			hasError = true;
+			elSalario.closest(".form-group").addClass("has-error");
+		}
+
+		if(elMotivo.val() == "?") {
+			hasError = true;
+			elMotivo.closest(".form-group").addClass("has-error");
+		}
+
+		if(elData.val().length == 0) {
+			hasError = true;
+			elData.closest(".form-group").addClass("has-error");
+		}
+
+		if(!hasError) {
+			$scope.dadosColaborador.funcoes.push( angular.copy($scope.tmpModal) );
+			$scope.tmpModal = {};
+			$("#modalAddFuncao").modal("hide");
+		}
+		else
+			$("#modalAddFuncao p.text-danger").removeClass("hide");
 	}
 
 	// Definição de funções auxiliares

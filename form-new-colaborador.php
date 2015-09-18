@@ -757,6 +757,9 @@
 
 
 					<div class="modal-footer clearfix">
+						<div class="pull-left">
+							<p class="text-danger hide">Os campos marcados em vermelho são obrigatórios!</p>
+						</div>
 						<div class="pull-right">
 							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
 							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addTelefone()">Salvar</button>
@@ -786,6 +789,9 @@
 					</div>
 
 					<div class="modal-footer clearfix">
+						<div class="pull-left">
+							<p class="text-danger hide">Os campos marcados em vermelho são obrigatórios!</p>
+						</div>
 						<div class="pull-right">
 							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
 							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addEmail()">Salvar</button>
@@ -839,6 +845,9 @@
 					</div>
 
 					<div class="modal-footer clearfix">
+						<div class="pull-left">
+							<p class="text-danger hide">Os campos marcados em vermelho são obrigatórios!</p>
+						</div>
 						<div class="pull-right">
 							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
 							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addFuncao()">Salvar</button>
