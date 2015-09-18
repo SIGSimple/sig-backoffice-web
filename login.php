@@ -23,6 +23,7 @@ if($data) {
 		// Recupera as informações do colaborador
 		$url = 'http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/colaboradores?col->cod_colaborador='.$user->cod_colaborador;
 		$data = HttpUtil::doGetRequest($url, null);
+
 		if($data) { 
 			$cooperator = json_decode($data)->rows[0];
 			// Recupera o cargo e salário atual do colaborador

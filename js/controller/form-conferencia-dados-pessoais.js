@@ -7,7 +7,7 @@ app.controller('ConferenciaDadosPessoaisCtrl', function($scope, $http, UserSrvc)
 		$("button.btn-success.fa-save").button('loading');
 		$http.post(baseUrlApi()+'colaborador/conferencia/dados', $scope.colaborador)
 			.success(function(message, status, headers, config){
-				$("button.btn-success.fa-save").button('reset');
+				$("button.btn-success.fa-save").remove();
 				showNotification("Enviado!", message, null, 'page', status);
 			})
 			.error(function(message, status, headers, config){
