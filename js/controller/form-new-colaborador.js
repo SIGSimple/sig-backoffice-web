@@ -41,6 +41,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	// Definição de variáveis de uso da tela
 	$scope.dadosColaborador = {
+		cod_empreendimento: $scope.colaborador.user.cod_empreendimento,
 		funcoes:[],
 		telefones: [],
 		emails: [],
@@ -159,11 +160,13 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	// Definição de funções de utilização da tela
 	$scope.validateFieldValues = function() {
+		// remove as mensagens de erro dos campos obrigatórios
 		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
 		$(".element-group").removeClass("has-error");
 		$("table thead").css("background-color","none").css("color","#515151");
 		$("span").css("border-color","#CDD6E1").css("color","#515151");
 
+		// captura os valores dos sliders (flgs)
 		$scope.dadosColaborador.flg_trabalho_fim_semana 			= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
 		$scope.dadosColaborador.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
 		$scope.dadosColaborador.flg_trabalho_feriado 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
@@ -172,31 +175,34 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$scope.dadosColaborador.flg_portador_necessidades_especiais = ($('.input-switch[ng-model="dadosColaborador.flg_portador_necessidades_especiais"]')[0].checked) ? 1 : 0;
 		$scope.dadosColaborador.flg_ativo 							= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
 
+		// envia os dados para a API tratar e salvar no BD
 		$http.post(baseUrlApi()+'colaborador/new', $scope.dadosColaborador)
 			.success(function(message, status, headers, config){
 				console.log(message, status, headers, config);
 			})
-			.error(function(message, status, headers, config){
-				if(status == 406){ // Not-Acceptable
+			.error(function(message, status, headers, config){ // se a API retornar algum erro
+				if(status == 406){ // Not-Acceptable (Campos inválidos)
+					// percorre a lista de campos devolvidos da API
 					$.each(message, function(index, value) {
+						// seleciona os elemento HTML de acordo com o campo mencionado
 						var element = ($("[ng-model='dadosColaborador."+ index +"']").length > 0) ? $("[ng-model='dadosColaborador."+ index +"']") : $("[name='"+ index +"']");
 
-						if(element.is("table"))
+						if(element.is("table")) // tratamento exclusivo para tabelas
 				    		$(element).find("thead").css("background-color","#A94442").css("color","#FFFFFF");
-				    	else if(element.is("span"))
+				    	else if(element.is("span")) // tratamento exclusivo para spans
 				    		$(element).css("border-color","#A94442").css("color","#A94442");
 
+				    	// coloca a mensagem de erro no elemento HTML selecionado
 			    		element.attr("data-toggle","tooltip").attr("data-placement","top").attr("title", value).attr("data-original-title", value);
 			    		element.closest(".element-group").addClass("has-error");
 					});
 
+					// inicializa o tooltip para exibir o erro ao passar o mouse sobre o elemento HTML
 					$('[data-toggle="tooltip"]').tooltip();
 				}
 				else {
 					// Do anything else
 				}
-
-				console.log(message, status, headers, config);
 			});
 	}
 
