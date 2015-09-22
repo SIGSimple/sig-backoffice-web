@@ -160,6 +160,13 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	// Definição de funções de utilização da tela
 	$scope.validateFieldValues = function() {
+		$scope.dadosColaborador.dta_admissao = moment($scope.dadosColaborador.dta_admissao, "DD/MM/YYYY").format("YYYY-MM-DD");
+		$scope.dadosColaborador.dta_demissao = moment($scope.dadosColaborador.dta_demissao, "DD/MM/YYYY").format("YYYY-MM-DD");
+		$scope.dadosColaborador.dta_emissao_ctps = moment($scope.dadosColaborador.dta_emissao_ctps, "DD/MM/YYYY").format("YYYY-MM-DD");
+		$scope.dadosColaborador.dta_nascimento = moment($scope.dadosColaborador.dta_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD");
+		$scope.dadosColaborador.dta_validade_cnh = moment($scope.dadosColaborador.dta_validade_cnh, "DD/MM/YYYY").format("YYYY-MM-DD");   
+
+
 		// remove as mensagens de erro dos campos obrigatórios
 		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
 		$(".element-group").removeClass("has-error");
@@ -322,21 +329,21 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		}
 		else
 			$("#modalAddEmail p.text-danger").removeClass("hide");
-
 	}
 
 	$scope.addFuncao = function(){
 		if(!$("#modalAddFuncao p.text-danger").hasClass("hide"))
 			$("#modalAddFuncao p.text-danger").addClass("hide");
-
+		
 		$("#modalAddFuncao .form-group").removeClass("has-error");
-
+		
 		var elFuncao 	= $("[ng-model='tmpModal.funcao'] option:selected");
 		var elSalario 	= $("[ng-model='tmpModal.vlr_salario']");
 		var elMotivo 	= $("[ng-model='tmpModal.motivoAlteracaoFuncao'] option:selected");
 		var elData 		= $("[ng-model='tmpModal.dta_alteracao']");
 
 		var hasError = false;
+
 
 		if(elFuncao.val() == "?") {
 			hasError = true;
@@ -359,6 +366,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		}
 
 		if(!hasError) {
+			$scope.tmpModal.dta_alteracao = moment($scope.tmpModal.dta_alteracao, "DD/MM/YYYY").format("YYYY-MM-DD");   
 			$scope.dadosColaborador.funcoes.push( angular.copy($scope.tmpModal) );
 			$scope.tmpModal = {};
 			$("#modalAddFuncao").modal("hide");
