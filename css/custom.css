@@ -1,3 +1,7 @@
+.cls-container {
+	background-color: #064365 !important;
+}
+
 .table th.text-middle,
 .table td.text-middle {
 	vertical-align: middle;
@@ -18,4 +22,14 @@
 
 .img-profile-table {
 	max-height: 50px !important;
+}
+
+.right-bottom-image {
+	max-height: 50px;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	z-index: 100;
 }

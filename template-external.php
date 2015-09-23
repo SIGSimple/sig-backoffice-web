@@ -52,7 +52,7 @@
 	<div id="container" class="cls-container">
 		<!-- BACKGROUND IMAGE -->
 		<!--===================================================-->
-		<div id="bg-overlay" class="bg-img img-bridge"></div>
+		<div id="bg-overlay" class="bg-img"></div>
 		
 		<!-- HEADER -->
 		<!--===================================================-->
@@ -68,7 +68,7 @@
 		<div class="cls-content">
 			<?php include($_GET['page'].'.php'); ?>
 		</div>
-		
+
 		<!-- DEMO PURPOSE ONLY -->
 		<!--===================================================-->
 		<!-- <div class="demo-bg">

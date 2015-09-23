@@ -8,7 +8,8 @@ unset($_SESSION['user_logged']);
 <!--===================================================-->
 <div class="{{ ( users.length === 0 && flg_senha_bloqueada ) ? 'cls-content-sm' : (!flg_senha_bloqueada) ? 'cls-content-lg' : 'cls-content-sm' }} panel" ng-controller="LoginCtrl" style="{{ ((users.length > 0) && (!flg_senha_bloqueada)) ? 'background-color: #F9F9F9;' : '' }}">
 	<div class="panel-body" ng-show="( users.length === 0 && flg_senha_bloqueada )">
-		<p class="pad-btm">Entre com seus dados</p>
+		<p class="pad-btm"><img src="img/logo_intermultiplas.jpg"></p>
+		<p class="pad-btm text-bold">Entre com seus dados</p>
 		<div class="form-group">
 			<div class="input-group">
 				<div class="input-group-addon"><i class="fa fa-user"></i></div>
