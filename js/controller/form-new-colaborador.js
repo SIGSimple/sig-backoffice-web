@@ -166,7 +166,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$scope.dadosColaborador.dta_nascimento = moment($scope.dadosColaborador.dta_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD");
 		$scope.dadosColaborador.dta_validade_cnh = moment($scope.dadosColaborador.dta_validade_cnh, "DD/MM/YYYY").format("YYYY-MM-DD");   
 
-
 		// remove as mensagens de erro dos campos obrigatórios
 		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
 		$(".element-group").removeClass("has-error");
@@ -185,7 +184,11 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		// envia os dados para a API tratar e salvar no BD
 		$http.post(baseUrlApi()+'colaborador/new', $scope.dadosColaborador)
 			.success(function(message, status, headers, config){
-				console.log(message, status, headers, config);
+				clearObject();
+				showNotification("Salvo!", message, null, 'page', status);
+				setTimeout(function(){
+					window.location.href = window.location.href.replace("form-new-colaborador", "list-colaboradores");
+				}, 5000);
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro
 				if(status == 406){ // Not-Acceptable (Campos inválidos)
@@ -208,7 +211,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 					$('[data-toggle="tooltip"]').tooltip();
 				}
 				else {
-					// Do anything else
+					showNotification(null, message, null, 'page', status);
 				}
 			});
 	}
@@ -376,6 +379,80 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	}
 
 	// Definição de funções auxiliares
+	function clearObject() {
+		$scope.dadosColaborador = {
+			cod_empreendimento: $scope.colaborador.user.cod_empreendimento,
+			funcoes:[],
+			telefones: [],
+			emails: [],
+			funcoes: [],
+			num_matricula: "",
+			nme_colaborador: "",
+			flg_portador_necessidades_especiais: 0,
+			cod_departamento: 0,
+			flg_cm: 0,
+			flg_ativo: 0,
+			dta_admissao: "",
+			dta_demissao: "",
+			num_ctps: "",
+			num_serie_ctps: "",
+			cod_estado_ctps: 0,
+			dta_emissao_ctps: "",
+			num_rg: "",
+			num_cpf: "",
+			num_pis: "",
+			num_titulo_eleitor: "",
+			num_zona_eleitoral: "",
+			num_secao_eleitoral: "",
+			num_reservista: "",
+			dsc_endereco: "",
+			num_endereco: "",
+			nme_bairro: "",
+			dsc_complemento: "",
+			cod_cidade_moradia: 0,
+			cod_estado_moradia: 0,
+			cod_cidade_naturalidade: 0,
+			cod_estado_naturalidade: 0,
+			cod_estado_moradia: 0,
+			num_cep: "",
+			dta_nascimento: "",
+			num_cnh: "",
+			nme_categoria_cnh: "",
+			dta_validade_cnh: "",
+			flg_sexo: "",
+			banco: {},
+			num_agencia: "",
+			num_digito_agencia: "",
+			num_conta_corrente: "",
+			num_digito_conta_corrente: "",
+			pth_arquivo_cnh: "",
+			pth_arquivo_rg: "",
+			pth_arquivo_foto: "",
+			pth_arquivo_cpf: "",
+			pth_arquivo_entidade: "",
+			pth_arquivo_curriculo: "",
+			pth_arquivo_reservista: "",
+			num_entidade: ""
+		};
+		$scope.motivosAlteracaoFuncao = [];
+		$scope.funcoes = [];
+		$scope.ufs = [];
+		$scope.cidadesMoradia = [];
+		$scope.cidadesNaturalidade = [];
+		$scope.empresasContratante = [];
+		$scope.regimesContratacao = [];
+		$scope.locaisTrabalho = [];
+		$scope.departamentos = [];
+		$scope.gradesHorario = [];
+		$scope.sindicatos = [];
+		$scope.bancos = [];
+		$scope.entidades = [];
+		$scope.contratos = [];
+		$scope.tiposTelefone = [];
+
+		$scope.tmpModal = {};
+	}
+
 	function loadUfs() {
 		$http.get(baseUrlApi()+'estados')
 			.success(function(items){
