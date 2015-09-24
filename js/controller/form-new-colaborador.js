@@ -540,14 +540,56 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	function loadMotivosAlteracaoFuncao(){
 		$http.get(baseUrlApi()+'alteracao/funcao/motivos')
-			.success(function(items){
+			.success(function(response){
 				$scope.motivosAlteracaoFuncao = items;
 			});
 	}
 
+	function getColaboradorByUrlParam() {
+		if(typeof getUrlVars().cod_colaborador != "undefined") { // eu tenho um parametro chamado cod_colaborador na url?
+			$http.get(baseUrlApi() + 'colaboradores?col->cod_colaborador=' + getUrlVars().cod_colaborador)
+				.success(function(response){
+					$scope.dadosColaborador = response.rows[0];
+					getTelefonesColaborador(getUrlVars().cod_colaborador);
+					getEmailsColaborador(getUrlVars().cod_colaborador);
+					getFuncoesColaborador(getUrlVars().cod_funcao);
+				});
+		}
+	}
 
+	function getTelefonesColaborador(cod_colaborador) {
+		$http.get(baseUrlApi() + 'colaborador/telefones?cod_colaborador=' + cod_colaborador)
+			.success(function(items){
+				$scope.dadosColaborador.telefones = [];
+
+				$.each(items, function(index, telefone){
+					var obj = {
+						cod_telefone: telefone.cod_telefone,
+						cod_colaborador: telefone.cod_colaborador,
+						num_ddd: telefone.num_ddd,
+						num_telefone: telefone.num_telefone,
+						tipoTelefone: {
+							cod_tipo_telefone: telefone.cod_tipo_telefone,
+							nme_tipo_telefone: telefone.nme_tipo_telefone
+						}
+					};
+
+					$scope.dadosColaborador.telefones.push(obj);
+				});
+			});
+	}
+
+	function getEmailsColaborador(cod_colaborador) {
+		$http.get(baseUrlApi() + 'colaborador/emails?cod_colaborador=' + cod_colaborador)
+			.success(function(items){
+				$scope.dadosColaborador.emails = items;
+			});
+	}
 
 	
+
+
+
 	// Chamada às funções de inicialização
 	loadUfs();
 	loadEmpresas();
@@ -562,4 +604,5 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	loadTiposTelefone();
 	loadFuncoes();
 	loadMotivosAlteracaoFuncao();
+	getColaboradorByUrlParam();
 });
