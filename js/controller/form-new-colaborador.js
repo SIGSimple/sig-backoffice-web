@@ -541,7 +541,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	function loadMotivosAlteracaoFuncao(){
 		$http.get(baseUrlApi()+'alteracao/funcao/motivos')
 			.success(function(response){
-				$scope.motivosAlteracaoFuncao = items;
+				$scope.motivosAlteracaoFuncao = response;
 			});
 	}
 
@@ -552,7 +552,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 					$scope.dadosColaborador = response.rows[0];
 					getTelefonesColaborador(getUrlVars().cod_colaborador);
 					getEmailsColaborador(getUrlVars().cod_colaborador);
-					getFuncoesColaborador(getUrlVars().cod_funcao);
+					getFuncoesColaborador(getUrlVars().cod_colaborador);
 				});
 		}
 	}
@@ -586,9 +586,30 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
+
+	function getFuncoesColaborador(cod_colaborador){
+		$http.get(baseUrlApi() + 'colaborador/funcoes/' + cod_colaborador)
+			.success(function(items){
+				$scope.dadosColaborador.funcoes = [];
+
+				$.each(items, function(index, funcao){
+					var obj = {
+						funcao: {
+							num_funcao: funcao.num_funcao,
+							nme_funcao: funcao.nme_funcao
+						},
+						vlr_salario: funcao.vlr_salario,
+						motivoAlteracaoFuncao: {
+							nme_motivo_alteracao_funcao: funcao.nme_motivo_alteracao_funcao,
+						},
+						dta_alteracao: funcao.dta_alteracao
+					};
+
+					$scope.dadosColaborador.funcoes.push(obj);
+				});
+			});
+		}
 	
-
-
 
 	// Chamada às funções de inicialização
 	loadUfs();
