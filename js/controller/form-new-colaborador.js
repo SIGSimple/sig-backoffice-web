@@ -550,6 +550,46 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			$http.get(baseUrlApi() + 'colaboradores?col->cod_colaborador=' + getUrlVars().cod_colaborador)
 				.success(function(response){
 					$scope.dadosColaborador = response.rows[0];
+
+					$scope.dadosColaborador.dta_admissao 		= ($scope.dadosColaborador.dta_admissao 	!= "") ? moment($scope.dadosColaborador.dta_admissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_nascimento 		= ($scope.dadosColaborador.dta_nascimento 	!= "") ? moment($scope.dadosColaborador.dta_nascimento, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_demissao 		= ($scope.dadosColaborador.dta_demissao 	!= "") ? moment($scope.dadosColaborador.dta_demissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_emissao_ctps 	= ($scope.dadosColaborador.dta_emissao_ctps != "") ?moment($scope.dadosColaborador.dta_emissao_ctps, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_aso 			= ($scope.dadosColaborador.dta_aso 			!= "") ?moment($scope.dadosColaborador.dta_aso, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_validade_cnh 	= ($scope.dadosColaborador.dta_validade_cnh != "") ?moment($scope.dadosColaborador.dta_validade_cnh, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+
+					$.each($scope.empresasContratante, function(index, empresaContratante) {
+						if(empresaContratante.cod_empresa == $scope.dadosColaborador.cod_empresa_contratante)
+							$scope.dadosColaborador.empresaContratante = empresaContratante;
+					});
+
+					$.each($scope.locaisTrabalho, function(index, localTrabalho) {
+						if(localTrabalho.cod_local_trabalho == $scope.dadosColaborador.cod_local_trabalho)
+							$scope.dadosColaborador.localTrabalho = localTrabalho;
+					});
+
+					$.each($scope.gradesHorario, function(index, gradeHorario) {
+						if(gradeHorario.cod_grade_horario == $scope.dadosColaborador.cod_grade_horario)
+							$scope.dadosColaborador.gradeHorario = gradeHorario;
+					});
+
+					$.each($scope.sindicatos, function(index, sindicato) {
+						if(sindicato.cod_sindicato == $scope.dadosColaborador.cod_sindicato)
+							$scope.dadosColaborador.sindicato = sindicato;
+					});
+
+					$.each($scope.bancos, function(index, banco) {
+						if(banco.cod_banco == $scope.dadosColaborador.cod_banco)
+							$scope.dadosColaborador.banco = banco;
+					});
+
+					$.each($scope.entidades, function(index, entidade) {
+						if(entidade.cod_entidade == $scope.dadosColaborador.cod_entidade)
+							$scope.dadosColaborador.entidade = entidade;
+					});
+
+
+
 					getTelefonesColaborador(getUrlVars().cod_colaborador);
 					getEmailsColaborador(getUrlVars().cod_colaborador);
 					getFuncoesColaborador(getUrlVars().cod_colaborador);
@@ -602,7 +642,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 						motivoAlteracaoFuncao: {
 							nme_motivo_alteracao_funcao: funcao.nme_motivo_alteracao_funcao,
 						},
-						dta_alteracao: funcao.dta_alteracao
+						dta_alteracao: moment(funcao.dta_alteracao, "YYYY-MM-DD hh:mm:ss").format("DD/MM/YYYY")
 					};
 
 					$scope.dadosColaborador.funcoes.push(obj);

@@ -384,7 +384,7 @@
 						<div class="form-group">
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Função</label>
-								<div class="col-lg-2">
+								<div class="col-lg-6">
 									<table class="table table-bordered table-condensed table-hover table-striped" name="funcoes">
 										<thead>
 											<th>Núm./Código</th>
