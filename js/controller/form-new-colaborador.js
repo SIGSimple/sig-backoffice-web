@@ -165,6 +165,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$scope.dadosColaborador.dta_emissao_ctps = moment($scope.dadosColaborador.dta_emissao_ctps, "DD/MM/YYYY").format("YYYY-MM-DD");
 		$scope.dadosColaborador.dta_nascimento = moment($scope.dadosColaborador.dta_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD");
 		$scope.dadosColaborador.dta_validade_cnh = moment($scope.dadosColaborador.dta_validade_cnh, "DD/MM/YYYY").format("YYYY-MM-DD");   
+		$scope.dadosColaborador.dta_aso = moment($scope.dadosColaborador.dta_aso, "DD/MM/YYYY").format("YYYY-MM-DD");   
 
 		// remove as mensagens de erro dos campos obrigatórios
 		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
@@ -432,7 +433,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			pth_arquivo_entidade: "",
 			pth_arquivo_curriculo: "",
 			pth_arquivo_reservista: "",
-			num_entidade: ""
+			num_entidade: "",
+			dta_aso: ""
 		};
 		$scope.motivosAlteracaoFuncao = [];
 		$scope.funcoes = [];
@@ -551,12 +553,15 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				.success(function(response){
 					$scope.dadosColaborador = response.rows[0];
 
-					$scope.dadosColaborador.dta_admissao 		= ($scope.dadosColaborador.dta_admissao 	!= "") ? moment($scope.dadosColaborador.dta_admissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.dadosColaborador.dta_nascimento 		= ($scope.dadosColaborador.dta_nascimento 	!= "") ? moment($scope.dadosColaborador.dta_nascimento, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.dadosColaborador.dta_demissao 		= ($scope.dadosColaborador.dta_demissao 	!= "") ? moment($scope.dadosColaborador.dta_demissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.dadosColaborador.dta_emissao_ctps 	= ($scope.dadosColaborador.dta_emissao_ctps != "") ?moment($scope.dadosColaborador.dta_emissao_ctps, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.dadosColaborador.dta_aso 			= ($scope.dadosColaborador.dta_aso 			!= "") ?moment($scope.dadosColaborador.dta_aso, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.dadosColaborador.dta_validade_cnh 	= ($scope.dadosColaborador.dta_validade_cnh != "") ?moment($scope.dadosColaborador.dta_validade_cnh, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.getCidades('moradia');
+					$scope.getCidades('naturalidade');
+
+					$scope.dadosColaborador.dta_admissao 		= ($scope.dadosColaborador.dta_admissao 	!= null) ? moment($scope.dadosColaborador.dta_admissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_nascimento 		= ($scope.dadosColaborador.dta_nascimento 	!= null) ? moment($scope.dadosColaborador.dta_nascimento, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_demissao 		= ($scope.dadosColaborador.dta_demissao 	!= null) ? moment($scope.dadosColaborador.dta_demissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_emissao_ctps 	= ($scope.dadosColaborador.dta_emissao_ctps != null) ? moment($scope.dadosColaborador.dta_emissao_ctps, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_aso 			= ($scope.dadosColaborador.dta_aso 			!= null) ? moment($scope.dadosColaborador.dta_aso, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_validade_cnh 	= ($scope.dadosColaborador.dta_validade_cnh != null) ? moment($scope.dadosColaborador.dta_validade_cnh, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
 
 					$.each($scope.empresasContratante, function(index, empresaContratante) {
 						if(empresaContratante.cod_empresa == $scope.dadosColaborador.cod_empresa_contratante)
@@ -588,6 +593,57 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 							$scope.dadosColaborador.entidade = entidade;
 					});
 
+					if((typeof $scope.dadosColaborador.flg_portador_necessidades_especiais != "undefined") && (parseInt($scope.dadosColaborador.flg_portador_necessidades_especiais, 10) == 1)) {
+						var element = $("[ng-model='dadosColaborador.flg_portador_necessidades_especiais']");
+						// TODO: destruir o elemento
+						element.siblings("span.switchery").remove();
+						// TODO: adicionar a tag (atributo) "checked"
+						element.attr("checked", "checked");
+						// TODO: inicializar o elemento novamente
+						resetSwitchInput();
+					}
+
+					if((typeof $scope.dadosColaborador.flg_ativo != "undefined") && (parseInt($scope.dadosColaborador.flg_ativo, 10) == 1)){
+						var element = $("[ng-model='dadosColaborador.flg_ativo']");
+						element.siblings("span.switchery").remove();
+						element.attr("checked", "checked");
+						resetSwitchInput();
+					}
+
+					if((typeof $scope.dadosColaborador.flg_hora_extra != "undefined") && (parseInt($scope.dadosColaborador.flg_hora_extra, 10) == 1)){
+						var element = $("[ng-model='dadosColaborador.flg_hora_extra']");
+						element.siblings("span.switchery").remove();
+						element.attr("checked", "checked");
+						resetSwitchInput();
+					}
+
+					if((typeof $scope.dadosColaborador.flg_trabalho_fim_semana != "undefined") && (parseInt($scope.dadosColaborador.flg_trabalho_fim_semana, 10) == 1)){
+						var element = $("[ng-model='dadosColaborador.flg_trabalho_fim_semana']");
+						element.siblings("span.switchery").remove();
+						element.attr("checked", "checked");
+						resetSwitchInput();
+					}
+
+					if((typeof $scope.dadosColaborador.flg_trabalho_feriado != "undefined") && (parseInt($scope.dadosColaborador.flg_trabalho_feriado, 10) == 1)){
+						var element = $("[ng-model='dadosColaborador.flg_trabalho_feriado']");
+						element.siblings("span.switchery").remove();
+						element.attr("checked", "checked");
+						resetSwitchInput();
+					}
+
+					if((typeof $scope.dadosColaborador.flg_ajusta_folha_ponto != "undefined") && (parseInt($scope.dadosColaborador.flg_ajusta_folha_ponto, 10) == 1)){
+						var element = $("[ng-model='dadosColaborador.flg_ajusta_folha_ponto']");
+						element.siblings("span.switchery").remove();
+						element.attr("checked", "checked");
+						resetSwitchInput();
+					}
+
+					if((typeof $scope.dadosColaborador.flg_ensino_superior != "undefined") && (parseInt($scope.dadosColaborador.flg_ensino_superior, 10) == 1)){
+						var element = $("[ng-model='dadosColaborador.flg_ensino_superior']");
+						element.siblings("span.switchery").remove();
+						element.attr("checked", "checked");
+						resetSwitchInput();
+					}
 
 
 					getTelefonesColaborador(getUrlVars().cod_colaborador);
