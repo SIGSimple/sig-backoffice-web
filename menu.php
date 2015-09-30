@@ -10,36 +10,38 @@
 					<ul id="mainnav-menu" class="list-group">
 						<?php
 							include_once 'php.util/HttpUtil.php';
-							$cod_perfil = $_SESSION['user_logged']['user']->cod_perfil;
-							$menuItems = json_decode(HttpUtil::doGetRequest('http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/modulos?tmp->cod_perfil='. $cod_perfil, null));
+							if(isset($_SESSION['user_logged'])) {
+								$cod_perfil = $_SESSION['user_logged']['user']->cod_perfil;
+								$menuItems = json_decode(HttpUtil::doGetRequest('http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/modulos?tmp->cod_perfil='. $cod_perfil, null));
 
-							foreach ($menuItems as $key => $value) {
-								echo '<li class="list-header"><i class="'. $value->icn_modulo .'"></i>'. $value->nme_modulo .'</li>';
+								foreach ($menuItems as $key => $value) {
+									echo '<li class="list-header"><i class="'. $value->icn_modulo .'"></i>'. $value->nme_modulo .'</li>';
 
-								if(count($value->children) > 0) {
-									foreach ($value->children as $xkey => $xvalue) {
-										echo '<li class="">';
-										echo 	'<a href="#">';
-										echo 		'<i class="'. $xvalue->icn_modulo .'"></i>';
-										echo 		'<span class="menu-title">'. $xvalue->nme_modulo .'</span>';
-										echo 		'<i class="arrow"></i>';
-										echo 	'</a>';
+									if(count($value->children) > 0) {
+										foreach ($value->children as $xkey => $xvalue) {
+											echo '<li class="">';
+											echo 	'<a href="#">';
+											echo 		'<i class="'. $xvalue->icn_modulo .'"></i>';
+											echo 		'<span class="menu-title">'. $xvalue->nme_modulo .'</span>';
+											echo 		'<i class="arrow"></i>';
+											echo 	'</a>';
 
-										if(count($xvalue->children) > 0) {
-											echo '<ul class="collapse">';
+											if(count($xvalue->children) > 0) {
+												echo '<ul class="collapse">';
 
-											foreach ($xvalue->children as $ykey => $yvalue) {
-												echo '<li class="{{activeLink(\''. $yvalue->url_modulo .'\')}}">';
-												echo 	'<a href="'. $yvalue->url_modulo .'">';
-												echo 		'<i class="'. $yvalue->icn_modulo .'"></i>'. $yvalue->nme_modulo;
-												echo 	'</a>';
-												echo '</li>';
+												foreach ($xvalue->children as $ykey => $yvalue) {
+													echo '<li class="{{activeLink(\''. $yvalue->url_modulo .'\')}}">';
+													echo 	'<a href="'. $yvalue->url_modulo .'">';
+													echo 		'<i class="'. $yvalue->icn_modulo .'"></i>'. $yvalue->nme_modulo;
+													echo 	'</a>';
+													echo '</li>';
+												}
+
+												echo '</ul>';
 											}
 
-											echo '</ul>';
+											echo '</li>';
 										}
-
-										echo '</li>';
 									}
 								}
 							}
