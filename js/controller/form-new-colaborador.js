@@ -160,12 +160,13 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	// Definição de funções de utilização da tela
 	$scope.validateFieldValues = function() {
-		$scope.dadosColaborador.dta_admissao = moment($scope.dadosColaborador.dta_admissao, "DD/MM/YYYY").format("YYYY-MM-DD");
-		$scope.dadosColaborador.dta_demissao = moment($scope.dadosColaborador.dta_demissao, "DD/MM/YYYY").format("YYYY-MM-DD");
-		$scope.dadosColaborador.dta_emissao_ctps = moment($scope.dadosColaborador.dta_emissao_ctps, "DD/MM/YYYY").format("YYYY-MM-DD");
-		$scope.dadosColaborador.dta_nascimento = moment($scope.dadosColaborador.dta_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD");
-		$scope.dadosColaborador.dta_validade_cnh = moment($scope.dadosColaborador.dta_validade_cnh, "DD/MM/YYYY").format("YYYY-MM-DD");   
-		$scope.dadosColaborador.dta_aso = moment($scope.dadosColaborador.dta_aso, "DD/MM/YYYY").format("YYYY-MM-DD");   
+		var postData = angular.copy($scope.dadosColaborador);
+		postData.dta_admissao 		= ($scope.dadosColaborador.dta_admissao != "") ? moment($scope.dadosColaborador.dta_admissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_demissao 		= ($scope.dadosColaborador.dta_demissao != "") ? moment($scope.dadosColaborador.dta_demissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_emissao_ctps 	= ($scope.dadosColaborador.dta_emissao_ctps != "") ? moment($scope.dadosColaborador.dta_emissao_ctps, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_nascimento 	= ($scope.dadosColaborador.dta_nascimento != "") ? moment($scope.dadosColaborador.dta_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_validade_cnh 	= ($scope.dadosColaborador.dta_validade_cnh != "") ? moment($scope.dadosColaborador.dta_validade_cnh, "DD/MM/YYYY").format("YYYY-MM-DD") : "";   
+		postData.dta_aso 			= ($scope.dadosColaborador.dta_aso != "") ? moment($scope.dadosColaborador.dta_aso, "DD/MM/YYYY").format("YYYY-MM-DD") : "";   
 
 		// remove as mensagens de erro dos campos obrigatórios
 		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
@@ -174,16 +175,16 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$("span").css("border-color","#CDD6E1").css("color","#515151");
 
 		// captura os valores dos sliders (flgs)
-		$scope.dadosColaborador.flg_trabalho_fim_semana 			= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_trabalho_feriado 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_ajusta_folha_ponto 				= ($('.input-switch[ng-model="dadosColaborador.flg_ajusta_folha_ponto"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_ensino_superior 				= ($('.input-switch[ng-model="dadosColaborador.flg_ensino_superior"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_portador_necessidades_especiais = ($('.input-switch[ng-model="dadosColaborador.flg_portador_necessidades_especiais"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_ativo 							= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
+		postData.flg_trabalho_fim_semana 			= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
+		postData.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
+		postData.flg_trabalho_feriado 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
+		postData.flg_ajusta_folha_ponto 				= ($('.input-switch[ng-model="dadosColaborador.flg_ajusta_folha_ponto"]')[0].checked) ? 1 : 0;
+		postData.flg_ensino_superior 				= ($('.input-switch[ng-model="dadosColaborador.flg_ensino_superior"]')[0].checked) ? 1 : 0;
+		postData.flg_portador_necessidades_especiais = ($('.input-switch[ng-model="dadosColaborador.flg_portador_necessidades_especiais"]')[0].checked) ? 1 : 0;
+		postData.flg_ativo 							= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
 
 		// envia os dados para a API tratar e salvar no BD
-		$http.post(baseUrlApi()+'colaborador/new', $scope.dadosColaborador)
+		$http.post(baseUrlApi()+'colaborador/new', postData)
 			.success(function(message, status, headers, config){
 				clearObject();
 				showNotification("Salvo!", message, null, 'page', status);
@@ -552,6 +553,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			$http.get(baseUrlApi() + 'colaboradores?col->cod_colaborador=' + getUrlVars().cod_colaborador)
 				.success(function(response){
 					$scope.dadosColaborador = response.rows[0];
+					$scope.dadosColaborador.cod_empreendimento = $scope.colaborador.user.cod_empreendimento;
 
 					$scope.getCidades('moradia');
 					$scope.getCidades('naturalidade');
