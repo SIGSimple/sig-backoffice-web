@@ -692,10 +692,10 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 				$.each(items, function(index, funcao){
 					var obj = {
+						cod_alteracao_funcao: funcao.cod_alteracao_funcao,
 						funcao: {
 							num_funcao: funcao.num_funcao,
 							nme_funcao: funcao.nme_funcao,
-							cod_alteracao_funcao: funcao.cod_alteracao_funcao,
 							cod_funcao: funcao.cod_funcao
 						},
 						vlr_salario: funcao.vlr_salario,
