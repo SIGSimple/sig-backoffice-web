@@ -175,13 +175,13 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$("span").css("border-color","#CDD6E1").css("color","#515151");
 
 		// captura os valores dos sliders (flgs)
-		postData.flg_trabalho_fim_semana 			= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
+		postData.flg_trabalho_fim_semana 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
 		postData.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
-		postData.flg_trabalho_feriado 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
+		postData.flg_trabalho_feriado 					= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
 		postData.flg_ajusta_folha_ponto 				= ($('.input-switch[ng-model="dadosColaborador.flg_ajusta_folha_ponto"]')[0].checked) ? 1 : 0;
-		postData.flg_ensino_superior 				= ($('.input-switch[ng-model="dadosColaborador.flg_ensino_superior"]')[0].checked) ? 1 : 0;
-		postData.flg_portador_necessidades_especiais = ($('.input-switch[ng-model="dadosColaborador.flg_portador_necessidades_especiais"]')[0].checked) ? 1 : 0;
-		postData.flg_ativo 							= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
+		postData.flg_ensino_superior 					= ($('.input-switch[ng-model="dadosColaborador.flg_ensino_superior"]')[0].checked) ? 1 : 0;
+		postData.flg_portador_necessidades_especiais 	= ($('.input-switch[ng-model="dadosColaborador.flg_portador_necessidades_especiais"]')[0].checked) ? 1 : 0;
+		postData.flg_ativo 								= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
 
 		// envia os dados para a API tratar e salvar no BD
 		$http.post(baseUrlApi()+'colaborador/new', postData)
@@ -560,9 +560,9 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 					$scope.dadosColaborador.dta_admissao 		= ($scope.dadosColaborador.dta_admissao 	!= null) ? moment($scope.dadosColaborador.dta_admissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
 					$scope.dadosColaborador.dta_nascimento 		= ($scope.dadosColaborador.dta_nascimento 	!= null) ? moment($scope.dadosColaborador.dta_nascimento, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.dadosColaborador.dta_demissao 		= ($scope.dadosColaborador.dta_demissao 	!= null) ? moment($scope.dadosColaborador.dta_demissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_demissao 		= ($scope.dadosColaborador.dta_demissao 	!= null) && ($scope.dadosColaborador.dta_demissao == "" )    ? moment($scope.dadosColaborador.dta_demissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
 					$scope.dadosColaborador.dta_emissao_ctps 	= ($scope.dadosColaborador.dta_emissao_ctps != null) ? moment($scope.dadosColaborador.dta_emissao_ctps, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.dadosColaborador.dta_aso 			= ($scope.dadosColaborador.dta_aso 			!= null) ? moment($scope.dadosColaborador.dta_aso, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_aso 			= ($scope.dadosColaborador.dta_aso 			!= null )  && ($scope.dadosColaborador.dta_aso == "" )  ? moment($scope.dadosColaborador.dta_aso, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
 					$scope.dadosColaborador.dta_validade_cnh 	= ($scope.dadosColaborador.dta_validade_cnh != null) ? moment($scope.dadosColaborador.dta_validade_cnh, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
 
 					$.each($scope.empresasContratante, function(index, empresaContratante) {
