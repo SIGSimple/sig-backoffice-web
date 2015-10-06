@@ -236,10 +236,15 @@
 												</th>
 											</thead>
 											<tbody>
-												<tr ng-repeat="telefone in dadosColaborador.telefones">
+												<tr ng-repeat="telefone in dadosColaborador.telefones | filter: { flg_removido: false }">
 													<td>{{ telefone.num_ddd }}</td>
 													<td>{{ telefone.num_telefone }}</td>
-													<td colspan="2">{{ telefone.tipoTelefone.nme_tipo_telefone }}</td>
+													<td>{{ telefone.tipoTelefone.nme_tipo_telefone }}</td>
+													<td>
+														<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(telefone)">
+															<i class="fa fa-trash-o"></i>
+														</button>
+													</td>
 												</tr>
 											</tbody>
 										</table>
@@ -259,8 +264,13 @@
 												</th>
 											</thead>
 											<tbody>
-												<tr ng-repeat="email in dadosColaborador.emails">
-													<td colspan="2">{{ email.end_email }}</td>
+												<tr ng-repeat="email in dadosColaborador.emails | filter: { flg_removido: false }">
+													<td >{{ email.end_email }}</td>
+													<td>
+														<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(email)">
+															<i class="fa fa-trash-o"></i>
+														</button>
+													</td>
 												</tr>
 											</tbody>
 										</table>
@@ -385,7 +395,7 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Função</label>
 								<div class="col-lg-6">
-									<table class="table table-bordered table-condensed table-hover table-striped" name="funcoes">
+									<table class="table table-bordered table-condensed table-hover table-striped" name="funcoes ">
 										<thead>
 											<th>Núm./Código</th>
 											<th>Função</th>
@@ -399,12 +409,17 @@
 											</th>
 										</thead>
 										<tbody>
-											<tr ng-repeat="funcao in dadosColaborador.funcoes">
+											<tr ng-repeat="funcao in dadosColaborador.funcoes | filter: { flg_removido: false }" >
 												<td>{{ funcao.funcao.num_funcao }}</td>
 												<td>{{ funcao.funcao.nme_funcao }}</td>
-												<td>{{ funcao.vlr_salario }}</td>
+												<td>{{ funcao.vlr_salario | currency : 'R$ ' : 2 }}</td>
 												<td>{{ funcao.motivoAlteracaoFuncao.nme_motivo_alteracao_funcao }}</td>
-												<td colspan="2">{{ funcao.dta_alteracao }}</td>
+												<td>{{ funcao.dta_alteracao }}</td>
+												<td>
+													<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(funcao)">
+														<i class="fa fa-trash-o"></i>
+													</button>
+												</td>	
 											</tr>
 										</tbody>
 									</table>
@@ -696,6 +711,7 @@
 			<!--Footer button-->
 			<div class="panel-footer text-right">
 				<div class="box-inline">
+					<a href="list-colaboradores" class="btn btn-danger">Cancelar</a>
 					<button type="button" class="previous btn btn-success">Voltar</button>
 					<button type="button" class="next btn btn-success">Avançar</button>
 					<button type="button" class="finish btn btn-success" disabled ng-click="validateFieldValues()">Finalizar</button>

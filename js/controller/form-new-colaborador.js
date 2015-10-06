@@ -268,6 +268,10 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$("#modalAddTelefone").modal("show");
 	}
 
+	$scope.desabilitaItem = function(item) {
+		item.flg_removido = true;
+	}
+
 	$scope.abreModalEmail = function() {
 		$("#modalAddEmail").modal("show");	
 	}
@@ -304,6 +308,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		}
 
 		if(!hasError) {
+			$scope.tmpModal.flg_removido = false;
 			$scope.dadosColaborador.telefones.push( angular.copy($scope.tmpModal) );
 			$scope.tmpModal = {};
 			$("#modalAddTelefone").modal("hide");
@@ -328,6 +333,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		}
 
 		if(!hasError) {
+			$scope.tmpModal.flg_removido = false;
 			$scope.dadosColaborador.emails.push( angular.copy($scope.tmpModal) );
 			$scope.tmpModal = {};
 			$("#modalAddEmail").modal("hide");
@@ -371,6 +377,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		}
 
 		if(!hasError) {
+			$scope.tmpModal.flg_removido = false;
 			$scope.tmpModal.dta_alteracao = moment($scope.tmpModal.dta_alteracao, "DD/MM/YYYY").format("YYYY-MM-DD");   
 			$scope.dadosColaborador.funcoes.push( angular.copy($scope.tmpModal) );
 			$scope.tmpModal = {};
@@ -548,6 +555,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
+
 	function getColaboradorByUrlParam() {
 		if(typeof getUrlVars().cod_colaborador != "undefined") { // eu tenho um parametro chamado cod_colaborador na url?
 			$http.get(baseUrlApi() + 'colaboradores?col->cod_colaborador=' + getUrlVars().cod_colaborador)
@@ -669,7 +677,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 						tipoTelefone: {
 							cod_tipo_telefone: telefone.cod_tipo_telefone,
 							nme_tipo_telefone: telefone.nme_tipo_telefone
-						}
+						},
+						flg_removido: false
 					};
 
 					$scope.dadosColaborador.telefones.push(obj);
@@ -680,8 +689,12 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	function getEmailsColaborador(cod_colaborador) {
 		$http.get(baseUrlApi() + 'colaborador/emails?cod_colaborador=' + cod_colaborador)
 			.success(function(items){
+				$.each(items, function(index, email) {
+					items[index].flg_removido = false;
+				});
+
 				$scope.dadosColaborador.emails = items;
-			});
+		});		
 	}
 
 
@@ -702,7 +715,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 						motivoAlteracaoFuncao: {
 							nme_motivo_alteracao_funcao: funcao.nme_motivo_alteracao_funcao,
 						},
-						dta_alteracao: moment(funcao.dta_alteracao, "YYYY-MM-DD hh:mm:ss").format("DD/MM/YYYY")
+						dta_alteracao: moment(funcao.dta_alteracao, "YYYY-MM-DD hh:mm:ss").format("DD/MM/YYYY"),
+						flg_removido: false
 					};
 
 					$scope.dadosColaborador.funcoes.push(obj);

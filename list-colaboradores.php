@@ -20,6 +20,7 @@
 			data-show-pagination-switch="true">
 			<thead>
 				<tr>
+					<th data-visible="true" data-align="center" data-formatter="editFormater"></th>
 					<th data-visible="true" data-align="center" data-field="pth_arquivo_foto" data-formatter="fotoFormatter"></th>
 					<th data-visible="false" data-sortable="true" data-sort-name="num_matricula" data-field="num_matricula">Matricula</th>
 					<th data-visible="true" data-sortable="true" data-sort-name="nme_colaborador" data-field="nme_colaborador">Nome</th>
