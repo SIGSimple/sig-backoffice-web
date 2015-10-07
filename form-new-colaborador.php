@@ -308,6 +308,22 @@
 
 						<div class="form-group">
 							<div class="element-group">
+								<label class="col-lg-2 control-label">Contrato</label> 
+								<div class="col-lg-4">
+									<div class="input-group">
+										<input type="text" class="form-control" name="contrato" readonly="readonly" value="{{ dadosColaborador.contrato.dsc_origem }}">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" ng-click="abreModal('origens', 'contrato')">
+												<i class="fa fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">
 								<label class="col-lg-2 control-label">Local de Trabalho</label>
 								<div class="col-lg-3">
 									<div class="input-group">
@@ -709,15 +725,42 @@
 				</div>
 
 			<!--Footer button-->
-			<div class="panel-footer text-right">
-				<div class="box-inline">
-					<a href="list-colaboradores" class="btn btn-danger">Cancelar</a>
-					<button type="button" class="previous btn btn-success">Voltar</button>
-					<button type="button" class="next btn btn-success">Avançar</button>
-					<button type="button" class="finish btn btn-success" disabled ng-click="validateFieldValues()">Finalizar</button>
+			<div class="panel-footer clearfix">
+				<div class="pull-left">
+					<div class="box-inline">
+						<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o">Excluir cadastro</button>
+					</div>
+				</div>
+				<div class="pull-right">
+					<div class="box-inline">
+						<a href="list-colaboradores" class="btn btn-default">Cancelar</a>
+						<button type="button" class="previous btn btn-success">Voltar</button>
+						<button type="button" class="next btn btn-success">Avançar</button>
+						<button type="button" class="finish btn btn-success" disabled ng-click="validateFieldValues()">Finalizar</button>
+					</div>
 				</div>
 			</div>
 		</form>
+	</div>
+
+	<div class="modal fade" id="modalExcluiColaborador" tabindex="-1" role="dialog" aria-labelledby="modalExcluiColaboradorLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Confirma exclusão?</h4>
+				</div>
+				<div class="modal-body">
+					Confirma a exclusão do colaborador [{{ dadosColaborador.nme_colaborador }}]?
+				</div>
+				<div class="modal-footer clearfix">
+					<div class="pull-right">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Sim</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="modal fade" id="modalItems" tabindex="-1" role="dialog" aria-labelledby="modalItemsLabel">

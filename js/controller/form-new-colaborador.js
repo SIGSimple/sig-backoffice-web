@@ -109,6 +109,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.entidades = [];
 	$scope.contratos = [];
 	$scope.tiposTelefone = [];
+	$scope.origens = [];
 
 	$scope.tmpModal = {};
 	
@@ -155,6 +156,12 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				field: 'nme_banco',
 				title: 'Nome'
 			}
+		],
+		"origens": [
+			{
+				field: 'dsc_origem',
+				title: 'Contrato'
+			}
 		]
 	};
 
@@ -172,7 +179,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
 		$(".element-group").removeClass("has-error");
 		$("table thead").css("background-color","none").css("color","#515151");
-		$("span").css("border-color","#CDD6E1").css("color","#515151");
+		$(".form-fields span").css("border-color","#CDD6E1").css("color","#515151");
 
 		// captura os valores dos sliders (flgs)
 		postData.flg_trabalho_fim_semana 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
@@ -189,7 +196,10 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				clearObject();
 				showNotification("Salvo!", message, null, 'page', status);
 				setTimeout(function(){
-					window.location.href = window.location.href.replace("form-new-colaborador", "list-colaboradores");
+					// Remove os parâmetros da url
+					var newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+					// Faz o redirecionamento
+					window.location.href = newUrl.replace("form-new-colaborador", "list-colaboradores");
 				}, 5000);
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro
@@ -601,6 +611,11 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 					$.each($scope.entidades, function(index, entidade) {
 						if(entidade.cod_entidade == $scope.dadosColaborador.cod_entidade)
 							$scope.dadosColaborador.entidade = entidade;
+					});
+
+					$.each($scope.contratos, function(index, origem) {
+						if(origem.cod_origem == $scope.dadosColaborador.cod_contrato)
+							$scope.dadosColaborador.contrato = origem;
 					});
 
 					if((typeof $scope.dadosColaborador.flg_portador_necessidades_especiais != "undefined") && (parseInt($scope.dadosColaborador.flg_portador_necessidades_especiais, 10) == 1)) {
