@@ -117,6 +117,13 @@ function dateFormatter(value) {
 	return moment(value, "YYYY-MM-DD").format("DD/MM/YYYY");
 }
 
+function currencyFormatter(value) {
+	var isParsed = (parseFloat(value)) ? true : false;
+
+	if(isParsed)
+		return "R$ " + numberFormat(parseFloat(value), 2, ",", ".");
+}
+
 function getQueryParams(qs) {
 	qs = qs.split('+').join(' ');
 

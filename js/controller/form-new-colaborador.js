@@ -109,6 +109,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.entidades = [];
 	$scope.contratos = [];
 	$scope.tiposTelefone = [];
+	$scope.origens = [];
 
 	$scope.tmpModal = {};
 	
@@ -155,40 +156,74 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				field: 'nme_banco',
 				title: 'Nome'
 			}
+		],
+		"origens": [
+			{
+				field: 'dsc_origem',
+				title: 'Contrato'
+			}
 		]
 	};
 
 	// Definição de funções de utilização da tela
+	$scope.deleteColaborador = function() {
+		var postData = {
+			cod_colaborador: $scope.dadosColaborador.cod_colaborador, 	// colaborador que está sendo alterado
+			cod_usuario: $scope.colaborador.user.cod_usuario 			// usuário logado no sistema
+		};
+
+		$http.delete(baseUrlApi()+"colaborador", {params: postData})
+			.success(function(message, status, headers, config){
+				$("#modalExcluiColaborador").modal("hide");
+				clearObject();
+				showNotification("Excluído!", message, null, 'page', status);
+				setTimeout(function(){
+					// Remove os parâmetros da url
+					var newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+					// Faz o redirecionamento
+					window.location.href = newUrl.replace("form-new-colaborador", "list-colaboradores");
+				}, 5000);
+			})
+			.error(function(message, status, headers, config){
+				showNotification(null, message, null, 'page', status);
+			});
+
+	}
+
 	$scope.validateFieldValues = function() {
-		$scope.dadosColaborador.dta_admissao = moment($scope.dadosColaborador.dta_admissao, "DD/MM/YYYY").format("YYYY-MM-DD");
-		$scope.dadosColaborador.dta_demissao = moment($scope.dadosColaborador.dta_demissao, "DD/MM/YYYY").format("YYYY-MM-DD");
-		$scope.dadosColaborador.dta_emissao_ctps = moment($scope.dadosColaborador.dta_emissao_ctps, "DD/MM/YYYY").format("YYYY-MM-DD");
-		$scope.dadosColaborador.dta_nascimento = moment($scope.dadosColaborador.dta_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD");
-		$scope.dadosColaborador.dta_validade_cnh = moment($scope.dadosColaborador.dta_validade_cnh, "DD/MM/YYYY").format("YYYY-MM-DD");   
-		$scope.dadosColaborador.dta_aso = moment($scope.dadosColaborador.dta_aso, "DD/MM/YYYY").format("YYYY-MM-DD");   
+		var postData = angular.copy($scope.dadosColaborador);
+		postData.dta_admissao 		= ($scope.dadosColaborador.dta_admissao != "") ? moment($scope.dadosColaborador.dta_admissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_demissao 		= ($scope.dadosColaborador.dta_demissao != "") ? moment($scope.dadosColaborador.dta_demissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_emissao_ctps 	= ($scope.dadosColaborador.dta_emissao_ctps != "") ? moment($scope.dadosColaborador.dta_emissao_ctps, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_nascimento 	= ($scope.dadosColaborador.dta_nascimento != "") ? moment($scope.dadosColaborador.dta_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_validade_cnh 	= ($scope.dadosColaborador.dta_validade_cnh != "") ? moment($scope.dadosColaborador.dta_validade_cnh, "DD/MM/YYYY").format("YYYY-MM-DD") : "";   
+		postData.dta_aso 			= ($scope.dadosColaborador.dta_aso != "") ? moment($scope.dadosColaborador.dta_aso, "DD/MM/YYYY").format("YYYY-MM-DD") : "";   
 
 		// remove as mensagens de erro dos campos obrigatórios
 		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
 		$(".element-group").removeClass("has-error");
 		$("table thead").css("background-color","none").css("color","#515151");
-		$("span").css("border-color","#CDD6E1").css("color","#515151");
+		$(".form-fields span").css("border-color","#CDD6E1").css("color","#515151");
 
 		// captura os valores dos sliders (flgs)
-		$scope.dadosColaborador.flg_trabalho_fim_semana 			= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_trabalho_feriado 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_ajusta_folha_ponto 				= ($('.input-switch[ng-model="dadosColaborador.flg_ajusta_folha_ponto"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_ensino_superior 				= ($('.input-switch[ng-model="dadosColaborador.flg_ensino_superior"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_portador_necessidades_especiais = ($('.input-switch[ng-model="dadosColaborador.flg_portador_necessidades_especiais"]')[0].checked) ? 1 : 0;
-		$scope.dadosColaborador.flg_ativo 							= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
+		postData.flg_trabalho_fim_semana 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
+		postData.flg_hora_extra 						= ($('.input-switch[ng-model="dadosColaborador.flg_hora_extra"]')[0].checked) ? 1 : 0;
+		postData.flg_trabalho_feriado 					= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_feriado"]')[0].checked) ? 1 : 0;
+		postData.flg_ajusta_folha_ponto 				= ($('.input-switch[ng-model="dadosColaborador.flg_ajusta_folha_ponto"]')[0].checked) ? 1 : 0;
+		postData.flg_ensino_superior 					= ($('.input-switch[ng-model="dadosColaborador.flg_ensino_superior"]')[0].checked) ? 1 : 0;
+		postData.flg_portador_necessidades_especiais 	= ($('.input-switch[ng-model="dadosColaborador.flg_portador_necessidades_especiais"]')[0].checked) ? 1 : 0;
+		postData.flg_ativo 								= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
 
 		// envia os dados para a API tratar e salvar no BD
-		$http.post(baseUrlApi()+'colaborador/new', $scope.dadosColaborador)
+		$http.post(baseUrlApi()+'colaborador', postData)
 			.success(function(message, status, headers, config){
 				clearObject();
 				showNotification("Salvo!", message, null, 'page', status);
 				setTimeout(function(){
-					window.location.href = window.location.href.replace("form-new-colaborador", "list-colaboradores");
+					// Remove os parâmetros da url
+					var newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+					// Faz o redirecionamento
+					window.location.href = newUrl.replace("form-new-colaborador", "list-colaboradores");
 				}, 5000);
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro
@@ -267,6 +302,10 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$("#modalAddTelefone").modal("show");
 	}
 
+	$scope.desabilitaItem = function(item) {
+		item.flg_removido = true;
+	}
+
 	$scope.abreModalEmail = function() {
 		$("#modalAddEmail").modal("show");	
 	}
@@ -303,6 +342,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		}
 
 		if(!hasError) {
+			$scope.tmpModal.flg_removido = false;
 			$scope.dadosColaborador.telefones.push( angular.copy($scope.tmpModal) );
 			$scope.tmpModal = {};
 			$("#modalAddTelefone").modal("hide");
@@ -327,6 +367,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		}
 
 		if(!hasError) {
+			$scope.tmpModal.flg_removido = false;
 			$scope.dadosColaborador.emails.push( angular.copy($scope.tmpModal) );
 			$scope.tmpModal = {};
 			$("#modalAddEmail").modal("hide");
@@ -370,6 +411,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		}
 
 		if(!hasError) {
+			$scope.tmpModal.flg_removido = false;
 			$scope.tmpModal.dta_alteracao = moment($scope.tmpModal.dta_alteracao, "DD/MM/YYYY").format("YYYY-MM-DD");   
 			$scope.dadosColaborador.funcoes.push( angular.copy($scope.tmpModal) );
 			$scope.tmpModal = {};
@@ -547,20 +589,22 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
+
 	function getColaboradorByUrlParam() {
 		if(typeof getUrlVars().cod_colaborador != "undefined") { // eu tenho um parametro chamado cod_colaborador na url?
 			$http.get(baseUrlApi() + 'colaboradores?col->cod_colaborador=' + getUrlVars().cod_colaborador)
 				.success(function(response){
 					$scope.dadosColaborador = response.rows[0];
+					$scope.dadosColaborador.cod_empreendimento = $scope.colaborador.user.cod_empreendimento;
 
 					$scope.getCidades('moradia');
 					$scope.getCidades('naturalidade');
 
 					$scope.dadosColaborador.dta_admissao 		= ($scope.dadosColaborador.dta_admissao 	!= null) ? moment($scope.dadosColaborador.dta_admissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
 					$scope.dadosColaborador.dta_nascimento 		= ($scope.dadosColaborador.dta_nascimento 	!= null) ? moment($scope.dadosColaborador.dta_nascimento, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.dadosColaborador.dta_demissao 		= ($scope.dadosColaborador.dta_demissao 	!= null) ? moment($scope.dadosColaborador.dta_demissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_demissao 		= ($scope.dadosColaborador.dta_demissao 	!= null) && ($scope.dadosColaborador.dta_demissao == "" )    ? moment($scope.dadosColaborador.dta_demissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
 					$scope.dadosColaborador.dta_emissao_ctps 	= ($scope.dadosColaborador.dta_emissao_ctps != null) ? moment($scope.dadosColaborador.dta_emissao_ctps, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.dadosColaborador.dta_aso 			= ($scope.dadosColaborador.dta_aso 			!= null) ? moment($scope.dadosColaborador.dta_aso, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.dadosColaborador.dta_aso 			= ($scope.dadosColaborador.dta_aso 			!= null )  && ($scope.dadosColaborador.dta_aso == "" )  ? moment($scope.dadosColaborador.dta_aso, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
 					$scope.dadosColaborador.dta_validade_cnh 	= ($scope.dadosColaborador.dta_validade_cnh != null) ? moment($scope.dadosColaborador.dta_validade_cnh, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
 
 					$.each($scope.empresasContratante, function(index, empresaContratante) {
@@ -591,6 +635,11 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 					$.each($scope.entidades, function(index, entidade) {
 						if(entidade.cod_entidade == $scope.dadosColaborador.cod_entidade)
 							$scope.dadosColaborador.entidade = entidade;
+					});
+
+					$.each($scope.contratos, function(index, origem) {
+						if(origem.cod_origem == $scope.dadosColaborador.cod_contrato)
+							$scope.dadosColaborador.contrato = origem;
 					});
 
 					if((typeof $scope.dadosColaborador.flg_portador_necessidades_especiais != "undefined") && (parseInt($scope.dadosColaborador.flg_portador_necessidades_especiais, 10) == 1)) {
@@ -667,7 +716,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 						tipoTelefone: {
 							cod_tipo_telefone: telefone.cod_tipo_telefone,
 							nme_tipo_telefone: telefone.nme_tipo_telefone
-						}
+						},
+						flg_removido: false
 					};
 
 					$scope.dadosColaborador.telefones.push(obj);
@@ -678,8 +728,12 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	function getEmailsColaborador(cod_colaborador) {
 		$http.get(baseUrlApi() + 'colaborador/emails?cod_colaborador=' + cod_colaborador)
 			.success(function(items){
+				$.each(items, function(index, email) {
+					items[index].flg_removido = false;
+				});
+
 				$scope.dadosColaborador.emails = items;
-			});
+		});		
 	}
 
 
@@ -690,15 +744,18 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 				$.each(items, function(index, funcao){
 					var obj = {
+						cod_alteracao_funcao: funcao.cod_alteracao_funcao,
 						funcao: {
 							num_funcao: funcao.num_funcao,
-							nme_funcao: funcao.nme_funcao
+							nme_funcao: funcao.nme_funcao,
+							cod_funcao: funcao.cod_funcao
 						},
 						vlr_salario: funcao.vlr_salario,
 						motivoAlteracaoFuncao: {
 							nme_motivo_alteracao_funcao: funcao.nme_motivo_alteracao_funcao,
 						},
-						dta_alteracao: moment(funcao.dta_alteracao, "YYYY-MM-DD hh:mm:ss").format("DD/MM/YYYY")
+						dta_alteracao: moment(funcao.dta_alteracao, "YYYY-MM-DD hh:mm:ss").format("DD/MM/YYYY"),
+						flg_removido: false
 					};
 
 					$scope.dadosColaborador.funcoes.push(obj);
