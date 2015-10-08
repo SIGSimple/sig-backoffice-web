@@ -27,9 +27,9 @@
 					<th data-visible="true" data-sortable="true" data-sort-name="nme_funcao_medicao" data-field="nme_funcao_medicao">Função Medição</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="nme_fantasia" data-field="nme_fantasia">Contratante</th>
 					<th data-visible="true" data-sortable="true" data-sort-name="dsc_origem" data-field="dsc_origem">Origem</th>	
-					<th data-visible="true" data-sortable="true" data-sort-name="vlr_slario_clt" data-field="vlr_slario_clt">Salário</th>						
+					<th data-visible="true" data-sortable="true" data-sort-name="vlr_slario_clt" data-field="vlr_slario_clt" data-formatter="currencyFormatter">Salário</th>						
 					<th data-visible="true" data-sortable="true" data-sort-name="nme_departamento" data-field="nme_departamento">Depto</th>
-					<th data-visible="true" data-sortable="true" data-sort-name="flg_cm" data-field="flg_cm">C/M</th>
+					<th data-visible="false" data-sortable="true" data-sort-name="flg_cm" data-field="flg_cm">C/M</th>
 					<th data-visible="true" data-sortable="true" data-sort-name="nme_local_trabalho" data-field="nme_local_trabalho">Local de Trabalho</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="nme_grade_horario" data-field="nme_grade_horario">Horário</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="dta_admissao" data-field="dta_admissao">Dta. Admissão</th>

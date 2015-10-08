@@ -166,6 +166,30 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	};
 
 	// Definição de funções de utilização da tela
+	$scope.deleteColaborador = function() {
+		var postData = {
+			cod_colaborador: $scope.dadosColaborador.cod_colaborador, 	// colaborador que está sendo alterado
+			cod_usuario: $scope.colaborador.user.cod_usuario 			// usuário logado no sistema
+		};
+
+		$http.delete(baseUrlApi()+"colaborador", {params: postData})
+			.success(function(message, status, headers, config){
+				$("#modalExcluiColaborador").modal("hide");
+				clearObject();
+				showNotification("Excluído!", message, null, 'page', status);
+				setTimeout(function(){
+					// Remove os parâmetros da url
+					var newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+					// Faz o redirecionamento
+					window.location.href = newUrl.replace("form-new-colaborador", "list-colaboradores");
+				}, 5000);
+			})
+			.error(function(message, status, headers, config){
+				showNotification(null, message, null, 'page', status);
+			});
+
+	}
+
 	$scope.validateFieldValues = function() {
 		var postData = angular.copy($scope.dadosColaborador);
 		postData.dta_admissao 		= ($scope.dadosColaborador.dta_admissao != "") ? moment($scope.dadosColaborador.dta_admissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
@@ -191,7 +215,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		postData.flg_ativo 								= ($('.input-switch[ng-model="dadosColaborador.flg_ativo"]')[0].checked) ? 1 : 0;
 
 		// envia os dados para a API tratar e salvar no BD
-		$http.post(baseUrlApi()+'colaborador/new', postData)
+		$http.post(baseUrlApi()+'colaborador', postData)
 			.success(function(message, status, headers, config){
 				clearObject();
 				showNotification("Salvo!", message, null, 'page', status);

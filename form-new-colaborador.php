@@ -728,7 +728,7 @@
 			<div class="panel-footer clearfix">
 				<div class="pull-left">
 					<div class="box-inline">
-						<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o">Excluir cadastro</button>
+						<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" data-toggle="modal" data-target='#modalExcluiColaborador'>Excluir cadastro</button>
 					</div>
 				</div>
 				<div class="pull-right">
@@ -756,7 +756,7 @@
 				<div class="modal-footer clearfix">
 					<div class="pull-right">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Sim</button>
+						<button type="button" class="btn btn-default" ng-click="deleteColaborador()">Sim</button>
 					</div>
 				</div>
 			</div>

@@ -113,6 +113,13 @@ function ativoFormatter(value) {
 	return (parseInt(value,10) == 1) ? '<i class="text-success fa fa-circle"></i> Ativo' : '<i class="text-danger fa fa-circle"></i> Inativo';
 }
 
+function currencyFormatter(value) {
+	var isParsed = (parseFloat(value)) ? true : false;
+
+	if(isParsed)
+		return "R$ " + numberFormat(parseFloat(value), 2, ",", ".");
+}
+
 function getQueryParams(qs) {
 	qs = qs.split('+').join(' ');
 
