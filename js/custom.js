@@ -113,6 +113,10 @@ function ativoFormatter(value) {
 	return (parseInt(value,10) == 1) ? '<i class="text-success fa fa-circle"></i> Ativo' : '<i class="text-danger fa fa-circle"></i> Inativo';
 }
 
+function dateFormatter(value) {
+	return moment(value, "YYYY-MM-DD").format("DD/MM/YYYY");
+}
+
 function getQueryParams(qs) {
 	qs = qs.split('+').join(' ');
 

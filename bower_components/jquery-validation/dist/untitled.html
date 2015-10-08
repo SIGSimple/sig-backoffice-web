@@ -1,7 +1,7 @@
 <?php
 
-include_once 'php.util/restrict.php';
-restrict();
+//include_once 'php.util/restrict.php';
+//restrict();
 
 ?>
 <!DOCTYPE html>
@@ -9,13 +9,13 @@ restrict();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SIG BackOffice | Colaborative Management SaaS.</title>
+	<title>SIG Operacional | Colaborative Management SaaS.</title>
 
 	<!--STYLESHEET-->
 	<!--=================================================-->
 
 	<!--Open Sans Font [ OPTIONAL ] -->
- 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet">
+
 
 
 	<!--Bootstrap Stylesheet [ REQUIRED ]-->
@@ -83,11 +83,11 @@ restrict();
 		<!--===================================================-->
 		<header id="navbar">
 			<div id="navbar-container" class="boxed">
-				<?php include('navbar-brand.php'); ?>
+				<?php /*include('navbar-brand.php');*/ ?>
 
 				<!--Navbar Dropdown-->
 				<!--================================-->
-				<?php include('navbar-dropdown.php'); ?>
+				<?php /*include('navbar-dropdown.php');*/ ?>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End Navbar Dropdown-->
 			</div>
@@ -102,15 +102,15 @@ restrict();
 				<!--Page Title-->
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<?php
-					if(isset($_GET['page']) && $_GET['page'] != "home")
-						include('page-title.php');
+					/*if(isset($_GET['page']) && $_GET['page'] != "home")
+						include('page-title.php');*/
 				?>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End page title-->
 
 				<!--Breadcrumb-->
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-				<?php include('page-breadcrumb.php'); ?>
+				<?php /*include('page-breadcrumb.php');*/ ?>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End breadcrumb-->
 
@@ -118,10 +118,10 @@ restrict();
 				<!--===================================================-->
 				<div id="page-content">
 					<?php
-						if(isset($_GET['page']) && file_exists($_GET['page'].'.php'))
+						/*if(isset($_GET['page']) && file_exists($_GET['page'].'.php'))
 							include($_GET['page'].'.php');
 						else
-							include('page-404.php');
+							include('page-404.php');*/
 					?>
 				</div>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -130,10 +130,10 @@ restrict();
 			<!--===================================================-->
 			<!--END CONTENT CONTAINER-->
 
-			<?php include('menu.php'); ?>
+			<?php /*include('menu.php');*/ ?>
 		</div>
 
-		<?php include('footer.php'); ?>
+		<?php /*include('footer.php');*/ ?>
 
 		<!-- SCROLL TOP BUTTON -->
 		<!--===================================================-->
@@ -143,7 +143,7 @@ restrict();
 	<!--===================================================-->
 	<!-- END OF CONTAINER -->
 
-	<?php include('theme-settings.php'); ?>
+	<?php /*include('theme-settings.php');*/ ?>
 	
 	<!--JAVASCRIPT-->
 	<!--=================================================-->
@@ -230,11 +230,6 @@ restrict();
 	<script src="bower_components/bootstrap-select/bootstrap-select.min.js"></script>
 	<script src="bower_components/moment/locale/pt-br.js"></script>
 
-	<!--jQuery Validation [ REQUIRED ]-->
-	<script src="bower_components/jquery-validation/jquery.validate.min.js"></script>
-	<script src="bower_components/jquery-validation/additional-methods.min.js"></script>
-
-	<!--CUSTOM-->
 	<script src="js/custom.js"></script>
 	<script src="js/extras.js"></script>
 

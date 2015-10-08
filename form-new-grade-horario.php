@@ -11,9 +11,9 @@
 
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Ativo?</label>
-					<div class="col-lg-1">
-						<input type="checkbox" class="input-switch" ng-model="gradeHorario.flg_ativo">
-					</div>
+				<div class="col-lg-1">
+					<input type="checkbox" class="input-switch" ng-model="gradeHorario.flg_ativo">
+				</div>
 			</div>
 
 		<div class="panel-footer clearfix">
