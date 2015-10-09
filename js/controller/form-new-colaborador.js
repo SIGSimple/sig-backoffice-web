@@ -92,7 +92,11 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		pth_arquivo_entidade: "",
 		pth_arquivo_curriculo: "",
 		pth_arquivo_reservista: "",
-		num_entidade: ""
+		num_entidade: "",
+		nme_dependente: "",
+		flg_plano_saude: 0,
+		flg_deduz_irrf: 0
+
 	};
 	$scope.motivosAlteracaoFuncao = [];
 	$scope.funcoes = [];
@@ -110,6 +114,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.contratos = [];
 	$scope.tiposTelefone = [];
 	$scope.origens = [];
+	$scope.dependentes = [];
 
 	$scope.tmpModal = {};
 	
@@ -161,6 +166,12 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			{
 				field: 'dsc_origem',
 				title: 'Contrato'
+			}
+		],
+		"dependentes": [
+			{
+				field: 'nme_dependente',
+				title: 'Nome Dependente'
 			}
 		]
 	};
@@ -312,6 +323,10 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	$scope.abreModalFuncao = function() {
 		$("#modalAddFuncao").modal("show");
+	}
+
+	$scope.abreModalDependente = function() {
+		$("#modalAddDependente").modal("show");
 	}
 
 	$scope.addTelefone = function(){

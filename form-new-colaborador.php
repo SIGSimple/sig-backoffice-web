@@ -442,7 +442,47 @@
 								</div>
 							</div>
 						</div>
-					</div>	
+
+						<div class="form-group">
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Dependentes</label>
+								<div class="col-lg-6">
+									<table class="table table-bordered table-condensed table-hover table-striped" name="dependentes ">
+										<thead>
+											<th>Grau Dependência</th>
+											<th>Dependente</th>
+											<th>Data de nascimento</th>
+											<th>Opta Plano de Saúde?</th>
+											<th>Plano de saúde</th>
+											<th>Deduz IRPF?</th>
+											<th>Possui Curso Superior?</th>
+											<th width="20">	
+												<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalDependente()">
+													<i class="fa fa-plus-circle"></i>
+												</button>
+											</th>
+										</thead>
+										<tbody>
+											<tr ng-repeat="dependente in dadosColaborador.dependentes" >
+												<td>{{ dependente.cod_tipo_dependencia }}</td>
+												<td>{{ dependente.nme_dependente }}</td>
+												<td>{{ dependente.dta_nascimento }}</td>
+												<td>{{ (dependente.flg_plano_saude == 1) ? 'Sim' : 'Não' }}</td>
+												<td>{{ dependente.planoSaude.nme_plano_saude }}</td>
+												<td>{{ (dependente.flg_deduz_irrf == 1) ? 'Sim' : 'Não'  }}</td>
+												<td>{{ (dependente.flg_curso_superior == 1) ? 'Sim' : 'Não'  }}</td>
+												<td>
+													<button type="button" class="btn btn-xs btn-danger">
+														<i class="fa fa-trash-o"></i>
+													</button>
+												</td>	
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>	
+						</div>		
+					</div>
 
 					<!--Third tab-->
 					<div id="demo-cls-tab3" class="tab-pane">
@@ -902,6 +942,69 @@
 							</div> 
 						</div>
 					</div>
+
+
+	<div class="modal fade" id="modalAddDependente" tabindex="-1" role="dialog" aria-labelledby="modalAddDependenteLabel">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalAddDependenteLabel">Dependência</h4>
+				</div>
+
+				<form class="form form-horizontal" role="form">
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Tipo</label>
+							<div class="col-lg-5">
+								<select class="form-control" ng-model="dependentes.dependente" ng-options="item as item.cod_tipo_dependencia for item in dependentes"></select>
+							</div> 
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Dependente</label>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" ng-model="dependentes.nme_dependente">
+							</div> 
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Data de Nascimento</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" ng-model="dependentes.dta_nascimento" >
+								<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Possui plano de saúde?</label>
+								<div class="col-lg-1">
+									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.planoSaude">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Possui IRRF?</label>
+								<div class="col-lg-1">
+									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_deduz_irrf" >
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Possui ensino superior?</label>
+								<div class="col-lg-1">
+									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_curso_superior" >
+								</div>
+							</div>
+						</div>
+					</div>
+
+
 
 					<div class="modal-footer clearfix">
 						<div class="pull-left">
