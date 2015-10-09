@@ -428,7 +428,7 @@
 											<tr ng-repeat="funcao in dadosColaborador.funcoes | filter: { flg_removido: false }" >
 												<td>{{ funcao.funcao.num_funcao }}</td>
 												<td>{{ funcao.funcao.nme_funcao }}</td>
-												<td>{{ funcao.vlr_salario | currency : 'R$ ' : 2 }}</td>
+												<td>R$ {{ funcao.vlr_salario | numberFormat: 2 : ',' : '.' }}</td>
 												<td>{{ funcao.motivoAlteracaoFuncao.nme_motivo_alteracao_funcao }}</td>
 												<td>{{ funcao.dta_alteracao }}</td>
 												<td>
