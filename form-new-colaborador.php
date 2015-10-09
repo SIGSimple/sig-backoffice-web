@@ -943,69 +943,6 @@
 						</div>
 					</div>
 
-
-	<div class="modal fade" id="modalAddDependente" tabindex="-1" role="dialog" aria-labelledby="modalAddDependenteLabel">
-		<div class="modal-dialog modal-md" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="modalAddDependenteLabel">Dependência</h4>
-				</div>
-
-				<form class="form form-horizontal" role="form">
-					<div class="modal-body">
-						<div class="form-group">
-							<label class="col-lg-3 control-label">Tipo</label>
-							<div class="col-lg-5">
-								<select class="form-control" ng-model="tmpModal.dependente" ng-options="item as item.cod_tipo_dependencia for item in dependentes"></select>
-							</div> 
-						</div>
-
-						<div class="form-group">
-							<label class="col-lg-3 control-label">Dependente</label>
-							<div class="col-lg-3">
-								<input type="text" class="form-control" ng-model="tmpModal.nme_dependente">
-							</div> 
-						</div>
-
-						<div class="form-group">
-							<label class="col-lg-3 control-label">Data de Nascimento</label>
-							<div class="col-lg-5">
-								<input type="text" class="form-control" ng-model="tmpModal.dta_nascimento" >
-								<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="element-group">
-								<label class="col-lg-2 control-label">Possui plano de saúde?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="tmpModal.planoSaude">
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="element-group">
-								<label class="col-lg-2 control-label">Possui IRRF?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="tmpModal.flg_deduz_irrf" >
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="element-group">
-								<label class="col-lg-2 control-label">Possui ensino superior?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="tmpModal.flg_curso_superior" >
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-
 					<div class="modal-footer clearfix">
 						<div class="pull-left">
 							<p class="text-danger hide">Os campos marcados em vermelho são obrigatórios!</p>
