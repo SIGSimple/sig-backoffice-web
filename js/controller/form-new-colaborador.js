@@ -92,10 +92,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		pth_arquivo_entidade: "",
 		pth_arquivo_curriculo: "",
 		pth_arquivo_reservista: "",
-		num_entidade: "",
-		nme_dependente: "",
-		flg_plano_saude: 0,
-		flg_deduz_irrf: 0
+		num_entidade: ""
 
 	};
 	$scope.motivosAlteracaoFuncao = [];
@@ -115,7 +112,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.tiposTelefone = [];
 	$scope.origens = [];
 	$scope.dependentes = [];
-
+	
 	$scope.tmpModal = {};
 	
 	var modalTablesColumns = {

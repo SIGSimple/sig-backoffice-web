@@ -957,21 +957,21 @@
 						<div class="form-group">
 							<label class="col-lg-3 control-label">Tipo</label>
 							<div class="col-lg-5">
-								<select class="form-control" ng-model="dependentes.dependente" ng-options="item as item.cod_tipo_dependencia for item in dependentes"></select>
+								<select class="form-control" ng-model="tmpModal.dependente" ng-options="item as item.cod_tipo_dependencia for item in dependentes"></select>
 							</div> 
 						</div>
 
 						<div class="form-group">
 							<label class="col-lg-3 control-label">Dependente</label>
 							<div class="col-lg-3">
-								<input type="text" class="form-control" ng-model="dependentes.nme_dependente">
+								<input type="text" class="form-control" ng-model="tmpModal.nme_dependente">
 							</div> 
 						</div>
 
 						<div class="form-group">
 							<label class="col-lg-3 control-label">Data de Nascimento</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" ng-model="dependentes.dta_nascimento" >
+								<input type="text" class="form-control" ng-model="tmpModal.dta_nascimento" >
 								<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 							</div>
 						</div>
@@ -980,7 +980,7 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Possui plano de saúde?</label>
 								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.planoSaude">
+									<input type="checkbox" class="input-switch" ng-model="tmpModal.planoSaude">
 								</div>
 							</div>
 						</div>
@@ -989,7 +989,7 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Possui IRRF?</label>
 								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_deduz_irrf" >
+									<input type="checkbox" class="input-switch" ng-model="tmpModal.flg_deduz_irrf" >
 								</div>
 							</div>
 						</div>
@@ -998,7 +998,7 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Possui ensino superior?</label>
 								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_curso_superior" >
+									<input type="checkbox" class="input-switch" ng-model="tmpModal.flg_curso_superior" >
 								</div>
 							</div>
 						</div>
