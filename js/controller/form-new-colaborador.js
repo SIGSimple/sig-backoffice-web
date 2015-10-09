@@ -278,7 +278,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$("#modalItemsLabel").text("LISTAGEM DE " + rota.replace("-"," de ").toUpperCase());
 		$("#modalItems").modal("show");
 		$('#mytable').bootstrapTable({
-			url: "http://localhost/sig-backoffice-api/"+ rota +".json",
+			url: baseUrlApi() + rota +".json",
 			search: true,
 			showRefresh: true,
 			showToggle: true,
@@ -343,6 +343,9 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 		if(!hasError) {
 			$scope.tmpModal.flg_removido = false;
+			if(typeof($scope.dadosColaborador.telefones) == "undefined")
+				$scope.dadosColaborador.telefones = [];
+
 			$scope.dadosColaborador.telefones.push( angular.copy($scope.tmpModal) );
 			$scope.tmpModal = {};
 			$("#modalAddTelefone").modal("hide");
@@ -413,6 +416,9 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		if(!hasError) {
 			$scope.tmpModal.flg_removido = false;
 			$scope.tmpModal.dta_alteracao = moment($scope.tmpModal.dta_alteracao, "DD/MM/YYYY").format("YYYY-MM-DD");   
+			if(typeof($scope.dadosColaborador.funcoes) == "undefined")
+				$scope.dadosColaborador.funcoes = [];
+
 			$scope.dadosColaborador.funcoes.push( angular.copy($scope.tmpModal) );
 			$scope.tmpModal = {};
 			$("#modalAddFuncao").modal("hide");
