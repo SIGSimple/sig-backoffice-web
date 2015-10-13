@@ -38,90 +38,96 @@
 						<fieldset>
 							<legend>Informações Básicas</legend>
 							
-							<div class="form-group">
-								<div class="element-group">
-									<label class="col-lg-2 control-label">Matrícula</label> 
-									<div class="col-lg-1">
-										<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula"  maxlength="100">
-									</div>
+							<div class="row">
+								<div class="col-lg-3">
+									<img class="img img-thumbnail" src="{{ dadosColaborador.pth_arquivo_foto }}">
 								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="element-group">
-									<label class="col-lg-2 control-label">Nome</label>
-									<div class="col-lg-6">
-										<input type="text" class="form-control" ng-model="dadosColaborador.nme_colaborador"  maxlength="100">
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="element-group">
-									<label class="col-lg-2 control-label">Data de Nascimento</label>
-									<div class="col-lg-2">
-										<div class="input-group date">
-											<input type="text" class="form-control" ng-model="dadosColaborador.dta_nascimento" >
-											<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+								<div class="col-lg-9">
+									<div class="form-group">
+										<div class="element-group">
+											<label class="col-lg-2 control-label">Matrícula</label> 
+											<div class="col-lg-2">
+												<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula"  maxlength="100">
+											</div>
 										</div>
 									</div>
-								</div>
-							
-								<div class="element-group">
-									<label class="col-lg-2 control-label">Sexo</label>
-									<div class="col-lg-2">
-										<select class="form-control"  ng-model="dadosColaborador.flg_sexo"  maxlength="1">
-									 		<option value="M" label="Masculino"></option>
-											<option value="F" label="Feminino"></option> 
-										</select> 
-									</div>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="element-group">
-									<label class="col-lg-2 control-label">Portador Necessidades Especiais?</label>
-									<div class="col-lg-1">
-										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_portador_necessidades_especiais" >
-									</div>
-								</div>
-								
-								<div class="element-group">
-									<label class="col-lg-1 control-label">Ativo?</label>
-									<div class="col-lg-1">
-										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ativo" >
-									</div>
-								</div>
-							</div>
-	
 
-							<div class="form-group">
-								<div class="element-group">
-									<label class="col-lg-2 control-label">Hora Extra?</label>
-									<div class="col-lg-1">
-										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_hora_extra" >
+									<div class="form-group">
+										<div class="element-group">
+											<label class="col-lg-2 control-label">Nome</label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control" ng-model="dadosColaborador.nme_colaborador"  maxlength="100">
+											</div>
+										</div>
 									</div>
-								</div>
-								
-								<div class="element-group">
-									<label class="col-lg-1 control-label">Trabalho de Fim de Semana?</label>
-									<div class="col-lg-1">
-										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_fim_semana" >
-									</div>
-								</div>	
-								
-								<div class="element-group">
-									<label class="col-lg-1 control-label">Trabalho Feriado?</label>
-									<div class="col-lg-1">
-										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_feriado" >
-									</div>
-								</div>
 
-								<div class="element-group">
-									<label class="col-lg-1 control-label">Folha de Ponto?</label>
-									<div class="col-lg-1">
-										<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ajusta_folha_ponto" >
+									<div class="form-group">
+										<div class="element-group">
+											<label class="col-lg-2 control-label">Data de Nascimento</label>
+											<div class="col-lg-3">
+												<div class="input-group date">
+													<input type="text" class="form-control" ng-model="dadosColaborador.dta_nascimento" >
+													<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+												</div>
+											</div>
+										</div>
+									
+										<div class="element-group">
+											<label class="col-lg-1 control-label">Sexo</label>
+											<div class="col-lg-2">
+												<select class="form-control"  ng-model="dadosColaborador.flg_sexo"  maxlength="1">
+											 		<option value="M" label="Masculino"></option>
+													<option value="F" label="Feminino"></option> 
+												</select> 
+											</div>
+										</div>
 									</div>
+									
+									<div class="form-group">
+										<div class="element-group">
+											<label class="col-lg-2 control-label">Ativo?</label>
+											<div class="col-lg-1">
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ativo" >
+											</div>
+										</div>
+										
+										<div class="element-group">
+											<label class="col-lg-4 control-label">Portador Necessidades Especiais?</label>
+											<div class="col-lg-1">
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_portador_necessidades_especiais" >
+											</div>
+										</div>
+
+										<div class="element-group">
+											<label class="col-lg-3 control-label">Preenche Folha de Ponto?</label>
+											<div class="col-lg-1">
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ajusta_folha_ponto" >
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="element-group">
+											<label class="col-lg-2 control-label">Faz Hora Extra?</label>
+											<div class="col-lg-1">
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_hora_extra" >
+											</div>
+										</div>
+										
+										<div class="element-group">
+											<label class="col-lg-4 control-label">Trabalha de Fim de Semana?</label>
+											<div class="col-lg-1">
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_fim_semana" >
+											</div>
+										</div>	
+										
+										<div class="element-group">
+											<label class="col-lg-3 control-label">Trabalha Feriado?</label>
+											<div class="col-lg-1">
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_feriado" >
+											</div>
+										</div>
+									</div>	
 								</div>
 							</div>
 						</fieldset>
@@ -132,7 +138,7 @@
 							<div class="form-group">
 								<div class="element-group">
 									<label class="col-lg-2 control-label">CEP</label>
-									<div class="col-lg-1">
+									<div class="col-lg-2">
 										<input type="text" class="form-control" ng-model="dadosColaborador.num_cep"  maxlength="10"> 
 									</div>
 								</div>
@@ -148,7 +154,7 @@
 							<div class="form-group">
 								<div class="element-group">
 									<label class="col-lg-2 control-label">Número</label>
-									<div class="col-lg-1">
+									<div class="col-lg-2">
 										<input type="text" class="form-control" ng-model="dadosColaborador.num_endereco"  maxlength="10"> 
 									</div>
 								</div>
@@ -164,7 +170,7 @@
 							<div class="form-group">
 								<div class="element-group">
 									<label class="col-lg-2 control-label">Bairro</label>
-									<div class="col-lg-4">
+									<div class="col-lg-3">
 										<input type="text" class="form-control" ng-model="dadosColaborador.nme_bairro"  maxlength="100"> 
 									</div>
 								</div>
@@ -181,7 +187,7 @@
 								
 								<div class="element-group">
 									<label class="col-lg-1 control-label">Cidade</label>
-									<div class="col-lg-2">
+									<div class="col-lg-3">
 										<select class="form-control" ng-model="dadosColaborador.cod_cidade_moradia"   ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia">
 										</select>
 										<span class="loading-cidade-moradia hide">
@@ -206,7 +212,7 @@
 								
 								<div class="element-group">	
 									<label class="col-lg-1 control-label">Cidade</label>
-									<div class="col-lg-2">
+									<div class="col-lg-3">
 										<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade"  ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
 										</select>
 										<span class="loading-cidade-naturalidade hide">
@@ -223,7 +229,7 @@
 							<div class="form-group">
 								<div class="element-group">
 									<label class="col-lg-2  control-label">Telefones</label>
-									<div class="col-lg-2">
+									<div class="col-lg-4">
 										<table class="table table-bordered table-condensed table-hover table-striped" name="telefones">
 											<thead>
 												<th>DDD</th>
@@ -253,7 +259,7 @@
 								
 								<div class="element-group">
 									<label class="col-lg-2 control-label">E-mails</label>
-									<div class="col-lg-2">
+									<div class="col-lg-4">
 										<table class="table table-bordered table-condensed table-hover table-striped">
 											<thead>
 												<th>Endereço de E-mail</th>
@@ -325,7 +331,7 @@
 						<div class="form-group">
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Local de Trabalho</label>
-								<div class="col-lg-3">
+								<div class="col-lg-4">
 									<div class="input-group">
 										<input type="text" class="form-control" name="localTrabalho" readonly="readonly" value="{{ dadosColaborador.localTrabalho.nme_local_trabalho }}">
 										<span class="input-group-btn">
@@ -349,7 +355,7 @@
 						<div class="form-group">
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Grade de Horário</label>
-								<div class="col-lg-3">
+								<div class="col-lg-4">
 									<div class="input-group">
 										<input type="text" class="form-control" name="gradeHorario" readonly="readonly" value="{{dadosColaborador.gradeHorario.nme_grade_horario }}">
 										<span class="input-group-btn">
@@ -410,14 +416,14 @@
 						<div class="form-group">
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Função</label>
-								<div class="col-lg-6">
+								<div class="col-lg-10">
 									<table class="table table-bordered table-condensed table-hover table-striped" name="funcoes ">
 										<thead>
-											<th>Núm./Código</th>
+											<th width="100">Núm./Código</th>
 											<th>Função</th>
-											<th>Salário</th>
+											<th width="120">Salário</th>
 											<th>Motivo</th>
-											<th>Data</th>
+											<th width="80">Data</th>
 											<th width="20">
 												<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalFuncao()">
 													<i class="fa fa-plus-circle"></i>
@@ -446,7 +452,7 @@
 						<div class="form-group">
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Dependentes</label>
-								<div class="col-lg-6">
+								<div class="col-lg-10">
 									<table class="table table-bordered table-condensed table-hover table-striped" name="dependentes ">
 										<thead>
 											<th>Grau Dependência</th>
@@ -592,7 +598,7 @@
 						<div class="form-group">
 							<div class="element-group">									
 								<label class="col-lg-2 control-label">Entidade</label>
-								<div class="col-lg-1">
+								<div class="col-lg-3">
 									<div class="input-group">
 										<input type="text" class="form-control" name="entidade" readonly="readonly" value="{{dadosColaborador.entidade.nme_entidade }}">
 										<span class="input-group-btn">
@@ -730,23 +736,6 @@
 
 						<div class="form-group">
 							<div class="element-group">
-								<label class="col-lg-2 control-label">ASO</label>
-								<div class="col-lg-3">
-									<div class="input-group date">
-										<input type="text" class="form-control" ng-model="dadosColaborador.dta_aso" >
-										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
-									
-										<div class="col-lg-3">
-										<span class="pull-left btn btn-default btn-file">
-										Selecionar... <input type="file">
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="element-group">
 								<label class="col-lg-2 control-label">Possui ensino Superior?</label>
 								<div class="col-lg-1">
 									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ensino_superior" >
@@ -763,6 +752,7 @@
 						</div>
 					</div>
 				</div>
+			</div>
 
 			<!--Footer button-->
 			<div class="panel-footer clearfix">
@@ -852,8 +842,6 @@
 							</div>
 						</div>
 					</div>
-
-
 
 					<div class="modal-footer clearfix">
 						<div class="pull-left">

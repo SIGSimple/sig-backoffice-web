@@ -236,6 +236,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro
 				if(status == 406){ // Not-Acceptable (Campos inválidos)
+					showNotification("Atenção!", "Alguns campos obrigatórios não foram preenchidos.", null, 'page', status);
 					// percorre a lista de campos devolvidos da API
 					$.each(message, function(index, value) {
 						// seleciona os elemento HTML de acordo com o campo mencionado
@@ -614,6 +615,19 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				.success(function(response){
 					$scope.dadosColaborador = response.rows[0];
 					$scope.dadosColaborador.cod_empreendimento = $scope.colaborador.user.cod_empreendimento;
+
+					if($scope.dadosColaborador.pth_arquivo_foto != null && $scope.dadosColaborador.pth_arquivo_foto != "") {
+						if(window.location.hostname == "localhost")
+							$scope.dadosColaborador.pth_arquivo_foto = $scope.dadosColaborador.pth_arquivo_foto.replace("/home/consorciointermultip/public_html/files/docs/", "../sig-backoffice-files/");
+						else
+							$scope.dadosColaborador.pth_arquivo_foto = $scope.dadosColaborador.pth_arquivo_foto.replace("/home/consorciointermultip/public_html/", "");
+					}
+					else if($scope.dadosColaborador.flg_sexo == "M")
+						$scope.dadosColaborador.pth_arquivo_foto = "img/av1.png";
+					else if($scope.dadosColaborador.flg_sexo == "F")
+						$scope.dadosColaborador.pth_arquivo_foto = "img/av6.png";
+					else
+						$scope.dadosColaborador.pth_arquivo_foto = "img/logo_intermultiplas.jpg";
 
 					$scope.getCidades('moradia');
 					$scope.getCidades('naturalidade');

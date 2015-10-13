@@ -14,7 +14,10 @@ function fotoFormatter(value, row, index) {
 	else
 		value = "img/logo_intermultiplas.jpg";
 
-	return (value != null && value != "") ? '<img src="'+ value +'" class="img-profile-table">' : '';
+	var imgInner = '<img src=\''+ value +'\' class=\'img img-thumbnail\'>';
+	var popover = 'data-toggle="popover" data-title="'+ row.nme_colaborador +'" data-content="'+ imgInner +'" data-html="true" data-placement="right" data-trigger="hover"';
+
+	return (value != null && value != "") ? '<img src="'+ value +'" class="img-profile-table" '+ popover +'>' : '';
 }
 
 function editFormater(value, row, index) {

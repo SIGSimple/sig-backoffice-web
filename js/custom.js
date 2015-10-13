@@ -107,6 +107,9 @@ function configBootstrapTable() {
 	        return 'Carregando, por favor aguarde...';
 	    },
 	});
+	$('.bootstrap-table').on('load-success.bs.table', function(){
+		$(".img-profile-table").popover();
+	});
 }
 
 function ativoFormatter(value) {

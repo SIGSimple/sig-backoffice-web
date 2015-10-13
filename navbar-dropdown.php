@@ -27,24 +27,14 @@
 				<ul class="head-list">
 					<li>
 						<a href="#">
-							<i class="fa fa-user fa-fw fa-lg"></i> Perfil
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="fa fa-gear fa-fw fa-lg"></i> Configurações
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="fa fa-lock fa-fw fa-lg"></i> Bloquear
+							<i class="fa fa-user fa-fw fa-lg"></i> {{ getFirstAndLastName(usuario.user.nme_usuario) }}
 						</a>
 					</li>
 				</ul>
 
 				<!-- Dropdown footer -->
 				<div class="pad-all text-right">
-					<a href="form-login" class="btn btn-danger">
+					<a href="form-login" class="btn btn-danger btn-block">
 						<i class="fa fa-sign-out fa-fw"></i> Sair
 					</a>
 				</div>
