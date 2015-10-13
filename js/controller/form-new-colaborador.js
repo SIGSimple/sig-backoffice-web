@@ -112,6 +112,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.tiposTelefone = [];
 	$scope.origens = [];
 	$scope.dependentes = [];
+	$scope.tiposDependencia = [];
+	$scope.planosSaude = [];
 	
 	$scope.tmpModal = {};
 	
@@ -440,6 +442,49 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			$("#modalAddFuncao p.text-danger").removeClass("hide");
 	}
 
+	$scope.addDependente = function(){		
+		if($scope.tmpModal.$$hashKey == "" || typeof($scope.tmpModal.$$hashKey) == "undefined") {
+			if(typeof($scope.dadosColaborador.dependentes) == "undefined")
+				$scope.dadosColaborador.dependentes = [];
+
+			// Capturando os dados do grau de parentesco selecionado
+			$.each($scope.tiposDependencia, function(index, tipoDependencia) {
+				if(tipoDependencia.cod_tipo_dependencia == $scope.tmpModal.cod_tipo_dependencia) {
+					$scope.tmpModal.cod_tipo_dependencia = undefined;
+					$scope.tmpModal.tipoDependencia = tipoDependencia;
+				}
+			});
+
+			// Capturando os dados do plano de saúde selecionado
+			$.each($scope.planosSaude, function(index, planoSaude) {
+				if(planoSaude.cod_plano_saude == $scope.tmpModal.cod_plano_saude) {
+					$scope.tmpModal.cod_plano_saude = undefined;
+					$scope.tmpModal.planoSaude = planoSaude;
+				}
+			});
+
+			$scope.dadosColaborador.dependentes.push( angular.copy($scope.tmpModal) );
+		}
+		else {
+			for (var i = 0; i < $scope.dadosColaborador.dependentes.length; i++) {
+				if($scope.dadosColaborador.dependentes[i].$$hashKey == $scope.tmpModal.$$hashKey)
+					$scope.dadosColaborador.dependentes[i] = angular.copy($scope.tmpModal);
+			};
+		}
+
+		$scope.tmpModal = {};
+		$("#modalAddDependente").modal("hide");
+	}
+
+	$scope.editarDependente = function(dependente) {
+		$scope.tmpModal = dependente;
+		$scope.abreModalDependente();
+	}
+
+	$scope.showDeleteButton = function() {
+		return (typeof getUrlVars().cod_colaborador != "undefined");
+	}
+
 	// Definição de funções auxiliares
 	function clearObject() {
 		$scope.dadosColaborador = {
@@ -730,6 +775,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 					getTelefonesColaborador(getUrlVars().cod_colaborador);
 					getEmailsColaborador(getUrlVars().cod_colaborador);
 					getFuncoesColaborador(getUrlVars().cod_colaborador);
+					getDependentesColaborador(getUrlVars().cod_colaborador);
 				});
 		}
 	}
@@ -793,7 +839,49 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 					$scope.dadosColaborador.funcoes.push(obj);
 				});
 			});
-		}
+	}
+
+	function getDependentesColaborador(cod_colaborador) {
+		$http.get(baseUrlApi()+'colaborador/dependentes?cod_colaborador='+cod_colaborador)
+			.success(function(items){
+				$scope.dadosColaborador.dependentes = [];
+
+				$.each(items, function(index, dependente) {
+					var obj = {
+						cod_dependente: dependente.cod_dependente,
+						tipoDependencia: {
+							cod_tipo_dependencia: dependente.cod_tipo_dependencia,
+							nme_tipo_dependencia: dependente.nme_tipo_dependencia
+						},
+						nme_dependente: dependente.nme_dependente,
+						pth_documento: dependente.pth_documento,
+						dta_nascimento: moment(dependente.dta_nascimento, "YYYY-MM-DD").format("DD/MM/YYYY"),
+						planoSaude: {
+							cod_plano_saude: dependente.cod_plano_saude,
+							nme_plano_saude: dependente.nme_plano_saude
+						},
+						flg_plano_saude: dependente.flg_plano_saude,
+						flg_deduz_irrf: dependente.flg_deduz_irrf,
+						flg_curso_superior: dependente.flg_curso_superior
+					};
+					$scope.dadosColaborador.dependentes.push(obj);
+				});
+			});
+	}
+
+	function loadTiposDependencia() {
+		$http.get(baseUrlApi()+'tipos/dependencia')
+			.success(function(items){
+				$scope.tiposDependencia = items;
+			});
+	}
+
+	function loadPlanosSaude() {
+		$http.get(baseUrlApi()+'planos-saude?nolimit=1')
+			.success(function(items){
+				$scope.planosSaude = items.rows;
+			});
+	}
 	
 
 	// Chamada às funções de inicialização
@@ -809,6 +897,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	loadOrigens();
 	loadTiposTelefone();
 	loadFuncoes();
+	loadTiposDependencia();
+	loadPlanosSaude();
 	loadMotivosAlteracaoFuncao();
 	getColaboradorByUrlParam();
 });

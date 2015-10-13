@@ -39,8 +39,8 @@
 							<legend>Informações Básicas</legend>
 							
 							<div class="row">
-								<div class="col-lg-3">
-									<img class="img img-thumbnail" src="{{ dadosColaborador.pth_arquivo_foto }}">
+								<div class="col-lg-3 text-right">
+									<img class="img img-thumbnail" src="{{ dadosColaborador.pth_arquivo_foto }}" style="max-height: 220px;">
 								</div>
 								<div class="col-lg-9">
 									<div class="form-group">
@@ -180,7 +180,7 @@
 								<div class="element-group">
 									<label class="col-lg-2 control-label">UF</label>
 									<div class="col-lg-1">
-										<select class="form-control" ng-model="dadosColaborador.cod_estado_moradia"   ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia') ">
+										<select class="form-control" ng-model="dadosColaborador.cod_estado_moradia"  ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia') ">
 										</select>
 									</div>
 								</div>
@@ -436,7 +436,7 @@
 												<td>{{ funcao.funcao.nme_funcao }}</td>
 												<td>R$ {{ funcao.vlr_salario | numberFormat: 2 : ',' : '.' }}</td>
 												<td>{{ funcao.motivoAlteracaoFuncao.nme_motivo_alteracao_funcao }}</td>
-												<td>{{ funcao.dta_alteracao }}</td>
+												<td>{{ funcao.dta_alteracao | date : 'dd/MM/yyyy' }}</td>
 												<td>
 													<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(funcao)">
 														<i class="fa fa-trash-o"></i>
@@ -455,22 +455,22 @@
 								<div class="col-lg-10">
 									<table class="table table-bordered table-condensed table-hover table-striped" name="dependentes ">
 										<thead>
-											<th>Grau Dependência</th>
-											<th>Dependente</th>
-											<th>Data de nascimento</th>
-											<th>Opta Plano de Saúde?</th>
-											<th>Plano de saúde</th>
+											<th>Parentesco</th>
+											<th>Nome</th>
+											<th>Dta. Nascimento</th>
+											<th>Plano Saúde?</th>
+											<th>Plano</th>
 											<th>Deduz IRPF?</th>
-											<th>Possui Curso Superior?</th>
-											<th width="20">	
-												<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalDependente()">
-													<i class="fa fa-plus-circle"></i>
+											<th>Possui Faculdade?</th>
+											<th width="60">	
+												<button type="button" class="btn btn-xs btn-primary" ng-click="tmpModal={};abreModalDependente()">
+													<i class="fa fa-plus-circle"></i> Incluir
 												</button>
 											</th>
 										</thead>
 										<tbody>
 											<tr ng-repeat="dependente in dadosColaborador.dependentes" >
-												<td>{{ dependente.cod_tipo_dependencia }}</td>
+												<td>{{ dependente.tipoDependencia.nme_tipo_dependencia }}</td>
 												<td>{{ dependente.nme_dependente }}</td>
 												<td>{{ dependente.dta_nascimento }}</td>
 												<td>{{ (dependente.flg_plano_saude == 1) ? 'Sim' : 'Não' }}</td>
@@ -478,7 +478,10 @@
 												<td>{{ (dependente.flg_deduz_irrf == 1) ? 'Sim' : 'Não'  }}</td>
 												<td>{{ (dependente.flg_curso_superior == 1) ? 'Sim' : 'Não'  }}</td>
 												<td>
-													<button type="button" class="btn btn-xs btn-danger">
+													<button type="button" class="btn btn-xs btn-warning" ng-click="editarDependente(dependente)">
+														<i class="fa fa-edit"></i>
+													</button>
+													<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(dependente)">
 														<i class="fa fa-trash-o"></i>
 													</button>
 												</td>	
@@ -758,7 +761,7 @@
 			<div class="panel-footer clearfix">
 				<div class="pull-left">
 					<div class="box-inline">
-						<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" data-toggle="modal" data-target='#modalExcluiColaborador'>Excluir cadastro</button>
+						<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" ng-show="showDeleteButton()" data-toggle="modal" data-target='#modalExcluiColaborador'>Excluir cadastro</button>
 					</div>
 				</div>
 				<div class="pull-right">
@@ -938,6 +941,87 @@
 						<div class="pull-right">
 							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
 							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addFuncao()">Salvar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAddDependente" tabindex="-1" role="dialog" aria-labelledby="modalAddDependenteLabel">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalAddDependenteLabel">Inclusão de Dependente</h4>
+				</div>
+
+				<form class="form form-horizontal" role="form">
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Nome</label>
+							<div class="col-lg-9">
+								<input class="form-control" ng-model="tmpModal.nme_dependente">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Grau de Parentesco</label>
+							<div class="col-lg-3">
+								<select class="form-control" ng-model="tmpModal.cod_tipo_dependencia">
+									<option ng-repeat="item in tiposDependencia" value="{{ item.cod_tipo_dependencia }}" label="{{ item.nme_tipo_dependencia }}" ng-selected="tmpModal.tipoDependencia.cod_tipo_dependencia == item.cod_tipo_dependencia"></option> 
+								</select>
+							</div>
+
+							<label class="col-lg-2 control-label">Nascimento</label>
+							<div class="col-lg-4">
+								<div class="input-group date">
+									<input type="text" class="form-control" ng-model="tmpModal.dta_nascimento">
+									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Plano de Saúde</label>
+							<div class="col-lg-9">
+								<div class="checkbox">
+									<label class="form-checkbox form-normal form-primary form-text {{ (tmpModal.flg_plano_saude == 1) ? 'active' : '' }}">
+										<input type="checkbox" ng-model="tmpModal.flg_plano_saude">
+									</label>
+								</div>
+
+								<select class="form-control" ng-model="tmpModal.cod_plano_saude" ng-show="(tmpModal.flg_plano_saude == 1)">
+									<option ng-repeat="item in planosSaude" value="{{ item.cod_plano_saude }}" label="{{ item.nme_fantasia + ' - ' + item.nme_plano_saude }}" ng-selected="tmpModal.planoSaude.cod_plano_saude == item.cod_plano_saude"></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Cursa Faculdade?</label>
+							<div class="col-lg-1">
+								<div class="checkbox">
+									<label class="form-checkbox form-normal form-primary form-text {{ (tmpModal.flg_curso_superior == 1) ? 'active' : '' }}">
+										<input type="checkbox" ng-model="tmpModal.flg_curso_superior">
+									</label>
+								</div>
+							</div>
+
+							<label class="col-lg-2 control-label">Deduz IRPF?</label>
+							<div class="col-lg-1">
+								<div class="checkbox">
+									<label class="form-checkbox form-normal form-primary form-text {{ (tmpModal.flg_deduz_irrf == 1) ? 'active' : '' }}">
+										<input type="checkbox" ng-model="tmpModal.flg_deduz_irrf">
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer clearfix">
+						<div class="pull-right">
+							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addDependente()">Salvar</button>
 						</div>
 					</div>
 				</form>
