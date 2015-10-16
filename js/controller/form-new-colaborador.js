@@ -124,6 +124,16 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				title: 'Nome Fantasia'
 			}
 		],
+		"planos-saude": [
+			{
+				field: 'nme_fantasia',
+				title: 'Empresa'
+			},
+			{
+				field: 'nme_plano_saude',
+				title: 'Plano'
+			}
+		],
 		"locais-trabalho": [
 			{
 				field: 'nme_local_trabalho',
@@ -442,10 +452,46 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			$("#modalAddFuncao p.text-danger").removeClass("hide");
 	}
 
-	$scope.addDependente = function(){		
-		if($scope.tmpModal.$$hashKey == "" || typeof($scope.tmpModal.$$hashKey) == "undefined") {
-			if(typeof($scope.dadosColaborador.dependentes) == "undefined")
-				$scope.dadosColaborador.dependentes = [];
+	$scope.addDependente = function(){
+		if(!$("#modalAddDependente p.text-danger").hasClass("hide"))
+			$("#modalAddDependente p.text-danger").addClass("hide");
+		
+		$("#modalAddDependente .form-group").removeClass("has-error");
+		
+		var elNome 				= $("[ng-model='tmpModal.nme_dependente']");
+		var elGrauParentesco 	= $("[ng-model='tmpModal.cod_tipo_dependencia'] option:selected");
+		var elDtaNascimento 	= $("[ng-model='tmpModal.dta_nascimento']");
+		var elFlgPlanoSaude 	= $("[ng-model='tmpModal.flg_plano_saude']");
+		var elPlanoSaude 		= $("[ng-model='tmpModal.cod_plano_saude'] option:selected");
+
+		var hasError = false;
+
+		if(elNome.val().length == 0) {
+			hasError = true;
+			elNome.closest(".form-group").addClass("has-error");
+		}
+
+		if(elGrauParentesco.val() == "? undefined:undefined ?") {
+			hasError = true;
+			elGrauParentesco.closest(".form-group").addClass("has-error");
+		}
+
+		if(elDtaNascimento.val().length == 0) {
+			hasError = true;
+			elDtaNascimento.closest(".form-group").addClass("has-error");
+		}
+
+		if(elFlgPlanoSaude.prop('checked') && elPlanoSaude.val() == "? undefined:undefined ?") {
+			hasError = true;
+			elFlgPlanoSaude.closest(".form-group").addClass("has-error");
+		}
+
+		if(!hasError) {
+			$scope.tmpModal.flg_atualizado 		= true;
+			$scope.tmpModal.dta_nascimento 		= moment($scope.tmpModal.dta_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD");
+			$scope.tmpModal.flg_curso_superior 	= ($scope.tmpModal.flg_curso_superior === true || $scope.tmpModal.flg_curso_superior === 1 || $scope.tmpModal.flg_curso_superior == "1") ? 1 : 0;
+			$scope.tmpModal.flg_plano_saude 	= ($scope.tmpModal.flg_plano_saude === true || $scope.tmpModal.flg_plano_saude === 1 || $scope.tmpModal.flg_plano_saude == "1") ? 1 : 0;
+			$scope.tmpModal.flg_deduz_irrf 		= ($scope.tmpModal.flg_deduz_irrf === true || $scope.tmpModal.flg_deduz_irrf === 1 || $scope.tmpModal.flg_deduz_irrf == "1") ? 1 : 0;
 
 			// Capturando os dados do grau de parentesco selecionado
 			$.each($scope.tiposDependencia, function(index, tipoDependencia) {
@@ -463,22 +509,40 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				}
 			});
 
-			$scope.dadosColaborador.dependentes.push( angular.copy($scope.tmpModal) );
-		}
-		else {
-			for (var i = 0; i < $scope.dadosColaborador.dependentes.length; i++) {
-				if($scope.dadosColaborador.dependentes[i].$$hashKey == $scope.tmpModal.$$hashKey)
-					$scope.dadosColaborador.dependentes[i] = angular.copy($scope.tmpModal);
-			};
-		}
+			if($scope.tmpModal.$$hashKey == "" || typeof($scope.tmpModal.$$hashKey) == "undefined") {
+				if(typeof($scope.dadosColaborador.dependentes) == "undefined")
+					$scope.dadosColaborador.dependentes = [];
+				$scope.dadosColaborador.dependentes.push( angular.copy($scope.tmpModal) );
+			}
+			else {
+				for (var i = 0; i < $scope.dadosColaborador.dependentes.length; i++) {
+					if($scope.dadosColaborador.dependentes[i].$$hashKey == $scope.tmpModal.$$hashKey)
+						$scope.dadosColaborador.dependentes[i] = angular.copy($scope.tmpModal);
+				};
+			}
 
-		$scope.tmpModal = {};
-		$("#modalAddDependente").modal("hide");
+			$scope.tmpModal = {};
+			$("#modalAddDependente").modal("hide");
+		}
+		else
+			$("#modalAddDependente p.text-danger").removeClass("hide");
 	}
 
 	$scope.editarDependente = function(dependente) {
+		if(dependente.dta_nascimento.split("-")[0].length == 4) // USA (YYYY-MM-DD)
+			dependente.dta_nascimento = moment(dependente.dta_nascimento, "YYYY-MM-DD").format("DD/MM/YYYY");
+
 		$scope.tmpModal = dependente;
 		$scope.abreModalDependente();
+	}
+
+	$scope.validateState = function() {
+		if($scope.tmpModal.flg_plano_saude == 0){
+			$scope.tmpModal.cod_plano_saude = null;
+			$scope.tmpModal.planoSaude = null;
+		}
+
+		return;
 	}
 
 	$scope.showDeleteButton = function() {
@@ -776,6 +840,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 					getEmailsColaborador(getUrlVars().cod_colaborador);
 					getFuncoesColaborador(getUrlVars().cod_colaborador);
 					getDependentesColaborador(getUrlVars().cod_colaborador);
+					getPlanoSaudeColaborador(getUrlVars().cod_colaborador);
 				});
 		}
 	}
@@ -866,6 +931,22 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 					};
 					$scope.dadosColaborador.dependentes.push(obj);
 				});
+			});
+	}
+
+	function getPlanoSaudeColaborador(cod_colaborador) {
+		$http.get(baseUrlApi()+'colaborador/beneficios?ben->cod_colaborador='+cod_colaborador+'&ben->cod_tipo_beneficio=9')
+			.success(function(items){
+				$scope.dadosColaborador.planoSaude = {
+					cod_plano_saude: 		items.rows[0].cod_plano_saude,
+					cod_empresa: 			items.rows[0].cod_empresa,
+					nme_plano_saude: 		items.rows[0].nme_plano_saude,
+					vlr_custo_empresa: 		items.rows[0].vlr_custo_empresa,
+					vlr_custo_colaborador: 	items.rows[0].vlr_custo_colaborador,
+					vlr_custo_dependente: 	items.rows[0].vlr_custo_dependente,
+					cod_empreendimento: 	items.rows[0].cod_empreendimento,
+					nme_fantasia: 			items.rows[0].nme_fantasia
+				};
 			});
 	}
 

@@ -325,6 +325,18 @@
 										</span>
 									</div>
 								</div>
+
+								<label class="col-lg-2 control-label">Plano de Saúde</label>
+								<div class="col-lg-4">
+									<div class="input-group">
+										<input type="text" class="form-control" name="planoSaude" readonly="readonly" value="{{ dadosColaborador.planoSaude.nme_fantasia + ' - ' + dadosColaborador.planoSaude.nme_plano_saude }}">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" ng-click="abreModal('planos-saude', 'planoSaude')">
+												<i class="fa fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
 							</div>
 						</div>
 
@@ -987,7 +999,7 @@
 							<div class="col-lg-9">
 								<div class="checkbox">
 									<label class="form-checkbox form-normal form-primary form-text {{ (tmpModal.flg_plano_saude == 1) ? 'active' : '' }}">
-										<input type="checkbox" ng-model="tmpModal.flg_plano_saude">
+										<input type="checkbox" ng-model="tmpModal.flg_plano_saude" ng-change="validateState()">
 									</label>
 								</div>
 
@@ -1019,6 +1031,9 @@
 					</div>
 
 					<div class="modal-footer clearfix">
+						<div class="pull-left">
+							<p class="text-danger hide">Os campos marcados em vermelho são obrigatórios!</p>
+						</div>
 						<div class="pull-right">
 							<button type="button" class="btn btn-default btn-labeled fa fa-times-circle" data-dismiss="modal">Cancelar</button>
 							<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="addDependente()">Salvar</button>
