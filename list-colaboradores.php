@@ -7,26 +7,24 @@
 		</div>
 		<table class="bootstrap-table" 
 			data-toggle="table"
-			data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/colaboradores.json"
+			data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/colaboradores.json?nolimit=1"
+			data-height="400"
 			data-toolbar="#toolbar"
 			data-search="true"
 			data-show-refresh="true"
 			data-show-toggle="true"
 			data-show-columns="true"
-			data-page-list="[5, 10, 20, 50, 100]"
-			data-page-size="10"
-			data-pagination="true"
-			data-side-pagination="server"
-			data-show-pagination-switch="true">
+			data-pagination="false"
+			data-side-pagination="server">
 			<thead>
 				<tr>
-					<th data-visible="true" data-align="center" data-formatter="editFormater"></th>
-					<th data-visible="true" data-align="center" data-field="pth_arquivo_foto" data-formatter="fotoFormatter"></th>
+					<th data-visible="true" data-align="center" data-formatter="editFormater">Ações</th>
+					<th data-visible="true" data-align="center" data-field="pth_arquivo_foto" data-formatter="fotoFormatter">Foto</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="num_matricula" data-field="num_matricula">Matricula</th>
 					<th data-visible="true" data-sortable="true" data-sort-name="nme_colaborador" data-field="nme_colaborador">Nome</th>
-					<th data-visible="true" data-sortable="true" data-sort-name="nme_funcao_medicao" data-field="nme_funcao_medicao">Função Medição</th>
+					<th data-visible="false" data-sortable="true" data-sort-name="nme_funcao_medicao" data-field="nme_funcao_medicao">Função Medição</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="nme_fantasia" data-field="nme_fantasia">Contratante</th>
-					<th data-visible="true" data-sortable="true" data-sort-name="dsc_origem" data-field="dsc_origem">Origem</th>	
+					<th data-visible="false" data-sortable="true" data-sort-name="dsc_origem" data-field="dsc_origem">Origem</th>	
 					<th data-visible="true" data-sortable="true" data-sort-name="vlr_slario_clt" data-field="vlr_slario_clt" data-formatter="currencyFormatter">Salário</th>						
 					<th data-visible="true" data-sortable="true" data-sort-name="nme_departamento" data-field="nme_departamento">Depto</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="flg_cm" data-field="flg_cm">C/M</th>
