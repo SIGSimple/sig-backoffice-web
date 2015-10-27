@@ -35,6 +35,20 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 			});
 	}
 
+	$scope.chooseProfile = function(profileSelected) {
+		if($scope.dadosLogin.flg_guardar_dados_login) {
+			localStorage.setItem("nme_login", $scope.dadosLogin.nme_login);
+			localStorage.setItem("nme_senha", $scope.dadosLogin.nme_senha);
+		}
+		else {
+			localStorage.removeItem("nme_login");
+			localStorage.removeItem("nme_senha");
+		}
+
+		var url = "login.php?cod_usuario="+ profileSelected.cod_usuario +"&cod_perfil="+ profileSelected.cod_perfil +"&cod_empreendimento="+ profileSelected.cod_empreendimento;
+		window.location.replace(url);
+	}
+
 	$scope.desbloquearSenha = function() {
 		if($scope.novaSenha.nme_senha === $scope.novaSenha.nme_senha_repete) {
 			$http.post(baseUrlApi()+'usuario/desbloquear/senha', { cod_usuario: $scope.users[0].cod_usuario, nme_senha: $scope.novaSenha.nme_senha })
@@ -86,6 +100,15 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 			$scope.errorMessage = "Você deve estar logado para acessar o sistema!";
 	}
 
+	function loadStorageData() {
+		if((localStorage.getItem("nme_login") != null) && (localStorage.getItem("nme_senha") != null)){
+			$scope.dadosLogin.nme_login = localStorage.getItem("nme_login");
+			$scope.dadosLogin.nme_senha = localStorage.getItem("nme_senha");
+			$scope.dadosLogin.flg_guardar_dados_login = true;
+		}
+	}
+
 	$("#demo-reset-settings").trigger("click");
 	isUnlocked();
+	loadStorageData();
 });

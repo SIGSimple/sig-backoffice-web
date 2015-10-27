@@ -717,7 +717,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
-
 	function getColaboradorByUrlParam() {
 		if(typeof getUrlVars().cod_colaborador != "undefined") { // eu tenho um parametro chamado cod_colaborador na url?
 			$http.get(baseUrlApi() + 'colaboradores?col->cod_colaborador=' + getUrlVars().cod_colaborador)

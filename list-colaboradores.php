@@ -40,6 +40,7 @@
 			<thead>
 				<tr>
 					<th data-visible="true" data-align="center" data-formatter="editFormater">Ações</th>
+					<th data-visible="true" data-sortable="true" data-sort-name="flg_ativo" data-field="flg_ativo" data-formatter="ativoFormatter">Ativo?</th>
 					<th data-visible="true" data-align="center" data-field="pth_arquivo_foto" data-formatter="fotoFormatter">Foto</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="num_matricula" data-field="num_matricula">Matricula</th>
 					<th data-visible="true" data-sortable="true" data-sort-name="nme_colaborador" data-field="nme_colaborador">Nome</th>
@@ -83,7 +84,6 @@
 					<th data-visible="false" data-sortable="true" data-sort-name="nme_entidade" data-field="nme_entidade">Entidade</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="num_entidade" data-field="num_entidade">Número</th>
 					<th data-visible="true" data-sortable="true" data-sort-name="nme_funcao_clt" data-field="nme_funcao_clt">Função CLT</th>
-					<th data-visible="true" data-sortable="true" data-sort-name="flg_ativo" data-field="flg_ativo" data-formatter="ativoFormatter">Ativo?</th>
 				</tr>
 			</thead>
 		</table>

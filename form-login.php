@@ -24,6 +24,14 @@ unset($_SESSION['user_logged']);
 			</div>
 		</div>
 
+		<div class="form-group">
+			<div class="checkbox">
+				<label class="form-checkbox form-normal form-primary form-text {{ (dadosLogin.flg_guardar_dados_login) ? 'active' : '' }}">
+					<input type="checkbox" ng-model="dadosLogin.flg_guardar_dados_login" > Guardar dados de login
+				</label>
+			</div>
+		</div>
+
 		<div class="row">
 			<p class="text-danger">{{ errorMessage }}</p>
 		</div>
@@ -63,7 +71,7 @@ unset($_SESSION['user_logged']);
 						<p class="text-muted mar-btm">{{ (user.funcao != null) ? user.funcao.nme_funcao : user.nme_perfil }}</p>
 						<h5 class="text-muted mar-btm text-bold">{{ user.nme_empreendimento }}</h5>
 						<div class="pad-ver">
-							<a href="login.php?cod_usuario={{ user.cod_usuario }}&cod_perfil={{ user.cod_perfil }}&cod_empreendimento={{ user.cod_empreendimento }}" 
+							<a ng-click="chooseProfile(user)"
 								class="btn btn-{{ (user.cod_perfil === 1) ? 'success' : (user.flg_sexo == 'F') ? 'pink' : (user.flg_sexo == 'M') ? 'primary' : 'success' }}">
 								Utilizar este perfil
 							</a>
