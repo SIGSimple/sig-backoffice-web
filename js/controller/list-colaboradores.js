@@ -28,6 +28,22 @@ function editFormater(value, row, index) {
     ].join('');
 }
 
-app.controller('ListColaboradoresCtrl', function($scope, $http){
+function queryParams() {
+	var params = {};
+	var flg_ativo = $("input[name='flg_ativo']").prop('checked');
+	var flg_inativo = $("input[name='flg_inativo']").prop('checked');
 
+	if(flg_ativo && flg_inativo)
+		params['col->flg_ativo[exp]']= "=1 OR col.flg_ativo=0";
+	else if(flg_ativo)
+		params['col->flg_ativo']= "1";
+	else if(flg_inativo)
+		params['col->flg_ativo']= "0";
+	return params;
+}
+
+app.controller('ListColaboradoresCtrl', function($scope, $http){
+	$scope.refreshTable = function (){
+		$('.bootstrap-table').bootstrapTable('refresh');
+	}
 });

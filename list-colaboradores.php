@@ -1,9 +1,29 @@
 <div class="panel" ng-controller="ListColaboradoresCtrl">
 	<div class="panel-body">
 		<div id="toolbar">
-			<a href="form-new-colaborador" class="btn btn-success btn-labeled fa fa-plus-square">
-				Cadastrar Novo
-			</a>
+			<div class="form-inline" role="form">
+				<div class="form-group">
+					<a href="form-new-colaborador" class="btn btn-success btn-labeled fa fa-plus-square">
+						Cadastrar Novo
+					</a>
+				</div>
+
+				<div class="form-group">
+					<div class="checkbox">
+						<label class="form-checkbox form-normal form-primary form-text">
+							<input type="checkbox" name="flg_ativo" checked="" ng-click="refreshTable()"> Ativos
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="checkbox">
+						<label class="form-checkbox form-normal form-primary form-text">
+							<input type="checkbox" name="flg_inativo" ng-click="refreshTable()"> Inativos
+						</label>
+					</div>
+				</div>
+			</div>
 		</div>
 		<table class="bootstrap-table" 
 			data-toggle="table"
@@ -15,7 +35,8 @@
 			data-show-toggle="true"
 			data-show-columns="true"
 			data-pagination="false"
-			data-side-pagination="server">
+			data-side-pagination="server"
+			data-query-params="queryParams">
 			<thead>
 				<tr>
 					<th data-visible="true" data-align="center" data-formatter="editFormater">Ações</th>
