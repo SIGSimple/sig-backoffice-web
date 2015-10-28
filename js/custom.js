@@ -2,11 +2,7 @@ $(function(){
 	moment.locale('pt-br');
 	initializeTimepickerInputs();
 
-	$('.input-group.date').datepicker({
-		language: 'pt-BR',
-		format: 'dd/mm/yyyy',
-		autoclose: true
-	});
+	enableDateField();
 
 	resetSwitchInput();
 
@@ -24,6 +20,16 @@ function resetSwitchInput() {
 	$.each($('.input-switch'), function(i, el){
 		new Switchery(el);
 	});
+}
+
+function enableDateField() {
+	setTimeout(function() {
+		$('.input-group.date').datepicker({
+			language: 'pt-BR',
+			format: 'dd/mm/yyyy',
+			autoclose: true
+		});
+	}, 1000);
 }
 
 function getActivePage() {

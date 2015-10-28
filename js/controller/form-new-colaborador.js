@@ -111,6 +111,9 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	$scope.dependentes = [];
 	$scope.tiposDependencia = [];
 	$scope.planosSaude = [];
+	$scope.estadosCivis = [];
+	$scope.asos = [];
+	$scope.certificados = [];
 	
 	$scope.tmpModal = {};
 	
@@ -338,6 +341,30 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	$scope.abreModalDependente = function() {
 		$("#modalAddDependente").modal("show");
+	}
+
+	$scope.addASO = function() {
+		$scope.asos.push({
+			dta_aso: "",
+			file: {
+				pth_arquivo_aso: ""
+			},
+			flg_removido: false
+		});
+
+		enableDateField();
+	}
+
+	$scope.addCertificado = function() {
+		$scope.certificados.push({
+			dta_certificado: "",
+			nme_curso: "",
+			file: {
+				pth_arquivo_certificado: ""
+			},
+			flg_removido: false
+		});
+		enableDateField();
 	}
 
 	$scope.addTelefone = function(){
@@ -660,7 +687,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
-
 	function loadOrigens() {
 		$http.get(baseUrlApi()+'origens?nolimit=1&cod_empreendimento='+$scope.colaborador.user.cod_empreendimento)
 			.success(function(items){
@@ -962,8 +988,14 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				$scope.planosSaude = items.rows;
 			});
 	}
-	
 
+	function loadEstadosCivis() {
+		$http.get(baseUrlApi()+'estados-civis')
+			.success(function(items){
+				$scope.estadosCivis = items;
+			});
+	}
+	
 	// Chamada às funções de inicialização
 	loadUfs();
 	loadEmpresas();
@@ -980,5 +1012,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	loadTiposDependencia();
 	loadPlanosSaude();
 	loadMotivosAlteracaoFuncao();
+	loadEstadosCivis();
 	getColaboradorByUrlParam();
 });

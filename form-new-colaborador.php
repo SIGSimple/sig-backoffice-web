@@ -55,7 +55,7 @@
 									<div class="form-group">
 										<div class="element-group">
 											<label class="col-lg-2 control-label">Nome</label>
-											<div class="col-lg-6">
+											<div class="col-lg-8">
 												<input type="text" class="form-control" ng-model="dadosColaborador.nme_colaborador"  maxlength="100" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											</div>
 										</div>
@@ -79,6 +79,14 @@
 											 		<option value="M" label="Masculino"></option>
 													<option value="F" label="Feminino"></option> 
 												</select> 
+											</div>
+										</div>
+
+										<div class="element-group">
+											<label class="col-lg-2 control-label">Estado Civil</label>
+											<div class="col-lg-2">
+												<select class="form-control" ng-model="dadosColaborador.cod_estado_civil"  ng-options="item.cod_estado_civil as item.nme_estado_civil for item in estadosCivis" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
+												</select>
 											</div>
 										</div>
 									</div>
@@ -481,7 +489,7 @@
 											</th>
 										</thead>
 										<tbody>
-											<tr ng-repeat="dependente in dadosColaborador.dependentes" >
+											<tr ng-repeat="dependente in dadosColaborador.dependentes | filter: { flg_removido: false }" >
 												<td>{{ dependente.tipoDependencia.nme_tipo_dependencia }}</td>
 												<td>{{ dependente.nme_dependente }}</td>
 												<td>{{ dependente.dta_nascimento }}</td>
@@ -568,26 +576,24 @@
 							
 
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">	
-								<div class="col-lg-3">
+								<div class="col-lg-2">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_rg">
-									Selecionar... <input type="file">
+										Selecionar... <input type="file">
 									</span>
 								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
 							<div class="element-group">	
-								<label class="col-lg-2 control-label">CPF</label>
+								<label class="col-lg-1 control-label">CPF</label>
 								<div class="col-lg-2">
 									<input type="text" class="form-control" ng-model="dadosColaborador.num_cpf" maxlength="20" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">	
-								<div class="col-lg-3">
+								<div class="col-lg-2">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_cpf">
-									Selecionar... <input type="file">
+										Selecionar... <input type="file">
 									</span>
 								</div>
 							</div>
@@ -602,9 +608,114 @@
 							</div>
 							
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">									
-								<div class="col-lg-3">
+								<div class="col-lg-2">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_pis">
-									Selecionar... <input type="file">
+										Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+
+							<div class="element-group">	
+								<label class="col-lg-1 control-label">Certidão</label>
+								<div class="col-lg-2">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_certidao">
+										Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+
+							<div class="element-group">	
+								<label class="col-lg-1 control-label">Cartão.SUS</label>
+								<div class="col-lg-2">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_carteira_sus">
+										Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">	
+								<label class="col-lg-2 control-label">Comprovante Endereço</label>
+								<div class="col-lg-2">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_comprovante_enderenco">
+										Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+
+							<div class="element-group">	
+								<label class="col-lg-2 control-label">Comprovante Bancário</label>
+								<div class="col-lg-2">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_comprovante_bancario">
+										Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+
+							<div class="element-group">	
+								<label class="col-lg-2 control-label">Contrato de Trabalho</label>
+								<div class="col-lg-2">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_contrato_trabalho">
+										Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Possui Ensino Superior?</label>
+								<div class="col-lg-1">
+									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ensino_superior" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
+								</div>
+							</div>
+
+							<div class="element-group">
+								<label class="col-lg-1 control-label">Curso</label>
+								<div class="col-lg-5">
+									<input type="text" class="form-control" ng-model="dadosColaborador.nme_curso_superior" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">											
+								<label class="col-lg-2 control-label">Data Colação de Grau</label>
+								<div class="col-lg-2">
+									<div class="input-group date">
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_colacao_grau_ensino_superior" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
+										<span class="input-group-addon" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')"><i class="fa fa-calendar fa-lg"></i></span>
+									</div>
+								</div>
+							</div>
+
+							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
+								<label class="col-lg-1 control-label">Diploma</label>
+								<div class="col-lg-3">
+									<span class="pull-left btn btn-default btn-file">
+										Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="element-group">	
+								<label class="col-lg-2 control-label">Currículo</label>
+								<div class="col-lg-2">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_curriculo">
+										Selecionar... <input type="file">
+									</span>
+								</div>
+							</div>
+
+							<div class="element-group">	
+								<label class="col-lg-2 control-label">Histórico Escolar</label>
+								<div class="col-lg-2">
+									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_historico_escolar">
+										Selecionar... <input type="file">
 									</span>
 								</div>
 							</div>
@@ -692,7 +803,7 @@
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">											
 								<div class="col-lg-2">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_titulo_eleitor">
-									Selecionar... <input type="file">
+										Selecionar... <input type="file">
 									</span>
 								</div>
 							</div>
@@ -724,9 +835,9 @@
 							</div>
 
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">											
-								<div class="col-lg-1">
+								<div class="col-lg-2">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_cnh">
-									Selecionar... <input type="file">
+										Selecionar... <input type="file">
 									</span>
 								</div>
 							</div>
@@ -741,9 +852,9 @@
 							</div>
 
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
-								<div class="col-lg-3">
+								<div class="col-lg-2">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_reservista" >
-									Selecionar... <input type="file">
+										Selecionar... <input type="file">
 									</span>
 								</div>
 							</div>
@@ -751,17 +862,82 @@
 
 						<div class="form-group">
 							<div class="element-group">
-								<label class="col-lg-2 control-label">Possui ensino Superior?</label>
-								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ensino_superior" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
+								<label class="col-lg-2  control-label">Atestados de <br/>Saúde Ocupacional</label>
+								<div class="col-lg-6">
+									<table class="table table-bordered table-condensed table-hover table-striped" name="asos">
+										<thead>
+											<th width="150">Data da ASO</th>
+											<th>Arquivo</th>
+											<th width="40">
+												<button type="button" class="btn btn-xs btn-primary" ng-click="addASO()">
+													<i class="fa fa-plus-circle"></i> Incluir ASO
+												</button>
+											</th>
+										</thead>
+										<tbody>
+											<tr ng-repeat="item in asos | filter: { flg_removido: false }">
+												<td>
+													<div class="input-group date">
+														<input type="text" class="form-control input-xs" ng-model="item.dta_aso">
+														<span class="input-group-addon input-xs"><i class="fa fa-calendar"></i></span>
+													</div>
+												</td>
+												<td class="text-middle">
+													<span class="pull-left btn btn-xs btn-default btn-file">
+														Selecionar... <input type="file">
+													</span>
+												</td>
+												<td width="40" class="text-center">
+													<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(item)">
+														<i class="fa fa-trash-o"></i> Remover
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
+						</div>
 
-							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
-								<div class="col-lg-3">
-									<span class="pull-left btn btn-default btn-file">
-									Selecionar... <input type="file">
-									</span>
+						<div class="form-group">
+							<div class="element-group">
+								<label class="col-lg-2  control-label">Certificados</label>
+								<div class="col-lg-10">
+									<table class="table table-bordered table-condensed table-hover table-striped" name="certificados">
+										<thead>
+											<th width="150">Data da Certificado</th>
+											<th>Curso</th>
+											<th width="250">Arquivo</th>
+											<th width="40">
+												<button type="button" class="btn btn-xs btn-primary" ng-click="addCertificado()">
+													<i class="fa fa-plus-circle"></i> Incluir Certificado
+												</button>
+											</th>
+										</thead>
+										<tbody>
+											<tr ng-repeat="item in certificados | filter: { flg_removido: false }">
+												<td>
+													<div class="input-group date">
+														<input type="text" class="form-control input-xs" ng-model="item.dta_certificado">
+														<span class="input-group-addon input-xs"><i class="fa fa-calendar"></i></span>
+													</div>
+												</td>
+												<td>
+													<input type="text" class="form-control input-xs" ng-model="item.nme_curso">
+												</td>
+												<td class="text-middle">
+													<span class="pull-left btn btn-xs btn-default btn-file">
+														Selecionar... <input type="file">
+													</span>
+												</td>
+												<td width="40" class="text-center">
+													<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(item)">
+														<i class="fa fa-trash-o"></i> Remover
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -991,6 +1167,22 @@
 									<input type="text" class="form-control" ng-model="tmpModal.dta_nascimento">
 									<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Carteira de Vacinação</label>
+							<div class="col-lg-3">
+								<span class="pull-left btn btn-default btn-file" name="pth_arquivo_carteira_vacinacao_dependente">
+									Selecionar... <input type="file">
+								</span>
+							</div>
+
+							<label class="col-lg-2 control-label">Certidão</label>
+							<div class="col-lg-4">
+								<span class="pull-left btn btn-default btn-file" name="pth_arquivo_certidao_dependente">
+									Selecionar... <input type="file">
+								</span>
 							</div>
 						</div>
 

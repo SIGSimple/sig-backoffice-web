@@ -150,10 +150,9 @@
 							<tr>
 								<th>Nome do Arquivo</th>        				
 								<th>
-									<div class="col-lg-3">
-										<span class="pull-left btn btn-default btn-file">
+									<span class="pull-left btn btn-default btn-file">
 										Selecionar... <input type="file">
-										</span>
+									</span>
 								</th>		
 							</tr>
 						</thead>

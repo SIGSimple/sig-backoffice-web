@@ -37,3 +37,18 @@
 .width-100 {
 	width: 100% !important;
 }
+
+.input-xs {
+	height: 22px;
+	padding: 2px 5px;
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.input-group-addon.input-xs {
+	padding: 0;
+}
+
+.switchery {
+	top: 5px !important;
+}
