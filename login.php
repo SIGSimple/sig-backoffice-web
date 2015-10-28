@@ -11,6 +11,12 @@ $data = HttpUtil::doGetRequest($url, null);
 
 if($data) {
 	$user = json_decode($data)->rows[0];
+
+	// Recupera as funcionalidades do perfil do usuário
+	$url = 'http://'. $_SERVER['HTTP_HOST'] .'/sig-backoffice-api/modulos/funcionalidades.json?tfp->cod_perfil='.$cod_perfil;
+	$data = HttpUtil::doGetRequest($url, null);
+	$user->funcionalidades = json_decode($data);
+
 	$cooperator = null;
 
 	// Se o usuário é um colaborador

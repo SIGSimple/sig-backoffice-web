@@ -1,4 +1,5 @@
 app.service('UserSrvc', function($http){
+	this.userLogged = {},
 	this.getUserLogged = function() {
 		var userLogged = {};
 		$.ajax({
@@ -22,10 +23,22 @@ app.service('UserSrvc', function($http){
 				console.log(error);
 			}
 		});
-		
+		this.userLogged = userLogged;
 		return userLogged;
 	},
 	this.getFirstAndLastName = function(nmeUsuario) {
 		return nmeUsuario.split(" ")[0] + " " + nmeUsuario.split(" ")[nmeUsuario.split(" ").length-1];
+	}
+	this.getFuncionalidadeByName = function(nmeFuncionalidade, urlModulo) {
+		var finded = false;
+		if(this.userLogged.user.funcionalidades != null) {
+			$.each(this.userLogged.user.funcionalidades, function(index, func) {
+				if(func.nme_funcionalidade === nmeFuncionalidade && func.url_modulo === urlModulo){
+					finded = true;
+					return;
+				}
+			});
+		}
+		return finded;
 	}
 });

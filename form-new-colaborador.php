@@ -47,7 +47,7 @@
 										<div class="element-group">
 											<label class="col-lg-2 control-label">Matrícula</label> 
 											<div class="col-lg-2">
-												<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula"  maxlength="100">
+												<input type="text" class="form-control" ng-model="dadosColaborador.num_matricula"  maxlength="100" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											</div>
 										</div>
 									</div>
@@ -56,7 +56,7 @@
 										<div class="element-group">
 											<label class="col-lg-2 control-label">Nome</label>
 											<div class="col-lg-6">
-												<input type="text" class="form-control" ng-model="dadosColaborador.nme_colaborador"  maxlength="100">
+												<input type="text" class="form-control" ng-model="dadosColaborador.nme_colaborador"  maxlength="100" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											</div>
 										</div>
 									</div>
@@ -66,8 +66,8 @@
 											<label class="col-lg-2 control-label">Data de Nascimento</label>
 											<div class="col-lg-3">
 												<div class="input-group date">
-													<input type="text" class="form-control" ng-model="dadosColaborador.dta_nascimento" >
-													<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+													<input type="text" class="form-control" ng-model="dadosColaborador.dta_nascimento" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
+													<span class="input-group-addon" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')"><i class="fa fa-calendar fa-lg"></i></span>
 												</div>
 											</div>
 										</div>
@@ -75,7 +75,7 @@
 										<div class="element-group">
 											<label class="col-lg-1 control-label">Sexo</label>
 											<div class="col-lg-2">
-												<select class="form-control"  ng-model="dadosColaborador.flg_sexo"  maxlength="1">
+												<select class="form-control"  ng-model="dadosColaborador.flg_sexo"  maxlength="1" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											 		<option value="M" label="Masculino"></option>
 													<option value="F" label="Feminino"></option> 
 												</select> 
@@ -87,21 +87,21 @@
 										<div class="element-group">
 											<label class="col-lg-2 control-label">Ativo?</label>
 											<div class="col-lg-1">
-												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ativo" >
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ativo" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											</div>
 										</div>
 										
 										<div class="element-group">
 											<label class="col-lg-4 control-label">Portador Necessidades Especiais?</label>
 											<div class="col-lg-1">
-												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_portador_necessidades_especiais" >
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_portador_necessidades_especiais" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											</div>
 										</div>
 
 										<div class="element-group">
 											<label class="col-lg-3 control-label">Preenche Folha de Ponto?</label>
 											<div class="col-lg-1">
-												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ajusta_folha_ponto" >
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ajusta_folha_ponto" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											</div>
 										</div>
 									</div>
@@ -110,21 +110,21 @@
 										<div class="element-group">
 											<label class="col-lg-2 control-label">Faz Hora Extra?</label>
 											<div class="col-lg-1">
-												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_hora_extra" >
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_hora_extra" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											</div>
 										</div>
 										
 										<div class="element-group">
 											<label class="col-lg-4 control-label">Trabalha de Fim de Semana?</label>
 											<div class="col-lg-1">
-												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_fim_semana" >
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_fim_semana" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											</div>
 										</div>	
 										
 										<div class="element-group">
 											<label class="col-lg-3 control-label">Trabalha Feriado?</label>
 											<div class="col-lg-1">
-												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_feriado" >
+												<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_trabalho_feriado" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 											</div>
 										</div>
 									</div>	
@@ -139,14 +139,14 @@
 								<div class="element-group">
 									<label class="col-lg-2 control-label">CEP</label>
 									<div class="col-lg-2">
-										<input type="text" class="form-control" ng-model="dadosColaborador.num_cep"  maxlength="10"> 
+										<input type="text" class="form-control" ng-model="dadosColaborador.num_cep"  maxlength="10" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 									</div>
 								</div>
 
 								<div class="element-group">
 									<label class="col-lg-1 control-label">Endereço</label>
 									<div class="col-lg-4">
-										<input type="text" class="form-control" ng-model="dadosColaborador.dsc_endereco"  maxlength="100"> 
+										<input type="text" class="form-control" ng-model="dadosColaborador.dsc_endereco"  maxlength="100" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 									</div>
 								</div>
 							</div>
@@ -155,14 +155,14 @@
 								<div class="element-group">
 									<label class="col-lg-2 control-label">Número</label>
 									<div class="col-lg-2">
-										<input type="text" class="form-control" ng-model="dadosColaborador.num_endereco"  maxlength="10"> 
+										<input type="text" class="form-control" ng-model="dadosColaborador.num_endereco"  maxlength="10" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 									</div>
 								</div>
 
 								<div class="element-group">
 									<label class="col-lg-1 control-label">Complemento</label>
 									<div class="col-lg-4">
-										<input type="text" class="form-control" ng-model="dadosColaborador.dsc_complemento"  maxlength="100"> 
+										<input type="text" class="form-control" ng-model="dadosColaborador.dsc_complemento"  maxlength="100" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 									</div>
 								</div>
 							</div>
@@ -171,7 +171,7 @@
 								<div class="element-group">
 									<label class="col-lg-2 control-label">Bairro</label>
 									<div class="col-lg-3">
-										<input type="text" class="form-control" ng-model="dadosColaborador.nme_bairro"  maxlength="100"> 
+										<input type="text" class="form-control" ng-model="dadosColaborador.nme_bairro"  maxlength="100" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 									</div>
 								</div>
 							</div>
@@ -180,7 +180,7 @@
 								<div class="element-group">
 									<label class="col-lg-2 control-label">UF</label>
 									<div class="col-lg-1">
-										<select class="form-control" ng-model="dadosColaborador.cod_estado_moradia"  ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia') ">
+										<select class="form-control" ng-model="dadosColaborador.cod_estado_moradia"  ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('moradia')" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 										</select>
 									</div>
 								</div>
@@ -188,7 +188,7 @@
 								<div class="element-group">
 									<label class="col-lg-1 control-label">Cidade</label>
 									<div class="col-lg-3">
-										<select class="form-control" ng-model="dadosColaborador.cod_cidade_moradia"   ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia">
+										<select class="form-control" ng-model="dadosColaborador.cod_cidade_moradia"   ng-options="item.cod_cidade as item.nme_cidade for item in cidadesMoradia" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 										</select>
 										<span class="loading-cidade-moradia hide">
 											<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
@@ -205,7 +205,7 @@
 								<div class="element-group">
 									<label class="col-lg-2 control-label">Estado</label>
 									<div class="col-lg-1">
-										<select class="form-control" ng-model="dadosColaborador.cod_estado_naturalidade"  ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('naturalidade')">
+										<select class="form-control" ng-model="dadosColaborador.cod_estado_naturalidade"  ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-change="getCidades('naturalidade')" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 										</select>
 									</div>
 								</div>
@@ -213,7 +213,7 @@
 								<div class="element-group">	
 									<label class="col-lg-1 control-label">Cidade</label>
 									<div class="col-lg-3">
-										<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade"  ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade">
+										<select class="form-control" ng-model="dadosColaborador.cod_cidade_naturalidade"  ng-options="item.cod_cidade as item.nme_cidade for item in cidadesNaturalidade" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 										</select>
 										<span class="loading-cidade-naturalidade hide">
 											<i class="fa fa-spinner fa-pulse"></i> Por favor, aguarde...
@@ -234,8 +234,8 @@
 											<thead>
 												<th>DDD</th>
 												<th>Número</th>
-												<th>Tipo</th>
-												<th width="20">
+												<th colspan="{{ (!getFuncionalidadeByName('INCLUIR TELEFONE')) ? '2' : '' }}">Tipo</th>
+												<th width="20" ng-show="getFuncionalidadeByName('INCLUIR TELEFONE')">
 													<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalTelefone()">
 														<i class="fa fa-plus-circle"></i>
 													</button>
@@ -245,8 +245,8 @@
 												<tr ng-repeat="telefone in dadosColaborador.telefones | filter: { flg_removido: false }">
 													<td>{{ telefone.num_ddd }}</td>
 													<td>{{ telefone.num_telefone }}</td>
-													<td>{{ telefone.tipoTelefone.nme_tipo_telefone }}</td>
-													<td>
+													<td colspan="{{ (!getFuncionalidadeByName('EXCLUIR TELEFONE')) ? '2' : '' }}">{{ telefone.tipoTelefone.nme_tipo_telefone }}</td>
+													<td width="20" ng-show="getFuncionalidadeByName('EXCLUIR TELEFONE')">
 														<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(telefone)">
 															<i class="fa fa-trash-o"></i>
 														</button>
@@ -262,8 +262,8 @@
 									<div class="col-lg-4">
 										<table class="table table-bordered table-condensed table-hover table-striped">
 											<thead>
-												<th>Endereço de E-mail</th>
-												<th width="20">
+												<th colspan="{{ (!getFuncionalidadeByName('INCLUIR EMAIL')) ? '2' : '' }}">Endereço de E-mail</th>
+												<th width="20" ng-show="getFuncionalidadeByName('INCLUIR EMAIL')">
 													<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalEmail()">
 														<i class="fa fa-plus-circle"></i>
 													</button>
@@ -271,8 +271,8 @@
 											</thead>
 											<tbody>
 												<tr ng-repeat="email in dadosColaborador.emails | filter: { flg_removido: false }">
-													<td >{{ email.end_email }}</td>
-													<td>
+													<td colspan="{{ (!getFuncionalidadeByName('EXCLUIR EMAIL')) ? '2' : '' }}">{{ email.end_email }}</td>
+													<td width="20" ng-show="getFuncionalidadeByName('EXCLUIR EMAIL')">
 														<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(email)">
 															<i class="fa fa-trash-o"></i>
 														</button>
@@ -292,9 +292,9 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Empresa Contratante</label> 
 								<div class="col-lg-4">
-									<div class="input-group">
+									<div class="input-group {{ (!getFuncionalidadeByName('EDITAR CADASTRO')) ? 'width-100' : ''}}">
 										<input type="text" class="form-control" name="empresaContratante" readonly="readonly" value="{{ dadosColaborador.empresaContratante.nme_fantasia }}">
-										<span class="input-group-btn">
+										<span class="input-group-btn" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 											<button class="btn btn-default" type="button" ng-click="abreModal('empresas', 'empresaContratante')">
 												<i class="fa fa-search"></i>
 											</button>
@@ -306,7 +306,7 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Regime de Contratação</label>
 								<div class="col-lg-1">
-									<select class="form-control"  ng-model="dadosColaborador.cod_regime_contratacao" ng-options="item.cod_regime_contratacao as item.dsc_regime_contratacao for item in regimesContratacao">
+									<select class="form-control"  ng-model="dadosColaborador.cod_regime_contratacao" ng-options="item.cod_regime_contratacao as item.dsc_regime_contratacao for item in regimesContratacao" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 									</select>
 								</div>
 							</div>
@@ -316,9 +316,9 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Contrato</label> 
 								<div class="col-lg-4">
-									<div class="input-group">
+									<div class="input-group {{ (!getFuncionalidadeByName('EDITAR CADASTRO')) ? 'width-100' : ''}}">
 										<input type="text" class="form-control" name="contrato" readonly="readonly" value="{{ dadosColaborador.contrato.dsc_origem }}">
-										<span class="input-group-btn">
+										<span class="input-group-btn" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 											<button class="btn btn-default" type="button" ng-click="abreModal('origens', 'contrato')">
 												<i class="fa fa-search"></i>
 											</button>
@@ -328,9 +328,9 @@
 
 								<label class="col-lg-2 control-label">Plano de Saúde</label>
 								<div class="col-lg-4">
-									<div class="input-group">
+									<div class="input-group {{ (!getFuncionalidadeByName('EDITAR CADASTRO')) ? 'width-100' : ''}}">
 										<input type="text" class="form-control" name="planoSaude" readonly="readonly" value="{{ dadosColaborador.planoSaude.nme_fantasia + ' - ' + dadosColaborador.planoSaude.nme_plano_saude }}">
-										<span class="input-group-btn">
+										<span class="input-group-btn" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 											<button class="btn btn-default" type="button" ng-click="abreModal('planos-saude', 'planoSaude')">
 												<i class="fa fa-search"></i>
 											</button>
@@ -344,9 +344,9 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Local de Trabalho</label>
 								<div class="col-lg-4">
-									<div class="input-group">
+									<div class="input-group {{ (!getFuncionalidadeByName('EDITAR CADASTRO')) ? 'width-100' : ''}}">
 										<input type="text" class="form-control" name="localTrabalho" readonly="readonly" value="{{ dadosColaborador.localTrabalho.nme_local_trabalho }}">
-										<span class="input-group-btn">
+										<span class="input-group-btn" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 											<button class="btn btn-default" type="button" ng-click="abreModal('locais-trabalho', 'localTrabalho')">
 												<i class="fa fa-search"></i>
 											</button>
@@ -358,7 +358,7 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Departamento</label>
 								<div class="col-lg-2">
-									<select class="form-control" ng-model="dadosColaborador.cod_departamento"  ng-options="item.cod_departamento as item.sgl_departamento for item in departamentos">
+									<select class="form-control" ng-model="dadosColaborador.cod_departamento"  ng-options="item.cod_departamento as item.sgl_departamento for item in departamentos" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 									</select>
 								</div>
 							</div>
@@ -368,9 +368,9 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Grade de Horário</label>
 								<div class="col-lg-4">
-									<div class="input-group">
+									<div class="input-group {{ (!getFuncionalidadeByName('EDITAR CADASTRO')) ? 'width-100' : ''}}">
 										<input type="text" class="form-control" name="gradeHorario" readonly="readonly" value="{{dadosColaborador.gradeHorario.nme_grade_horario }}">
-										<span class="input-group-btn">
+										<span class="input-group-btn" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 											<button class="btn btn-default" type="button" ng-click="abreModal('grades-horario', 'gradeHorario')">
 												<i class="fa fa-search"></i>
 											</button>
@@ -382,7 +382,7 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Horas Contratadas</label>
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.qtd_horas_contratadas" maxlength="11" >
+									<input type="text" class="form-control" ng-model="dadosColaborador.qtd_horas_contratadas" maxlength="11"  ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 								</div>
 							</div>
 						</div>
@@ -391,9 +391,9 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Sindicato</label>
 								<div class="col-lg-4">
-									<div class="input-group">
+									<div class="input-group {{ (!getFuncionalidadeByName('EDITAR CADASTRO')) ? 'width-100' : ''}}">
 										<input type="text" class="form-control" name="sindicato" readonly="readonly" value="{{dadosColaborador.sindicato.nme_sindicato }}">
-										<span class="input-group-btn">
+										<span class="input-group-btn" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 											<button class="btn btn-default" type="button" ng-click="abreModal('sindicatos', 'sindicato')">
 												<i class="fa fa-search"></i>
 											</button>
@@ -408,8 +408,8 @@
 								<label class="col-lg-2 control-label">Data de Admissão</label>
 								<div class="col-lg-2">
 									<div class="input-group date">																
-										<input type="text" class="form-control" ng-model="dadosColaborador.dta_admissao">
-										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_admissao" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
+										<span class="input-group-addon" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')"><i class="fa fa-calendar fa-lg"></i></span>
 									</div>
 								</div>
 							</div>
@@ -418,8 +418,8 @@
 								<label class="col-lg-2 control-label">Data de Demissão</label>
 								<div class="col-lg-2">
 									<div class="input-group date">
-										<input type="text" class="form-control" ng-model="dadosColaborador.dta_demissao" >
-										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_demissao"  ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
+										<span class="input-group-addon" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')"><i class="fa fa-calendar fa-lg"></i></span>
 									</div>
 								</div>
 							</div>
@@ -435,8 +435,8 @@
 											<th>Função</th>
 											<th width="120">Salário</th>
 											<th>Motivo</th>
-											<th width="80">Data</th>
-											<th width="20">
+											<th width="80" colspan="{{ (!getFuncionalidadeByName('INCLUIR FUNÇÃO')) ? '2' : '' }}">Data</th>
+											<th width="20" ng-show="getFuncionalidadeByName('INCLUIR FUNÇÃO')">
 												<button type="button" class="btn btn-xs btn-primary" ng-click="abreModalFuncao()">
 													<i class="fa fa-plus-circle"></i>
 												</button>
@@ -448,8 +448,8 @@
 												<td>{{ funcao.funcao.nme_funcao }}</td>
 												<td>R$ {{ funcao.vlr_salario | numberFormat: 2 : ',' : '.' }}</td>
 												<td>{{ funcao.motivoAlteracaoFuncao.nme_motivo_alteracao_funcao }}</td>
-												<td>{{ funcao.dta_alteracao | date : 'dd/MM/yyyy' }}</td>
-												<td>
+												<td colspan="{{ (!getFuncionalidadeByName('EXCLUIR FUNÇÃO')) ? '2' : '' }}">{{ funcao.dta_alteracao | date : 'dd/MM/yyyy' }}</td>
+												<td width="20" ng-show="getFuncionalidadeByName('EXCLUIR FUNÇÃO')">
 													<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(funcao)">
 														<i class="fa fa-trash-o"></i>
 													</button>
@@ -473,8 +473,8 @@
 											<th>Plano Saúde?</th>
 											<th>Plano</th>
 											<th>Deduz IRPF?</th>
-											<th>Possui Faculdade?</th>
-											<th width="60">	
+											<th colspan="{{ (!getFuncionalidadeByName('INCLUIR DEPENDENTE')) ? '2' : '' }}">Possui Faculdade?</th>
+											<th width="60" ng-show="getFuncionalidadeByName('INCLUIR DEPENDENTE')">	
 												<button type="button" class="btn btn-xs btn-primary" ng-click="tmpModal={};abreModalDependente()">
 													<i class="fa fa-plus-circle"></i> Incluir
 												</button>
@@ -488,8 +488,8 @@
 												<td>{{ (dependente.flg_plano_saude == 1) ? 'Sim' : 'Não' }}</td>
 												<td>{{ dependente.planoSaude.nme_plano_saude }}</td>
 												<td>{{ (dependente.flg_deduz_irrf == 1) ? 'Sim' : 'Não'  }}</td>
-												<td>{{ (dependente.flg_curso_superior == 1) ? 'Sim' : 'Não'  }}</td>
-												<td>
+												<td colspan="{{ (!getFuncionalidadeByName('EXCLUIR DEPENDENTE')) ? '2' : '' }}">{{ (dependente.flg_curso_superior == 1) ? 'Sim' : 'Não'  }}</td>
+												<td width="20" ng-show="getFuncionalidadeByName('EXCLUIR DEPENDENTE')">
 													<button type="button" class="btn btn-xs btn-warning" ng-click="editarDependente(dependente)">
 														<i class="fa fa-edit"></i>
 													</button>
@@ -511,9 +511,9 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Banco</label>
 								<div class="col-lg-4">
-									<div class="input-group">
+									<div class="input-group {{ (!getFuncionalidadeByName('EDITAR CADASTRO')) ? 'width-100' : ''}}">
 										<input type="text" class="form-control" name="banco" readonly="readonly" value="{{ dadosColaborador.banco.num_banco }} | {{ dadosColaborador.banco.nme_banco }}">
-										<span class="input-group-btn">
+										<span class="input-group-btn" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 											<button class="btn btn-default" type="button" ng-click="abreModal('bancos', 'banco')">
 												<i class="fa fa-search"></i>
 											</button>
@@ -527,14 +527,14 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Agência</label>
 								<div class="col-lg-2">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_agencia" maxlength="10" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_agencia" maxlength="10" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 
 							<div class="element-group">
 								<label class="col-lg-1 control-label">Dígito</label>
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_digito_agencia" maxlength="5" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_digito_agencia" maxlength="5" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 						</div>
@@ -543,14 +543,14 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Conta Corrente</label>
 								<div class="col-lg-2">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_conta_corrente" maxlength="20" >  
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_conta_corrente" maxlength="20" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">  
 								</div>
 							</div>
 							
 							<div class="element-group">	
 								<label class="col-lg-1 control-label">Dígito</label>
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_digito_conta_corrente" maxlength="5" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_digito_conta_corrente" maxlength="5" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 						</div>
@@ -562,12 +562,12 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">RG</label>
 								<div class="col-lg-2">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_rg" maxlength="20" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_rg" maxlength="20" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 							
 
-							<div class="element-group">	
+							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">	
 								<div class="col-lg-3">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_rg">
 									Selecionar... <input type="file">
@@ -580,11 +580,11 @@
 							<div class="element-group">	
 								<label class="col-lg-2 control-label">CPF</label>
 								<div class="col-lg-2">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_cpf" maxlength="20" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_cpf" maxlength="20" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 
-							<div class="element-group">	
+							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">	
 								<div class="col-lg-3">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_cpf">
 									Selecionar... <input type="file">
@@ -597,11 +597,11 @@
 							<div class="element-group">	
 								<label class="col-lg-2 control-label">PIS</label>
 								<div class="col-lg-2">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_pis" maxlength="20" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_pis" maxlength="20" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 							
-							<div class="element-group">									
+							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">									
 								<div class="col-lg-3">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_pis">
 									Selecionar... <input type="file">
@@ -614,9 +614,9 @@
 							<div class="element-group">									
 								<label class="col-lg-2 control-label">Entidade</label>
 								<div class="col-lg-3">
-									<div class="input-group">
+									<div class="input-group {{ (!getFuncionalidadeByName('EDITAR CADASTRO')) ? 'width-100' : ''}}">
 										<input type="text" class="form-control" name="entidade" readonly="readonly" value="{{dadosColaborador.entidade.nme_entidade }}">
-										<span class="input-group-btn">
+										<span class="input-group-btn" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 											<button class="btn btn-default" type="button" ng-click="abreModal('entidades', 'entidade')">
 												<i class="fa fa-search"></i>
 											</button>
@@ -628,7 +628,7 @@
 							<div class="element-group">									
 								<label class="col-lg-1 control-label">Número</label>
 								<div class="col-lg-2">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_entidade" maxlength="20" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_entidade" maxlength="20" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 						</div>
@@ -637,14 +637,14 @@
 							<div class="element-group">									
 								<label class="col-lg-2 control-label">CTPS</label>
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_ctps" maxlength="50" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_ctps" maxlength="50" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 							
 							<div class="element-group">										
 								<label class="col-lg-1 control-label">Série</label>
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_serie_ctps" maxlength="50" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_serie_ctps" maxlength="50" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 
@@ -652,8 +652,8 @@
 								<label class="col-lg-1 control-label">Emissão CTPS</label>
 								<div class="col-lg-2">
 									<div class="input-group date">
-										<input type="text" class="form-control" ng-model="dadosColaborador.dta_emissao_ctps" >
-										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_emissao_ctps" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
+										<span class="input-group-addon" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')"><i class="fa fa-calendar fa-lg"></i></span>
 									</div>
 								</div>
 							</div>
@@ -661,7 +661,7 @@
 							<div class="element-group">										
 								<label class="col-lg-2 control-label">Estado</label>
 								<div class="col-lg-1">
-									<select class="form-control" ng-model="dadosColaborador.cod_estado_ctps" ng-options="item.cod_estado as item.sgl_estado for item in ufs" >
+									<select class="form-control" ng-model="dadosColaborador.cod_estado_ctps" ng-options="item.cod_estado as item.sgl_estado for item in ufs" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 									</select>
 								</div>
 							</div>
@@ -671,25 +671,25 @@
 							<div class="element-group">										
 								<label class="col-lg-2 control-label">Título de Eleitor</label>
 								<div class="col-lg-2">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_titulo_eleitor" maxlength="20" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_titulo_eleitor" maxlength="20" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 								
 							<div class="element-group">										
 								<label class="col-lg-1 control-label">Zona</label>
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_zona_eleitoral" maxlength="10" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_zona_eleitoral" maxlength="10" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 							
 							<div class="element-group">											
 								<label class="col-lg-1 control-label">Seção</label>
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_secao_eleitoral" maxlength="10" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_secao_eleitoral" maxlength="10" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 
-							<div class="element-group">											
+							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">											
 								<div class="col-lg-2">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_titulo_eleitor">
 									Selecionar... <input type="file">
@@ -702,7 +702,7 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">CNH</label>
 								<div class="col-lg-2">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_cnh" maxlength="20" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_cnh" maxlength="20" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 
@@ -710,8 +710,8 @@
 								<label class="col-lg-1 control-label">Validade</label>
 								<div class="col-lg-2">
 									<div class="input-group date">
-										<input type="text" class="form-control" ng-model="dadosColaborador.dta_validade_cnh" >
-										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+										<input type="text" class="form-control" ng-model="dadosColaborador.dta_validade_cnh" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
+										<span class="input-group-addon" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')"><i class="fa fa-calendar fa-lg"></i></span>
 									</div>
 								</div>
 							</div>
@@ -719,11 +719,11 @@
 							<div class="element-group">											
 								<label class="col-lg-1 control-label">Categoria</label>
 								<div class="col-lg-1">
-									<input type="text" class="form-control" ng-model="dadosColaborador.nme_categoria_cnh" maxlength="10" >
+									<input type="text" class="form-control" ng-model="dadosColaborador.nme_categoria_cnh" maxlength="10" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 								</div>
 							</div>
 
-							<div class="element-group">											
+							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">											
 								<div class="col-lg-1">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_cnh">
 									Selecionar... <input type="file">
@@ -736,11 +736,11 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Reservista</label>
 								<div class="col-lg-2">
-									<input type="text" class="form-control" ng-model="dadosColaborador.num_reservista" maxlength="20" > 
+									<input type="text" class="form-control" ng-model="dadosColaborador.num_reservista" maxlength="20" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))"> 
 								</div>
 							</div>
 
-							<div class="element-group">
+							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 								<div class="col-lg-3">
 									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_reservista" >
 									Selecionar... <input type="file">
@@ -753,11 +753,11 @@
 							<div class="element-group">
 								<label class="col-lg-2 control-label">Possui ensino Superior?</label>
 								<div class="col-lg-1">
-									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ensino_superior" >
+									<input type="checkbox" class="input-switch" ng-model="dadosColaborador.flg_ensino_superior" ng-readonly="(!getFuncionalidadeByName('EDITAR CADASTRO'))" ng-disabled="(!getFuncionalidadeByName('EDITAR CADASTRO'))">
 								</div>
 							</div>
 
-							<div class="element-group">
+							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 								<div class="col-lg-3">
 									<span class="pull-left btn btn-default btn-file">
 									Selecionar... <input type="file">
@@ -778,10 +778,10 @@
 				</div>
 				<div class="pull-right">
 					<div class="box-inline">
-						<a href="list-colaboradores" class="btn btn-default">Cancelar</a>
+						<a href="list-colaboradores" class="btn btn-default">Voltar p/ Listagem de Colaboradores</a>
 						<button type="button" class="previous btn btn-success">Voltar</button>
 						<button type="button" class="next btn btn-success">Avançar</button>
-						<button type="button" class="finish btn btn-success" disabled ng-click="validateFieldValues()">Finalizar</button>
+						<button type="button" class="finish btn btn-success" disabled ng-click="validateFieldValues()" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">Finalizar</button>
 					</div>
 				</div>
 			</div>

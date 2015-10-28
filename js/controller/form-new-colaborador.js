@@ -2,9 +2,6 @@ $('#demo-cls-wz').bootstrapWizard({
 	tabClass			: 'wz-classic',
 	nextSelector		: '.next',
 	previousSelector	: '.previous',
-	onTabClick: function(tab, navigation, index) {
-		return false;
-	},
 	onInit : function(){
 		$('#demo-cls-wz').find('.finish').hide().prop('disabled', true);
 	},
@@ -186,6 +183,10 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 	};
 
 	// Definição de funções de utilização da tela
+	$scope.getFuncionalidadeByName = function(nmeFuncionalidade){
+		return UserSrvc.getFuncionalidadeByName(nmeFuncionalidade, getActivePage());
+	};
+
 	$scope.deleteColaborador = function() {
 		var postData = {
 			cod_colaborador: $scope.dadosColaborador.cod_colaborador, 	// colaborador que está sendo alterado
@@ -541,12 +542,11 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			$scope.tmpModal.cod_plano_saude = null;
 			$scope.tmpModal.planoSaude = null;
 		}
-
 		return;
 	}
 
 	$scope.showDeleteButton = function() {
-		return (typeof getUrlVars().cod_colaborador != "undefined");
+		return (typeof getUrlVars().cod_colaborador != "undefined") && (UserSrvc.getFuncionalidadeByName("EXCLUIR CADASTRO", getActivePage()));
 	}
 
 	// Definição de funções auxiliares

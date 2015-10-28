@@ -26,6 +26,10 @@ function resetSwitchInput() {
 	});
 }
 
+function getActivePage() {
+	return document.location.pathname.split('/')[document.location.pathname.split('/').length-1];
+}
+
 function showNotification(title, message, icon, container, status, time) {
 	var alertType = "";
 
