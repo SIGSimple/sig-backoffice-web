@@ -13,7 +13,11 @@ $(function(){
 		invalid: 'fa fa-times-circle fa-lg',
 		validating: 'fa fa-refresh'
 	};
-})
+});
+
+function getActivePageId() {
+	return Math.random().toString(36).slice(2);
+}
 
 function resetSwitchInput() {
 	$("span.switchery").remove();

@@ -23,7 +23,8 @@
 	$handler = new upload($_FILES['file']);
 
 	if($handler->uploaded) {
-		$handler->file_name_body_add   = '_' . rand();
+		$handler->file_name_body_pre = $_GET['prefixName'] .'_';
+		$handler->file_name_body_add = '_'. rand();
 		$handler->process(PATH_UPLOAD_FILES);
 		if ($handler->processed) {
 			header("HTTP/1.0 200 Ok");

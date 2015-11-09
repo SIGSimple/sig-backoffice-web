@@ -34,6 +34,9 @@ $("#modalItems").on("hidden.bs.modal", function(e){
 });
 
 app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
+	$scope.activePageId = getActivePageId();
+	$scope.sessionSaved = false;
+
 	$scope.colaborador = UserSrvc.getUserLogged();
 
 	// Definição de variáveis de uso da tela
@@ -43,6 +46,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		telefones: [],
 		emails: [],
 		funcoes: [],
+		files: {},
 		num_matricula: "",
 		nme_colaborador: "",
 		flg_portador_necessidades_especiais: 0,
@@ -76,7 +80,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		num_cnh: "",
 		nme_categoria_cnh: "",
 		dta_validade_cnh: "",
-		flg_sexo: "",
+		flg_sexo: "M",
 		banco: {},
 		num_agencia: "",
 		num_digito_agencia: "",
@@ -90,7 +94,6 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		pth_arquivo_curriculo: "",
 		pth_arquivo_reservista: "",
 		num_entidade: ""
-
 	};
 	$scope.motivosAlteracaoFuncao = [];
 	$scope.funcoes = [];
@@ -185,7 +188,10 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		]
 	};
 
-	// Definição de funções de utilização da tela
+	$scope.getProfileImagePath = function() {
+		return "files/user/" + $scope.dadosColaborador.files.file_foto.nme_anexo;
+	}
+
 	$scope.getFuncionalidadeByName = function(nmeFuncionalidade){
 		return UserSrvc.getFuncionalidadeByName(nmeFuncionalidade, getActivePage());
 	};
@@ -227,7 +233,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
 		$(".element-group").removeClass("has-error");
 		$("table thead").css("background-color","none").css("color","#515151");
-		$(".form-fields span").css("border-color","#CDD6E1").css("color","#515151");
+		$(".form-fields span").css("background-color", "#fafafa").css("border-color","#CDD6E1").css("color","#515151");
 
 		// captura os valores dos sliders (flgs)
 		postData.flg_trabalho_fim_semana 				= ($('.input-switch[ng-model="dadosColaborador.flg_trabalho_fim_semana"]')[0].checked) ? 1 : 0;
@@ -241,6 +247,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 		// envia os dados para a API tratar e salvar no BD
 		$http.post(baseUrlApi()+'colaborador', postData)
 			.success(function(message, status, headers, config){
+				$scope.sessionSaved = true;
 				clearObject();
 				showNotification("Salvo!", message, null, 'page', status);
 				setTimeout(function(){
@@ -262,6 +269,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				    		$(element).find("thead").css("background-color","#A94442").css("color","#FFFFFF");
 				    	else if(element.is("span")) // tratamento exclusivo para spans
 				    		$(element).css("border-color","#A94442").css("color","#A94442");
+				    	else if(typeof(element.attr('flow-btn')) != "undefined")
+				    		element = $(element).closest("span").css("background-color","#A94442").css("border-color","#A94442").css("color","#FFFFFF");
 
 				    	// coloca a mensagem de erro no elemento HTML selecionado
 			    		element.attr("data-toggle","tooltip").attr("data-placement","top").attr("title", value).attr("data-original-title", value);
@@ -329,6 +338,28 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 
 	$scope.desabilitaItem = function(item) {
 		item.flg_removido = true;
+	}
+
+	$scope.fileUploaded = function(object, subItem, message) {
+		var parsedObj = JSON.parse(message);
+		object[subItem] = {};
+		object[subItem].nme_anexo 		= parsedObj.flowFileName;
+		object[subItem].pth_anexo 		= parsedObj.flowFilePath;
+		object[subItem].dsc_tipo_anexo 	= parsedObj.flowFileType;
+	}
+
+	$scope.clearAttachment = function(item, subItem) {
+		$http.get(baseUrl()+'file-delete.php?file-path=' + item[subItem].pth_anexo)
+			.success(function(message, status, headers, config) {
+				delete item[subItem];
+			})
+			.error(function(message, status, headers, config) {
+				showNotification(null, message, null, 'floating', status);
+			});
+	}
+
+	$scope.fileUploadError = function(file, message, flow) {
+		console.log(file, message, flow);
 	}
 
 	$scope.abreModalEmail = function() {
@@ -584,6 +615,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			telefones: [],
 			emails: [],
 			funcoes: [],
+			files: {},
 			num_matricula: "",
 			nme_colaborador: "",
 			flg_portador_necessidades_especiais: 0,
@@ -617,7 +649,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			num_cnh: "",
 			nme_categoria_cnh: "",
 			dta_validade_cnh: "",
-			flg_sexo: "",
+			flg_sexo: "M",
 			banco: {},
 			num_agencia: "",
 			num_digito_agencia: "",
@@ -748,6 +780,7 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 			$http.get(baseUrlApi() + 'colaboradores?col->cod_colaborador=' + getUrlVars().cod_colaborador)
 				.success(function(response){
 					$scope.dadosColaborador = response.rows[0];
+					$scope.dadosColaborador.files = {};
 					$scope.dadosColaborador.cod_empreendimento = $scope.colaborador.user.cod_empreendimento;
 
 					if($scope.dadosColaborador.pth_arquivo_foto != null && $scope.dadosColaborador.pth_arquivo_foto != "") {
@@ -995,6 +1028,31 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 				$scope.estadosCivis = items;
 			});
 	}
+
+	function clearFilesNotUsed(async) {
+		if(!$scope.sessionSaved) {
+			$.ajax({
+				url: "file-directory-clear.php?prefixName="+$scope.activePageId, 
+				async: async,
+				success:function(){
+					console.log('memcache deleted');
+				}
+			});
+		}
+	}
+
+	$(window).bind('beforeunload', function(){ 
+		if(/Firefox[\/\s](\d+)/.test(navigator.userAgent) && new Number(RegExp.$1) >= 4) {
+			console.log('firefox delete');
+			clearFilesNotUsed(false);
+			return;
+		} 
+		else {
+			console.log('NON-firefox delete');
+			clearFilesNotUsed(true);
+			return;
+		}
+	});
 	
 	// Chamada às funções de inicialização
 	loadUfs();

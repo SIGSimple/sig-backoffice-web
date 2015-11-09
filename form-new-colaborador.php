@@ -40,7 +40,17 @@
 							
 							<div class="row">
 								<div class="col-lg-3 text-right">
-									<img class="img img-thumbnail" src="{{ dadosColaborador.pth_arquivo_foto }}" style="max-height: 220px;">
+									<div class="profile-img-container">
+										<img class="img img-thumbnail" 
+										src="{{ (dadosColaborador.files.file_foto) ? getProfileImagePath() : (dadosColaborador.pth_arquivo_foto != '') ? dadosColaborador.pth_arquivo_foto : (dadosColaborador.flg_sexo == 'M') ? 'img/av1.png' : (dadosColaborador.flg_sexo == 'F') ? 'img/av6.png' : 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png' }}" style="max-height: 220px;">
+										<a href="#"
+											flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+											flow-files-submitted="$flow.upload()"
+											flow-file-success="fileUploaded(dadosColaborador.files, 'file_foto', $message)"
+											flow-error="fileUploadError($file, $message, $flow)">
+											<span class="fa fa-upload fa-5x" flow-btn></span>
+										</a>
+									</div>
 								</div>
 								<div class="col-lg-9">
 									<div class="form-group">
@@ -574,12 +584,29 @@
 								</div>
 							</div>
 							
-
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">	
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_rg">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_rg', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_rg == null)">
+										Selecionar... <input type="file" name="file_rg" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_rg.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_rg')"
+										tooltip="{{ dadosColaborador.files.file_rg.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_rg.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_rg.nme_anexo }}&file-path={{ dadosColaborador.files.file_rg.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_rg.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_rg.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 
@@ -591,10 +618,28 @@
 							</div>
 
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">	
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_cpf">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_cpf', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_cpf == null)">
+										Selecionar... <input type="file" name="file_cpf" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_cpf.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_cpf')"
+										tooltip="{{ dadosColaborador.files.file_cpf.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_cpf.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_cpf.nme_anexo }}&file-path={{ dadosColaborador.files.file_cpf.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_cpf.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_cpf.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 						</div>
@@ -608,28 +653,82 @@
 							</div>
 							
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">									
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_pis">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_pis', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_pis == null)">
+										Selecionar... <input type="file" name="file_pis" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_pis.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_pis')"
+										tooltip="{{ dadosColaborador.files.file_pis.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_pis.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_pis.nme_anexo }}&file-path={{ dadosColaborador.files.file_pis.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_pis.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_pis.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 
 							<div class="element-group">	
 								<label class="col-lg-1 control-label">Certidão</label>
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_certidao">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_certidao', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_certidao == null)">
+										Selecionar... <input type="file" name="file_certidao" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_certidao.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_certidao')"
+										tooltip="{{ dadosColaborador.files.file_certidao.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_certidao.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_certidao.nme_anexo }}&file-path={{ dadosColaborador.files.file_certidao.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_certidao.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_certidao.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 
 							<div class="element-group">	
 								<label class="col-lg-1 control-label">Cartão.SUS</label>
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_carteira_sus">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_cartao_sus', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_cartao_sus == null)">
+										Selecionar... <input type="file" name="file_cartao_sus" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_cartao_sus.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_cartao_sus')"
+										tooltip="{{ dadosColaborador.files.file_cartao_sus.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_cartao_sus.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_cartao_sus.nme_anexo }}&file-path={{ dadosColaborador.files.file_cartao_sus.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_cartao_sus.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_cartao_sus.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 						</div>
@@ -637,28 +736,82 @@
 						<div class="form-group">
 							<div class="element-group">	
 								<label class="col-lg-2 control-label">Comprovante Endereço</label>
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_comprovante_enderenco">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_comprovante_endereco', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_comprovante_endereco == null)">
+										Selecionar... <input type="file" name="file_comprovante_endereco" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_comprovante_endereco.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_comprovante_endereco')"
+										tooltip="{{ dadosColaborador.files.file_comprovante_endereco.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_comprovante_endereco.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_comprovante_endereco.nme_anexo }}&file-path={{ dadosColaborador.files.file_comprovante_endereco.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_comprovante_endereco.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_comprovante_endereco.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 
 							<div class="element-group">	
 								<label class="col-lg-2 control-label">Comprovante Bancário</label>
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_comprovante_bancario">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_comprovante_bancario', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_comprovante_bancario == null)">
+										Selecionar... <input type="file" name="file_comprovante_bancario" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_comprovante_bancario.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_comprovante_bancario')"
+										tooltip="{{ dadosColaborador.files.file_comprovante_bancario.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_comprovante_bancario.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_comprovante_bancario.nme_anexo }}&file-path={{ dadosColaborador.files.file_comprovante_bancario.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_comprovante_bancario.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_comprovante_bancario.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 
 							<div class="element-group">	
 								<label class="col-lg-2 control-label">Contrato de Trabalho</label>
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_contrato_trabalho">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_contrato_trabalho', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_contrato_trabalho == null)">
+										Selecionar... <input type="file" name="file_contrato_trabalho" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_contrato_trabalho.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_contrato_trabalho')"
+										tooltip="{{ dadosColaborador.files.file_contrato_trabalho.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_contrato_trabalho.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_contrato_trabalho.nme_anexo }}&file-path={{ dadosColaborador.files.file_contrato_trabalho.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_contrato_trabalho.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_contrato_trabalho.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 						</div>
@@ -693,10 +846,28 @@
 
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
 								<label class="col-lg-1 control-label">Diploma</label>
-								<div class="col-lg-3">
-									<span class="pull-left btn btn-default btn-file">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_diploma', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_diploma == null)">
+										Selecionar... <input type="file" name="file_diploma" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_diploma.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_diploma')"
+										tooltip="{{ dadosColaborador.files.file_diploma.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_diploma.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_diploma.nme_anexo }}&file-path={{ dadosColaborador.files.file_diploma.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_diploma.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_diploma.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 						</div>
@@ -704,19 +875,55 @@
 						<div class="form-group">
 							<div class="element-group">	
 								<label class="col-lg-2 control-label">Currículo</label>
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_curriculo">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_curriculo', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_curriculo == null)">
+										Selecionar... <input type="file" name="file_curriculo" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_curriculo.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_curriculo')"
+										tooltip="{{ dadosColaborador.files.file_curriculo.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_curriculo.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_curriculo.nme_anexo }}&file-path={{ dadosColaborador.files.file_curriculo.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_curriculo.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_curriculo.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 
 							<div class="element-group">	
 								<label class="col-lg-2 control-label">Histórico Escolar</label>
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_historico_escolar">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_historico_escolar', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_historico_escolar == null)">
+										Selecionar... <input type="file" name="file_historico_escolar" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_historico_escolar.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_historico_escolar')"
+										tooltip="{{ dadosColaborador.files.file_historico_escolar.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_historico_escolar.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_historico_escolar.nme_anexo }}&file-path={{ dadosColaborador.files.file_historico_escolar.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_historico_escolar.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_historico_escolar.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 						</div>
@@ -801,10 +1008,28 @@
 							</div>
 
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">											
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_titulo_eleitor">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_titulo_eleitor', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_titulo_eleitor == null)">
+										Selecionar... <input type="file" name="file_titulo_eleitor" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_titulo_eleitor.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_titulo_eleitor')"
+										tooltip="{{ dadosColaborador.files.file_titulo_eleitor.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_titulo_eleitor.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_titulo_eleitor.nme_anexo }}&file-path={{ dadosColaborador.files.file_titulo_eleitor.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_titulo_eleitor.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_titulo_eleitor.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 						</div>
@@ -835,10 +1060,28 @@
 							</div>
 
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">											
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_cnh">
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_cnh', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_cnh == null)">
+										Selecionar... <input type="file" name="file_cnh" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_cnh.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_cnh')"
+										tooltip="{{ dadosColaborador.files.file_cnh.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_cnh.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_cnh.nme_anexo }}&file-path={{ dadosColaborador.files.file_cnh.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_cnh.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_cnh.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 						</div>
@@ -852,10 +1095,28 @@
 							</div>
 
 							<div class="element-group" ng-show="getFuncionalidadeByName('EDITAR CADASTRO')">
-								<div class="col-lg-2">
-									<span class="pull-left btn btn-default btn-file" name="pth_arquivo_reservista" >
-										Selecionar... <input type="file">
+								<div class="col-lg-2 text-middle"
+									flow-init="{target:'file-upload.php?prefixName='+activePageId}" 
+									flow-files-submitted="$flow.upload()"
+									flow-file-success="fileUploaded(dadosColaborador.files, 'file_reservista', $message)"
+									flow-error="fileUploadError($file, $message, $flow)">
+									<span class="pull-left btn btn-default btn-file"
+										ng-show="(dadosColaborador.files.file_reservista == null)">
+										Selecionar... <input type="file" name="file_reservista" flow-btn>
 									</span>
+									<button type="button" class="btn btn-xs btn-danger"
+										ng-show="(dadosColaborador.files.file_reservista.pth_anexo.length > 0)"
+										ng-click="clearAttachment(dadosColaborador.files, 'file_reservista')"
+										tooltip="{{ dadosColaborador.files.file_reservista.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-trash-o"></i> Excluir
+									</button>
+									&nbsp;
+									<a class="btn btn-xs btn-primary" 
+										href="file-download.php?file-type={{ dadosColaborador.files.file_reservista.dsc_tipo_anexo }}&file-name={{ dadosColaborador.files.file_reservista.nme_anexo }}&file-path={{ dadosColaborador.files.file_reservista.pth_anexo }}"
+										ng-show="(dadosColaborador.files.file_reservista.pth_anexo.length > 0)"
+										tooltip="{{ dadosColaborador.files.file_reservista.nme_anexo }}" tooltip-placement="top">
+										<i class="fa fa-download"></i> Baixar
+									</a>
 								</div>
 							</div>
 						</div>
