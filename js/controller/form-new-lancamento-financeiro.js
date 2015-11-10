@@ -83,7 +83,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 			onClickRow: function(row, $element) {
 				$scope.lancamentoFinanceiro[obj].data = row;
 				$scope.lancamentoFinanceiro[obj].type = rota;
-				$scope.lancamentoFinanceiro[obj].label = $element.find("td").text();
+				$scope.lancamentoFinanceiro[obj].label = $($element.find("td")[0]).text();
 				$scope.$apply();
 				$('#mytable').bootstrapTable('destroy');
 				$("#modalItems").modal("hide");
@@ -137,8 +137,13 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 
 		$http.post(baseUrlApi()+'lancamento-financeiro', postData)
 			.success(function(message, status, headers, config){
-				// Do somethin else
-				console.log(message);
+				showNotification("Salvo!", message, null, 'page', status);
+				setTimeout(function(){
+					// Remove os parâmetros da url
+					var newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+					// Faz o redirecionamento
+					window.location.href = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
+				}, 3000);
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro
 				if(status == 406){ // Not-Acceptable (Campos inválidos)

@@ -199,6 +199,11 @@
 											</button>
 										</span>
 									</div>
+									<div class="radios">
+										<label class="radio-inline" style="font-size: 10px; padding-left: 10px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'empresas'" ng-checked="(titularMovimento == 'empresas')">Empresa</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'colaboradores'" ng-checked="(titularMovimento == 'colaboradores')">Colaborador</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'terceiros'" ng-checked="(titularMovimento == 'terceiros')">Terceiros</label>
+									</div>
 								</td>
 								<td>
 									<div class="input-group">
@@ -209,21 +214,36 @@
 											</button>
 										</span>
 									</div>
+									<div class="radios">
+										<label class="radio-inline" style="font-size: 10px; padding-left: 10px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'empresas'" ng-checked="(titularMovimento == 'empresas')">Empresa</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'colaboradores'" ng-checked="(titularMovimento == 'colaboradores')">Colaborador</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'terceiros'" ng-checked="(titularMovimento == 'terceiros')">Terceiros</label>
+									</div>
 								</td>
 								<td>
-									<select class="form-control input-xs"></select>
+									<select class="form-control">
+										<option></option>
+										<option ng-repeat="item in contratos" value="{{ item.cod_origem }}">{{ item.dsc_origem }}</option>
+									</select>
 								</td>
 								<td>
 									<input type="text" class="form-control input-xs">
 								</td>
 								<td>
-									<input type="text" class="form-control input-xs">
+									<input type="text" class="form-control input-xs" ui-number-mask>
 								</td>
 								<td class="text-center">
 									<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(item)">
 										<i class="fa fa-trash-o"></i>
 									</button>
 								</td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+								<td class="text-right" colspan="4">Total</td>
+								<td class="text-right">R$ 99.999,99</td>
+								<td></td>
 							</tr>
 						</tbody>
 					</table>

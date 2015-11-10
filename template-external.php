@@ -134,6 +134,9 @@
 	<script src="bower_components/flow.js/dist/flow.min.js"></script>
 	<script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
 
+	<!--Angular Input Masks [ REQUIRED ]-->
+	<script src="bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
+
 	<!--Angular [ REQUIRED ]-->
 	<script src="js/ui-bootstrap-custom-0.13.0.min.js"></script>
 	<script src="js/ui-bootstrap-custom-tpls-0.13.0.min.js"></script>

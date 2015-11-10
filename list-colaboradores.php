@@ -63,8 +63,7 @@
 					<th data-visible="false" data-sortable="true" data-sort-name="num_pis" data-field="num_pis">PIS</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="num_titulo_eleitor" data-field="num_titulo_eleitor">Título de eleitor</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="num_zona_eleitoral" data-field="num_zona_eleitoral">Zona eleitoral</th>
-					<th data-visible="false" data-sortable="true" data-sort-name="num_secao_eleitoral" data-field="num_secao_eleitoral">Seção eleitoral</th>
-					<th data-visible="false" data-sortable="true" data-sort-name="num_reservista" data-field="num_reservista">Reservista</th>
+					<th data-visible="false" data-sortable="true" data-sort-name="num_secao_eleitoral" data-field="num_secao_eleitoral">Seção eleitoral</th> <th data-visible="false" data-sortable="true" data-sort-name="num_reservista" data-field="num_reservista">Reservista</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="dsc_endereco" data-field="dsc_endereco">Endereço</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="num_endereco" data-field="num_endereco">Número</th>
 					<th data-visible="false" data-sortable="true" data-sort-name="nme_bairro" data-field="nme_bairro">Bairro</th>

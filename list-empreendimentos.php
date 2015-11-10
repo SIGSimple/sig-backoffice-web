@@ -1,9 +1,6 @@
 <!--Custom Toolbar-->
 <!--===================================================-->
 <div class="panel" ng-controller="ListEmpreendimentosCtrl">
-	<div class="panel-heading">
-		<h3 class="panel-title">Listagem de Empreendimentos</h3>
-	</div>
 	<div class="panel-body">
 		<table class="bootstrap-table" 
 			data-toggle="table"
