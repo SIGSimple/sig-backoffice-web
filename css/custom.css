@@ -45,6 +45,10 @@
 	line-height: 1.5;
 }
 
+.input-group-addon {
+	cursor: pointer;
+}
+
 .input-group-addon.input-xs {
 	padding: 0;
 }
@@ -96,4 +100,12 @@
 	right: 0;
 	text-align: center;
 	color: inherit;
+}
+
+.chosen-container {
+	margin-bottom: 0 !important;
+}
+
+.radio-inline.first {
+	margin-left: 12px;
 }

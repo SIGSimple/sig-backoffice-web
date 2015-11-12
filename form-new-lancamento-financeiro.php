@@ -47,6 +47,12 @@
 					<div class="input-group">
 						<span class="input-group-addon">R$</span>
 						<input type="text" class="form-control" ng-model="lancamentoFinanceiro.vlr_realizado" ui-number-mask>
+						<span class="input-group-addon btn-primary" 
+							tooltip="Copiar Valor Previsto" 
+							tooltip-placement="right" 
+							ng-click="copyValorPrevistoRealizado()">
+							<i class="fa fa-copy"></i>
+						</span>
 					</div>
 				</div>
 			</div>
@@ -89,24 +95,23 @@
 		
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Conta Contábil</label>
-				<div class="col-lg-4">
-					<div class="input-group">
-						<select class="form-control" ng-model="lancamentoFinanceiro.cod_conta_contabil">
-							<option></option>
-							<option ng-repeat="item in planosConta" value="{{ item.cod_item }}">{{ item.dsc_exibicao_item }}</option>
-						</select>
-					</div>
+				<div class="col-lg-8">
+					<select chosen
+						options="planosConta"
+						ng-model="lancamentoFinanceiro.cod_conta_contabil"
+						ng-options="item.cod_item as ('(' + item.num_item + ') ' + item.dsc_item) for item in planosConta">
+					</select>
 				</div>
+			</div>
 
-
-				<label class="col-lg-1 control-label">Natureza</label>
-				<div class="col-lg-4">
-					<div class="input-group">
-						<select class="form-control" ng-model="lancamentoFinanceiro.cod_natureza_operacao">
-							<option></option>
-							<option ng-repeat="item in planosConta" value="{{ item.cod_item }}">{{ item.dsc_exibicao_item }}</option>
-						</select>
-					</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label">Natureza</label>
+				<div class="col-lg-8">
+					<select chosen
+						options="planosConta"
+						ng-model="lancamentoFinanceiro.cod_natureza_operacao"
+						ng-options="item.cod_item as ('(' + item.num_item + ') ' + item.dsc_item) for item in planosConta">
+					</select>
 				</div>
 			</div>
 
@@ -118,21 +123,21 @@
 				</div>
 			</div>
 
-			<div class="form-group {{ (lancamentoFinanceiro.abrirLancamento) ? 'hide' : '' }}">
-				<label class="radio-inline"><input type="radio" ng-click="favorecido = 'empresas'" ng-checked="(favorecido == 'empresas')">Empresa</label>
+			<div class="form-group">
+				<label class="radio-inline first"><input type="radio" ng-click="favorecido = 'empresas'" ng-checked="(favorecido == 'empresas')">Empresa</label>
 				<label class="radio-inline"><input type="radio" ng-click="favorecido = 'colaboradores'" ng-checked="(favorecido == 'colaboradores')">Colaborador</label>
 				<label class="radio-inline"><input type="radio" ng-click="favorecido = 'terceiros'" ng-checked="(favorecido == 'terceiros')">Terceiros</label>
 				<div class="col-lg-2">
 				</div>
 			</div>
 
-			<div class="form-group {{ (lancamentoFinanceiro.abrirLancamento) ? 'hide' : '' }}">
+			<div class="form-group">
 				<label class="col-lg-2 control-label">Favorecido</label>
 				<div class="col-lg-4">
 					<div class="input-group">
 						<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.favorecido.label }}">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" ng-click="abreModal('FAVORECIDO')">
+							<button class="btn btn-default" type="button" ng-click="abreModal('FAVORECIDO', 'lancamentoFinanceiro', true)">
 								<i class="fa fa-search"></i>
 							</button>
 						</span>
@@ -141,7 +146,7 @@
 			</div>
 
 			<div class="form-group {{ (lancamentoFinanceiro.abrirLancamento) ? 'hide' : '' }}">
-				<label class="radio-inline"><input type="radio" ng-click="titularMovimento = 'empresas'" ng-checked="(titularMovimento == 'empresas')">Empresa</label>
+				<label class="radio-inline first"><input type="radio" ng-click="titularMovimento = 'empresas'" ng-checked="(titularMovimento == 'empresas')">Empresa</label>
 				<label class="radio-inline"><input type="radio" ng-click="titularMovimento = 'colaboradores'" ng-checked="(titularMovimento == 'colaboradores')">Colaborador</label>
 				<label class="radio-inline"><input type="radio" ng-click="titularMovimento = 'terceiros'" ng-checked="(titularMovimento == 'terceiros')">Terceiros</label>
 				<div class="col-lg-2">
@@ -154,7 +159,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.titularMovimento.label }}">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" ng-click="abreModal('TITULAR_MOVIMENTO')">
+							<button class="btn btn-default" type="button" ng-click="abreModal('TITULAR_MOVIMENTO', 'lancamentoFinanceiro', true)">
 								<i class="fa fa-search"></i>
 							</button>
 						</span>
@@ -173,14 +178,13 @@
 			</div>
 
 			<div class="form-group {{ (!lancamentoFinanceiro.abrirLancamento) ? 'hide' : '' }}">
-				<label class="col-lg-2 control-label">Favorecidos / Titular do Movimento</label>
+				<label class="col-lg-2 control-label">Titulares do Movimento</label>
 				<div class="col-lg-10">
 					<table class="table table-bordered table-condensed table-hover table-striped">
 						<thead>
-							<th class="text-middle" width="200">Favorecido</th>
-							<th class="text-middle" width="200">Titular do Movimento</th>
+							<th class="text-middle" width="300">Titular do Movimento</th>
 							<th class="text-middle text-center">Origem da Despesa</th>
-							<th class="text-middle" width="150">Informação Adicional</th>
+							<th class="text-middle" width="200">Informação Adicional</th>
 							<th class="text-middle text-center">Valor Respectivo</th>
 							<th class="text-middle text-center" width="20">
 								<button type="button" class="btn btn-xs btn-primary" ng-click="addItemTabela('favorecidos')">
@@ -192,48 +196,33 @@
 							<tr ng-repeat="item in lancamentoFinanceiro.favorecidos | filter: { flg_removido: false }">
 								<td>
 									<div class="input-group">
-										<input type="text" class="form-control input-xs" readonly="readonly">
+										<input type="text" class="form-control input-xs" readonly="readonly" value="{{ item.titularMovimento.label }}">
 										<span class="input-group-btn">
-											<button class="btn btn-xs btn-default" type="button">
+											<button class="btn btn-xs btn-default" type="button" ng-click="abreModal('TITULAR_MOVIMENTO', item, false)">
 												<i class="fa fa-search"></i>
 											</button>
 										</span>
 									</div>
 									<div class="radios">
-										<label class="radio-inline" style="font-size: 10px; padding-left: 10px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'empresas'" ng-checked="(titularMovimento == 'empresas')">Empresa</label>
-										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'colaboradores'" ng-checked="(titularMovimento == 'colaboradores')">Colaborador</label>
-										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'terceiros'" ng-checked="(titularMovimento == 'terceiros')">Terceiros</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 10px;"><input type="radio" style="margin-left: -12px;" ng-click="item.titularMovimentoOption = 'empresas'" ng-checked="(item.titularMovimentoOption == 'empresas')">Empresa</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="item.titularMovimentoOption = 'colaboradores'" ng-checked="(item.titularMovimentoOption == 'colaboradores')">Colaborador</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="item.titularMovimentoOption = 'terceiros'" ng-checked="(item.titularMovimentoOption == 'terceiros')">Terceiros</label>
 									</div>
 								</td>
 								<td>
-									<div class="input-group">
-										<input type="text" class="form-control input-xs" readonly="readonly">
-										<span class="input-group-btn">
-											<button class="btn btn-xs btn-default" type="button">
-												<i class="fa fa-search"></i>
-											</button>
-										</span>
-									</div>
-									<div class="radios">
-										<label class="radio-inline" style="font-size: 10px; padding-left: 10px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'empresas'" ng-checked="(titularMovimento == 'empresas')">Empresa</label>
-										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'colaboradores'" ng-checked="(titularMovimento == 'colaboradores')">Colaborador</label>
-										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="titularMovimento = 'terceiros'" ng-checked="(titularMovimento == 'terceiros')">Terceiros</label>
-									</div>
-								</td>
-								<td>
-									<select class="form-control">
+									<select class="form-control" ng-model="item.cod_origem_correspondente">
 										<option></option>
 										<option ng-repeat="item in contratos" value="{{ item.cod_origem }}">{{ item.dsc_origem }}</option>
 									</select>
 								</td>
 								<td>
-									<input type="text" class="form-control input-xs">
+									<input type="text" class="form-control input-xs" ng-model="item.dsc_observacao_adicional">
 								</td>
 								<td>
-									<input type="text" class="form-control input-xs" ui-number-mask>
+									<input type="text" class="form-control input-xs" ng-model="item.vlr_correspondente" ui-number-mask ng-blur="confereValorTotalRespectivo()">
 								</td>
 								<td class="text-center">
-									<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(item)">
+									<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(item);">
 										<i class="fa fa-trash-o"></i>
 									</button>
 								</td>
@@ -241,8 +230,14 @@
 						</tbody>
 						<tbody>
 							<tr>
-								<td class="text-right" colspan="4">Total</td>
-								<td class="text-right">R$ 99.999,99</td>
+								<td class="text-right" colspan="3">Total</td>
+								<td class="text-right {{ (validateVlrTotalRespectivo()) ? 'danger' : '' }}">
+									<span class="{{ (validateVlrTotalRespectivo()) ? 'text-danger' : '' }}"
+										tooltip-placement="left"
+										tooltip="{{ (validateVlrTotalRespectivo()) ? 'O valor total dos itens está acima do valor total do lançamento!' : '' }}">
+										{{ lancamentoFinanceiro.vlrTotalRespectivo | currency : 'R$ ' : 2 }}
+									</span>
+								</td>
 								<td></td>
 							</tr>
 						</tbody>

@@ -57,6 +57,8 @@ restrict();
 	<!--Bootstrap Table [ OPTIONAL ]-->
 	<link href="plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 
+	<!--Chosen [ OPTIONAL ]-->
+	<link href="plugins/chosen/chosen.min.css" rel="stylesheet">
 
 	<!--X-editable [ OPTIONAL ]-->
 	<link href="plugins/x-editable/css/bootstrap-editable.css" rel="stylesheet">
@@ -210,9 +212,15 @@ restrict();
 	<!--Underscore [ REQUIRED ]-->
 	<script src="js/underscore.min.js"></script>
 
+	<!--Chosen [ OPTIONAL ]-->
+	<script src="plugins/chosen/chosen.jquery.min.js"></script>
+
 	<!--Angular [ REQUIRED ]-->
 	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="js/angular-locale_pt-br.js"></script>
 
+	<!--Chosen [ OPTIONAL ]-->
+	<script src="plugins/chosen/angular-chosen.min.js"></script>
 
 	<!--Angular [ REQUIRED ]-->
 	<script src="js/ui-bootstrap-custom-0.13.0.min.js"></script>

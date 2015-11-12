@@ -8,11 +8,13 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		favorecido: {},
 		favorecidos: [],
 		titularMovimento: {},
-		titularesMovimento: [],
 		anexos: [],
 		cod_tipo_lancamento: 2,
 		tipoLancamento: "Despesa",
-		abrirLancamento: false
+		abrirLancamento: false,
+		vlr_previsto: 0,
+		vlr_realizado: 0,
+		vlrTotalRespectivo: 0
 	};
 	$scope.favorecido = "";
 	$scope.titularMovimento = "";
@@ -53,18 +55,21 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		]
 	};
 
-	$scope.abreModal = function(type) {
+	$scope.abreModal = function(type, itemData, isScope) {
 		var rota = "";
 		var obj = "";
 
 		if(type == "FAVORECIDO"){
-			rota = $scope.favorecido;
+			rota = (isScope) ? $scope.favorecido : itemData.favorecidoOption;
 			obj = "favorecido";
 		}
 		else if(type == "TITULAR_MOVIMENTO"){
-			rota = $scope.titularMovimento;
+			rota = (isScope) ? $scope.titularMovimento : itemData.titularMovimentoOption;
 			obj = "titularMovimento";
 		}
+
+		if(isScope)
+			itemData = $scope[itemData];
 
 		$("#modalItemsLabel").text("LISTAGEM DE " + rota.replace("-"," de ").toUpperCase());
 		$("#modalItems").modal("show");
@@ -81,9 +86,16 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 			showPaginationSwitch: true,
 			columns: modalTablesColumns[rota],
 			onClickRow: function(row, $element) {
-				$scope.lancamentoFinanceiro[obj].data = row;
-				$scope.lancamentoFinanceiro[obj].type = rota;
-				$scope.lancamentoFinanceiro[obj].label = $($element.find("td")[0]).text();
+				itemData[obj].data = row;
+				itemData[obj].type = rota;
+				itemData[obj].label = $($element.find("td")[0]).text();
+
+				if(isScope && type == "FAVORECIDO") {
+					$.each($scope.lancamentoFinanceiro.favorecidos, function(index, favorecido) {
+						favorecido.favorecido = itemData[obj];
+					});
+				}
+
 				$scope.$apply();
 				$('#mytable').bootstrapTable('destroy');
 				$("#modalItems").modal("hide");
@@ -96,8 +108,8 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 
 		if(object == 'favorecidos') {
 			objectToAdd = {
-				data: {},
-				label: "",
+				favorecido: angular.copy($scope.lancamentoFinanceiro.favorecido),
+				titularMovimento: {},
 				dsc_observacao_adicional: "",
 				vlr_correspondente: 0,
 				flg_removido: false
@@ -116,16 +128,38 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		$scope.lancamentoFinanceiro[object].push(objectToAdd);
 	}
 
+	$scope.confereValorTotalRespectivo = function() {
+		$scope.lancamentoFinanceiro.vlrTotalRespectivo = 0;
+		$.each($scope.lancamentoFinanceiro.favorecidos, function(index, favorecido) {
+			if(!favorecido.flg_removido)
+				$scope.lancamentoFinanceiro.vlrTotalRespectivo += parseFloat(favorecido.vlr_correspondente);
+		});
+	}
+
+	$scope.validateVlrTotalRespectivo = function() {
+		if((parseFloat($scope.lancamentoFinanceiro.vlr_realizado) > 0) && ($scope.lancamentoFinanceiro.vlrTotalRespectivo > parseFloat($scope.lancamentoFinanceiro.vlr_realizado)))
+			return true;
+		else if($scope.lancamentoFinanceiro.vlrTotalRespectivo > parseFloat($scope.lancamentoFinanceiro.vlr_previsto))
+			return true;
+
+		return false;
+	}
+
 	$scope.desabilitaItem = function(item) {
 		item.flg_removido = true;
+		$scope.confereValorTotalRespectivo();
+	}
+
+	$scope.copyValorPrevistoRealizado = function() {
+		$scope.lancamentoFinanceiro.vlr_realizado = angular.copy($scope.lancamentoFinanceiro.vlr_previsto);
 	}
 
 	$scope.saveRecords = function() {
 		var postData = angular.copy($scope.lancamentoFinanceiro);
-		postData.dta_emissao 		= ($scope.lancamentoFinanceiro.dta_emissao != "") ? moment($scope.lancamentoFinanceiro.dta_emissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
-		postData.dta_competencia 	= ($scope.lancamentoFinanceiro.dta_competencia != "") ? moment($scope.lancamentoFinanceiro.dta_competencia, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
-		postData.dta_vencimento 	= ($scope.lancamentoFinanceiro.dta_vencimento != "") ? moment($scope.lancamentoFinanceiro.dta_vencimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
-		postData.dta_pagamento 		= ($scope.lancamentoFinanceiro.dta_pagamento != "") ? moment($scope.lancamentoFinanceiro.dta_pagamento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_emissao 		= (postData.dta_emissao != "") ? moment(postData.dta_emissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_competencia 	= (postData.dta_competencia != "") ? moment(postData.dta_competencia, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_pagamento 		= (postData.dta_pagamento != "") ? moment(postData.dta_pagamento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_vencimento 	= (postData.dta_vencimento != "") ? moment(postData.dta_vencimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
 
 		// remove as mensagens de erro dos campos obrigatórios
 		/*$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
@@ -140,7 +174,9 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 				showNotification("Salvo!", message, null, 'page', status);
 				setTimeout(function(){
 					// Remove os parâmetros da url
-					var newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+					var newUrl = window.location.href;
+					if(window.location.href.indexOf("?") != -1)
+						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
 					window.location.href = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
 				}, 3000);

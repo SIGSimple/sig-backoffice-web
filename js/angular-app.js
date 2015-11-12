@@ -1,4 +1,4 @@
-var app = angular.module('sig_backoffice', ['ui.bootstrap', 'flow', 'filters', 'ui.utils.masks'], function($httpProvider) {
+var app = angular.module('sig_backoffice', ['ui.bootstrap', 'flow', 'filters', 'ui.utils.masks', 'angular.chosen'], function($httpProvider) {
 	// Use x-www-form-urlencoded Content-Type
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
