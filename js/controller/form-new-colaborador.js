@@ -985,7 +985,8 @@ app.controller('CadastroColaboradorCtrl', function($scope, $http, UserSrvc){
 						},
 						flg_plano_saude: dependente.flg_plano_saude,
 						flg_deduz_irrf: dependente.flg_deduz_irrf,
-						flg_curso_superior: dependente.flg_curso_superior
+						flg_curso_superior: dependente.flg_curso_superior,
+						flg_removido: false
 					};
 					$scope.dadosColaborador.dependentes.push(obj);
 				});

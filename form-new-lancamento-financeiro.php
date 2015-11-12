@@ -4,8 +4,8 @@
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Tipo de Lançamento?</label>
 				<div class="col-lg-4">
-					<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.cod_tipo_lancamento = 1; lancamentoFinanceiro.tipoLancamento = 'Receita';" ng-checked="(lancamentoFinanceiro.tipoLancamento == 'Receita')">Receita</label>
-					<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.cod_tipo_lancamento = 2; lancamentoFinanceiro.tipoLancamento = 'Despesa'" ng-checked="(lancamentoFinanceiro.tipoLancamento == 'Despesa')">Despesa</label>
+					<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.cod_tipo_lancamento = 1; lancamentoFinanceiro.tipoLancamento = 'Receita';" ng-checked="(lancamentoFinanceiro.cod_tipo_lancamento == 1 || lancamentoFinanceiro.tipoLancamento == 'Receita')">Receita</label>
+					<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.cod_tipo_lancamento = 2; lancamentoFinanceiro.tipoLancamento = 'Despesa'" ng-checked="(lancamentoFinanceiro.cod_tipo_lancamento == 2 || lancamentoFinanceiro.tipoLancamento == 'Despesa')">Despesa</label>
 				</div>
 			</div>
 
@@ -118,15 +118,15 @@
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Abrir Lançamento?</label>
 				<div class="col-lg-2">
-					<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.abrirLancamento = true" ng-checked="(lancamentoFinanceiro.abrirLancamento == true)">Sim</label>
-					<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.abrirLancamento = false" ng-checked="(lancamentoFinanceiro.abrirLancamento == false)">Não</label>
+					<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.flg_lancamento_aberto = true" ng-checked="(lancamentoFinanceiro.flg_lancamento_aberto == true)">Sim</label>
+					<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.flg_lancamento_aberto = false" ng-checked="(lancamentoFinanceiro.flg_lancamento_aberto == false)">Não</label>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label class="radio-inline first"><input type="radio" ng-click="favorecido = 'empresas'" ng-checked="(favorecido == 'empresas')">Empresa</label>
-				<label class="radio-inline"><input type="radio" ng-click="favorecido = 'colaboradores'" ng-checked="(favorecido == 'colaboradores')">Colaborador</label>
-				<label class="radio-inline"><input type="radio" ng-click="favorecido = 'terceiros'" ng-checked="(favorecido == 'terceiros')">Terceiros</label>
+				<label class="radio-inline first"><input type="radio" ng-click="lancamentoFinanceiro.favorecido.type = 'empresas'" ng-checked="(lancamentoFinanceiro.favorecido.type == 'empresas')">Empresa</label>
+				<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.favorecido.type = 'colaboradores'" ng-checked="(lancamentoFinanceiro.favorecido.type == 'colaboradores')">Colaborador</label>
+				<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.favorecido.type = 'terceiros'" ng-checked="(lancamentoFinanceiro.favorecido.type == 'terceiros')">Terceiros</label>
 				<div class="col-lg-2">
 				</div>
 			</div>
@@ -145,15 +145,15 @@
 				</div>
 			</div>
 
-			<div class="form-group {{ (lancamentoFinanceiro.abrirLancamento) ? 'hide' : '' }}">
-				<label class="radio-inline first"><input type="radio" ng-click="titularMovimento = 'empresas'" ng-checked="(titularMovimento == 'empresas')">Empresa</label>
-				<label class="radio-inline"><input type="radio" ng-click="titularMovimento = 'colaboradores'" ng-checked="(titularMovimento == 'colaboradores')">Colaborador</label>
-				<label class="radio-inline"><input type="radio" ng-click="titularMovimento = 'terceiros'" ng-checked="(titularMovimento == 'terceiros')">Terceiros</label>
+			<div class="form-group {{ (lancamentoFinanceiro.flg_lancamento_aberto) ? 'hide' : '' }}">
+				<label class="radio-inline first"><input type="radio" ng-click="lancamentoFinanceiro.titularMovimento.type = 'empresas'" ng-checked="(lancamentoFinanceiro.titularMovimento.type == 'empresas')">Empresa</label>
+				<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.titularMovimento.type = 'colaboradores'" ng-checked="(lancamentoFinanceiro.titularMovimento.type == 'colaboradores')">Colaborador</label>
+				<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.titularMovimento.type = 'terceiros'" ng-checked="(lancamentoFinanceiro.titularMovimento.type == 'terceiros')">Terceiros</label>
 				<div class="col-lg-2">
 				</div>
 			</div>
 
-			<div class="form-group {{ (lancamentoFinanceiro.abrirLancamento) ? 'hide' : '' }}">
+			<div class="form-group {{ (lancamentoFinanceiro.flg_lancamento_aberto) ? 'hide' : '' }}">
 				<label class="col-lg-2 control-label">Titular do Movimento</label>
 				<div class="col-lg-4">
 					<div class="input-group">
@@ -167,7 +167,7 @@
 				</div>
 			</div>
 			
-			<div class="form-group {{ (lancamentoFinanceiro.abrirLancamento) ? 'hide' : '' }}">
+			<div class="form-group {{ (lancamentoFinanceiro.flg_lancamento_aberto) ? 'hide' : '' }}">
 				<label class="col-lg-2 control-label">Origem Despesa</label>
 				<div class="col-lg-4">
 					<select class="form-control" ng-model="lancamentoFinanceiro.cod_origem_despesa">
@@ -177,7 +177,7 @@
 				</div>
 			</div>
 
-			<div class="form-group {{ (!lancamentoFinanceiro.abrirLancamento) ? 'hide' : '' }}">
+			<div class="form-group {{ (!lancamentoFinanceiro.flg_lancamento_aberto) ? 'hide' : '' }}">
 				<label class="col-lg-2 control-label">Titulares do Movimento</label>
 				<div class="col-lg-10">
 					<table class="table table-bordered table-condensed table-hover table-striped">
@@ -204,22 +204,22 @@
 										</span>
 									</div>
 									<div class="radios">
-										<label class="radio-inline" style="font-size: 10px; padding-left: 10px;"><input type="radio" style="margin-left: -12px;" ng-click="item.titularMovimentoOption = 'empresas'" ng-checked="(item.titularMovimentoOption == 'empresas')">Empresa</label>
-										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="item.titularMovimentoOption = 'colaboradores'" ng-checked="(item.titularMovimentoOption == 'colaboradores')">Colaborador</label>
-										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="item.titularMovimentoOption = 'terceiros'" ng-checked="(item.titularMovimentoOption == 'terceiros')">Terceiros</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 10px;"><input type="radio" style="margin-left: -12px;" ng-click="item.titularMovimento.type = 'empresas'" ng-checked="(item.titularMovimento.type == 'empresas')">Empresa</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="item.titularMovimento.type = 'colaboradores'" ng-checked="(item.titularMovimento.type == 'colaboradores')">Colaborador</label>
+										<label class="radio-inline" style="font-size: 10px; padding-left: 5px;"><input type="radio" style="margin-left: -12px;" ng-click="item.titularMovimento.type = 'terceiros'" ng-checked="(item.titularMovimento.type == 'terceiros')">Terceiros</label>
 									</div>
 								</td>
 								<td>
-									<select class="form-control" ng-model="item.cod_origem_correspondente">
-										<option></option>
-										<option ng-repeat="item in contratos" value="{{ item.cod_origem }}">{{ item.dsc_origem }}</option>
+									<select class="form-control" 
+										ng-model="item.cod_origem_correspondente"
+										ng-options="item.cod_origem as item.dsc_origem for item in contratos">
 									</select>
 								</td>
 								<td>
 									<input type="text" class="form-control input-xs" ng-model="item.dsc_observacao_adicional">
 								</td>
 								<td>
-									<input type="text" class="form-control input-xs" ng-model="item.vlr_correspondente" ui-number-mask ng-blur="confereValorTotalRespectivo()">
+									<input type="text" class="form-control input-xs text-right" ng-model="item.vlr_correspondente" ui-number-mask ng-blur="confereValorTotalRespectivo()">
 								</td>
 								<td class="text-center">
 									<button type="button" class="btn btn-xs btn-danger" ng-click="desabilitaItem(item);">
@@ -289,7 +289,11 @@
 		</div>
 
 		<div class="panel-footer clearfix">
+			<div class="pull-left">
+				<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" ng-click="deleteRecord()">Excluir Lançamento</button>
+			</div>
 			<div class="pull-right">
+				<a href="list-lancamentos-financeiros" class="btn btn-default">Voltar p/ Listagem de Lançamentos</a>
 				<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="saveRecords()">Salvar</button>
 			</div>
 		</div>

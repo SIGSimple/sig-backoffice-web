@@ -11,10 +11,11 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		anexos: [],
 		cod_tipo_lancamento: 2,
 		tipoLancamento: "Despesa",
-		abrirLancamento: false,
+		flg_lancamento_aberto: false,
 		vlr_previsto: 0,
 		vlr_realizado: 0,
-		vlrTotalRespectivo: 0
+		vlrTotalRespectivo: 0,
+		cod_conta_contabil: "7"
 	};
 	$scope.favorecido = "";
 	$scope.titularMovimento = "";
@@ -60,11 +61,11 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		var obj = "";
 
 		if(type == "FAVORECIDO"){
-			rota = (isScope) ? $scope.favorecido : itemData.favorecidoOption;
+			rota = (isScope) ? $scope.lancamentoFinanceiro.favorecido.type : itemData.favorecido.type;
 			obj = "favorecido";
 		}
 		else if(type == "TITULAR_MOVIMENTO"){
-			rota = (isScope) ? $scope.titularMovimento : itemData.titularMovimentoOption;
+			rota = (isScope) ? $scope.lancamentoFinanceiro.titularMovimento.type : itemData.titularMovimento.type;
 			obj = "titularMovimento";
 		}
 
@@ -154,20 +155,22 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		$scope.lancamentoFinanceiro.vlr_realizado = angular.copy($scope.lancamentoFinanceiro.vlr_previsto);
 	}
 
+	$scope.deleteRecord = function() {
+		
+	}
+
 	$scope.saveRecords = function() {
 		var postData = angular.copy($scope.lancamentoFinanceiro);
-		postData.dta_emissao 		= (postData.dta_emissao != "") ? moment(postData.dta_emissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
-		postData.dta_competencia 	= (postData.dta_competencia != "") ? moment(postData.dta_competencia, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
-		postData.dta_pagamento 		= (postData.dta_pagamento != "") ? moment(postData.dta_pagamento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
-		postData.dta_vencimento 	= (postData.dta_vencimento != "") ? moment(postData.dta_vencimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_emissao 		= (typeof(postData.dta_emissao) != "undefined" 		&& postData.dta_emissao != "" 		&& 	postData.dta_emissao != "Invalid date") ? moment(postData.dta_emissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_competencia 	= (typeof(postData.dta_competencia) != "undefined" 	&& postData.dta_competencia != "" 	&& 	postData.dta_competencia != "Invalid date") ? moment(postData.dta_competencia, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_pagamento 		= (typeof(postData.dta_pagamento) != "undefined" 	&& postData.dta_pagamento != "" 	&& 	postData.dta_pagamento != "Invalid date") ? moment(postData.dta_pagamento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_vencimento 	= (typeof(postData.dta_vencimento) != "undefined" 	&& postData.dta_vencimento != "" 	&& 	postData.dta_vencimento != "Invalid date") ? moment(postData.dta_vencimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
 
 		// remove as mensagens de erro dos campos obrigatórios
 		/*$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
 		$(".element-group").removeClass("has-error");
 		$("table thead").css("background-color","none").css("color","#515151");
 		$(".form-fields span").css("background-color", "#fafafa").css("border-color","#CDD6E1").css("color","#515151");*/
-
-		console.log(postData);
 
 		$http.post(baseUrlApi()+'lancamento-financeiro', postData)
 			.success(function(message, status, headers, config){
@@ -179,7 +182,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
 					window.location.href = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
-				}, 3000);
+				}, 1000);
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro
 				if(status == 406){ // Not-Acceptable (Campos inválidos)
@@ -210,6 +213,145 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 			});
 	}
 
+	function loadDadosLancamentoFinanceiroByIdUrl() {
+		if(typeof getUrlVars().cod_lancamento_financeiro != "undefined") {
+			$http.get(baseUrlApi() + 'lancamentos-financeiros?cod_lancamento_financeiro=' + getUrlVars().cod_lancamento_financeiro)
+				.success(function(response){
+					$scope.lancamentoFinanceiro = response.rows[0];
+					$scope.lancamentoFinanceiro.flg_lancamento_aberto 	= ($scope.lancamentoFinanceiro.flg_lancamento_aberto == 1);
+					$scope.lancamentoFinanceiro.dta_emissao 			= ($scope.lancamentoFinanceiro.dta_emissao != "") ? moment($scope.lancamentoFinanceiro.dta_emissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.lancamentoFinanceiro.dta_competencia 		= ($scope.lancamentoFinanceiro.dta_competencia != "") ? moment($scope.lancamentoFinanceiro.dta_competencia, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.lancamentoFinanceiro.dta_pagamento 			= ($scope.lancamentoFinanceiro.dta_pagamento != "") ? moment($scope.lancamentoFinanceiro.dta_pagamento, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.lancamentoFinanceiro.dta_vencimento 			= ($scope.lancamentoFinanceiro.dta_vencimento != "") ? moment($scope.lancamentoFinanceiro.dta_vencimento, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+
+					loadFavorecidosTitularesLancamento();
+				});
+		}
+	}
+
+	function loadFavorecidosTitularesLancamento() {
+		$http.get(baseUrlApi() + 'lancamento-financeiro/favorecidos-titulares?ftlf->flg_excluido=0&ftlf->cod_lancamento_financeiro=' + getUrlVars().cod_lancamento_financeiro)
+			.success(function(response){
+				if(!$scope.lancamentoFinanceiro.flg_lancamento_aberto) {
+					var objData = {},
+						objType = "",
+						objLabel = "";
+
+					// Preenche os dados do Favorecido
+					if(response[0].cod_favorecido_fornecedor != null) {
+						objData.cod_empresa = response[0].cod_favorecido_fornecedor
+						objType = "empresas";
+						objLabel = response[0].nme_fantasia_favorecido;
+					}
+					else if(response[0].cod_favorecido_colaborador != null) {
+						objData.cod_colaborador = response[0].cod_favorecido_colaborador;
+						objType = "colaboradores";
+						objLabel = response[0].nme_colaborador_favorecido;
+					}
+					else if(response[0].cod_favorecido_terceiro != null) {
+						objData.cod_colaborador = response[0].cod_favorecido_terceiro;
+						objType = "terceiros";
+						objLabel = response[0].nme_terceiro_favorecido;
+					}
+
+					$scope.lancamentoFinanceiro.favorecido = {
+						data: objData,
+						type: objType,
+						label: objLabel
+					};
+
+					// Preenche os dados do Titular do Movimento
+					if(response[0].cod_titular_fornecedor != null) {
+						objData.cod_empresa = response[0].cod_titular_fornecedor;
+						objType = "empresas";
+						objLabel = response[0].nme_fantasia_titular;
+					}
+					else if(response[0].cod_titular_colaborador != null) {
+						objData.cod_colaborador = response[0].cod_titular_colaborador;
+						objType = "colaboradores";
+						objLabel = response[0].nme_colaborador_titular;
+					}
+					else if(response[0].cod_titular_terceiro != null) {
+						objData.cod_terceiro = response[0].cod_titular_terceiro;
+						objType = "terceiros";
+						objLabel = response[0].nme_terceiro_titular;
+					}
+
+					$scope.lancamentoFinanceiro.titularMovimento = {
+						data: objData,
+						type: objType,
+						label: objLabel
+					};
+				}
+				else {
+					var objData = {},
+						objType = "",
+						objLabel = "";
+
+					// Preenche os dados do Favorecido
+					if(response[0].cod_favorecido_fornecedor != null) {
+						objData.cod_empresa = response[0].cod_favorecido_fornecedor;
+						objType = "empresas";
+						objLabel = response[0].nme_fantasia_favorecido;
+					}
+					else if(response[0].cod_favorecido_colaborador != null) {
+						objData.cod_colaborador = response[0].cod_favorecido_colaborador;
+						objType = "colaboradores";
+						objLabel = response[0].nme_colaborador_favorecido;
+					}
+					else if(response[0].cod_favorecido_terceiro != null) {
+						objData.cod_terceiro = response[0].cod_favorecido_terceiro;
+						objType = "terceiros";
+						objLabel = response[0].nme_terceiro_favorecido;
+					}
+
+					$scope.lancamentoFinanceiro.favorecido = {
+						data: objData,
+						type: objType,
+						label: objLabel
+					};
+
+					$scope.lancamentoFinanceiro.favorecidos = [];
+
+					$.each(response, function(index, item) {
+						item.flg_removido = false;
+						item.favorecido = angular.copy($scope.lancamentoFinanceiro.favorecido);
+
+						var objData = {},
+							objType = "",
+							objLabel = "";
+
+						// Preenche os dados do Titular do Movimento
+						if(item.cod_titular_fornecedor != null) {
+							objData.cod_empresa = item.cod_titular_fornecedor;
+							objType = "empresas";
+							objLabel = item.nme_fantasia_titular;
+						}
+						else if(item.cod_titular_colaborador != null) {
+							objData.cod_colaborador = item.cod_titular_colaborador;
+							objType = "colaboradores";
+							objLabel = item.nme_colaborador_titular;
+						}
+						else if(item.cod_titular_terceiro != null) {
+							objData.cod_terceiro = item.cod_titular_terceiro;
+							objType = "terceiros";
+							objLabel = item.nme_terceiro_titular;
+						}
+
+						item.titularMovimento = {
+							data: objData,
+							type: objType,
+							label: objLabel
+						};
+
+						$scope.lancamentoFinanceiro.favorecidos.push(item);
+
+						$scope.confereValorTotalRespectivo();
+					});
+				}
+			});
+	}
+
 	function loadPlanoContas() {
 		$http.get(baseUrlApi()+'plano-contas')
 			.success(function(items){
@@ -226,4 +368,5 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 
 	loadPlanoContas();
 	loadOrigens();
+	loadDadosLancamentoFinanceiroByIdUrl();
 });

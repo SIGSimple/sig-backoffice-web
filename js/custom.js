@@ -121,8 +121,9 @@ function configBootstrapTable() {
 	        return 'Carregando, por favor aguarde...';
 	    },
 	});
-	$('.bootstrap-table').on('load-success.bs.table', function(){
+	$('.bootstrap-table').on('all.bs.table', function(){
 		$(".img-profile-table").popover();
+		$("[data-toggle='tooltip']").tooltip();
 	});
 }
 
