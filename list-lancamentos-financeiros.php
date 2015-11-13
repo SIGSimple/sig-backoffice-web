@@ -12,7 +12,7 @@
 		</div>
 		<table class="bootstrap-table" 
 			data-toggle="table"
-			data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/lancamentos-financeiros.json"
+			data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sig-backoffice-api/lancamentos-financeiros.json?flg_excluido=0"
 			data-search="true"
 			data-toolbar="#toolbar"
 			data-show-refresh="true"

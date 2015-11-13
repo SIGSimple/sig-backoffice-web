@@ -290,7 +290,7 @@
 
 		<div class="panel-footer clearfix">
 			<div class="pull-left">
-				<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" ng-click="deleteRecord()">Excluir Lançamento</button>
+				<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" data-toggle="modal" data-target='#modalExcluiColaborador'>Excluir Lançamento</button>
 			</div>
 			<div class="pull-right">
 				<a href="list-lancamentos-financeiros" class="btn btn-default">Voltar p/ Listagem de Lançamentos</a>
@@ -298,6 +298,26 @@
 			</div>
 		</div>
 	</form>
+
+	<div class="modal fade" id="modalExcluiColaborador" tabindex="-1" role="dialog" aria-labelledby="modalExcluiColaboradorLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Confirma exclusão?</h4>
+				</div>
+				<div class="modal-body">
+					Confirma a exclusão do lançamento [<strong>{{ lancamentoFinanceiro.dsc_lancamento }}</strong>], com vencimento em [<strong>{{ lancamentoFinanceiro.dta_vencimento }}</strong>]?
+				</div>
+				<div class="modal-footer clearfix">
+					<div class="pull-right">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+						<button type="button" class="btn btn-default" ng-click="deleteRecord()">Sim</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="modal fade" id="modalItems" tabindex="-1" role="dialog" aria-labelledby="modalItemsLabel">
 		<div class="modal-dialog" role="document">

@@ -10,7 +10,5 @@ function actionsLancamentoFinanceiroFormatter(value, row, index) {
 }
 
 app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http){
-	$scope.deleteRecord = function() {
-		alert('vamos brincar?')
-	}
+	
 });

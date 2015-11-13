@@ -5,22 +5,22 @@ $("#modalItems").on("hidden.bs.modal", function(e){
 app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 	$scope.colaborador = UserSrvc.getUserLogged();
 	$scope.lancamentoFinanceiro = {
-		favorecido: {},
-		favorecidos: [],
-		titularMovimento: {},
-		anexos: [],
-		cod_tipo_lancamento: 2,
-		tipoLancamento: "Despesa",
-		flg_lancamento_aberto: false,
-		vlr_previsto: 0,
-		vlr_realizado: 0,
-		vlrTotalRespectivo: 0,
-		cod_conta_contabil: "7"
+		favorecido: 			{},
+		favorecidos: 			[],
+		titularMovimento: 		{},
+		anexos: 				[],
+		cod_tipo_lancamento: 	2,
+		tipoLancamento: 		"Despesa",
+		flg_lancamento_aberto: 	false,
+		vlr_previsto: 			0,
+		vlr_realizado: 			0,
+		vlrTotalRespectivo: 	0,
+		cod_conta_contabil: 	"7"
 	};
-	$scope.favorecido = "";
+	$scope.favorecido 		= "";
 	$scope.titularMovimento = "";
-	$scope.planosConta = [];
-	$scope.contratos = [];
+	$scope.planosConta 		= [];
+	$scope.contratos 		= [];
 
 	// Modal control
 	$scope.tmpModal = {};
@@ -126,6 +126,9 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 			};
 		}
 
+		if(typeof($scope.lancamentoFinanceiro[object]) == "undefined" || $scope.lancamentoFinanceiro[object] == null)
+			$scope.lancamentoFinanceiro[object] = [];
+
 		$scope.lancamentoFinanceiro[object].push(objectToAdd);
 	}
 
@@ -156,7 +159,28 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 	}
 
 	$scope.deleteRecord = function() {
-		
+		var postData = {
+			cod_lancamento_financeiro: $scope.lancamentoFinanceiro.cod_lancamento_financeiro, 	// lançamento que está sendo alterado
+			cod_usuario: $scope.colaborador.user.cod_usuario 									// usuário logado no sistema
+		};
+
+		$http.delete(baseUrlApi()+"lancamento-financeiro", {params: postData})
+			.success(function(message, status, headers, config){
+				$("#modalExcluiColaborador").modal("hide");
+				showNotification("Excluído!", message, null, 'page', status);
+				setTimeout(function(){
+					// Remove os parâmetros da url
+					var newUrl = window.location.href;
+					if(window.location.href.indexOf("?") != -1)
+						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+					// Faz o redirecionamento
+					window.location.href = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
+				}, 5000);
+			})
+			.error(function(message, status, headers, config){
+				showNotification(null, message, null, 'page', status);
+			});
+
 	}
 
 	$scope.saveRecords = function() {
@@ -182,7 +206,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
 					window.location.href = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
-				}, 1000);
+				}, 5000);
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro
 				if(status == 406){ // Not-Acceptable (Campos inválidos)
