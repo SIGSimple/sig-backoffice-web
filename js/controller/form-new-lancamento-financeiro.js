@@ -15,7 +15,8 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		vlr_previsto: 			0,
 		vlr_realizado: 			0,
 		vlrTotalRespectivo: 	0,
-		cod_conta_contabil: 	"7"
+		cod_conta_contabil: 	"7",
+		cod_empreendimento: 	$scope.colaborador.user.cod_empreendimento
 	};
 	$scope.favorecido 		= "";
 	$scope.titularMovimento = "";
