@@ -23,6 +23,13 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 	$scope.planosConta 		= [];
 	$scope.contratos 		= [];
 
+	$scope.filtro = {
+		dta_inicio: getUrlParameter("fdi"),
+		dta_fim: getUrlParameter("fdf"),
+		nme_campo_filtro: getUrlParameter("fcf"),
+		cod_tipo_lancamento: getUrlParameter("ftl")
+	};
+
 	// Modal control
 	$scope.tmpModal = {};
 	var modalTablesColumns = {
@@ -136,8 +143,11 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 	$scope.confereValorTotalRespectivo = function() {
 		$scope.lancamentoFinanceiro.vlrTotalRespectivo = 0;
 		$.each($scope.lancamentoFinanceiro.favorecidos, function(index, favorecido) {
-			if(!favorecido.flg_removido)
+			if(!favorecido.flg_removido) {
 				$scope.lancamentoFinanceiro.vlrTotalRespectivo += parseFloat(favorecido.vlr_correspondente);
+				$scope.lancamentoFinanceiro.vlrTotalRespectivo = parseFloat($scope.lancamentoFinanceiro.vlrTotalRespectivo.toFixed(2));
+				console.log($scope.lancamentoFinanceiro.vlrTotalRespectivo);
+			}
 		});
 	}
 
@@ -186,10 +196,10 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 
 	$scope.saveRecords = function() {
 		var postData = angular.copy($scope.lancamentoFinanceiro);
-		postData.dta_emissao 		= (typeof(postData.dta_emissao) != "undefined" 		&& postData.dta_emissao != "" 		&& 	postData.dta_emissao != "Invalid date") ? moment(postData.dta_emissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
-		postData.dta_competencia 	= (typeof(postData.dta_competencia) != "undefined" 	&& postData.dta_competencia != "" 	&& 	postData.dta_competencia != "Invalid date") ? moment(postData.dta_competencia, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
-		postData.dta_pagamento 		= (typeof(postData.dta_pagamento) != "undefined" 	&& postData.dta_pagamento != "" 	&& 	postData.dta_pagamento != "Invalid date") ? moment(postData.dta_pagamento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
-		postData.dta_vencimento 	= (typeof(postData.dta_vencimento) != "undefined" 	&& postData.dta_vencimento != "" 	&& 	postData.dta_vencimento != "Invalid date") ? moment(postData.dta_vencimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_emissao 		= (postData.dta_emissao != null 	&& typeof(postData.dta_emissao) != "undefined" 		&& postData.dta_emissao != "" 		&& 	postData.dta_emissao != "Invalid date") ? moment(postData.dta_emissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_competencia 	= (postData.dta_competencia != null && typeof(postData.dta_competencia) != "undefined" 	&& postData.dta_competencia != "" 	&& 	postData.dta_competencia != "Invalid date") ? moment(postData.dta_competencia, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_pagamento 		= (postData.dta_pagamento != null 	&& typeof(postData.dta_pagamento) != "undefined" 	&& postData.dta_pagamento != "" 	&& 	postData.dta_pagamento != "Invalid date") ? moment(postData.dta_pagamento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+		postData.dta_vencimento 	= (postData.dta_vencimento != null 	&& typeof(postData.dta_vencimento) != "undefined" 	&& postData.dta_vencimento != "" 	&& 	postData.dta_vencimento != "Invalid date") ? moment(postData.dta_vencimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
 
 		// remove as mensagens de erro dos campos obrigatórios
 		/*$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
@@ -206,7 +216,10 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 					if(window.location.href.indexOf("?") != -1)
 						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
-					window.location.href = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
+					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
+					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&fcf="+ $scope.filtro.nme_campo_filtro +"&ftl="+ $scope.filtro.cod_tipo_lancamento;
+					window.location.href = newUrl;
+
 				}, 5000);
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro
@@ -243,13 +256,23 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 			$http.get(baseUrlApi() + 'lancamentos-financeiros?cod_lancamento_financeiro=' + getUrlVars().cod_lancamento_financeiro)
 				.success(function(response){
 					$scope.lancamentoFinanceiro = response.rows[0];
+					
+					if($scope.lancamentoFinanceiro.vlr_previsto != null && (!isNaN($scope.lancamentoFinanceiro.vlr_previsto)))
+						$scope.lancamentoFinanceiro.vlr_previsto = parseFloat(parseFloat($scope.lancamentoFinanceiro.vlr_previsto).toFixed(2))
+					
+					if($scope.lancamentoFinanceiro.vlr_realizado != null && (!isNaN($scope.lancamentoFinanceiro.vlr_realizado)))
+						$scope.lancamentoFinanceiro.vlr_realizado = parseFloat(parseFloat($scope.lancamentoFinanceiro.vlr_realizado).toFixed(2))
+					
 					$scope.lancamentoFinanceiro.flg_lancamento_aberto 	= ($scope.lancamentoFinanceiro.flg_lancamento_aberto == 1);
-					$scope.lancamentoFinanceiro.dta_emissao 			= ($scope.lancamentoFinanceiro.dta_emissao != "") ? moment($scope.lancamentoFinanceiro.dta_emissao, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.lancamentoFinanceiro.dta_competencia 		= ($scope.lancamentoFinanceiro.dta_competencia != "") ? moment($scope.lancamentoFinanceiro.dta_competencia, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.lancamentoFinanceiro.dta_pagamento 			= ($scope.lancamentoFinanceiro.dta_pagamento != "") ? moment($scope.lancamentoFinanceiro.dta_pagamento, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
-					$scope.lancamentoFinanceiro.dta_vencimento 			= ($scope.lancamentoFinanceiro.dta_vencimento != "") ? moment($scope.lancamentoFinanceiro.dta_vencimento, "YYYY-MM-DD").format("DD/MM/YYYY") : "";
+					$scope.lancamentoFinanceiro.dta_emissao 			= ($scope.lancamentoFinanceiro.dta_emissao != null) ? moment($scope.lancamentoFinanceiro.dta_emissao, "YYYY-MM-DD").format("DD/MM/YYYY") : null;
+					$scope.lancamentoFinanceiro.dta_competencia 		= ($scope.lancamentoFinanceiro.dta_competencia != null) ? moment($scope.lancamentoFinanceiro.dta_competencia, "YYYY-MM-DD").format("DD/MM/YYYY") : null;
+					$scope.lancamentoFinanceiro.dta_pagamento 			= ($scope.lancamentoFinanceiro.dta_pagamento != null) ? moment($scope.lancamentoFinanceiro.dta_pagamento, "YYYY-MM-DD").format("DD/MM/YYYY") : null;
+					$scope.lancamentoFinanceiro.dta_vencimento 			= ($scope.lancamentoFinanceiro.dta_vencimento != null) ? moment($scope.lancamentoFinanceiro.dta_vencimento, "YYYY-MM-DD").format("DD/MM/YYYY") : null;
 
 					loadFavorecidosTitularesLancamento();
+
+					if(Boolean(getUrlParameter("copy")))
+						$scope.lancamentoFinanceiro.cod_lancamento_financeiro = null;
 				});
 		}
 	}

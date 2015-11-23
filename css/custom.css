@@ -109,3 +109,7 @@
 .radio-inline.first {
 	margin-left: 12px;
 }
+
+.popover-title {
+	font-weight: bold !important;
+}

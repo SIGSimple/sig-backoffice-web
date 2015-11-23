@@ -293,7 +293,7 @@
 				<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" data-toggle="modal" data-target='#modalExcluiColaborador'>Excluir Lançamento</button>
 			</div>
 			<div class="pull-right">
-				<a href="list-lancamentos-financeiros" class="btn btn-default">Voltar p/ Listagem de Lançamentos</a>
+				<a href="list-lancamentos-financeiros?fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&fcf={{ filtro.nme_campo_filtro }}&ftl={{ filtro.cod_tipo_lancamento }}" class="btn btn-default">Voltar p/ Listagem de Lançamentos</a>
 				<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="saveRecords()">Salvar</button>
 			</div>
 		</div>

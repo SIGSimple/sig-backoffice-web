@@ -11,7 +11,8 @@ configBootstrapTable();
 
 app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrvc){
 	$scope.colaborador = UserSrvc.getUserLogged();
-	$scope.lancamentos 			= [];
+	$scope.lancamentos 				= [];
+	$scope.loadingData 				= false;
 	$scope.vlrTotalCredito 			= 0;
 	$scope.vlrTotalDebito 			= 0;
 	$scope.vlrTotalSaldo 			= 0;
@@ -29,12 +30,24 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 	},{
 		nme_campo: "dta_pagamento", 
 		dsc_campo: "Data de Pagamento"
-	}]
+	}];
+
+	$scope.tiposDespesa = [{
+		cod_tipo_lancamento: 0, 
+		nme_tipo_despesa: "Todos"
+	},{
+		cod_tipo_lancamento: 1, 
+		nme_tipo_despesa: "Receitas"
+	},{
+		cod_tipo_lancamento: 2, 
+		nme_tipo_despesa: "Despesas"
+	}];
 
 	$scope.filtro = {
-		dta_inicio: getFirstDateOfMonthString(),
-		dta_fim: getLastDateOfMonthString(),
-		nme_campo_filtro: $scope.camposFiltro[2].nme_campo
+		dta_inicio: 			(typeof(getUrlParameter("fdi")) != "undefined") ? getUrlParameter("fdi") : getFirstDateOfMonthString(),
+		dta_fim: 				(typeof(getUrlParameter("fdf")) != "undefined") ? getUrlParameter("fdf") : getLastDateOfMonthString(),
+		nme_campo_filtro: 		(typeof(getUrlParameter("fcf")) != "undefined") ? getUrlParameter("fcf") : $scope.camposFiltro[2].nme_campo,
+		cod_tipo_lancamento: 	(typeof(getUrlParameter("ftl")) != "undefined") ? getUrlParameter("ftl") : $scope.tiposDespesa[0].cod_tipo_lancamento,
 	};
 
 	$scope.loadLancamentosFinanceiros = function() {
@@ -46,10 +59,16 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 		$scope.vlrTotalSaldo 	= 0;
 		$scope.vlrSaldoFinal 	= 0;
 		$scope.lancamentos 		= [];
+		$scope.loadingData 		= true;
 
-		$http.get(baseUrlApi()+"lancamentos-financeiros.json?nolimit=1&"+ $scope.filtro.nme_campo_filtro +"[exp]=BETWEEN '"+ dtaInicio +"' AND '"+ dtaFim +"' &flg_excluido=0&tlf->cod_empreendimento="+$scope.colaborador.user.cod_empreendimento)
+		var urlOptions = "";
+		if(parseInt($scope.filtro.cod_tipo_lancamento,10) > 0)
+			urlOptions = "&tlf->cod_tipo_lancamento=" + $scope.filtro.cod_tipo_lancamento;
+
+		$http.get(baseUrlApi()+"lancamentos-financeiros.json?nolimit=1&flg_excluido=0&tlf->cod_empreendimento="+ $scope.colaborador.user.cod_empreendimento +"&"+ $scope.filtro.nme_campo_filtro +"[exp]=BETWEEN '"+ dtaInicio +"' AND '"+ dtaFim +"'"+urlOptions)
 			.success(function(items){
-				$scope.lancamentos = items.rows;
+				$scope.loadingData 		= false;
+				$scope.lancamentos 		= items.rows;
 				var vlrCreditos 		= 0;
 				var vlrDebitos 			= 0;
 				var vlrSaldo 			= 0;
@@ -65,6 +84,12 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 					$scope.vlrTotalSaldo 	= ($scope.vlrTotalCredito - $scope.vlrTotalDebito);
 					$scope.vlrSaldoFinal 	= ($scope.vlrTotalSaldoAnterior - ($scope.vlrTotalSaldo * -1));
 				});
+			})
+			.error(function(message, status, headers, config){
+				if(status === 404) {
+					$scope.loadingData = false;
+					$scope.lancamentos = [];
+				}
 			});
 	}
 

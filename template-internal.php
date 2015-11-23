@@ -194,17 +194,25 @@ restrict();
 	<!--X-editable [ OPTIONAL ]-->
 	<script src="plugins/x-editable/js/bootstrap-editable.min.js"></script>
 
+	<!--Switchery [ OPTIONAL ]-->
+	<script src="plugins/switchery/switchery.min.js"></script>
+
+	<!--Table Export [ OPTIONAL ]-->
+	<script src="plugins/table-2-excel/jquery.table2Excel.js"></script>
 
 	<!--Bootstrap Table [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-table/bootstrap-table.min.js"></script>
 
-
-	<!--Switchery [ OPTIONAL ]-->
-	<script src="plugins/switchery/switchery.min.js"></script>
+	<!--Table Export [ OPTIONAL ]-->
+	<script src="plugins/table-export/tableExport.js"></script>
+	<script src="plugins/table-export/jquery.base64.js"></script>
+	<script src="plugins/table-export/jspdf/libs/sprintf.js"></script>
+	<script src="plugins/table-export/jspdf/jspdf.js"></script>
+	<script src="plugins/table-export/jspdf/libs/base64.js"></script>
 
 	<!--Bootstrap Table Extension [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
-
+	<script src="plugins/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
 
 	<!--Demo script [ DEMONSTRATION ]-->
 	<script src="js/demo/nifty-demo.js"></script>
