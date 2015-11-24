@@ -26,7 +26,7 @@
 				</div>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group element-group">
 				<label class="col-lg-2 control-label">Descrição do Lançamento</label>
 				<div class="col-lg-8">
 					<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dsc_lancamento">
@@ -58,11 +58,13 @@
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Data de Emissão</label>
-				<div class="col-lg-2">
-					<div class="input-group date">
-						<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dta_emissao">
-						<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+				<div class="element-group">
+					<label class="col-lg-2 control-label">Data de Emissão</label>
+					<div class="col-lg-2">
+						<div class="input-group date">
+							<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dta_emissao">
+							<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+						</div>
 					</div>
 				</div>
 
@@ -76,14 +78,16 @@
 			</div>
 				
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Data de Vencimento</label>
-				<div class="col-lg-2">
-					<div class="input-group date">
-						<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dta_vencimento">
-						<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+				<div class="element-group">
+					<label class="col-lg-2 control-label">Data de Vencimento</label>
+					<div class="col-lg-2">
+						<div class="input-group date">
+							<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dta_vencimento">
+							<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+						</div>
 					</div>
 				</div>
-			
+
 				<label class="col-lg-2 control-label">Data de Pagamento</label>
 				<div class="col-lg-2">
 					<div class="input-group date">
@@ -96,7 +100,7 @@
 			<div class="form-group">
 				<label class="col-lg-2 control-label">Conta Contábil</label>
 				<div class="col-lg-8">
-					<select chosen
+					<select chosen class="chosen"
 						options="planosConta"
 						ng-model="lancamentoFinanceiro.cod_conta_contabil"
 						ng-options="item.cod_item as ('(' + item.num_item + ') ' + item.dsc_item) for item in planosConta">
@@ -104,11 +108,11 @@
 				</div>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group element-group">
 				<label class="col-lg-2 control-label">Natureza</label>
 				<div class="col-lg-8">
-					<select chosen
-						options="planosConta"
+					<select chosen class="chosen" 
+						options="planosConta" name="cod_natureza_operacao"
 						ng-model="lancamentoFinanceiro.cod_natureza_operacao"
 						ng-options="item.cod_item as ('(' + item.num_item + ') ' + item.dsc_item) for item in planosConta">
 					</select>
@@ -210,7 +214,7 @@
 									</div>
 								</td>
 								<td>
-									<select class="form-control" 
+									<select class="form-control input-xs" 
 										ng-model="item.cod_origem_correspondente"
 										ng-options="item.cod_origem as item.dsc_origem for item in contratos">
 									</select>
@@ -293,7 +297,7 @@
 				<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" data-toggle="modal" data-target='#modalExcluiColaborador'>Excluir Lançamento</button>
 			</div>
 			<div class="pull-right">
-				<a href="list-lancamentos-financeiros?fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&fcf={{ filtro.nme_campo_filtro }}&ftl={{ filtro.cod_tipo_lancamento }}" class="btn btn-default">Voltar p/ Listagem de Lançamentos</a>
+				<a href="list-lancamentos-financeiros?fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&ftl={{ filtro.cod_tipo_lancamento }}" class="btn btn-default">Voltar p/ Listagem de Lançamentos</a>
 				<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="saveRecords()">Salvar</button>
 			</div>
 		</div>

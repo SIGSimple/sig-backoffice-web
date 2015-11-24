@@ -26,7 +26,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 	$scope.filtro = {
 		dta_inicio: getUrlParameter("fdi"),
 		dta_fim: getUrlParameter("fdf"),
-		nme_campo_filtro: getUrlParameter("fcf"),
+		// nme_campo_filtro: getUrlParameter("fcf"),
 		cod_tipo_lancamento: getUrlParameter("ftl")
 	};
 
@@ -146,7 +146,6 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 			if(!favorecido.flg_removido) {
 				$scope.lancamentoFinanceiro.vlrTotalRespectivo += parseFloat(favorecido.vlr_correspondente);
 				$scope.lancamentoFinanceiro.vlrTotalRespectivo = parseFloat($scope.lancamentoFinanceiro.vlrTotalRespectivo.toFixed(2));
-				console.log($scope.lancamentoFinanceiro.vlrTotalRespectivo);
 			}
 		});
 	}
@@ -202,10 +201,11 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		postData.dta_vencimento 	= (postData.dta_vencimento != null 	&& typeof(postData.dta_vencimento) != "undefined" 	&& postData.dta_vencimento != "" 	&& 	postData.dta_vencimento != "Invalid date") ? moment(postData.dta_vencimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
 
 		// remove as mensagens de erro dos campos obrigatórios
-		/*$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
+		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
 		$(".element-group").removeClass("has-error");
 		$("table thead").css("background-color","none").css("color","#515151");
-		$(".form-fields span").css("background-color", "#fafafa").css("border-color","#CDD6E1").css("color","#515151");*/
+		$(".form-fields span").css("background-color", "#fafafa").css("border-color","#CDD6E1").css("color","#515151");
+		$("a.chosen-single").css("border-color","#CDD6E1");
 
 		$http.post(baseUrlApi()+'lancamento-financeiro', postData)
 			.success(function(message, status, headers, config){
@@ -217,7 +217,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
 					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
-					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&fcf="+ $scope.filtro.nme_campo_filtro +"&ftl="+ $scope.filtro.cod_tipo_lancamento;
+					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&ftl="+ $scope.filtro.cod_tipo_lancamento; // +"&fcf="+ $scope.filtro.nme_campo_filtro;
 					window.location.href = newUrl;
 
 				}, 5000);
@@ -226,7 +226,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 				if(status == 406){ // Not-Acceptable (Campos inválidos)
 					showNotification("Atenção!", "Alguns campos obrigatórios não foram preenchidos.", null, 'page', status);
 					// percorre a lista de campos devolvidos da API
-					/*$.each(message, function(index, value) {
+					$.each(message, function(index, value) {
 						// seleciona os elemento HTML de acordo com o campo mencionado
 						var element = ($("[ng-model='lancamentoFinanceiro."+ index +"']").length > 0) ? $("[ng-model='lancamentoFinanceiro."+ index +"']") : $("[name='"+ index +"']");
 
@@ -236,14 +236,16 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 				    		$(element).css("border-color","#A94442").css("color","#A94442");
 				    	else if(typeof(element.attr('flow-btn')) != "undefined")
 				    		element = $(element).closest("span").css("background-color","#A94442").css("border-color","#A94442").css("color","#FFFFFF");
+				    	else if(element.hasClass("chosen"))
+				    		element = element.closest(".form-group").find("a.chosen-single").css("border-color","#A94442");
 
 				    	// coloca a mensagem de erro no elemento HTML selecionado
-			    		element.attr("data-toggle","tooltip").attr("data-placement","top").attr("title", value).attr("data-original-title", value);
+		    			element.attr("data-toggle","tooltip").attr("data-placement","top").attr("title", value).attr("data-original-title", value);
 			    		element.closest(".element-group").addClass("has-error");
-					});*/
+					});
 
 					// inicializa o tooltip para exibir o erro ao passar o mouse sobre o elemento HTML
-					// $('[data-toggle="tooltip"]').tooltip();
+					$('[data-toggle="tooltip"]').tooltip();
 				}
 				else {
 					showNotification(null, message, null, 'page', status);
@@ -397,6 +399,9 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 						$scope.confereValorTotalRespectivo();
 					});
 				}
+			})
+			.error(function(message, status, headers, config) {
+				$scope.lancamentoFinanceiro.favorecidos = [];
 			});
 	}
 

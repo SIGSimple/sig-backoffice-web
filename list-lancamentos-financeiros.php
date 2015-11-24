@@ -18,18 +18,18 @@
 					</div>
 				</div>
 
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+				<!-- <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<select chosen
 						options="camposFiltro"
 						ng-model="filtro.nme_campo_filtro"
 						ng-options="campo.nme_campo as campo.dsc_campo for campo in camposFiltro"
 						style="width: 100px;">
 					</select>
-				</div>
+				</div> -->
 
 				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 					<select chosen
-						options="camposFiltro"
+						options="tiposDespesa"
 						ng-model="filtro.cod_tipo_lancamento"
 						ng-options="tipoDespesa.cod_tipo_lancamento as tipoDespesa.nme_tipo_despesa for tipoDespesa in tiposDespesa"
 						style="width: 100px;">
@@ -68,7 +68,7 @@
 					<tr ng-repeat="item in lancamentos" popover-template="'myPopoverTemplate.html'" popover-title="Detalhes do Lançamento" popover-placement="bottom">
 						<td class="text-center">
 							<a class="btn btn-xs btn-warning" 
-							   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}&fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&fcf={{ filtro.nme_campo_filtro }}&ftl={{ filtro.cod_tipo_lancamento }}" 
+							   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}&fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&ftl={{ filtro.cod_tipo_lancamento }}" 
 							   data-placement="top" tooltip="Editar lançamento">
 						   		<i class="fa fa-edit"></i>
 					   		</a>
@@ -124,7 +124,7 @@
 				<strong>No. Natureza Operação: </strong>{{ item.num_natureza_operacao }}<br/>
 				<strong>Natureza Operação: </strong>{{ item.dsc_natureza_operacao }}<br/>
 				<a class="btn btn-sm btn-block btn-warning" 
-				   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}&fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&fcf={{ filtro.nme_campo_filtro }}&ftl={{ filtro.cod_tipo_lancamento }}" data-placement="top" tooltip="Editar lançamento">
+				   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}&fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&ftl={{ filtro.cod_tipo_lancamento }}" data-placement="top" tooltip="Editar lançamento">
 			   		<i class="fa fa-edit"></i> Editar Lançamento
 		   		</a>
 			</script>
