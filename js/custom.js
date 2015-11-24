@@ -31,7 +31,9 @@ function enableDateField() {
 		$('.input-group.date').datepicker({
 			language: 'pt-BR',
 			format: 'dd/mm/yyyy',
-			autoclose: true
+			autoclose: true,
+			todayBtn: true,
+			todayHighlight: true
 		});
 	}, 1000);
 }

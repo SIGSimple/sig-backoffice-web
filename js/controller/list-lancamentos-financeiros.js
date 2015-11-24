@@ -20,6 +20,7 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 	$scope.vlrTotalDebitoAnterior 	= 0;
 	$scope.vlrTotalSaldoAnterior 	= 0;
 	$scope.vlrSaldoFinal 			= 0;
+	$scope.lancamentoFinanceiro 	= null;
 
 	/*$scope.camposFiltro = [{
 		nme_campo: "dta_emissao", 
@@ -112,5 +113,99 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 			});
 	}
 
+	$scope.openModal = function(objectData, modal) {
+		$scope.lancamentoFinanceiro = angular.copy(objectData);
+		$("#"+modal).modal("show");
+	}
+
+	$scope.deleteRecord = function() {
+		var postData = {
+			cod_lancamento_financeiro: $scope.lancamentoFinanceiro.cod_lancamento_financeiro, 	// lançamento que está sendo alterado
+			cod_usuario: $scope.colaborador.user.cod_usuario 									// usuário logado no sistema
+		};
+
+		$http.delete(baseUrlApi()+"lancamento-financeiro", {params: postData})
+			.success(function(message, status, headers, config){
+				$("#modalExcluiLancamento").modal("hide");
+				showNotification("Excluído!", message, null, 'page', status);
+				setTimeout(function(){
+					// Remove os parâmetros da url
+					var newUrl = window.location.href;
+					if(window.location.href.indexOf("?") != -1)
+						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+					// Faz o redirecionamento
+					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
+					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&ftl="+ $scope.filtro.cod_tipo_lancamento; // +"&fcf="+ $scope.filtro.nme_campo_filtro;
+					window.location.href = newUrl;
+				}, 5000);
+			})
+			.error(function(message, status, headers, config){
+				showNotification(null, message, null, 'page', status);
+			});
+	}
+
+	$scope.copyValorPrevistoRealizado = function() {
+		$scope.lancamentoFinanceiro.vlr_realizado = angular.copy($scope.lancamentoFinanceiro.vlr_previsto);
+	}
+
+	$scope.confirmarPagamento = function() {
+		// remove as mensagens de erro dos campos obrigatórios
+		$('[data-toggle="tooltip"]').removeAttr("data-toggle").removeAttr("data-placement").removeAttr("title").removeAttr("data-original-title");
+		$(".element-group").removeClass("has-error");
+		$("table thead").css("background-color","none").css("color","#515151");
+		$(".form-fields span").css("background-color", "#fafafa").css("border-color","#CDD6E1").css("color","#515151");
+		$("a.chosen-single").css("border-color","#CDD6E1");
+
+		var postData = angular.copy($scope.lancamentoFinanceiro);
+		postData.dta_pagamento = (postData.dta_pagamento != null 	&& typeof(postData.dta_pagamento) != "undefined" 	&& postData.dta_pagamento != "" 	&& 	postData.dta_pagamento != "Invalid date") ? moment(postData.dta_pagamento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
+
+		$http.post(baseUrlApi()+"lancamento-financeiro/confirmar/pagamento", postData)
+			.success(function(message, status, headers, config){
+				$("#modalConfirmaPagamento").modal("hide");
+				showNotification("Confirmado!", message, null, 'page', status);
+				setTimeout(function(){
+					// Remove os parâmetros da url
+					var newUrl = window.location.href;
+					if(window.location.href.indexOf("?") != -1)
+						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
+					// Faz o redirecionamento
+					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
+					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&ftl="+ $scope.filtro.cod_tipo_lancamento; // +"&fcf="+ $scope.filtro.nme_campo_filtro;
+					window.location.href = newUrl;
+				}, 5000);
+			})
+			.error(function(message, status, headers, config){
+				if(status == 406){ // Not-Acceptable (Campos inválidos)
+					showNotification("Atenção!", "Alguns campos obrigatórios não foram preenchidos.", null, 'page', status);
+					// percorre a lista de campos devolvidos da API
+					$.each(message, function(index, value) {
+						// seleciona os elemento HTML de acordo com o campo mencionado
+						var element = ($("#modalConfirmaPagamento [ng-model='lancamentoFinanceiro."+ index +"']").length > 0) ? $("#modalConfirmaPagamento [ng-model='lancamentoFinanceiro."+ index +"']") : $("[name='"+ index +"']");
+
+						if(element.is("table")) // tratamento exclusivo para tabelas
+				    		$(element).find("thead").css("background-color","#A94442").css("color","#FFFFFF");
+				    	else if(element.is("span")) // tratamento exclusivo para spans
+				    		$(element).css("border-color","#A94442").css("color","#A94442");
+				    	else if(typeof(element.attr('flow-btn')) != "undefined")
+				    		element = $(element).closest("span").css("background-color","#A94442").css("border-color","#A94442").css("color","#FFFFFF");
+				    	else if(element.hasClass("chosen"))
+				    		element = element.closest(".form-group").find("a.chosen-single").css("border-color","#A94442");
+
+				    	// coloca a mensagem de erro no elemento HTML selecionado
+		    			element.attr("data-toggle","tooltip").attr("data-placement","top").attr("title", value).attr("data-original-title", value);
+			    		element.closest(".element-group").addClass("has-error");
+					});
+
+					// inicializa o tooltip para exibir o erro ao passar o mouse sobre o elemento HTML
+					$('[data-toggle="tooltip"]').tooltip();
+				}
+				else {
+					showNotification(null, message, null, 'page', status);
+				}
+			});
+	}
+
 	$scope.loadSaldoAnterior();
+
+	$("div#container.effect").removeClass("mainnav-lg").addClass("mainnav-sm");
 });

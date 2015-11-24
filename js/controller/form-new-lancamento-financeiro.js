@@ -176,7 +176,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 
 		$http.delete(baseUrlApi()+"lancamento-financeiro", {params: postData})
 			.success(function(message, status, headers, config){
-				$("#modalExcluiColaborador").modal("hide");
+				$("#modalExcluiLancamento").modal("hide");
 				showNotification("Excluído!", message, null, 'page', status);
 				setTimeout(function(){
 					// Remove os parâmetros da url
@@ -184,7 +184,9 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 					if(window.location.href.indexOf("?") != -1)
 						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
-					window.location.href = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
+					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
+					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&ftl="+ $scope.filtro.cod_tipo_lancamento; // +"&fcf="+ $scope.filtro.nme_campo_filtro;
+					window.location.href = newUrl;
 				}, 5000);
 			})
 			.error(function(message, status, headers, config){
@@ -219,7 +221,6 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
 					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&ftl="+ $scope.filtro.cod_tipo_lancamento; // +"&fcf="+ $scope.filtro.nme_campo_filtro;
 					window.location.href = newUrl;
-
 				}, 5000);
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro

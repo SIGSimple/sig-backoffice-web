@@ -294,7 +294,7 @@
 
 		<div class="panel-footer clearfix">
 			<div class="pull-left">
-				<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" data-toggle="modal" data-target='#modalExcluiColaborador'>Excluir Lançamento</button>
+				<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" data-toggle="modal" data-target='#modalExcluiLancamento'>Excluir Lançamento</button>
 			</div>
 			<div class="pull-right">
 				<a href="list-lancamentos-financeiros?fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&ftl={{ filtro.cod_tipo_lancamento }}" class="btn btn-default">Voltar p/ Listagem de Lançamentos</a>
@@ -303,7 +303,7 @@
 		</div>
 	</form>
 
-	<div class="modal fade" id="modalExcluiColaborador" tabindex="-1" role="dialog" aria-labelledby="modalExcluiColaboradorLabel">
+	<div class="modal fade" id="modalExcluiLancamento" tabindex="-1" role="dialog" aria-labelledby="modalExcluiLancamentoLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -311,7 +311,7 @@
 					<h4 class="modal-title">Confirma exclusão?</h4>
 				</div>
 				<div class="modal-body">
-					Confirma a exclusão do lançamento [<strong>{{ lancamentoFinanceiro.dsc_lancamento }}</strong>], com vencimento em [<strong>{{ lancamentoFinanceiro.dta_vencimento }}</strong>]?
+					Confirma a exclusão do lançamento [<strong>{{ lancamentoFinanceiro.dsc_lancamento }}</strong>], com vencimento em [<strong>{{ (lancamentoFinanceiro.dta_vencimento) ? (lancamentoFinanceiro.dta_vencimento | date : 'dd/MM/yyyy' ) : (lancamentoFinanceiro.dta_pagamento | date : 'dd/MM/yyyy') }}</strong>]?
 				</div>
 				<div class="modal-footer clearfix">
 					<div class="pull-right">

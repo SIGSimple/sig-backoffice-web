@@ -113,3 +113,7 @@
 .popover-title {
 	font-weight: bold !important;
 }
+
+.label-table {
+	min-width: 6ex !important;
+}

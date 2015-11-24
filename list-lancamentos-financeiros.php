@@ -39,7 +39,7 @@
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<button type="button" class="btn btn-primary btn-labeled fa fa-filter" ng-click="loadSaldoAnterior()">Filtar</button>
 					<a href="form-new-lancamento-financeiro?fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&fcf={{ filtro.nme_campo_filtro }}&ftl={{ filtro.cod_tipo_lancamento }}" 
-					class="btn btn-success btn-labeled fa fa-plus-square">Novo</a>
+					class="btn btn-mint btn-labeled fa fa-plus-square">Novo</a>
 				</div>
 			</div>
 		</div>
@@ -47,14 +47,15 @@
 		<div class="table-responsive">
 			<table class="table table-bordered table-condensed table-hover table-striped">
 				<thead>
-					<th>Ações</th>
-					<th>Dta. Vencimento</th>
-					<th>Dta. Pagamento</th>
-					<th>Origem da Despesa</th>
-					<th>Descrição Despesa</th>
-					<th class="text-center" width="130">Crédito</th>
-					<th class="text-center" width="130">Débito</th>
-					<th class="text-center" width="130">Saldo</th>
+					<th width="110" class="text-center text-middle">Ações</th>
+					<th class="text-middle">Dta. Vencimento</th>
+					<th class="text-middle">Dta. Pagamento</th>
+					<th class="text-middle">Origem da Despesa</th>
+					<th class="text-middle">Descrição Despesa</th>
+					<th class="text-center text-middle" width="130">Crédito</th>
+					<th class="text-center text-middle" width="130">Débito</th>
+					<th class="text-center text-middle" width="130">Saldo</th>
+					<th class="text-center text-middle" width="25">Status</th>
 				</thead>
 				<tbody>
 					<tr>
@@ -62,16 +63,30 @@
 						<td class="text-right text-middle text-bold text-success">{{ vlrTotalCreditoAnterior | currency : 'R$ ' : 2 }}</td>
 						<td class="text-right text-middle text-bold text-danger">{{ vlrTotalDebitoAnterior | currency : 'R$ ' : 2 }}</td>
 						<td class="text-right text-middle text-bold {{ (vlrTotalSaldoAnterior > 0) ? 'text-info' : ((vlrTotalSaldoAnterior < 0) ? 'text-danger' : '') }}">{{ vlrTotalSaldoAnterior | currency : 'R$ ' : 2 }}</td>
+						<td></td>
 					</tr>
 				</tbody>
 				<tbody>
-					<tr ng-repeat="item in lancamentos" popover-template="'myPopoverTemplate.html'" popover-title="Detalhes do Lançamento" popover-placement="bottom">
-						<td class="text-center">
+					<tr ng-repeat="item in lancamentos">
+						<td class="text-middle">
+							<button type="button" class="btn btn-xs btn-danger" data-placement="top" tooltip="Excluir lançamento" ng-click="openModal(item, 'modalExcluiLancamento')">
+						   		<i class="fa fa-trash-o"></i>
+					   		</button>
+
 							<a class="btn btn-xs btn-warning" 
 							   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}&fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&ftl={{ filtro.cod_tipo_lancamento }}" 
 							   data-placement="top" tooltip="Editar lançamento">
 						   		<i class="fa fa-edit"></i>
 					   		</a>
+
+					   		<button type="button" class="btn btn-xs btn-default" data-placement="top" tooltip="Pré-visualizar detalhes"
+					   			popover-template="'myPopoverTemplate.html'" popover-title="Detalhes do Lançamento" popover-placement="bottom">
+						   		<i class="fa fa-eye"></i>
+					   		</button>
+
+					   		<button type="button" class="btn btn-xs btn-success {{ (item.dta_pagamento) ? 'hide' : '' }}" data-placement="top" tooltip="Confirmar pagamento" ng-click="openModal(item, 'modalConfirmaPagamento')">
+						   		<i class="fa fa-check-circle"></i>
+					   		</button>
 						</td>
 						<td class="text-center">{{ item.dta_vencimento | date : 'dd/MM/yyyy' }}</td>
 						<td class="text-center">{{ item.dta_pagamento | date : 'dd/MM/yyyy' }}</td>
@@ -84,12 +99,19 @@
 							<span class="text-danger" ng-show='(item.cod_tipo_lancamento == 2 && (item.vlr_previsto != "" || item.vlr_realizado != ""))'>{{ (item.cod_tipo_lancamento == 2) ? ((item.vlr_realizado > 0) ? item.vlr_realizado : item.vlr_previsto) : 0 | currency : 'R$ ' : 2 }}</span>
 						</td>
 						<td class="text-right {{ (item.vlr_saldo > 0) ? 'text-info' : ((item.vlr_saldo < 0) ? 'text-danger' : '') }}">{{ item.vlr_saldo | currency : 'R$ ' : 2 }}</td>
+						<td class="text-center text-middle">
+							<span class="label label-table {{ (item.dta_pagamento) ? 'label-success' : 'label-warning' }}" 
+								data-placement="top" tooltip="{{ (item.dta_pagamento) ? 'Lançamento pago' : 'Lançamento previsto' }}">
+								<i class="fa fa-check-circle {{ (!item.dta_pagamento) ? 'hide' : '' }}"></i>
+								<i class="fa fa-calendar {{ (item.dta_pagamento) ? 'hide' : '' }}"></i>
+							</span>
+						</td>
 					</tr>
 					<tr ng-show="loadingData">
-						<td colspan="8" class="text-center text-bold"><i class="fa fa-spinner fa-spin"></i> Aguarde! Carregando lançamentos...</td>
+						<td colspan="9" class="text-center text-bold"><i class="fa fa-spinner fa-spin"></i> Aguarde! Carregando lançamentos...</td>
 					</tr>
 					<tr ng-show="(!loadingData) && (lancamentos.length === 0)">
-						<td colspan="8" class="text-center text-bold text-danger">Nenhum lançamento encontrado para o período selecionado!</td>
+						<td colspan="9" class="text-center text-bold text-danger">Nenhum lançamento encontrado para o período selecionado!</td>
 					</tr>
 				</tbody>
 				<tbody>
@@ -98,12 +120,14 @@
 						<td class="text-right text-middle text-bold text-success">{{ vlrTotalCredito | currency : 'R$ ' : 2 }}</td>
 						<td class="text-right text-middle text-bold text-danger">{{ vlrTotalDebito | currency : 'R$ ' : 2 }}</td>
 						<td class="text-right text-middle text-bold {{ (vlrTotalSaldo > 0) ? 'text-info' : ((vlrTotalSaldo < 0) ? 'text-danger' : '') }}">{{ vlrTotalSaldo | currency : 'R$ ' : 2 }}</td>
+						<td></td>
 					</tr>
 				</tbody>
 				<tbody>
 					<tr>
 						<td class="text-right text-middle text-bold" colspan="7">Saldo Final</td>
 						<td class="text-right text-middle text-bold {{ (vlrSaldoFinal > 0) ? 'text-info' : ((vlrTotalSaldo < 0) ? 'text-danger' : '') }}">{{ vlrSaldoFinal | currency : 'R$ ' : 2 }}</td>
+						<td></td>
 					</tr>
 				</tbody>
 			</table>
@@ -128,6 +152,106 @@
 			   		<i class="fa fa-edit"></i> Editar Lançamento
 		   		</a>
 			</script>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalConfirmaPagamento" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaPagamentoLabel">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Confirmar pagamento?</h4>
+				</div>
+				<form class="form form-horizontal" role="form">
+					<div class="modal-body">
+						<p>Para confirmar este pagamento, informe abaixo a data do pagamento e o valor efetivo:</p>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Descrição</label>
+							<div class="col-lg-10">
+								<input class="form-control" value="{{ lancamentoFinanceiro.dsc_lancamento }}" readonly="readonly">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Vencimento</label>
+							<div class="col-lg-4">
+								<input class="form-control" value="{{ lancamentoFinanceiro.dta_vencimento | date : 'dd/MM/yyyy' }}" readonly="readonly">
+							</div>
+
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Pagamento</label>
+								<div class="col-lg-4">
+									<div class="input-group date">
+										<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dta_pagamento">
+										<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Previsto</label>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<span class="input-group-addon">R$</span>
+									<input type="text" class="form-control" ng-model="lancamentoFinanceiro.vlr_previsto" readonly="readonly" ui-number-mask>
+								</div>
+							</div>
+
+							<div class="element-group">
+								<label class="col-lg-2 control-label">Realizado</label>
+								<div class="col-lg-4">
+									<div class="input-group">
+										<span class="input-group-addon">R$</span>
+										<input type="text" class="form-control" ng-model="lancamentoFinanceiro.vlr_realizado" ui-number-mask>
+										<span class="input-group-addon btn-primary" 
+											tooltip="Copiar Valor Previsto" 
+											tooltip-placement="right" 
+											ng-click="copyValorPrevistoRealizado()">
+											<i class="fa fa-copy"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Observações</label>
+							<div class="col-lg-10">
+								<textarea class="form-control" rows="5" ng-model="lancamentoFinanceiro.dsc_observacao"></textarea>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer clearfix">
+						<div class="pull-right">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-success btn-labeled fa fa-check-circle" ng-click="confirmarPagamento()">Confirmar Pagamento</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalExcluiLancamento" tabindex="-1" role="dialog" aria-labelledby="modalExcluiLancamentoLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Confirma exclusão?</h4>
+				</div>
+				<div class="modal-body">
+					Confirma a exclusão do lançamento [<strong>{{ lancamentoFinanceiro.dsc_lancamento }}</strong>], com vencimento em [<strong>{{ (lancamentoFinanceiro.dta_vencimento) ? (lancamentoFinanceiro.dta_vencimento | date : 'dd/MM/yyyy' ) : (lancamentoFinanceiro.dta_pagamento | date : 'dd/MM/yyyy') }}</strong>]?
+				</div>
+				<div class="modal-footer clearfix">
+					<div class="pull-right">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+						<button type="button" class="btn btn-default" ng-click="deleteRecord()">Sim</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
