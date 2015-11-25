@@ -243,12 +243,25 @@
 					<h4 class="modal-title">Confirma exclusão?</h4>
 				</div>
 				<div class="modal-body">
-					Confirma a exclusão do lançamento [<strong>{{ lancamentoFinanceiro.dsc_lancamento }}</strong>], com vencimento em [<strong>{{ (lancamentoFinanceiro.dta_vencimento) ? (lancamentoFinanceiro.dta_vencimento | date : 'dd/MM/yyyy' ) : (lancamentoFinanceiro.dta_pagamento | date : 'dd/MM/yyyy') }}</strong>]?
+					<p class="{{ (lancamentoFinanceiro.flg_lancamento_recorrente == 1) ? 'hide' : '' }}">
+						Confirma a exclusão do lançamento [<strong>{{ lancamentoFinanceiro.dsc_lancamento }}</strong>], com vencimento em [<strong>{{ (lancamentoFinanceiro.dta_vencimento) ? (lancamentoFinanceiro.dta_vencimento | date : 'dd/MM/yyyy' ) : (lancamentoFinanceiro.dta_pagamento | date : 'dd/MM/yyyy') }}</strong>]?
+					</p>
+					<p class="{{ (lancamentoFinanceiro.flg_lancamento_recorrente == 0) ? 'hide' : '' }}">
+						Este registro faz parte de um provisionamento com outras parcelas, deseja excluir este e os próximos lançamentos?
+					</p>
 				</div>
 				<div class="modal-footer clearfix">
 					<div class="pull-right">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
-						<button type="button" class="btn btn-default" ng-click="deleteRecord()">Sim</button>
+						<div class="{{ (lancamentoFinanceiro.flg_lancamento_recorrente == 1) ? 'hide' : '' }}">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+							<button type="button" class="btn btn-default" ng-click="deleteRecord(false)">Sim</button>
+						</div>
+
+						<div class="{{ (lancamentoFinanceiro.flg_lancamento_recorrente == 0) ? 'hide' : '' }}">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-default" ng-click="deleteRecord(true)">Sim, este e os próximos</button>
+							<button type="button" class="btn btn-default" ng-click="deleteRecord(false)">Não, apenas este</button>
+						</div>
 					</div>
 				</div>
 			</div>

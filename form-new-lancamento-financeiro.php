@@ -10,43 +10,43 @@
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label {{ (lancamentoFinanceiro.tipoLancamento == 'Receita') ? 'hide' : '' }}">No. Nota/Fatura</label> 
+				<label class="col-lg-2 control-label {{ (lancamentoFinanceiro.tipoLancamento == 'Receita') ? 'hide' : '' }}" for="num_nota_fatura">No. Nota/Fatura</label> 
 				<div class="col-lg-2 {{ (lancamentoFinanceiro.tipoLancamento == 'Receita') ? 'hide' : '' }}">
-					<input type="text" class="form-control" ng-model="lancamentoFinanceiro.num_nota_fatura">
+					<input type="text" id="num_nota_fatura" class="form-control" ng-model="lancamentoFinanceiro.num_nota_fatura">
 				</div>
 
-				<label class="col-lg-2 control-label">Cód. Lanç. Contábil</label> 
+				<label class="col-lg-2 control-label" for="num_lancamento_contabil">Cód. Lanç. Contábil</label> 
 				<div class="col-lg-2">
-					<input type="text" class="form-control" ng-model="lancamentoFinanceiro.num_lancamento_contabil">
+					<input type="text" id="num_lancamento_contabil" class="form-control" ng-model="lancamentoFinanceiro.num_lancamento_contabil">
 				</div>
 
-				<label class="col-lg-1 control-label">No. Banco</label> 
+				<label class="col-lg-1 control-label" for="num_documento_banco">No. Banco</label> 
 				<div class="col-lg-2">
-					<input type="text" class="form-control" ng-model="lancamentoFinanceiro.num_documento_banco">
+					<input type="text" id="num_documento_banco" class="form-control" ng-model="lancamentoFinanceiro.num_documento_banco">
 				</div>
 			</div>
 
 			<div class="form-group element-group">
-				<label class="col-lg-2 control-label">Descrição do Lançamento</label>
+				<label class="col-lg-2 control-label" for="dsc_lancamento">Descrição Lançamento</label>
 				<div class="col-lg-8">
-					<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dsc_lancamento">
+					<input type="text" id="dsc_lancamento" class="form-control" ng-model="lancamentoFinanceiro.dsc_lancamento">
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Valor Previsto</label> 
+				<label class="col-lg-2 control-label" for="vlr_previsto">Valor Previsto</label> 
 				<div class="col-lg-3">
 					<div class="input-group">
 						<span class="input-group-addon">R$</span>
-						<input type="text" class="form-control" ng-model="lancamentoFinanceiro.vlr_previsto" ui-number-mask>
+						<input type="text" id="vlr_previsto" class="form-control" ng-model="lancamentoFinanceiro.vlr_previsto" ui-number-mask>
 					</div>
 				</div>
 
-				<label class="col-lg-2 control-label">Valor Realizado</label> 
+				<label class="col-lg-2 control-label" for="vlr_realizado">Valor Realizado</label> 
 				<div class="col-lg-3">
 					<div class="input-group">
 						<span class="input-group-addon">R$</span>
-						<input type="text" class="form-control" ng-model="lancamentoFinanceiro.vlr_realizado" ui-number-mask>
+						<input type="text" id="vlr_realizado" class="form-control" ng-model="lancamentoFinanceiro.vlr_realizado" ui-number-mask>
 						<span class="input-group-addon btn-primary" 
 							tooltip="Copiar Valor Previsto" 
 							tooltip-placement="right" 
@@ -57,21 +57,41 @@
 				</div>
 			</div>
 
+			<div class="form-group {{ (lancamentoFinanceiro.cod_lancamento_financeiro) ? 'hide' : '' }}">
+				<div class="element-group">
+					<label class="col-lg-2 control-label" for="qtd_dias_recorrencia">Se repete?</label>
+					<div class="col-lg-3">
+						<select id="qtd_dias_recorrencia" name="qtd_dias_recorrencia" 
+							chosen class="chosen" options="recorrencias"
+							ng-model="lancamentoFinanceiro.qtd_dias_recorrencia" ng-change="alteraFlagRecorrencia()"
+							ng-options="item.qtd_dias_recorrencia as item.dsc_recorrencia for item in recorrencias">
+						</select>
+					</div>
+				</div>
+
+				<div class="element-group {{ (lancamentoFinanceiro.qtd_dias_recorrencia == 0) ? 'hide' : '' }}">
+					<label class="col-lg-2 control-label" for="qtd_parcelas">Qtd. Parcelas</label> 
+					<div class="col-lg-1">
+						<input type="text" id="qtd_parcelas" class="form-control" ng-model="lancamentoFinanceiro.qtd_parcelas">
+					</div>
+				</div>
+			</div>
+
 			<div class="form-group">
 				<div class="element-group">
-					<label class="col-lg-2 control-label">Data de Emissão</label>
+					<label class="col-lg-2 control-label" for="dta_emissao">Data de Emissão</label>
 					<div class="col-lg-2">
 						<div class="input-group date">
-							<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dta_emissao">
+							<input type="text" id="dta_emissao" class="form-control" ng-model="lancamentoFinanceiro.dta_emissao">
 							<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 						</div>
 					</div>
 				</div>
 
-				<label class="col-lg-2 control-label">Data de Competência</label>
+				<label class="col-lg-2 control-label" for="dta_competencia">Data de Competência</label>
 				<div class="col-lg-2">
 					<div class="input-group date">
-						<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dta_competencia">
+						<input type="text" id="dta_competencia" class="form-control" ng-model="lancamentoFinanceiro.dta_competencia">
 						<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 					</div>
 				</div>
@@ -79,29 +99,29 @@
 				
 			<div class="form-group">
 				<div class="element-group">
-					<label class="col-lg-2 control-label">Data de Vencimento</label>
+					<label class="col-lg-2 control-label" for="dta_vencimento">Data de Vencimento</label>
 					<div class="col-lg-2">
 						<div class="input-group date">
-							<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dta_vencimento">
+							<input type="text" id="dta_vencimento" class="form-control" ng-model="lancamentoFinanceiro.dta_vencimento">
 							<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 						</div>
 					</div>
 				</div>
 
-				<label class="col-lg-2 control-label">Data de Pagamento</label>
+				<label class="col-lg-2 control-label" for="dta_pagamento">Data de Pagamento</label>
 				<div class="col-lg-2">
 					<div class="input-group date">
-						<input type="text" class="form-control" ng-model="lancamentoFinanceiro.dta_pagamento">
+						<input type="text" id="dta_pagamento" class="form-control" ng-model="lancamentoFinanceiro.dta_pagamento">
 						<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 					</div>
 				</div>
 			</div>
 		
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Conta Contábil</label>
+				<label class="col-lg-2 control-label" for="cod_conta_contabil">Conta Contábil</label>
 				<div class="col-lg-8">
-					<select chosen class="chosen"
-						options="planosConta"
+					<select id="cod_conta_contabil" name="cod_conta_contabil" 
+						chosen class="chosen" options="planosConta"
 						ng-model="lancamentoFinanceiro.cod_conta_contabil"
 						ng-options="item.cod_item as ('(' + item.num_item + ') ' + item.dsc_item) for item in planosConta">
 					</select>
@@ -109,10 +129,10 @@
 			</div>
 
 			<div class="form-group element-group">
-				<label class="col-lg-2 control-label">Natureza</label>
+				<label class="col-lg-2 control-label" for="cod_natureza_operacao">Natureza</label>
 				<div class="col-lg-8">
-					<select chosen class="chosen" 
-						options="planosConta" name="cod_natureza_operacao"
+					<select id="cod_natureza_operacao" name="cod_natureza_operacao"
+						chosen class="chosen" options="planosConta"
 						ng-model="lancamentoFinanceiro.cod_natureza_operacao"
 						ng-options="item.cod_item as ('(' + item.num_item + ') ' + item.dsc_item) for item in planosConta">
 					</select>
@@ -190,7 +210,9 @@
 							<th class="text-middle text-center">Origem da Despesa</th>
 							<th class="text-middle" width="200">Informação Adicional</th>
 							<th class="text-middle text-center">Valor Respectivo</th>
-							<th class="text-middle text-center" width="20">
+							<th class="text-middle text-center" width="40">
+								<input type="text" class="form-control input-xs" ng-model="qtdItensToAddTable">
+								<div class="clearfix"></div>
 								<button type="button" class="btn btn-xs btn-primary" ng-click="addItemTabela('favorecidos')">
 									<i class="fa fa-plus-square"></i>
 								</button>
@@ -311,12 +333,25 @@
 					<h4 class="modal-title">Confirma exclusão?</h4>
 				</div>
 				<div class="modal-body">
-					Confirma a exclusão do lançamento [<strong>{{ lancamentoFinanceiro.dsc_lancamento }}</strong>], com vencimento em [<strong>{{ (lancamentoFinanceiro.dta_vencimento) ? (lancamentoFinanceiro.dta_vencimento | date : 'dd/MM/yyyy' ) : (lancamentoFinanceiro.dta_pagamento | date : 'dd/MM/yyyy') }}</strong>]?
+					<p class="{{ (lancamentoFinanceiro.flg_lancamento_recorrente == 1) ? 'hide' : '' }}">
+						Confirma a exclusão do lançamento [<strong>{{ lancamentoFinanceiro.dsc_lancamento }}</strong>], com vencimento em [<strong>{{ (lancamentoFinanceiro.dta_vencimento) ? (lancamentoFinanceiro.dta_vencimento | date : 'dd/MM/yyyy' ) : (lancamentoFinanceiro.dta_pagamento | date : 'dd/MM/yyyy') }}</strong>]?
+					</p>
+					<p class="{{ (lancamentoFinanceiro.flg_lancamento_recorrente == 0) ? 'hide' : '' }}">
+						Este registro faz parte de um provisionamento com outras parcelas, deseja excluir este e os próximos lançamentos?
+					</p>
 				</div>
 				<div class="modal-footer clearfix">
 					<div class="pull-right">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
-						<button type="button" class="btn btn-default" ng-click="deleteRecord()">Sim</button>
+						<div class="{{ (lancamentoFinanceiro.flg_lancamento_recorrente == 1) ? 'hide' : '' }}">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+							<button type="button" class="btn btn-default" ng-click="deleteRecord(false)">Sim</button>
+						</div>
+
+						<div class="{{ (lancamentoFinanceiro.flg_lancamento_recorrente == 0) ? 'hide' : '' }}">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-default" ng-click="deleteRecord(true)">Sim, este e os próximos</button>
+							<button type="button" class="btn btn-default" ng-click="deleteRecord(false)">Não, apenas este</button>
+						</div>
 					</div>
 				</div>
 			</div>

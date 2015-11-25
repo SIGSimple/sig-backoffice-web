@@ -118,9 +118,11 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 		$("#"+modal).modal("show");
 	}
 
-	$scope.deleteRecord = function() {
+	$scope.deleteRecord = function(deleteNextRecords) {
 		var postData = {
+			deleteNextRecords: deleteNextRecords,
 			cod_lancamento_financeiro: $scope.lancamentoFinanceiro.cod_lancamento_financeiro, 	// lançamento que está sendo alterado
+			cod_lancamento_pai: ($scope.lancamentoFinanceiro.cod_lancamento_pai) ? $scope.lancamentoFinanceiro.cod_lancamento_pai : "", 				// lançamento que está sendo alterado
 			cod_usuario: $scope.colaborador.user.cod_usuario 									// usuário logado no sistema
 		};
 
