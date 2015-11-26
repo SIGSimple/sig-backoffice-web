@@ -14,8 +14,11 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		flg_lancamento_aberto: 		false,
 		flg_lancamento_recorrente: 	false,
 		qtd_dias_recorrencia: 		0,
+		vlr_orcado: 				0,
 		vlr_previsto: 				0,
 		vlr_realizado: 				0,
+		vlr_juros: 					0,
+		vlr_desconto: 				0,
 		vlrTotalRespectivo: 		0,
 		cod_conta_contabil: 		"7",
 		cod_empreendimento: 		$scope.colaborador.user.cod_empreendimento
@@ -187,8 +190,14 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		$scope.confereValorTotalRespectivo();
 	}
 
-	$scope.copyValorPrevistoRealizado = function() {
-		$scope.lancamentoFinanceiro.vlr_realizado = angular.copy($scope.lancamentoFinanceiro.vlr_previsto);
+	$scope.copyValorPrevistoEmpenhado = function() {
+		$scope.lancamentoFinanceiro.vlr_previsto = angular.copy($scope.lancamentoFinanceiro.vlr_orcado);
+		$scope.calculaValorRealizado();
+	}
+
+	$scope.calculaValorRealizado = function() {
+		if($scope.lancamentoFinanceiro.dta_pagamento)
+			$scope.lancamentoFinanceiro.vlr_realizado = (($scope.lancamentoFinanceiro.vlr_previsto + $scope.lancamentoFinanceiro.vlr_juros) - $scope.lancamentoFinanceiro.vlr_desconto);
 	}
 
 	$scope.deleteRecord = function(deleteNextRecords) {
@@ -222,6 +231,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 
 	$scope.saveRecords = function() {
 		var postData = angular.copy($scope.lancamentoFinanceiro);
+		postData.cod_empreendimento = $scope.colaborador.user.cod_empreendimento;
 		postData.dta_emissao 		= (postData.dta_emissao != null 	&& typeof(postData.dta_emissao) != "undefined" 		&& postData.dta_emissao != "" 		&& 	postData.dta_emissao != "Invalid date") ? moment(postData.dta_emissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
 		postData.dta_competencia 	= (postData.dta_competencia != null && typeof(postData.dta_competencia) != "undefined" 	&& postData.dta_competencia != "" 	&& 	postData.dta_competencia != "Invalid date") ? moment(postData.dta_competencia, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
 		postData.dta_pagamento 		= (postData.dta_pagamento != null 	&& typeof(postData.dta_pagamento) != "undefined" 	&& postData.dta_pagamento != "" 	&& 	postData.dta_pagamento != "Invalid date") ? moment(postData.dta_pagamento, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
