@@ -75,8 +75,8 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 				var vlrSaldo 			= 0;
 
 				$.each($scope.lancamentos, function(index, lancamento) {
-					vlrCreditos 			= (parseInt(lancamento.cod_tipo_lancamento) == 1) ? ((parseFloat(lancamento.vlr_realizado) > 0) ? parseFloat(lancamento.vlr_realizado) : parseFloat(lancamento.vlr_previsto)) : 0;
-					vlrDebitos 				= (parseInt(lancamento.cod_tipo_lancamento) == 2) ? ((parseFloat(lancamento.vlr_realizado) > 0) ? parseFloat(lancamento.vlr_realizado) : parseFloat(lancamento.vlr_previsto)) : 0;
+					vlrCreditos 			= (parseInt(lancamento.cod_tipo_lancamento) == 1) ? ((parseFloat(lancamento.vlr_realizado) > 0) ? parseFloat(lancamento.vlr_realizado) : parseFloat(lancamento.vlr_orcado)) : 0;
+					vlrDebitos 				= (parseInt(lancamento.cod_tipo_lancamento) == 2) ? ((parseFloat(lancamento.vlr_realizado) > 0) ? parseFloat(lancamento.vlr_realizado) : parseFloat(lancamento.vlr_orcado)) : 0;
 					vlrSaldo 				= (index == 0) ? (($scope.vlrTotalSaldoAnterior + vlrCreditos) - vlrDebitos) : (($scope.lancamentos[index-1].vlr_saldo +  vlrCreditos) - vlrDebitos);
 					lancamento.vlr_saldo 	= vlrSaldo;
 
@@ -205,6 +205,21 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 					showNotification(null, message, null, 'page', status);
 				}
 			});
+	}
+
+	$scope.loadLancamentosVinculados = function(lancamentoFinanceiro) {
+		if(lancamentoFinanceiro.lancamentosVinculados == null) {
+			var cod_lancamento_pai = lancamentoFinanceiro.cod_lancamento_pai;
+			if(cod_lancamento_pai == null || typeof(cod_lancamento_pai) == "undefined" || cod_lancamento_pai == "")
+				cod_lancamento_pai = lancamentoFinanceiro.cod_lancamento_financeiro;
+			var params = "flg_excluido=0&nolimit=1&(cod_lancamento_financeiro[exp]=="+ lancamentoFinanceiro.cod_lancamento_financeiro +"%20OR%20cod_lancamento_pai="+ cod_lancamento_pai +"%20OR%20cod_lancamento_financeiro="+ cod_lancamento_pai +")";
+			$http.get(baseUrlApi()+"lancamentos-financeiros?"+params)
+				.success(function(items){
+					setTimeout(function() {
+						lancamentoFinanceiro.lancamentosVinculados = items.rows;
+					}, 500);
+				});
+		}
 	}
 
 	$scope.loadSaldoAnterior();

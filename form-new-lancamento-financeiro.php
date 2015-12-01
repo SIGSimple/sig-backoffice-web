@@ -9,6 +9,7 @@
 				</div>
 			</div>
 
+			<!--Dados do Documento-->
 			<fieldset>
 				<legend>Dados do Documento</legend>
 
@@ -52,7 +53,7 @@
 				</div>
 
 				<div class="form-group element-group">
-					<label class="col-lg-2 control-label" for="dsc_lancamento">Descrição</label>
+					<label class="col-lg-2 control-label" for="dsc_lancamento"><strong>Descrição</strong></label>
 					<div class="col-lg-9">
 						<input type="text" id="dsc_lancamento" class="form-control" ng-model="lancamentoFinanceiro.dsc_lancamento">
 					</div>
@@ -60,7 +61,7 @@
 
 				<div class="form-group">
 					<div class="element-group">
-						<label class="col-lg-2 control-label" for="dta_emissao">Emissão</label>
+						<label class="col-lg-2 control-label" for="dta_emissao"><strong>Emissão</strong></label>
 						<div class="col-lg-2">
 							<div class="input-group date">
 								<input type="text" id="dta_emissao" class="form-control" ng-model="lancamentoFinanceiro.dta_emissao">
@@ -90,7 +91,7 @@
 				</div>
 
 				<div class="form-group element-group">
-					<label class="col-lg-2 control-label" for="cod_natureza_operacao">Natureza da Operação</label>
+					<label class="col-lg-2 control-label" for="cod_natureza_operacao"><strong>Natureza da Operação</strong></label>
 					<div class="col-lg-9">
 						<select id="cod_natureza_operacao" name="cod_natureza_operacao"
 							chosen class="chosen" options="planosConta"
@@ -101,16 +102,18 @@
 				</div>
 			</fieldset>
 
-
+			<!--Dados de Pagamento-->
 			<fieldset>
 				<legend>Dados de Pagamento</legend>
 			
 				<div class="form-group">
-					<label class="col-lg-1 control-label" for="vlr_orcado">Orçado</label> 
-					<div class="col-lg-2">
-						<div class="input-group">
-							<span class="input-group-addon">R$</span>
-							<input type="text" id="vlr_orcado" class="form-control" ng-model="lancamentoFinanceiro.vlr_orcado" ui-number-mask>
+					<div class="element-group">
+						<label class="col-lg-1 control-label" for="vlr_orcado"><strong>Orçado</strong></label> 
+						<div class="col-lg-2">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" id="vlr_orcado" class="form-control" ng-model="lancamentoFinanceiro.vlr_orcado" ui-number-mask>
+							</div>
 						</div>
 					</div>
 
@@ -118,7 +121,7 @@
 					<div class="col-lg-2">
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
-							<input type="text" id="vlr_previsto" class="form-control" ng-model="lancamentoFinanceiro.vlr_previsto" ng-blur="calculaValorRealizado()" ui-number-mask>
+							<input type="text" id="vlr_previsto" class="form-control" ng-model="lancamentoFinanceiro.vlr_previsto" ng-blur="calculaValorRealizado(true)" ui-number-mask>
 						</div>
 					</div>
 
@@ -132,7 +135,7 @@
 					</div>
 
 					<div class="element-group">
-						<label class="col-lg-3 control-label" for="dta_vencimento">Vencimento</label>
+						<label class="col-lg-3 control-label" for="dta_vencimento"><strong>Vencimento</strong></label>
 						<div class="col-lg-2">
 							<div class="input-group date">
 								<input type="text" id="dta_vencimento" class="form-control" ng-model="lancamentoFinanceiro.dta_vencimento">
@@ -147,7 +150,7 @@
 					<div class="col-lg-2">
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
-							<input type="text" id="vlr_juros" class="form-control" ng-model="lancamentoFinanceiro.vlr_juros" ng-blur="calculaValorRealizado()" ui-number-mask>
+							<input type="text" id="vlr_juros" class="form-control" ng-model="lancamentoFinanceiro.vlr_juros" ng-blur="calculaValorRealizado(true)" ui-number-mask>
 						</div>
 					</div>
 
@@ -155,11 +158,11 @@
 					<div class="col-lg-2">
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
-							<input type="text" id="vlr_desconto" class="form-control" ng-model="lancamentoFinanceiro.vlr_desconto" ng-blur="calculaValorRealizado()" ui-number-mask>
+							<input type="text" id="vlr_desconto" class="form-control" ng-model="lancamentoFinanceiro.vlr_desconto" ng-blur="calculaValorRealizado(true)" ui-number-mask>
 						</div>
 					</div>
 
-					<label class="col-lg-1 control-label" for="vlr_realizado">Realizado<br/><small><strong>(A+B)-C</strong></small></label> 
+					<label class="col-lg-1 control-label" for="vlr_realizado">Realizado<br/><small><strong>((A+B)-C-D)</strong></small></label> 
 					<div class="col-lg-2">
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
@@ -170,13 +173,192 @@
 					<label class="col-lg-1 control-label" for="dta_pagamento">Pagamento</label>
 					<div class="col-lg-2">
 						<div class="input-group date">
-							<input type="text" id="dta_pagamento" class="form-control" ng-model="lancamentoFinanceiro.dta_pagamento" ng-change="calculaValorRealizado()">
+							<input type="text" id="dta_pagamento" class="form-control" ng-model="lancamentoFinanceiro.dta_pagamento" ng-change="calculaValorRealizado(true)">
 							<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
 						</div>
 					</div>
 				</div>
 			</fieldset>
 
+			<!--Apuração de Impostos-->
+			<!--<fieldset ng-show="(lancamentoFinanceiro.favorecido.type == 'empresas' && lancamentoFinanceiro.favorecido.data != null)">
+				<legend>Apuração de Impostos</legend>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Apurar impostos?</label>
+					<div class="col-lg-2">
+						<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.flg_apurar_impostos = true; calculaValorRealizado(true);" ng-checked="(lancamentoFinanceiro.flg_apurar_impostos == true)">Sim</label>
+						<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.flg_apurar_impostos = false; clearTaxValues();" ng-checked="(lancamentoFinanceiro.flg_apurar_impostos == false)">Não</label>
+					</div>
+				</div>
+
+				<div class="impostos" ng-show="(lancamentoFinanceiro.flg_apurar_impostos == true)">
+					<div class="form-group">
+						<label class="col-lg-1 control-label">ISS</label>
+						<div class="col-lg-1">
+							<input type="checkbox" name="flg_iss" class="input-switch" ng-model="lancamentoFinanceiro.flg_iss">
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<input type="text" id="num_percentual_iss" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.num_percentual_iss"
+									ng-blur="calculaImposto('flg_iss')"
+									ng-readonly="(!lancamentoFinanceiro.flg_iss)"
+									ui-number-mask>
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" id="vlr_iss" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.vlr_iss"
+									readonly="readonly" ui-number-mask>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-1 control-label">IRRF</label>
+						<div class="col-lg-1">
+							<input type="checkbox" name="flg_irrf" class="input-switch" ng-model="lancamentoFinanceiro.flg_irrf">
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<input type="text" id="num_percentual_irrf" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.num_percentual_irrf"
+									ng-blur="calculaImposto('flg_irrf')"
+									ng-readonly="(!lancamentoFinanceiro.flg_irrf)"
+									ui-number-mask>
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" id="vlr_irrf" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.vlr_irrf"
+									readonly="readonly" ui-number-mask>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-1 control-label">CSLL</label>
+						<div class="col-lg-1">
+							<input type="checkbox" name="flg_csll" class="input-switch" ng-model="lancamentoFinanceiro.flg_csll">
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<input type="text" id="num_percentual_csll" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.num_percentual_csll"
+									ng-blur="calculaImposto('flg_csll')"
+									ng-readonly="(!lancamentoFinanceiro.flg_csll)"
+									ui-number-mask>
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" id="vlr_csll" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.vlr_csll"
+									readonly="readonly" ui-number-mask>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-1 control-label">INSS</label>
+						<div class="col-lg-1">
+							<input type="checkbox" name="flg_inss" class="input-switch" ng-model="lancamentoFinanceiro.flg_inss">
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<input type="text" id="num_percentual_inss" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.num_percentual_inss"
+									ng-blur="calculaImposto('flg_inss')"
+									ng-readonly="(!lancamentoFinanceiro.flg_inss)"
+									ui-number-mask>
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" id="vlr_inss" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.vlr_inss"
+									readonly="readonly" ui-number-mask>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-1 control-label">PIS/PASEP</label>
+						<div class="col-lg-1">
+							<input type="checkbox" name="flg_pis" class="input-switch" ng-model="lancamentoFinanceiro.flg_pis">
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<input type="text" id="num_percentual_pis" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.num_percentual_pis"
+									ng-blur="calculaImposto('flg_pis')"
+									ng-readonly="(!lancamentoFinanceiro.flg_pis)"
+									ui-number-mask>
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" id="vlr_pis" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.vlr_pis"
+									readonly="readonly" ui-number-mask>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-1 control-label">COFINS</label>
+						<div class="col-lg-1">
+							<input type="checkbox" name="flg_cofins" class="input-switch" ng-model="lancamentoFinanceiro.flg_cofins">
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<input type="text" id="num_percentual_cofins" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.num_percentual_cofins"
+									ng-blur="calculaImposto('flg_cofins')"
+									ng-readonly="(!lancamentoFinanceiro.flg_cofins)"
+									ui-number-mask>
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" id="vlr_cofins" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.vlr_cofins"
+									readonly="readonly" ui-number-mask>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-lg-2"></div>
+						<label class="col-lg-2 control-label">Total Impostos<br/><small><strong>(D)</strong></small></label>
+						<div class="col-lg-2">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" id="vlr_total_impostos" class="form-control text-right" 
+									ng-model="lancamentoFinanceiro.vlr_total_impostos"
+									readonly="readonly" ui-number-mask>
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>-->
+
+			<!--Recorrência-->
 			<fieldset>
 				<legend>Recorrência</legend>
 
@@ -193,14 +375,16 @@
 					</div>
 
 					<div class="element-group {{ (lancamentoFinanceiro.qtd_dias_recorrencia == 0) ? 'hide' : '' }}">
-						<label class="col-lg-1 control-label">Tipo</label>
-						<div class="col-lg-1">
-							<label class="radio-inline">
-								<input type="radio" ng-click="lancamentoFinanceiro.flg_tipo_repeticao = 1" ng-checked="(lancamentoFinanceiro.flg_tipo_repeticao == 1)">Projeção
-							</label>
-							<label class="radio-inline" style="padding-left: 10px;">
-								<input type="radio" ng-click="lancamentoFinanceiro.flg_tipo_repeticao = 2" ng-checked="(lancamentoFinanceiro.flg_tipo_repeticao == 2)">Parcelado
-							</label>
+						<div class="element-group">
+							<label class="col-lg-1 control-label">Tipo</label>
+							<div class="col-lg-1"  name="cod_tipo_recorrencia">
+								<label class="radio-inline">
+									<input type="radio" ng-click="lancamentoFinanceiro.cod_tipo_recorrencia = 1" ng-checked="(lancamentoFinanceiro.cod_tipo_recorrencia == 1)">Projeção
+								</label>
+								<label class="radio-inline" style="padding-left: 10px;">
+									<input type="radio" ng-click="lancamentoFinanceiro.cod_tipo_recorrencia = 2" ng-checked="(lancamentoFinanceiro.cod_tipo_recorrencia == 2)">Parcelado
+								</label>
+							</div>
 						</div>
 					</div>
 
@@ -212,7 +396,7 @@
 					</div>
 				</div>
 
-				<div class="form-group {{ (lancamentoFinanceiro.qtd_dias_recorrencia == 0) ? 'hide' : '' }}">
+				<div class="form-group {{ (!lancamentoFinanceiro.lancamentosVinculados) ? 'hide' : '' }}">
 					<label class="col-lg-2 control-label">Lançamento Vinculados</label>
 					<div class="col-lg-4">
 						<table class="table table-condensed table-hover">
@@ -223,49 +407,25 @@
 								<th class="text-center text-middle" width="10">Status</th>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="text-center text-middle">1ø</td>
-									<td class="text-center text-middle">15/12/2015</td>
-									<td class="text-right text-middle">R$ 13.422,63</td>
+								<tr ng-repeat="(index, item) in lancamentoFinanceiro.lancamentosVinculados" 
+									class="{{ (item.cod_lancamento_financeiro == lancamentoFinanceiro.cod_lancamento_financeiro) ? 'warning' : '' }}">
+									<td class="text-center text-middle">{{ (index+1) }}ø</td>
+									<td class="text-center text-middle">{{ item.dta_vencimento | date : 'dd/MM/yyyy' }}</td>
+									<td class="text-right text-middle">{{ (item.vlr_realizado > 0) ? item.vlr_realizado : ((item.vlr_previsto > 0) ? item.vlr_previsto : item.vlr_orcado) | currency : 'R$ ' : 2 }}</td>
 									<td class="text-center text-middle">
-										<span class="label label-table label-success" tooltip="Lançamento pago" tooltip-placement="right">
-											<i class="fa fa-check-circle text-success"></i>
-										</span>
-									</td>
-								</tr>
-								<tr class="warning">
-									<td class="text-center text-middle">2ø</td>
-									<td class="text-center text-middle">15/12/2015</td>
-									<td class="text-right text-middle">R$ 13.569,57</td>
-									<td class="text-center text-middle">
-										<span class="label label-table label-success" tooltip="Lançamento pago" tooltip-placement="right">
-											<i class="fa fa-check-circle text-success"></i>
-										</span>
-									</td>
-								</tr>
-								<tr>
-									<td class="text-center text-middle">3ø</td>
-									<td class="text-center text-middle">15/12/2015</td>
-									<td class="text-right text-middle">R$ 13.422,63</td>
-									<td class="text-center text-middle">
-										<span class="label label-table label-warning" tooltip="Lançamento previsto" tooltip-placement="right">
-											<i class="fa fa-calendar text-warning"></i>
+										<span class="label label-table {{ (item.dta_pagamento) ? 'label-success' : 'label-warning' }}" 
+											tooltip=" {{ (item.dta_pagamento) ? 'Lançamento pago' : 'Lançamento previsto' }}" tooltip-placement="right">
+											<i class="fa {{ (item.dta_pagamento) ? 'fa-check-circle text-success' : 'fa-calendar text-warning' }}"></i>
 										</span>
 									</td>
 								</tr>
 							</tbody>
-							<thead>
-								<th>Total</th>
-								<th></th>
-								<th class="text-right text-middle">R$ 15.345,47</th>
-								<th class="text-center text-middle"></th>
-							</thead>
 						</table>
 					</div>
 				</div>
 			</fieldset>
-		
 
+			<!--Informações Adicionais-->
 			<fieldset>
 				<legend>Informações Adicionais</legend>
 
@@ -461,6 +621,37 @@
 							<button type="button" class="btn btn-default" ng-click="deleteRecord(true)">Sim, este e os próximos</button>
 							<button type="button" class="btn btn-default" ng-click="deleteRecord(false)">Não, apenas este</button>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAtualizaReferencias" tabindex="-1" role="dialog" aria-labelledby="modalAtualizaReferenciasLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Confirma atualização?</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						Este registro faz parte de um provisionamento com outras parcelas, deseja atualizar este e os próximos lançamentos?
+					</p>
+					<p>
+						Os seguintes campos serão replicados:
+						<ul>
+							<li>Valor Orçado</li>
+							<li>Valor Empenhado</li>
+							<li>Valor Realizado</li>
+						</ul>
+					</p>
+				</div>
+				<div class="modal-footer clearfix">
+					<div class="pull-right">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+						<button type="button" class="btn btn-default" ng-click="deleteRecord(true)">Sim, este e os próximos</button>
+						<button type="button" class="btn btn-default" ng-click="deleteRecord(false)">Não, apenas este</button>
 					</div>
 				</div>
 			</div>

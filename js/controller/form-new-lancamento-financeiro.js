@@ -19,6 +19,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		vlr_realizado: 				0,
 		vlr_juros: 					0,
 		vlr_desconto: 				0,
+		vlr_total_impostos: 		0,
 		vlrTotalRespectivo: 		0,
 		cod_conta_contabil: 		"7",
 		cod_empreendimento: 		$scope.colaborador.user.cod_empreendimento
@@ -119,10 +120,71 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 				itemData[obj].type = rota;
 				itemData[obj].label = $($element.find("td")[0]).text();
 
-				if(isScope && type == "FAVORECIDO") {
-					$.each($scope.lancamentoFinanceiro.favorecidos, function(index, favorecido) {
-						favorecido.favorecido = itemData[obj];
-					});
+				if(isScope) {
+					// Verifica se está selecionando o favorecido...
+					if(type == "FAVORECIDO") {
+						// e atribui o mesmo favorecido para todos os titulares de movimento
+						$.each($scope.lancamentoFinanceiro.favorecidos, function(index, favorecido) {
+							favorecido.favorecido = itemData[obj];
+						});
+					}
+
+					// Verifica se é empresa e precisa apurar impostos
+					/*if(rota == "empresas" && row.flg_apurar_impostos == "1") {
+						$scope.lancamentoFinanceiro.flg_apurar_impostos = (row.flg_apurar_impostos == "1");
+						
+						if(!$scope.lancamentoFinanceiro.flg_apurar_impostos)
+							$scope.clearTaxValues();
+
+						// Verifica se tem que apurar o ISS
+						if(row.num_aliquota_iss){
+							$scope.lancamentoFinanceiro.flg_iss = true;
+							$scope.lancamentoFinanceiro.num_percentual_iss 	= parseFloat(row.num_aliquota_iss);
+							$(".input-switch[name='flg_iss']").attr("checked","checked");
+						}
+
+						// Verifica se tem que apurar o IRRF
+						if(row.num_aliquota_irrf){
+							$scope.lancamentoFinanceiro.flg_irrf = true;
+							$scope.lancamentoFinanceiro.num_percentual_irrf = parseFloat(row.num_aliquota_irrf);
+							$(".input-switch[name='flg_irrf']").attr("checked","checked");
+						}
+
+						// Verifica se tem que apurar o CSLL
+						if(row.num_aliquota_csll){
+							$scope.lancamentoFinanceiro.flg_csll = true;
+							$scope.lancamentoFinanceiro.num_percentual_csll = parseFloat(row.num_aliquota_csll);
+							$(".input-switch[name='flg_csll']").attr("checked","checked");
+						}
+
+						// Verifica se tem que apurar o INSS
+						if(row.num_aliquota_inss){
+							$scope.lancamentoFinanceiro.flg_inss = true;
+							$scope.lancamentoFinanceiro.num_percentual_inss = parseFloat(row.num_aliquota_inss);
+							$(".input-switch[name='flg_inss']").attr("checked","checked");
+						}
+
+						// Verifica se tem que apurar o PIS/PASEP
+						if(row.num_aliquota_pis){
+							$scope.lancamentoFinanceiro.flg_pis = true;
+							$scope.lancamentoFinanceiro.num_percentual_pis 	= parseFloat(row.num_aliquota_pis);
+							$(".input-switch[name='flg_pis']").attr("checked","checked");
+						}
+
+						// Verifica se tem que apurar o COFINS
+						if(row.num_aliquota_cofins){
+							$scope.lancamentoFinanceiro.flg_cofins = true;
+							$scope.lancamentoFinanceiro.num_percentual_cofins = parseFloat(row.num_aliquota_cofins);
+							$(".input-switch[name='flg_cofins']").attr("checked","checked");
+							
+						}
+
+						// Recria os elementos html (checkbox like iOS switch)
+						resetSwitchInput();
+
+						// Recalcula valores
+						$scope.calculaValorRealizado(true);
+					}*/
 				}
 
 				$scope.$apply();
@@ -166,6 +228,11 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		$scope.lancamentoFinanceiro.flg_lancamento_recorrente = ($scope.lancamentoFinanceiro.qtd_dias_recorrencia > 0);
 	}
 
+	$scope.desabilitaItem = function(item) {
+		item.flg_removido = true;
+		$scope.confereValorTotalRespectivo();
+	}
+
 	$scope.confereValorTotalRespectivo = function() {
 		$scope.lancamentoFinanceiro.vlrTotalRespectivo = 0;
 		$.each($scope.lancamentoFinanceiro.favorecidos, function(index, favorecido) {
@@ -185,19 +252,72 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 		return false;
 	}
 
-	$scope.desabilitaItem = function(item) {
-		item.flg_removido = true;
-		$scope.confereValorTotalRespectivo();
+	$scope.clearTaxValues = function() {
+		// Limpa os valores de apuração de impostos
+		$scope.lancamentoFinanceiro.flg_iss 			= false;
+		$scope.lancamentoFinanceiro.flg_irrf 			= false;
+		$scope.lancamentoFinanceiro.flg_csll 			= false;
+		$scope.lancamentoFinanceiro.flg_inss 			= false;
+		$scope.lancamentoFinanceiro.flg_pis 			= false;
+		$scope.lancamentoFinanceiro.flg_cofins 			= false;
+		$scope.lancamentoFinanceiro.vlr_iss 			= 0;
+		$scope.lancamentoFinanceiro.vlr_irrf 			= 0;
+		$scope.lancamentoFinanceiro.vlr_csll 			= 0;
+		$scope.lancamentoFinanceiro.vlr_inss 			= 0;
+		$scope.lancamentoFinanceiro.vlr_pis 			= 0;
+		$scope.lancamentoFinanceiro.vlr_cofins 			= 0;
+		$scope.lancamentoFinanceiro.vlr_total_impostos 	= 0;
+
+		$scope.calculaValorRealizado(false);
 	}
 
 	$scope.copyValorPrevistoEmpenhado = function() {
 		$scope.lancamentoFinanceiro.vlr_previsto = angular.copy($scope.lancamentoFinanceiro.vlr_orcado);
-		$scope.calculaValorRealizado();
+		$scope.calculaValorRealizado(true);
 	}
 
-	$scope.calculaValorRealizado = function() {
-		if($scope.lancamentoFinanceiro.dta_pagamento)
-			$scope.lancamentoFinanceiro.vlr_realizado = (($scope.lancamentoFinanceiro.vlr_previsto + $scope.lancamentoFinanceiro.vlr_juros) - $scope.lancamentoFinanceiro.vlr_desconto);
+	$scope.calculaValorRealizado = function(flgCalculaImposto) {
+		if(flgCalculaImposto) {
+			$scope.calculaImposto('flg_iss');
+			$scope.calculaImposto('flg_irrf');
+			$scope.calculaImposto('flg_csll');
+			$scope.calculaImposto('flg_inss');
+			$scope.calculaImposto('flg_pis');
+			$scope.calculaImposto('flg_cofins');
+		}
+		$scope.lancamentoFinanceiro.vlr_realizado = (($scope.lancamentoFinanceiro.vlr_previsto + $scope.lancamentoFinanceiro.vlr_juros) - $scope.lancamentoFinanceiro.vlr_desconto - $scope.lancamentoFinanceiro.vlr_total_impostos);
+	}
+
+	$scope.calculaImposto = function(imposto) {
+		var vlr_base 				= $scope.lancamentoFinanceiro.vlr_previsto;
+		var num_percentual_aliquota = $scope.lancamentoFinanceiro['num_percentual_'+imposto.substring(4, imposto.length)];
+		var value_field 			= 'vlr_'+ imposto.substr(4,imposto.length);
+		$scope.lancamentoFinanceiro[value_field] = (vlr_base * num_percentual_aliquota) / 100;
+		$scope.calculaTotalImpostos();
+		$scope.calculaValorRealizado(false);
+	}
+
+	$scope.calculaTotalImpostos = function() {
+		$scope.lancamentoFinanceiro.vlr_total_impostos = 0;
+		
+		if($scope.lancamentoFinanceiro.vlr_iss)
+			$scope.lancamentoFinanceiro.vlr_total_impostos += $scope.lancamentoFinanceiro.vlr_iss;
+		
+		if($scope.lancamentoFinanceiro.vlr_irrf)
+			$scope.lancamentoFinanceiro.vlr_total_impostos += $scope.lancamentoFinanceiro.vlr_irrf;
+		
+		if($scope.lancamentoFinanceiro.vlr_csll)
+			$scope.lancamentoFinanceiro.vlr_total_impostos += $scope.lancamentoFinanceiro.vlr_csll;
+		
+		if($scope.lancamentoFinanceiro.vlr_inss)
+			$scope.lancamentoFinanceiro.vlr_total_impostos += $scope.lancamentoFinanceiro.vlr_inss;
+		
+		if($scope.lancamentoFinanceiro.vlr_pis)
+			$scope.lancamentoFinanceiro.vlr_total_impostos += $scope.lancamentoFinanceiro.vlr_pis;
+		
+		if($scope.lancamentoFinanceiro.vlr_cofins)
+			$scope.lancamentoFinanceiro.vlr_total_impostos += $scope.lancamentoFinanceiro.vlr_cofins;
+	
 	}
 
 	$scope.deleteRecord = function(deleteNextRecords) {
@@ -310,6 +430,8 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 					$scope.lancamentoFinanceiro.dta_vencimento 			= ($scope.lancamentoFinanceiro.dta_vencimento != null) ? moment($scope.lancamentoFinanceiro.dta_vencimento, "YYYY-MM-DD").format("DD/MM/YYYY") : null;
 
 					loadFavorecidosTitularesLancamento();
+					if($scope.lancamentoFinanceiro.cod_tipo_recorrencia == "2")
+						loadLancamentosVinculados();
 
 					if(Boolean(getUrlParameter("copy")))
 						$scope.lancamentoFinanceiro.cod_lancamento_financeiro = null;
@@ -456,6 +578,30 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 				$scope.contratos = items.rows;
 			});
 	}
+
+	function loadLancamentosVinculados() {
+		var cod_lancamento_pai = $scope.lancamentoFinanceiro.cod_lancamento_pai;
+		if(cod_lancamento_pai == null || typeof(cod_lancamento_pai) == "undefined" || cod_lancamento_pai == "")
+			cod_lancamento_pai = $scope.lancamentoFinanceiro.cod_lancamento_financeiro;
+		var params = "flg_excluido=0&nolimit=1&(cod_lancamento_financeiro[exp]=="+ $scope.lancamentoFinanceiro.cod_lancamento_financeiro +"%20OR%20cod_lancamento_pai="+ cod_lancamento_pai +"%20OR%20cod_lancamento_financeiro="+ cod_lancamento_pai +")";
+		$http.get(baseUrlApi()+"lancamentos-financeiros?"+params)
+			.success(function(items){
+				$scope.lancamentoFinanceiro.lancamentosVinculados = items.rows;
+			});
+	}
+
+	$('.input-switch').on("change", function(e){
+		if(!this.checked) {
+			$scope.lancamentoFinanceiro['num_percentual_'+this.name.substr(4,this.name.length)] = null;
+			$scope.lancamentoFinanceiro['vlr_'+this.name.substr(4,this.name.length)] = null;
+		}
+
+		$scope.lancamentoFinanceiro[this.name] = this.checked;
+		$scope.calculaImposto(this.name);
+		setTimeout(function(){
+			$scope.$apply();
+		}, 500);
+	});
 
 	loadPlanoContas();
 	loadOrigens();

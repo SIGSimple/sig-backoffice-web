@@ -49,7 +49,7 @@
 		<div class="table-responsive">
 			<table class="table table-bordered table-condensed table-hover table-striped">
 				<thead>
-					<th width="110" class="text-center text-middle">Ações</th>
+					<th width="130" class="text-center text-middle">Ações</th>
 					<th class="text-middle">Dta. Vencimento</th>
 					<th class="text-middle">Dta. Pagamento</th>
 					<th class="text-middle">Origem da Despesa</th>
@@ -82,11 +82,18 @@
 					   		</a>
 
 					   		<button type="button" class="btn btn-xs btn-default" data-placement="top" tooltip="Pré-visualizar detalhes"
-					   			popover-template="'myPopoverTemplate.html'" popover-title="Detalhes do Lançamento" popover-placement="bottom">
+					   			popover-template="'popoverDetails.html'" popover-title="Detalhes do Lançamento" popover-placement="bottom" popover-trigger="focus">
 						   		<i class="fa fa-eye"></i>
 					   		</button>
 
-					   		<button type="button" class="btn btn-xs btn-success {{ (item.dta_pagamento) ? 'hide' : '' }}" data-placement="top" tooltip="Confirmar pagamento" ng-click="openModal(item, 'modalConfirmaPagamento')">
+					   		<button type="button" class="btn btn-xs btn-primary {{ (item.flg_lancamento_recorrente === '0') ? 'hide' : '' }}" data-placement="top" tooltip="Lançamentos vinculados"
+					   			ng-click="loadLancamentosVinculados(item)"
+					   			popover-template="'popoverLancamentosVinculados.html'" popover-title="Lançamentos Vinculados" popover-placement="bottom" popover-trigger="focus">
+						   		<i class="fa fa-refresh"></i>
+					   		</button>
+
+					   		<button type="button" class="btn btn-xs btn-success {{ (item.dta_pagamento) ? 'hide' : '' }}" 
+					   			data-placement="top" tooltip="Confirmar pagamento" ng-click="openModal(item, 'modalConfirmaPagamento')">
 						   		<i class="fa fa-check-circle"></i>
 					   		</button>
 						</td>
@@ -95,10 +102,10 @@
 						<td>{{ item.dsc_origem }}</td>
 						<td>{{ item.dsc_lancamento }}</td>
 						<td class="text-right">
-							<span class="text-success" ng-show='(item.cod_tipo_lancamento == 1 && (item.vlr_previsto != "" || item.vlr_realizado != ""))'>{{ (item.cod_tipo_lancamento == 1) ? ((item.vlr_realizado > 0) ? item.vlr_realizado : item.vlr_previsto) : 0 | currency : 'R$ ' : 2 }}</span>
+							<span class="text-success" ng-show='(item.cod_tipo_lancamento == 1 && (item.vlr_orcado != "" || item.vlr_realizado != ""))'>{{ (item.cod_tipo_lancamento == 1) ? ((item.vlr_realizado > 0) ? item.vlr_realizado : item.vlr_orcado) : 0 | currency : 'R$ ' : 2 }}</span>
 						</td>
 						<td class="text-right">
-							<span class="text-danger" ng-show='(item.cod_tipo_lancamento == 2 && (item.vlr_previsto != "" || item.vlr_realizado != ""))'>{{ (item.cod_tipo_lancamento == 2) ? ((item.vlr_realizado > 0) ? item.vlr_realizado : item.vlr_previsto) : 0 | currency : 'R$ ' : 2 }}</span>
+							<span class="text-danger" ng-show='(item.cod_tipo_lancamento == 2 && (item.vlr_orcado != "" || item.vlr_realizado != ""))'>{{ (item.cod_tipo_lancamento == 2) ? ((item.vlr_realizado > 0) ? item.vlr_realizado : item.vlr_orcado) : 0 | currency : 'R$ ' : 2 }}</span>
 						</td>
 						<td class="text-right {{ (item.vlr_saldo > 0) ? 'text-info' : ((item.vlr_saldo < 0) ? 'text-danger' : '') }}">{{ item.vlr_saldo | currency : 'R$ ' : 2 }}</td>
 						<td class="text-center text-middle">
@@ -134,7 +141,7 @@
 				</tbody>
 			</table>
 
-			<script type="text/ng-template" id="myPopoverTemplate.html">
+			<script type="text/ng-template" id="popoverDetails.html">
 				<strong>No. Nota/Fatura: </strong>{{ item.num_nota_fatura }}<br/>
 				<strong>Cód. Lanç. Contábil: </strong>{{ item.num_lancamento_contabil }}<br/>
 				<strong>No. Banco: </strong>{{ item.num_banco }}<br/>
@@ -143,7 +150,7 @@
 				<strong>Emissão: </strong>{{ item.dta_emissao | date : 'dd/MM/yyyy' }}<br/>
 				<strong>Vencimento: </strong>{{ item.dta_vencimento | date : 'dd/MM/yyyy' }}<br/>
 				<strong>Pagamento: </strong>{{ item.dta_pagamento | date : 'dd/MM/yyyy' }}<br/>
-				<strong>R$ Previsto: </strong>{{ item.vlr_previsto | currency : 'R$ ' : 2 }}<br/>
+				<strong>R$ Previsto: </strong>{{ item.vlr_orcado | currency : 'R$ ' : 2 }}<br/>
 				<strong>R$ Realizado: </strong>{{ item.vlr_realizado | currency : 'R$ ' : 2 }}<br/>
 				<strong>No. Conta Contábil: </strong>{{ item.dsc_conta_contabil }}<br/>
 				<strong>Conta Contábil: </strong>{{ item.dsc_conta_contabil }}<br/>
@@ -153,6 +160,34 @@
 				   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}&fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&ftl={{ filtro.cod_tipo_lancamento }}" data-placement="top" tooltip="Editar lançamento">
 			   		<i class="fa fa-edit"></i> Editar Lançamento
 		   		</a>
+			</script>
+
+			<script type="text/ng-template" id="popoverLancamentosVinculados.html">
+				<table class="table table-condensed table-hover">
+					<thead>
+						<th class="text-center text-middle" width="10">Nø.</th>
+						<th class="text-center text-middle">Venc./Pgto.</th>
+						<th class="text-right text-middle">Valor</th>
+						<th class="text-center text-middle" width="10">Status</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(index, lv) in item.lancamentosVinculados" 
+							class="{{ (lv.cod_lancamento_financeiro == item.cod_lancamento_financeiro) ? 'warning' : '' }} {{ (!item.lancamentosVinculados) ? 'hide' : '' }}">
+							<td class="text-center text-middle">{{ (index+1) }}ø</td>
+							<td class="text-center text-middle">{{ lv.dta_vencimento | date : 'dd/MM/yyyy' }}</td>
+							<td class="text-right text-middle">{{ (lv.vlr_realizado > 0) ? lv.vlr_realizado : ((lv.vlr_previsto > 0) ? lv.vlr_previsto : lv.vlr_orcado) | currency : 'R$ ' : 2 }}</td>
+							<td class="text-center text-middle">
+								<span class="label label-table {{ (lv.dta_pagamento) ? 'label-success' : 'label-warning' }}" 
+									tooltip=" {{ (lv.dta_pagamento) ? 'Lançamento pago' : 'Lançamento previsto' }}" tooltip-placement="right">
+									<i class="fa {{ (lv.dta_pagamento) ? 'fa-check-circle text-success' : 'fa-calendar text-warning' }}"></i>
+								</span>
+							</td>
+						</tr>
+						<tr class="{{ (item.lancamentosVinculados) ? 'hide' : '' }}">
+							<td colspan="4" class="text-center"><i class="fa fa-spinner fa-spin"></i> Aguarde, carregando...</td>
+						</tr>
+					</tbody>
+				</table>
 			</script>
 		</div>
 	</div>
@@ -197,7 +232,7 @@
 							<div class="col-lg-4">
 								<div class="input-group">
 									<span class="input-group-addon">R$</span>
-									<input type="text" class="form-control" ng-model="lancamentoFinanceiro.vlr_previsto" readonly="readonly" ui-number-mask>
+									<input type="text" class="form-control" ng-model="lancamentoFinanceiro.vlr_orcado" readonly="readonly" ui-number-mask>
 								</div>
 							</div>
 
