@@ -2,7 +2,7 @@ $("#modalItems").on("hidden.bs.modal", function(e){
 	$('#mytable').bootstrapTable('destroy');
 });
 
-app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
+app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc, FilterSrvc){
 	$scope.colaborador = UserSrvc.getUserLogged();
 	$scope.lancamentoFinanceiro = {
 		favorecido: 				{},
@@ -29,13 +29,9 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 	$scope.planosConta 			= [];
 	$scope.contratos 			= [];
 	$scope.qtdItensToAddTable 	= 1;
+	$scope.canUpdateRecorrencia = true;
 
-	$scope.filtro = {
-		dta_inicio: getUrlParameter("fdi"),
-		dta_fim: getUrlParameter("fdf"),
-		// nme_campo_filtro: getUrlParameter("fcf"),
-		cod_tipo_lancamento: getUrlParameter("ftl")
-	};
+	$scope.filtro = angular.copy(FilterSrvc.getFilter());
 
 	$scope.recorrencias = [{
 		qtd_dias_recorrencia: 0,
@@ -127,6 +123,22 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 						$.each($scope.lancamentoFinanceiro.favorecidos, function(index, favorecido) {
 							favorecido.favorecido = itemData[obj];
 						});
+
+						if(rota == "colaboradores") {
+							itemData['titularMovimento'].data = row;
+							itemData['titularMovimento'].type = rota;
+							itemData['titularMovimento'].label = $($element.find("td")[0]).text();
+
+							var cod_origem = "";
+
+							if(typeof(row.cod_contrato) != "undefined")
+								cod_origem = row.cod_contrato;
+							else if(typeof(row.cod_origem) != "undefined")
+								cod_origem = row.cod_origem;
+
+							if(cod_origem != "")
+								itemData.cod_origem_despesa =  cod_origem;
+						}
 					}
 
 					// Verifica se é empresa e precisa apurar impostos
@@ -186,6 +198,22 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 						$scope.calculaValorRealizado(true);
 					}*/
 				}
+				
+				if(type == "TITULAR_MOVIMENTO") {
+					var cod_origem = "";
+
+					if(typeof(row.cod_contrato) != "undefined")
+						cod_origem = row.cod_contrato;
+					else if(typeof(row.cod_origem) != "undefined")
+						cod_origem = row.cod_origem;
+
+					if(cod_origem != ""){
+						if(isScope)
+							itemData.cod_origem_despesa =  cod_origem;
+						else
+							itemData.cod_origem_correspondente = cod_origem;
+					}
+				}
 
 				$scope.$apply();
 				$('#mytable').bootstrapTable('destroy');
@@ -203,7 +231,9 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 				var objectToAdd = {};
 				objectToAdd = {
 					favorecido: angular.copy($scope.lancamentoFinanceiro.favorecido),
-					titularMovimento: {},
+					titularMovimento: {
+						type: 'colaboradores'
+					},
 					dsc_observacao_adicional: "",
 					vlr_correspondente: 0,
 					flg_removido: false
@@ -339,7 +369,6 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
 					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
-					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&ftl="+ $scope.filtro.cod_tipo_lancamento; // +"&fcf="+ $scope.filtro.nme_campo_filtro;
 					window.location.href = newUrl;
 				}, 5000);
 			})
@@ -350,6 +379,8 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 	}
 
 	$scope.saveRecords = function() {
+		$('.btn.fa-save').button('loading');
+
 		var postData = angular.copy($scope.lancamentoFinanceiro);
 		postData.cod_empreendimento = $scope.colaborador.user.cod_empreendimento;
 		postData.dta_emissao 		= (postData.dta_emissao != null 	&& typeof(postData.dta_emissao) != "undefined" 		&& postData.dta_emissao != "" 		&& 	postData.dta_emissao != "Invalid date") ? moment(postData.dta_emissao, "DD/MM/YYYY").format("YYYY-MM-DD") : "";
@@ -374,11 +405,11 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
 					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
-					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&ftl="+ $scope.filtro.cod_tipo_lancamento; // +"&fcf="+ $scope.filtro.nme_campo_filtro;
 					window.location.href = newUrl;
 				}, 5000);
 			})
 			.error(function(message, status, headers, config){ // se a API retornar algum erro
+				$('.btn.fa-save').button('reset');
 				if(status == 406){ // Not-Acceptable (Campos inválidos)
 					showNotification("Atenção!", "Alguns campos obrigatórios não foram preenchidos.", null, 'page', status);
 					// percorre a lista de campos devolvidos da API
@@ -411,7 +442,7 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 
 	function loadDadosLancamentoFinanceiroByIdUrl() {
 		if(typeof getUrlVars().cod_lancamento_financeiro != "undefined") {
-			$http.get(baseUrlApi() + 'lancamentos-financeiros?cod_lancamento_financeiro=' + getUrlVars().cod_lancamento_financeiro)
+			$http.get(baseUrlApi() + 'lancamentos-financeiros?tlf->cod_lancamento_financeiro=' + getUrlVars().cod_lancamento_financeiro)
 				.success(function(response){
 					$scope.lancamentoFinanceiro = response.rows[0];
 
@@ -435,6 +466,17 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 
 					if(Boolean(getUrlParameter("copy")))
 						$scope.lancamentoFinanceiro.cod_lancamento_financeiro = null;
+
+
+					if(parseInt($scope.lancamentoFinanceiro.flg_lancamento_recorrente,10) == 1 || $scope.lancamentoFinanceiro.flg_lancamento_recorrente == true) {
+						$scope.canUpdateRecorrencia = false;
+						$scope.lancamentoFinanceiro.dsc_tipo_recorrencia = (parseInt($scope.lancamentoFinanceiro.cod_tipo_recorrencia,10) == 1) ? "Projeção" : "Parcelado";
+						
+						$.each($scope.recorrencias, function(index, recorrencia) {
+							if(recorrencia.qtd_dias_recorrencia == parseInt($scope.lancamentoFinanceiro.qtd_dias_recorrencia,10))
+								$scope.lancamentoFinanceiro.dsc_recorrencia = recorrencia.dsc_recorrencia;
+						});
+					}
 				});
 		}
 	}
@@ -598,9 +640,6 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc){
 
 		$scope.lancamentoFinanceiro[this.name] = this.checked;
 		$scope.calculaImposto(this.name);
-		setTimeout(function(){
-			$scope.$apply();
-		}, 500);
 	});
 
 	loadPlanoContas();

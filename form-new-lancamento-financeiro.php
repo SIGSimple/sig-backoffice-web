@@ -25,7 +25,7 @@
 					<label class="col-lg-2 control-label">Favorecido</label>
 					<div class="col-lg-9">
 						<div class="input-group">
-							<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.favorecido.label }}">
+							<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.favorecido.label }}" ng-click="abreModal('FAVORECIDO', 'lancamentoFinanceiro', true)">
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button" ng-click="abreModal('FAVORECIDO', 'lancamentoFinanceiro', true)">
 									<i class="fa fa-search"></i>
@@ -36,9 +36,11 @@
 				</div>
 
 				<div class="form-group">
-					<label class="col-lg-2 control-label {{ (lancamentoFinanceiro.tipoLancamento == 'Receita') ? 'hide' : '' }}" for="num_nota_fatura">No. Nota/Fatura</label> 
-					<div class="col-lg-2 {{ (lancamentoFinanceiro.tipoLancamento == 'Receita') ? 'hide' : '' }}">
-						<input type="text" id="num_nota_fatura" class="form-control" ng-model="lancamentoFinanceiro.num_nota_fatura">
+					<div class="element-group">
+						<label class="col-lg-2 control-label {{ (lancamentoFinanceiro.tipoLancamento == 'Receita') ? 'hide' : '' }}" for="num_nota_fatura">No. Nota/Fatura</label> 
+						<div class="col-lg-2 {{ (lancamentoFinanceiro.tipoLancamento == 'Receita') ? 'hide' : '' }}">
+							<input type="text" id="num_nota_fatura" class="form-control" ng-model="lancamentoFinanceiro.num_nota_fatura">
+						</div>
 					</div>
 
 					<label class="col-lg-2 control-label" for="num_lancamento_contabil">Cód. Lanç. Contábil</label> 
@@ -91,7 +93,7 @@
 				</div>
 
 				<div class="form-group element-group">
-					<label class="col-lg-2 control-label" for="cod_natureza_operacao"><strong>Natureza da Operação</strong></label>
+					<label class="col-lg-2 control-label" for="cod_natureza_operacao">Natureza da Operação</label>
 					<div class="col-lg-9">
 						<select id="cod_natureza_operacao" name="cod_natureza_operacao"
 							chosen class="chosen" options="planosConta"
@@ -365,19 +367,22 @@
 				<div class="form-group">
 					<div class="element-group">
 						<label class="col-lg-2 control-label" for="qtd_dias_recorrencia">Se repete?</label>
-						<div class="col-lg-3">
+						<div class="col-lg-3" ng-show="canUpdateRecorrencia">
 							<select id="qtd_dias_recorrencia" name="qtd_dias_recorrencia" 
 								chosen class="chosen" options="recorrencias"
 								ng-model="lancamentoFinanceiro.qtd_dias_recorrencia" ng-change="alteraFlagRecorrencia()"
 								ng-options="item.qtd_dias_recorrencia as item.dsc_recorrencia for item in recorrencias">
 							</select>
 						</div>
+						<div class="col-lg-3" ng-hide="canUpdateRecorrencia">
+							<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.dsc_recorrencia }}">
+						</div>
 					</div>
 
 					<div class="element-group {{ (lancamentoFinanceiro.qtd_dias_recorrencia == 0) ? 'hide' : '' }}">
 						<div class="element-group">
 							<label class="col-lg-1 control-label">Tipo</label>
-							<div class="col-lg-1"  name="cod_tipo_recorrencia">
+							<div class="col-lg-1"  name="cod_tipo_recorrencia" ng-show="canUpdateRecorrencia">
 								<label class="radio-inline">
 									<input type="radio" ng-click="lancamentoFinanceiro.cod_tipo_recorrencia = 1" ng-checked="(lancamentoFinanceiro.cod_tipo_recorrencia == 1)">Projeção
 								</label>
@@ -385,13 +390,16 @@
 									<input type="radio" ng-click="lancamentoFinanceiro.cod_tipo_recorrencia = 2" ng-checked="(lancamentoFinanceiro.cod_tipo_recorrencia == 2)">Parcelado
 								</label>
 							</div>
+							<div class="col-lg-2" ng-hide="canUpdateRecorrencia">
+								<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.dsc_tipo_recorrencia }}">
+							</div>
 						</div>
 					</div>
 
 					<div class="element-group {{ (lancamentoFinanceiro.qtd_dias_recorrencia == 0) ? 'hide' : '' }}">
 						<label class="col-lg-1 control-label" for="qtd_parcelas">Qtd.</label> 
 						<div class="col-lg-1">
-							<input type="text" id="qtd_parcelas" class="form-control" ng-model="lancamentoFinanceiro.qtd_parcelas">
+							<input type="text" id="qtd_parcelas" class="form-control" ng-model="lancamentoFinanceiro.qtd_parcelas" ng-readonly="!canUpdateRecorrencia">
 						</div>
 					</div>
 				</div>
@@ -432,8 +440,8 @@
 				<div class="form-group">
 					<label class="col-lg-2 control-label">Abrir Lançamento?</label>
 					<div class="col-lg-2">
-						<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.flg_lancamento_aberto = true" ng-checked="(lancamentoFinanceiro.flg_lancamento_aberto == true)">Sim</label>
-						<label class="radio-inline"><input type="radio" ng-click="lancamentoFinanceiro.flg_lancamento_aberto = false" ng-checked="(lancamentoFinanceiro.flg_lancamento_aberto == false)">Não</label>
+						<label class="radio-inline"><input type="radio" ng-model="lancamentoFinanceiro.flg_lancamento_aberto" ng-click="lancamentoFinanceiro.flg_lancamento_aberto = true" ng-checked="(lancamentoFinanceiro.flg_lancamento_aberto == true)">Sim</label>
+						<label class="radio-inline"><input type="radio" ng-model="lancamentoFinanceiro.flg_lancamento_aberto" ng-click="lancamentoFinanceiro.flg_lancamento_aberto = false" ng-checked="(lancamentoFinanceiro.flg_lancamento_aberto == false)">Não</label>
 					</div>
 				</div>
 
@@ -447,9 +455,9 @@
 
 				<div class="form-group {{ (lancamentoFinanceiro.flg_lancamento_aberto) ? 'hide' : '' }}">
 					<label class="col-lg-2 control-label">Titular do Movimento</label>
-					<div class="col-lg-4">
+					<div class="col-lg-9">
 						<div class="input-group">
-							<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.titularMovimento.label }}">
+							<input type="text" class="form-control" readonly="readonly" value="{{ lancamentoFinanceiro.titularMovimento.label }}" ng-click="abreModal('TITULAR_MOVIMENTO', 'lancamentoFinanceiro', true)">
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button" ng-click="abreModal('TITULAR_MOVIMENTO', 'lancamentoFinanceiro', true)">
 									<i class="fa fa-search"></i>
@@ -490,7 +498,7 @@
 								<tr ng-repeat="item in lancamentoFinanceiro.favorecidos | filter: { flg_removido: false }">
 									<td>
 										<div class="input-group">
-											<input type="text" class="form-control input-xs" readonly="readonly" value="{{ item.titularMovimento.label }}">
+											<input type="text" class="form-control input-xs" readonly="readonly" value="{{ item.titularMovimento.label }}" ng-click="abreModal('TITULAR_MOVIMENTO', item, false)">
 											<span class="input-group-btn">
 												<button class="btn btn-xs btn-default" type="button" ng-click="abreModal('TITULAR_MOVIMENTO', item, false)">
 													<i class="fa fa-search"></i>
@@ -541,7 +549,7 @@
 
 				<div class="form-group">
 					<label class="col-lg-2 control-label">Observações</label>
-					<div class="col-lg-8">
+					<div class="col-lg-9">
 						<textarea class="form-control" rows="5" ng-model="lancamentoFinanceiro.dsc_observacao"></textarea>
 					</div>
 				</div>
@@ -588,8 +596,8 @@
 				<button type="button" class="btn btn-danger btn-labeled fa fa-trash-o" data-toggle="modal" data-target='#modalExcluiLancamento'>Excluir Lançamento</button>
 			</div>
 			<div class="pull-right">
-				<a href="list-lancamentos-financeiros?fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&ftl={{ filtro.cod_tipo_lancamento }}" class="btn btn-default">Voltar p/ Listagem de Lançamentos</a>
-				<button type="submit" class="btn btn-primary btn-labeled fa fa-save" ng-click="saveRecords()">Salvar</button>
+				<a href="list-lancamentos-financeiros" class="btn btn-default">Voltar p/ Listagem de Lançamentos</a>
+				<button type="submit" class="btn btn-primary btn-labeled fa fa-save" data-loading-text="Aguarde, salvando..." ng-click="saveRecords()">Salvar</button>
 			</div>
 		</div>
 	</form>

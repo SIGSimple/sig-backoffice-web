@@ -2,46 +2,137 @@
 <!--===================================================-->
 <div class="panel" ng-controller="ListLancamentosFinanceirosCtrl">
 	<div class="panel-body">
-		<div class="pad-btm form-inline">
+		<div class="pad-btm">
 			<div class="row">
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-					<div class="input-group date">
-						<span class="input-group-addon">De:</span>
-						<input type="text" class="form-control" ng-model="filtro.dta_inicio" placeholder="De">
-						<span class="input-group-addon btn-default"><i class="fa fa-calendar fa-lg"></i></span>
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+					<label class="control-label">De</label>
+					<div class="controls">
+						<div class="input-group date">
+							<input type="text" class="form-control" ng-model="filtro.dta_inicio" placeholder="De">
+							<span class="input-group-addon btn-default"><i class="fa fa-calendar fa-lg"></i></span>
+						</div>
 					</div>
 				</div>
-
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-					<div class="input-group date">
-						<span class="input-group-addon">Até:</span>
-						<input type="text" class="form-control" ng-model="filtro.dta_fim" placeholder="Até">
-						<span class="input-group-addon btn-default"><i class="fa fa-calendar fa-lg"></i></span>
-					</div>
-				</div>
-
-				<!-- <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-					<select chosen
-						options="camposFiltro"
-						ng-model="filtro.nme_campo_filtro"
-						ng-options="campo.nme_campo as campo.dsc_campo for campo in camposFiltro"
-						style="width: 100px;">
-					</select>
-				</div> -->
 
 				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-					<select chosen
-						options="tiposDespesa"
-						ng-model="filtro.cod_tipo_lancamento"
-						ng-options="tipoDespesa.cod_tipo_lancamento as tipoDespesa.nme_tipo_despesa for tipoDespesa in tiposDespesa"
-						style="width: 100px;">
-					</select>
+					<label class="control-label">Até</label>
+					<div class="controls">
+						<div class="input-group date">
+							<input type="text" class="form-control" ng-model="filtro.dta_fim" placeholder="Até">
+							<span class="input-group-addon btn-default"><i class="fa fa-calendar fa-lg"></i></span>
+						</div>
+					</div>
 				</div>
 
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-					<button type="button" class="btn btn-primary btn-labeled fa fa-filter" ng-click="loadSaldoAnterior()">Filtar</button>
-					<a href="form-new-lancamento-financeiro?fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&fcf={{ filtro.nme_campo_filtro }}&ftl={{ filtro.cod_tipo_lancamento }}" 
-					class="btn btn-mint btn-labeled fa fa-plus-square">Novo</a>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<label class="control-label sr-only"></label>
+					<div class="controls only-buttons">
+						<button type="button" class="btn btn-default btn-labeled fa fa-filter" ng-click="toggleAdvancedFilter()">Filtro Avançado</button>
+						<button type="button" class="btn btn-primary btn-labeled btn-simple-filter fa fa-search" ng-click="loadData()">Filtar</button>
+						<a href="form-new-lancamento-financeiro" 
+						class="btn btn-mint btn-labeled fa fa-plus-square">Novo</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="advanced-filter hide bg-gray-light">
+				<h4 class="bord-btm pad-top" style="padding-left: 5px;">Filtro Avançado</h4>
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<label class="control-label">Descrição</label>
+						<div class="controls">
+							<input type="text" class="form-control" ng-model="filtro.dsc_lancamento" placeholder="Ex.: Reembolso de Despesas">
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+						<label class="control-label">No. Nota/Fatura</label>
+						<div class="controls">
+							<input type="text" class="form-control" ng-model="filtro.num_nota_fatura" placeholder="Ex.: AMGT-02437">
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+						<label class="control-label">De</label>
+						<div class="controls">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" class="form-control" ng-model="filtro.vlr_inicial" ui-number-mask>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+						<label class="control-label">Até</label>
+						<div class="controls">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" class="form-control" ng-model="filtro.vlr_final" ui-number-mask>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+						<label class="control-label">Tipo de Lançamento</label>
+						<div class="controls">
+							<select chosen
+								options="tiposDespesa"
+								ng-model="filtro.cod_tipo_lancamento"
+								ng-options="tipoDespesa.cod_tipo_lancamento as tipoDespesa.nme_tipo_despesa for tipoDespesa in tiposDespesa"
+								style="width: 100px;">
+							</select>
+						</div>
+					</div>				
+				</div>
+
+				<div class="row mar-top">
+					<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+						<label class="control-label">
+							Favorecido
+							<label class="radio-inline"><input type="radio" ng-click="filtro.favorecido.type = 'empresas'" ng-checked="(filtro.favorecido.type == 'empresas')">Empresa</label>
+							<label class="radio-inline"><input type="radio" ng-click="filtro.favorecido.type = 'colaboradores'" ng-checked="(filtro.favorecido.type == 'colaboradores')">Colaborador</label>
+							<label class="radio-inline"><input type="radio" ng-click="filtro.favorecido.type = 'terceiros'" ng-checked="(filtro.favorecido.type == 'terceiros')">Terceiros</label>
+						</label>
+						<div class="controls">
+							<div class="input-group">
+								<input type="text" class="form-control" readonly="readonly" value="{{ filtro.favorecido.label }}" ng-click="abreModal('FAVORECIDO', 'filtro', true)">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button" ng-click="abreModal('FAVORECIDO', 'filtro', true)">
+										<i class="fa fa-search"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+						<label class="control-label">Natureza da Operação</label>
+						<div class="controls">
+							<select chosen class="chosen" options="planosConta"
+								ng-model="filtro.cod_natureza_operacao"
+								ng-options="item.cod_item as ('(' + item.num_item + ') ' + item.dsc_item) for item in planosConta">
+							</select>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<label class="control-label">Controle de Datas</label>
+						<div class="controls">
+							<select chosen
+								options="camposFiltro"
+								ng-model="filtro.cod_campo_filtro"
+								ng-options="campo.cod_campo as campo.dsc_campo for campo in camposFiltro"
+								style="width: 100px;">
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="row mar-top pad-btm">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
+						<button type="button" class="btn btn-primary btn-labeled btn-advanced-filter fa fa-search pull-right" ng-click="loadData()">Filtar</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -52,7 +143,7 @@
 					<th width="130" class="text-center text-middle">Ações</th>
 					<th class="text-middle">Dta. Vencimento</th>
 					<th class="text-middle">Dta. Pagamento</th>
-					<th class="text-middle">Origem da Despesa</th>
+					<th class="text-middle">Favorecido</th>
 					<th class="text-middle">Descrição Despesa</th>
 					<th class="text-center text-middle" width="130">Crédito</th>
 					<th class="text-center text-middle" width="130">Débito</th>
@@ -76,7 +167,7 @@
 					   		</button>
 
 							<a class="btn btn-xs btn-warning" 
-							   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}&fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&ftl={{ filtro.cod_tipo_lancamento }}" 
+							   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}" 
 							   data-placement="top" tooltip="Editar lançamento">
 						   		<i class="fa fa-edit"></i>
 					   		</a>
@@ -99,7 +190,7 @@
 						</td>
 						<td class="text-center">{{ item.dta_vencimento | date : 'dd/MM/yyyy' }}</td>
 						<td class="text-center">{{ item.dta_pagamento | date : 'dd/MM/yyyy' }}</td>
-						<td>{{ item.dsc_origem }}</td>
+						<td>{{ item.nme_favorecido }}</td>
 						<td>{{ item.dsc_lancamento }}</td>
 						<td class="text-right">
 							<span class="text-success" ng-show='(item.cod_tipo_lancamento == 1 && (item.vlr_orcado != "" || item.vlr_realizado != ""))'>{{ (item.cod_tipo_lancamento == 1) ? ((item.vlr_realizado > 0) ? item.vlr_realizado : item.vlr_orcado) : 0 | currency : 'R$ ' : 2 }}</span>
@@ -157,7 +248,7 @@
 				<strong>No. Natureza Operação: </strong>{{ item.num_natureza_operacao }}<br/>
 				<strong>Natureza Operação: </strong>{{ item.dsc_natureza_operacao }}<br/>
 				<a class="btn btn-sm btn-block btn-warning" 
-				   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}&fdi={{ filtro.dta_inicio }}&fdf={{ filtro.dta_fim }}&ftl={{ filtro.cod_tipo_lancamento }}" data-placement="top" tooltip="Editar lançamento">
+				   href="form-new-lancamento-financeiro?cod_lancamento_financeiro={{ item.cod_lancamento_financeiro }}" data-placement="top" tooltip="Editar lançamento">
 			   		<i class="fa fa-edit"></i> Editar Lançamento
 		   		</a>
 			</script>
@@ -299,6 +390,26 @@
 							<button type="button" class="btn btn-default" ng-click="deleteRecord(true)">Sim, este e os próximos</button>
 							<button type="button" class="btn btn-default" ng-click="deleteRecord(false)">Não, apenas este</button>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalItems" tabindex="-1" role="dialog" aria-labelledby="modalItemsLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalItemsLabel"></h4>
+				</div>
+				<div class="modal-body">
+					<table id="mytable">
+					</table>
+				</div>
+				<div class="modal-footer clearfix">
+					<div class="pull-right">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>

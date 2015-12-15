@@ -117,3 +117,7 @@
 .label-table {
 	min-width: 6ex !important;
 }
+
+.controls.only-buttons {
+	margin-top: 22px;
+}

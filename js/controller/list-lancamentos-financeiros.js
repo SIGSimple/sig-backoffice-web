@@ -9,7 +9,7 @@ configBootstrapTable();
 	].join('');
 }*/
 
-app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrvc){
+app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrvc, FilterSrvc){
 	$scope.colaborador = UserSrvc.getUserLogged();
 	$scope.lancamentos 				= [];
 	$scope.loadingData 				= false;
@@ -21,39 +21,144 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 	$scope.vlrTotalSaldoAnterior 	= 0;
 	$scope.vlrSaldoFinal 			= 0;
 	$scope.lancamentoFinanceiro 	= null;
+	$scope.planosConta 				= [];
 
-	/*$scope.camposFiltro = [{
-		nme_campo: "dta_emissao", 
-		dsc_campo: "Data de Emissão"
-	},{
-		nme_campo: "dta_vencimento", 
-		dsc_campo: "Data de Vencimento"
-	},{
-		nme_campo: "dta_pagamento", 
-		dsc_campo: "Data de Pagamento"
-	}];*/
+	$scope.camposFiltro = FilterSrvc.getCamposFiltro();
+	$scope.tiposDespesa = FilterSrvc.getTiposDespesa();
+	$scope.filtro = FilterSrvc.getFilter();
 
-	$scope.tiposDespesa = [{
-		cod_tipo_lancamento: '0', 
-		nme_tipo_despesa: "Todos"
-	},{
-		cod_tipo_lancamento: '1', 
-		nme_tipo_despesa: "Receitas"
-	},{
-		cod_tipo_lancamento: '2', 
-		nme_tipo_despesa: "Despesas"
-	}];
+	// Modal control
+	$scope.tmpModal = {};
+	var modalTablesColumns = {
+		"empresas": [
+			{
+				field: 'nme_fantasia',
+				title: 'Nome Fantasia'
+			},
+			{
+				field: 'flg_ativo',
+				title: 'Ativo?',
+				formatter: ativoFormatter
+			}
+		],
 
-	$scope.filtro = {
-		dta_inicio: 			(typeof(getUrlParameter("fdi")) != "undefined") ? getUrlParameter("fdi") : getFirstDateOfMonthString(),
-		dta_fim: 				(typeof(getUrlParameter("fdf")) != "undefined") ? getUrlParameter("fdf") : getLastDateOfMonthString(),
-		// nme_campo_filtro: 		(typeof(getUrlParameter("fcf")) != "undefined") ? getUrlParameter("fcf") : $scope.camposFiltro[2].nme_campo,
-		cod_tipo_lancamento: 	(typeof(getUrlParameter("ftl")) != "undefined") ? getUrlParameter("ftl") : $scope.tiposDespesa[0].cod_tipo_lancamento,
+		"colaboradores": [
+			{
+				field: 'nme_colaborador',
+				title: 'Nome Colaborador'
+			},
+			{
+				field: 'flg_ativo',
+				title: 'Ativo?',
+				formatter: ativoFormatter
+			}
+		],
+		"terceiros": [
+			{
+				field: 'nme_terceiro',
+				title: 'Nome Terceiro'
+			}
+		]
 	};
 
 	$scope.loadLancamentosFinanceiros = function() {
 		var dtaInicio 	= moment($scope.filtro.dta_inicio, "DD/MM/YYYY").format("YYYY-MM-DD");
 		var dtaFim 		= moment($scope.filtro.dta_fim, "DD/MM/YYYY").format("YYYY-MM-DD");
+
+		var urlOptions = "";
+		
+		if(parseInt($scope.filtro.cod_tipo_lancamento,10) > 0)
+			urlOptions += "&tlf->cod_tipo_lancamento=" + $scope.filtro.cod_tipo_lancamento;
+
+		if($scope.filtro.dsc_lancamento != "" || $scope.filtro.dsc_lancamento.length > 0)
+			urlOptions += "&tlf->dsc_lancamento=" + $scope.filtro.dsc_lancamento;
+
+		if($scope.filtro.num_nota_fatura != "" || $scope.filtro.num_nota_fatura.length > 0)
+			urlOptions += "&tlf->num_nota_fatura=" + $scope.filtro.num_nota_fatura;
+
+		if(Object.keys($scope.filtro.favorecido.data).length > 0) {
+			switch($scope.filtro.favorecido.type) {
+				case "empresas": {
+					urlOptions += "&ftlf->cod_favorecido_fornecedor=" + $scope.filtro.favorecido.data.cod_empresa;
+					break;
+				}
+				case "colaboradores": {
+					urlOptions += "&ftlf->cod_favorecido_colaborador=" + $scope.filtro.favorecido.data.cod_colaborador;
+					break;
+				}
+				case "terceiros": {
+					urlOptions += "&ftlf->cod_favorecido_terceiro=" + $scope.filtro.favorecido.data.cod_terceiro;
+					break;
+				}
+			}
+		}
+
+		if(parseInt($scope.filtro.cod_natureza_operacao,10) > 0)
+			urlOptions += "&tlf->cod_natureza_operacao=" + $scope.filtro.cod_natureza_operacao;
+
+		var urlFitroData = "";
+		switch($scope.filtro.cod_campo_filtro) {
+			case "1": { // Venceu ou pagou no período
+				urlFitroData = "(dta_vencimento[exp]=BETWEEN '"+ dtaInicio +"' AND '"+ dtaFim +"' OR dta_pagamento BETWEEN '"+ dtaInicio +"' AND '"+ dtaFim +"')";
+				
+				// Se preencheu o valor inicial e não preencheu o valor final
+				if(parseFloat($scope.filtro.vlr_inicial) > 0 && (parseFloat($scope.filtro.vlr_final) == 0 || isNaN(parseFloat($scope.filtro.vlr_final)))) {
+					// TODO: addClass('has-error')
+					return;
+				}
+				// Se preencheu o valor final e não preencheu o valor inicial
+				else if(parseFloat($scope.filtro.vlr_final) > 0 && (parseFloat($scope.filtro.vlr_inicial) == 0 || isNaN(parseFloat($scope.filtro.vlr_inicial)))) {
+					$scope.filtro.vlr_inicial = 0;
+					urlFitroData += "&(vlr_orcado[exp]=BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +" OR vlr_previsto BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +")";
+				}
+				// Valor Inicial e Valor Final estão preenchidos...
+				else if(!isNaN(parseFloat($scope.filtro.vlr_inicial)) && !isNaN(parseFloat($scope.filtro.vlr_final))) {
+					urlFitroData += "&(vlr_orcado[exp]=BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +" OR vlr_previsto BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +")";
+				}
+
+				break;
+			}
+			case "2": { // Vence no período
+				urlFitroData = "(dta_vencimento[exp]=BETWEEN '"+ dtaInicio +"' AND '"+ dtaFim +"')";
+
+				// Se preencheu o valor inicial e não preencheu o valor final
+				if(parseFloat($scope.filtro.vlr_inicial) > 0 && (parseFloat($scope.filtro.vlr_final) == 0 || isNaN(parseFloat($scope.filtro.vlr_final)))) {
+					// TODO: addClass('has-error')
+					return;
+				}
+				// Se preencheu o valor final e não preencheu o valor inicial
+				else if(parseFloat($scope.filtro.vlr_final) > 0 && (parseFloat($scope.filtro.vlr_inicial) == 0 || isNaN(parseFloat($scope.filtro.vlr_inicial)))) {
+					$scope.filtro.vlr_inicial = 0;
+					urlFitroData += "&(vlr_orcado[exp]=BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +" OR vlr_previsto BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +")";
+				}
+				// Valor Inicial e Valor Final estão preenchidos...
+				else if(!isNaN(parseFloat($scope.filtro.vlr_inicial)) && !isNaN(parseFloat($scope.filtro.vlr_final))) {
+					urlFitroData += "&(vlr_orcado[exp]=BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +" OR vlr_previsto BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +")";
+				}
+
+				break;
+			}
+			case "3": { // Pago no período
+				urlFitroData = "(dta_pagamento[exp]=BETWEEN '"+ dtaInicio +"' AND '"+ dtaFim +"')";
+
+				// Se preencheu o valor inicial e não preencheu o valor final
+				if(parseFloat($scope.filtro.vlr_inicial) > 0 && (parseFloat($scope.filtro.vlr_final) == 0 || isNaN(parseFloat($scope.filtro.vlr_final)))) {
+					// TODO: addClass('has-error')
+					return;
+				}
+				// Se preencheu o valor final e não preencheu o valor inicial
+				else if(parseFloat($scope.filtro.vlr_final) > 0 && (parseFloat($scope.filtro.vlr_inicial) == 0 || isNaN(parseFloat($scope.filtro.vlr_inicial)))) {
+					$scope.filtro.vlr_inicial = 0;
+					urlFitroData += "&(vlr_orcado[exp]=BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +" OR vlr_previsto BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +")";
+				}
+				// Valor Inicial e Valor Final estão preenchidos...
+				else if(!isNaN(parseFloat($scope.filtro.vlr_inicial)) && !isNaN(parseFloat($scope.filtro.vlr_final))) {
+					urlFitroData += "&vlr_realizado[exp]=BETWEEN "+ $scope.filtro.vlr_inicial +" AND "+ $scope.filtro.vlr_final +"";
+				}
+
+				break;
+			}
+		}
 
 		$scope.vlrTotalCredito 	= 0;
 		$scope.vlrTotalDebito 	= 0;
@@ -62,11 +167,7 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 		$scope.lancamentos 		= [];
 		$scope.loadingData 		= true;
 
-		var urlOptions = "";
-		if(parseInt($scope.filtro.cod_tipo_lancamento,10) > 0)
-			urlOptions = "&tlf->cod_tipo_lancamento=" + $scope.filtro.cod_tipo_lancamento;
-
-		$http.get(baseUrlApi()+"lancamentos-financeiros.json?nolimit=1&flg_excluido=0&tlf->cod_empreendimento="+ $scope.colaborador.user.cod_empreendimento +"&(dta_vencimento[exp]=BETWEEN '"+ dtaInicio +"' AND '"+ dtaFim +"' OR dta_pagamento BETWEEN '"+ dtaInicio +"' AND '"+ dtaFim +"')"+urlOptions)
+		$http.get(baseUrlApi()+"lancamentos-financeiros.json?nolimit=1&tlf->flg_excluido=0&tlf->cod_empreendimento="+ $scope.colaborador.user.cod_empreendimento +"&"+urlFitroData+urlOptions)
 			.success(function(items){
 				$scope.loadingData 		= false;
 				$scope.lancamentos 		= items.rows;
@@ -94,6 +195,24 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 			});
 	}
 
+	$scope.toggleAdvancedFilter = function() {
+		if($('.advanced-filter').hasClass('hide')) {
+			$('.btn-advanced-filter').removeClass('hide');
+			$('.btn-simple-filter').addClass('hide');
+			$('.advanced-filter').removeClass('hide');
+		}
+		else {
+			$('.btn-advanced-filter').addClass('hide');
+			$('.btn-simple-filter').removeClass('hide');
+			$('.advanced-filter').addClass('hide');
+		}
+	}
+
+	$scope.loadData = function() {
+		FilterSrvc.registerFilter(angular.copy($scope.filtro));
+		$scope.loadSaldoAnterior();
+	}
+
 	$scope.loadSaldoAnterior = function() {
 		var dtaInicio 	= moment($scope.filtro.dta_inicio, "DD/MM/YYYY").format("YYYY-MM-DD");
 		
@@ -118,6 +237,47 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 		$("#"+modal).modal("show");
 	}
 
+	$scope.abreModal = function(type, itemData, isScope) {
+		var rota = "";
+		var obj = "";
+
+		if(type == "FAVORECIDO"){
+			rota = (isScope) ? $scope.filtro.favorecido.type : itemData.favorecido.type;
+			obj = "favorecido";
+		}
+		else if(type == "TITULAR_MOVIMENTO"){
+			rota = (isScope) ? $scope.filtro.titularMovimento.type : itemData.titularMovimento.type;
+			obj = "titularMovimento";
+		}
+
+		if(isScope)
+			itemData = $scope[itemData];
+
+		$("#modalItemsLabel").text("LISTAGEM DE " + rota.replace("-"," de ").toUpperCase());
+		$("#modalItems").modal("show");
+		$('#mytable').bootstrapTable({
+			url: baseUrlApi() + rota +".json",
+			search: true,
+			showRefresh: true,
+			showToggle: true,
+			showColumns: true,
+			pageList: "[5, 10, 20, 50, 100, All]",
+			pageSize: "5",
+			pagination: true,
+			sidePagination: "server",
+			showPaginationSwitch: true,
+			columns: modalTablesColumns[rota],
+			onClickRow: function(row, $element) {
+				itemData[obj].data = row;
+				itemData[obj].type = rota;
+				itemData[obj].label = $($element.find("td")[0]).text();
+				$scope.$apply();
+				$('#mytable').bootstrapTable('destroy');
+				$("#modalItems").modal("hide");
+			}
+		});
+	}
+
 	$scope.deleteRecord = function(deleteNextRecords) {
 		var postData = {
 			deleteNextRecords: deleteNextRecords,
@@ -137,7 +297,6 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
 					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
-					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&ftl="+ $scope.filtro.cod_tipo_lancamento; // +"&fcf="+ $scope.filtro.nme_campo_filtro;
 					window.location.href = newUrl;
 				}, 5000);
 			})
@@ -172,7 +331,6 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 						newUrl = window.location.href.substr(0, window.location.href.indexOf("?"));
 					// Faz o redirecionamento
 					newUrl = newUrl.replace("form-new-lancamento-financeiro", "list-lancamentos-financeiros");
-					newUrl += "?fdi="+ $scope.filtro.dta_inicio +"&fdf="+ $scope.filtro.dta_fim +"&ftl="+ $scope.filtro.cod_tipo_lancamento; // +"&fcf="+ $scope.filtro.nme_campo_filtro;
 					window.location.href = newUrl;
 				}, 5000);
 			})
@@ -222,7 +380,14 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 		}
 	}
 
-	$scope.loadSaldoAnterior();
+	function loadPlanoContas() {
+		$http.get(baseUrlApi()+'plano-contas')
+			.success(function(items){
+				$scope.planosConta = items;
+			});
+	}
 
+	$scope.loadData();
+	loadPlanoContas();
 	$("div#container.effect").removeClass("mainnav-lg").addClass("mainnav-sm");
 });

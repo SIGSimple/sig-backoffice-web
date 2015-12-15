@@ -255,6 +255,7 @@ restrict();
 
 	<script src="js/angular-app.js"></script>
 	<script src="js/service/user-logged.js"></script>
+	<script src="js/service/filter.js"></script>
 	<script src="js/controller/menu.js"></script>
 	<script src="js/controller/page-title.js"></script>
 	<script src="js/controller/page-breadcrumb.js"></script>
