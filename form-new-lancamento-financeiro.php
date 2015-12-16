@@ -30,6 +30,9 @@
 								<button class="btn btn-default" type="button" ng-click="abreModal('FAVORECIDO', 'lancamentoFinanceiro', true)">
 									<i class="fa fa-search"></i>
 								</button>
+								<button type="button" class="btn btn-default" tooltip="Limpar seleção" ng-click="lancamentoFinanceiro.favorecido = {}">
+									<i class="fa fa-times"></i>
+								</button>
 							</span>
 						</div>
 					</div>
@@ -461,6 +464,9 @@
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button" ng-click="abreModal('TITULAR_MOVIMENTO', 'lancamentoFinanceiro', true)">
 									<i class="fa fa-search"></i>
+								</button>
+								<button type="button" class="btn btn-default" tooltip="Limpar seleção" ng-click="lancamentoFinanceiro.titularMovimento = {}">
+									<i class="fa fa-times"></i>
 								</button>
 							</span>
 						</div>

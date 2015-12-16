@@ -87,7 +87,7 @@
 				</div>
 
 				<div class="row mar-top">
-					<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<label class="control-label">
 							Favorecido
 							<label class="radio-inline"><input type="radio" ng-click="filtro.favorecido.type = 'empresas'" ng-checked="(filtro.favorecido.type == 'empresas')">Empresa</label>
@@ -101,18 +101,28 @@
 									<button class="btn btn-default" type="button" ng-click="abreModal('FAVORECIDO', 'filtro', true)">
 										<i class="fa fa-search"></i>
 									</button>
+									<button type="button" class="btn btn-default" tooltip="Limpar seleção" ng-click="filtro.favorecido = {data:{},type:'',label:''}">
+										<i class="fa fa-times"></i>
+									</button>
 								</span>
 							</div>
 						</div>
 					</div>
 
-					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+					<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 						<label class="control-label">Natureza da Operação</label>
 						<div class="controls">
-							<select chosen class="chosen" options="planosConta"
-								ng-model="filtro.cod_natureza_operacao"
-								ng-options="item.cod_item as ('(' + item.num_item + ') ' + item.dsc_item) for item in planosConta">
-							</select>
+							<div class="input-group">
+								<select chosen class="chosen" options="planosConta"
+									ng-model="filtro.cod_natureza_operacao"
+									ng-options="item.cod_item as ('(' + item.num_item + ') ' + item.dsc_item) for item in planosConta">
+								</select>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" tooltip="Limpar seleção" ng-click="filtro.cod_natureza_operacao = ''">
+										<i class="fa fa-times"></i>
+									</button>
+								</span>
+							</div>
 						</div>
 					</div>
 
