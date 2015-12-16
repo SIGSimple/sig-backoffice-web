@@ -120,9 +120,11 @@ app.controller('CadastroFinanceiroCtrl', function($scope, $http, UserSrvc, Filte
 					// Verifica se está selecionando o favorecido...
 					if(type == "FAVORECIDO") {
 						// e atribui o mesmo favorecido para todos os titulares de movimento
-						$.each($scope.lancamentoFinanceiro.favorecidos, function(index, favorecido) {
-							favorecido.favorecido = itemData[obj];
-						});
+						if(typeof($scope.lancamentoFinanceiro.favorecidos) != "undefined") {
+							$.each($scope.lancamentoFinanceiro.favorecidos, function(index, favorecido) {
+								favorecido.favorecido = itemData[obj];
+							});
+						}
 
 						if(rota == "colaboradores") {
 							itemData['titularMovimento'].data = row;

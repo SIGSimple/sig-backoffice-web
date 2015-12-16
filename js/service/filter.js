@@ -39,7 +39,7 @@ app.service('FilterSrvc', function($window){
 			this.filter = JSON.parse(storedData);
 		}
 
-		if(!this.filter) { // pre-initilyze data
+		if(Object.keys(this.filter).length == 0) { // pre-initilyze data
 			this.filter = {
 				dta_inicio: getFirstDateOfMonthString(),
 				dta_fim: getLastDateOfMonthString(),
