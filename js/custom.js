@@ -38,6 +38,21 @@ function enableDateField() {
 	}, 1000);
 }
 
+function enableMonthField() {
+	$('.input-group.date').datepicker('remove');
+	setTimeout(function() {
+		$('.input-group.date').datepicker({
+			language: 'pt-BR',
+			format: 'mm/yyyy',
+			autoclose: true,
+			todayBtn: true,
+			todayHighlight: true,
+			viewMode: 'months',
+			minViewMode: 'months'
+		});
+	}, 1000);
+}
+
 function getActivePage() {
 	return document.location.pathname.split('/')[document.location.pathname.split('/').length-1];
 }

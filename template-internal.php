@@ -67,6 +67,8 @@ restrict();
 	<!--Demo [ DEMONSTRATION ]-->
 	<link href="css/demo/nifty-demo.min.css" rel="stylesheet">
 
+	<!--PivotTable-->
+	<link rel="stylesheet" type="text/css" href="plugins/pivottable/pivot.css">
 
 	<!-- CUSTOM -->
 	<link href="css/custom.css" rel="stylesheet">
@@ -152,6 +154,7 @@ restrict();
 
 	<!--jQuery [ REQUIRED ]-->
 	<script src="js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
 
 	<!--BootstrapJS [ RECOMMENDED ]-->
@@ -248,6 +251,10 @@ restrict();
 	<!--Bootstrap Select [ REQUIRED ]-->
 	<script src="bower_components/bootstrap-select/bootstrap-select.min.js"></script>
 	<script src="bower_components/moment/locale/pt-br.js"></script>
+
+	<!--PivotTable-->
+    <script type="text/javascript" src="plugins/pivottable/pivot.js"></script>
+    <script type="text/javascript" src="plugins/pivottable/pivot.pt.js"></script>
 
 	<!--CUSTOM-->
 	<script src="js/custom.js"></script>
