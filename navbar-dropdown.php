@@ -17,7 +17,7 @@
 		<li id="dropdown-user" class="dropdown">
 			<a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
 				<span class="pull-right">
-					<img class="img-circle img-user media-object" src="{{ (usuario.user.pth_arquivo_foto != '') ? usuario.user.pth_arquivo_foto : (usuario.user.cod_perfil === 1) ? 'img/av3.png' : (usuario.user.flg_sexo == 'F') ? 'img/av6.png' : (usuario.user.flg_sexo == 'M') ? 'img/av2.png' : 'img/av3.png' }}" alt="Profile Picture">
+					<img class="img-circle img-user media-object" src="{{ (usuario.user.pth_arquivo_foto) ? usuario.user.pth_arquivo_foto : (usuario.user.cod_perfil === 1) ? 'img/av3.png' : (usuario.user.flg_sexo == 'F') ? 'img/av6.png' : (usuario.user.flg_sexo == 'M') ? 'img/av2.png' : 'img/av3.png' }}" alt="Profile Picture">
 				</span>
 				<div class="username hidden-xs">{{ getFirstAndLastName(usuario.user.nme_usuario) }}</div>
 			</a>

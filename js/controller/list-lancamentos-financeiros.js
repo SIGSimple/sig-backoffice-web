@@ -370,7 +370,7 @@ app.controller('ListLancamentosFinanceirosCtrl', function($scope, $http, UserSrv
 			var cod_lancamento_pai = lancamentoFinanceiro.cod_lancamento_pai;
 			if(cod_lancamento_pai == null || typeof(cod_lancamento_pai) == "undefined" || cod_lancamento_pai == "")
 				cod_lancamento_pai = lancamentoFinanceiro.cod_lancamento_financeiro;
-			var params = "flg_excluido=0&nolimit=1&(cod_lancamento_financeiro[exp]=="+ lancamentoFinanceiro.cod_lancamento_financeiro +"%20OR%20cod_lancamento_pai="+ cod_lancamento_pai +"%20OR%20cod_lancamento_financeiro="+ cod_lancamento_pai +")";
+			var params = "tlf->flg_excluido=0&nolimit=1&(tlf->cod_lancamento_financeiro[exp]=="+ lancamentoFinanceiro.cod_lancamento_financeiro +"%20OR%20tlf.cod_lancamento_pai="+ cod_lancamento_pai +"%20OR%20tlf.cod_lancamento_financeiro="+ cod_lancamento_pai +")";
 			$http.get(baseUrlApi()+"lancamentos-financeiros?"+params)
 				.success(function(items){
 					setTimeout(function() {

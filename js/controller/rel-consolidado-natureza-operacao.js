@@ -1,10 +1,6 @@
 app.controller('RelatorioConsolidadoNaturezaOperacaoCtrl', function($scope, $http, UserSrvc){
 	$scope.colaborador = UserSrvc.getUserLogged();
 
-	$scope.itensConsolidados 	= [];
-	$scope.itensApurados 		= [];
-	$scope.resumoApuracao 		= {};
-
 	$scope.loadItensConsolidados = function() {
 		var dtaSelected = $scope.dta_selected;
 		var dtaInicio 	= "01/" + dtaSelected;
@@ -16,21 +12,25 @@ app.controller('RelatorioConsolidadoNaturezaOperacaoCtrl', function($scope, $htt
 
 		$http.get(baseUrlApi()+"lancamentos-financeiros/consolidado/natureza-operacao/"+ dtaInicio +"/"+ dtaFinal)
 			.success(function(data){
-				$scope.itensConsolidados = data;
-
 				setTimeout(function(){
 					$(".loading-data").addClass("hide");
 					$("#output").pivotUI(
-						$scope.itensConsolidados,
+						data,
 						{
-							rows: ["dsc_item"],
-							cols: ["dsc_origem"]
+							rows: [],
+							cols: []
 						},
 						false,
 						"pt"
 					);
 				}, 700);
 			});
+	}
+
+	$scope.export = function(extension) {
+		if(extension == 'excel') {
+			exportToExcel('table.pvtTable', 'Cons. Natureza de Operação', moment().format('YYYY-MM-DD') +"_Relatório Consolidado por Natureza de Operação");
+		}
 	}
 
 	enableMonthField();

@@ -5,7 +5,7 @@
 				<img class="img-responsive" src="img/thumbs/{{ (colaborador.user.flg_sexo == 'F') ? 'img2' : (colaborador.user.flg_sexo == 'M') ? 'img1' : 'img3' }}.jpg" alt="Image">
 			</div>
 			<div class="panel-media">
-				<img src="{{ (colaborador.user.pth_arquivo_foto != '') ? colaborador.user.pth_arquivo_foto : (colaborador.user.flg_sexo == 'F') ? 'img/av6.png' : (colaborador.user.flg_sexo == 'M') ? 'img/av2.png' : 'img/av3.png'}}" class="panel-media-img img-circle img-border-light" alt="Profile Picture">
+				<img src="{{ (colaborador.user.pth_arquivo_foto) ? colaborador.user.pth_arquivo_foto : (colaborador.user.flg_sexo == 'F') ? 'img/av6.png' : (colaborador.user.flg_sexo == 'M') ? 'img/av2.png' : 'img/av3.png'}}" class="panel-media-img img-circle img-border-light" alt="Profile Picture">
 				<div class="row">
 					<div class="col-lg-7">
 						<h3 class="panel-media-heading">{{ colaborador.user.nme_usuario }}</h3>

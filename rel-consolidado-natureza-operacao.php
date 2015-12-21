@@ -16,7 +16,7 @@
 					<label class="control-label sr-only"></label>
 					<div class="controls only-buttons">
 						<button type="button" class="btn btn-primary btn-labeled fa fa-cog" ng-click="loadItensConsolidados()">Gerar relatório</button>
-						<button type="button" class="btn btn-default btn-labeled fa fa-file-pdf-o">Exportar p/ PDF</button>
+						<button type="button" class="btn btn-default btn-labeled fa fa-file-excel-o" ng-click="export('excel');">Exportar p/ Excel</button>
 					</div>
 				</div>
 			</div>

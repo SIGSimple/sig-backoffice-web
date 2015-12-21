@@ -15,6 +15,13 @@ $(function(){
 	};
 });
 
+function exportToExcel(tableElement, worksheetName, filename) {
+	$(tableElement).table2excel({
+		name: worksheetName,
+		filename: filename
+	});
+}
+
 function getActivePageId() {
 	return Math.random().toString(36).slice(2);
 }
