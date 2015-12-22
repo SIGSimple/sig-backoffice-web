@@ -58,15 +58,23 @@ unset($_SESSION['user_logged']);
 		</div>
 	</div>
 
-	<div class="panel-body" ng-show="((users.length > 0) && (!flg_senha_bloqueada))">
-		<p class="pad-btm"><i class="fa fa-user"></i> Selecione o perfil que deseja utilizar</p>
+	<div class="panel-body" ng-show="(directLogin === true)">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+			<i class="fa fa-spin fa-spinner"></i> Aguarde, você está sendo redirecionado...
+		</div>
+	</div>
+
+	<div class="panel-body" ng-show="((users.length > 0) && (!flg_senha_bloqueada)) && (!directLogin)">
+		<p class="pad-btm">
+			<i class="fa fa-user"></i> Selecione o perfil que deseja utilizar
+		</p>
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" ng-repeat="user in users">
 				<div class="panel widget">
 					<div class="widget-header bg-{{ (user.cod_perfil === 1) ? 'success' : (user.flg_sexo == 'F') ? 'pink' : (user.flg_sexo == 'M') ? 'primary' : 'success' }} no-image"></div>
 					<div class="widget-body text-center">
-						<img class="widget-img img-border img-circle" src="{{ (user.pth_arquivo_foto != '') ? user.pth_arquivo_foto : (user.cod_perfil === 1) ? 'img/av3.png' : (user.flg_sexo == 'F') ? 'img/av6.png' : (user.flg_sexo == 'M') ? 'img/av2.png' : 'img/av3.png' }}"></img>
+						<img class="widget-img img-border img-circle" src="{{ (user.pth_arquivo_foto) ? user.pth_arquivo_foto : (user.cod_perfil === 1) ? 'img/av3.png' : (user.flg_sexo == 'F') ? 'img/av6.png' : (user.flg_sexo == 'M') ? 'img/av2.png' : 'img/av3.png' }}"></img>
 						<h4 class="mar-no">{{ getFirstAndLastName(user.nme_usuario) }}</h4>
 						<p class="text-muted mar-btm">{{ (user.funcao != null) ? user.funcao.nme_funcao : user.nme_perfil }}</p>
 						<h5 class="text-muted mar-btm text-bold">{{ user.nme_empreendimento }}</h5>
@@ -83,10 +91,10 @@ unset($_SESSION['user_logged']);
 		</div>
 	</div>
 
-	<div class="panel-footer clearfix">
+	<div class="panel-footer clearfix" ng-show="(!directLogin)">
 		<div class="pull-right">
 			<button type="button" class="btn btn-default text-uppercase btn-labeled fa fa-times-circle" ng-show="users.length > 0" ng-click="cancelLogin()">Cancelar</button>
-			<button type="button" class="btn btn-mint text-uppercase btn-labeled fa fa-unlock" ng-show="( users.length > 0 && flg_senha_bloqueada )" ng-click="desbloquearSenha()">Desbloquear senha</button>
+			<button type="button" class="btn btn-mint btn-unlock-password text-uppercase btn-labeled fa fa-unlock" data-loading-text="Aguarde..." ng-show="( users.length > 0 && flg_senha_bloqueada )" ng-click="desbloquearSenha()">Desbloquear senha</button>
 			<button type="button" class="btn btn-success text-uppercase btn-labeled fa fa-sign-in" ng-show="( users.length === 0 && flg_senha_bloqueada )" ng-click="login()" data-loading-text="Aguarde...">Entrar</button>
 		</div>
 	</div>

@@ -4,6 +4,7 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 	$scope.errorMessage 		= "";
 	$scope.novaSenha 			= {};
 	$scope.flg_senha_bloqueada 	= true;
+	$scope.directLogin 			= false;
 
 	$scope.login = function() {
 		$("button.btn.fa-sign-in").button("loading");
@@ -22,9 +23,15 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 				});
 
 				$scope.flg_senha_bloqueada = ($scope.users[0].flg_senha_bloqueada == 1);
+				$("button.btn.fa-sign-in").button("reset");
+
+				if(!($scope.users[0].flg_senha_bloqueada == 1) && $scope.users.length == 1) {
+					$scope.directLogin = true;
+					$scope.chooseProfile($scope.users[0]);
+				}
+
 				if($scope.users[0].cod_colaborador != null && $scope.users[0].cod_colaborador > 0)
 					getUltimaFuncao();
-				$("button.btn.fa-sign-in").button("reset");
 			})
 			.error(function(message, status, headers, config){
 				$("button.btn.fa-sign-in").button("reset");
@@ -51,11 +58,22 @@ app.controller('LoginCtrl', function($scope, $http, $timeout, UserSrvc){
 
 	$scope.desbloquearSenha = function() {
 		if($scope.novaSenha.nme_senha === $scope.novaSenha.nme_senha_repete) {
+			$("button.btn-unlock-password").button('loading');
+
 			$http.post(baseUrlApi()+'usuario/desbloquear/senha', { cod_usuario: $scope.users[0].cod_usuario, nme_senha: $scope.novaSenha.nme_senha })
 				.success(function(message, status) {
 					$scope.errorMessage = "";
-					$scope.flg_senha_bloqueada 	= false;
-					showNotification("Pronto!", message, null, 'floating', status);
+					
+					if($scope.users.length > 1) {
+						$scope.flg_senha_bloqueada = false;
+						$("button.btn-unlock-password").button('reset');
+					}
+					else if($scope.users.length == 1) {
+						setTimeout(function() {
+							showNotification("Pronto!", message, null, 'floating', status);
+							$scope.chooseProfile($scope.users[0]);
+						}, 500);
+					}
 				})
 				.error(function(message, status, headers, config){
 					if(status === 404)
