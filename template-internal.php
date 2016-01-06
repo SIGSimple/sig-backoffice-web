@@ -201,7 +201,7 @@ restrict();
 	<script src="plugins/switchery/switchery.min.js"></script>
 
 	<!--Table Export [ OPTIONAL ]-->
-	<script src="plugins/table-2-excel/jquery.table2Excel.js"></script>
+	<script src="plugins/table-2-excel/jquery.table2excel.js"></script>
 
 	<!--Bootstrap Table [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-table/bootstrap-table.min.js"></script>

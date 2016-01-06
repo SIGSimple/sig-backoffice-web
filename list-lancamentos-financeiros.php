@@ -198,17 +198,17 @@
 						   		<i class="fa fa-check-circle"></i>
 					   		</button>
 						</td>
-						<td class="text-center">{{ item.dta_vencimento | date : 'dd/MM/yyyy' }}</td>
-						<td class="text-center">{{ item.dta_pagamento | date : 'dd/MM/yyyy' }}</td>
-						<td>{{ item.nme_favorecido }}</td>
-						<td>{{ item.dsc_lancamento }}</td>
-						<td class="text-right">
+						<td class="text-center text-middle">{{ item.dta_vencimento | date : 'dd/MM/yyyy' }}</td>
+						<td class="text-center text-middle">{{ item.dta_pagamento | date : 'dd/MM/yyyy' }}</td>
+						<td class="text-middle">{{ item.nme_favorecido }}</td>
+						<td class="text-middle">{{ item.dsc_lancamento }}</td>
+						<td class="text-right text-middle">
 							<span class="text-success" ng-show='(item.cod_tipo_lancamento == 1 && (item.vlr_orcado != "" || item.vlr_realizado != ""))'>{{ (item.cod_tipo_lancamento == 1) ? ((item.vlr_realizado > 0) ? item.vlr_realizado : item.vlr_orcado) : 0 | currency : 'R$ ' : 2 }}</span>
 						</td>
-						<td class="text-right">
+						<td class="text-right text-middle">
 							<span class="text-danger" ng-show='(item.cod_tipo_lancamento == 2 && (item.vlr_orcado != "" || item.vlr_realizado != ""))'>{{ (item.cod_tipo_lancamento == 2) ? ((item.vlr_realizado > 0) ? item.vlr_realizado : item.vlr_orcado) : 0 | currency : 'R$ ' : 2 }}</span>
 						</td>
-						<td class="text-right {{ (item.vlr_saldo > 0) ? 'text-info' : ((item.vlr_saldo < 0) ? 'text-danger' : '') }}">{{ item.vlr_saldo | currency : 'R$ ' : 2 }}</td>
+						<td class="text-right text-middle {{ (item.vlr_saldo > 0) ? 'text-info' : ((item.vlr_saldo < 0) ? 'text-danger' : '') }}">{{ item.vlr_saldo | currency : 'R$ ' : 2 }}</td>
 						<td class="text-center text-middle">
 							<span class="label label-table {{ (item.dta_pagamento) ? 'label-success' : 'label-warning' }}" 
 								data-placement="top" tooltip="{{ (item.dta_pagamento) ? 'Lançamento pago' : 'Lançamento previsto' }}">
@@ -218,10 +218,10 @@
 						</td>
 					</tr>
 					<tr ng-show="loadingData">
-						<td colspan="9" class="text-center text-bold"><i class="fa fa-spinner fa-spin"></i> Aguarde! Carregando lançamentos...</td>
+						<td colspan="9" class="text-center text-middle text-bold"><i class="fa fa-spinner fa-spin"></i> Aguarde! Carregando lançamentos...</td>
 					</tr>
 					<tr ng-show="(!loadingData) && (lancamentos.length === 0)">
-						<td colspan="9" class="text-center text-bold text-danger">Nenhum lançamento encontrado para o período selecionado!</td>
+						<td colspan="9" class="text-center text-middle text-bold text-danger">Nenhum lançamento encontrado para o período selecionado!</td>
 					</tr>
 				</tbody>
 				<tbody>
@@ -230,14 +230,14 @@
 						<td class="text-right text-middle text-bold text-success">{{ vlrTotalCredito | currency : 'R$ ' : 2 }}</td>
 						<td class="text-right text-middle text-bold text-danger">{{ vlrTotalDebito | currency : 'R$ ' : 2 }}</td>
 						<td class="text-right text-middle text-bold {{ (vlrTotalSaldo > 0) ? 'text-info' : ((vlrTotalSaldo < 0) ? 'text-danger' : '') }}">{{ vlrTotalSaldo | currency : 'R$ ' : 2 }}</td>
-						<td></td>
+						<td class="text-middle"></td>
 					</tr>
 				</tbody>
 				<tbody>
 					<tr>
 						<td class="text-right text-middle text-bold" colspan="7">Saldo Final</td>
 						<td class="text-right text-middle text-bold {{ (vlrSaldoFinal > 0) ? 'text-info' : ((vlrTotalSaldo < 0) ? 'text-danger' : '') }}">{{ vlrSaldoFinal | currency : 'R$ ' : 2 }}</td>
-						<td></td>
+						<td class="text-middle"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -285,7 +285,7 @@
 							</td>
 						</tr>
 						<tr class="{{ (item.lancamentosVinculados) ? 'hide' : '' }}">
-							<td colspan="4" class="text-center"><i class="fa fa-spinner fa-spin"></i> Aguarde, carregando...</td>
+							<td colspan="4" class="text-center text-middle"><i class="fa fa-spinner fa-spin"></i> Aguarde, carregando...</td>
 						</tr>
 					</tbody>
 				</table>

@@ -1,19 +1,29 @@
 <?php
 
-$dsc_lancamento = "Pagto. NF 13423 Teste de Mesa (1/4)";
+ini_set('default_charset','UTF-8');
+date_default_timezone_set('America/Sao_Paulo');
 
-echo $dsc_lancamento . "<br>";
+$dta = "2016-03-12";
 
-$dsc_lancamento = substr($dsc_lancamento, 0, strlen($dsc_lancamento)-6) . " (2/4)";
+function geraDataProximoMes() {
+	$dateOriginal = new DateTime($dta);
+	$date = new DateTime($dta);
+	$newDate = $date->add(new DateInterval("P1M"));
 
-echo $dsc_lancamento . "<br>";
+	if( ((int)$newDate->format("m") - $dateOriginal->format("m")) > 1 ) {
+		$m = ((int)$newDate->format("m")-1);
 
-$dsc_lancamento = substr($dsc_lancamento, 0, strlen($dsc_lancamento)-6) . " (3/4)";
+		if($m < 10)
+			$m = "0".$m;
 
-echo $dsc_lancamento . "<br>";
+		$f = new DateTime($newDate->format("Y") . $m .'01');
+		$f->modify('last day of this month');
 
-$dsc_lancamento = substr($dsc_lancamento, 0, strlen($dsc_lancamento)-6) . " (4/4)";
-
-echo $dsc_lancamento . "<br>";
+		return $f->format('Y-m-d');
+	}
+	else {
+		return $newDate->format('Y-m-d');
+	}
+}
 
 ?>
