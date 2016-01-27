@@ -4,9 +4,9 @@
 
 			<div class="form-group">
 				<label class="control-label col-lg-2">Nome</label>
-					<div class="col-lg-4">
-						<input type="text" class="form-control" ng-model="funcao.nme_funcao">
-					</div>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" ng-model="funcao.nme_funcao">
+				</div>
 			</div>
 
 			<div class="form-group">

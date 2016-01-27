@@ -156,31 +156,24 @@ restrict();
 	<script src="js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-
 	<!--BootstrapJS [ RECOMMENDED ]-->
 	<script src="js/bootstrap.min.js"></script>
 
-
 	<!--Fast Click [ OPTIONAL ]-->
 	<script src="plugins/fast-click/fastclick.min.js"></script>
-
 	
 	<!--Nifty Admin [ RECOMMENDED ]-->
 	<script src="js/nifty.min.js"></script>
 
-
 	<!--Switchery [ OPTIONAL ]-->
 	<script src="plugins/switchery/switchery.min.js"></script>
-
 
 	<!--Bootstrap Select [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
 
-
 	<!--Bootstrap Datepicker [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 	<script src="plugins/bootstrap-datepicker/bootstrap-datepicker.pt-BR.js"></script>
-
 
 	<!--Bootstrap Timepicker [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
@@ -192,7 +185,6 @@ restrict();
 
 	<!--Bootstrap Validator [ OPTIONAL ]-->
 	<script src="plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
-
 
 	<!--X-editable [ OPTIONAL ]-->
 	<script src="plugins/x-editable/js/bootstrap-editable.min.js"></script>
@@ -236,6 +228,9 @@ restrict();
 	<!--Angular [ REQUIRED ]-->
 	<script src="js/ui-bootstrap-custom-0.13.0.min.js"></script>
 	<script src="js/ui-bootstrap-custom-tpls-0.13.0.min.js"></script>
+
+	<!--Bootstrap Treeview [ REQUIRED ]-->
+	<script src="bower_components/bootstrap-treeview/src/js/bootstrap-treeview.js"></script>
 
 	<!--Flow.js [ REQUIRED ]-->
 	<script src="bower_components/flow.js/dist/flow.min.js"></script>

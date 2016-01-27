@@ -7,6 +7,12 @@
 				<i class="fa fa-navicon fa-lg"></i>
 			</a>
 		</li>
+
+		<li>
+			<a href="home">
+				<i class="fa fa-home fa-lg"></i>
+			</a>
+		</li>
 		<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 		<!--End Navigation toogle button-->
 	</ul>

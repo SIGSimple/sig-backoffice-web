@@ -1,7 +1,7 @@
 <!--Brand logo & name-->
 <!--================================-->
 <div class="navbar-header">
-	<a href="template-internal.php?page=home" class="navbar-brand">
+	<a href="home" class="navbar-brand">
 		<img src="img/logo.png" alt="SIG BackOffice Logo" class="brand-icon">
 		<div class="brand-title">
 			<span class="brand-text">SIG BackOffice</span>

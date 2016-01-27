@@ -17,8 +17,8 @@
 								foreach ($menuItems as $key => $value) {
 									echo '<li class="list-header"><i class="'. $value->icn_modulo .'"></i>'. $value->nme_modulo .'</li>';
 
-									if(count($value->children) > 0) {
-										foreach ($value->children as $xkey => $xvalue) {
+									if(count($value->nodes) > 0) {
+										foreach ($value->nodes as $xkey => $xvalue) {
 											echo '<li class="">';
 											echo 	'<a href="#">';
 											echo 		'<i class="'. $xvalue->icn_modulo .'"></i>';
@@ -26,10 +26,10 @@
 											echo 		'<i class="arrow"></i>';
 											echo 	'</a>';
 
-											if(count($xvalue->children) > 0) {
+											if(count($xvalue->nodes) > 0) {
 												echo '<ul class="collapse">';
 
-												foreach ($xvalue->children as $ykey => $yvalue) {
+												foreach ($xvalue->nodes as $ykey => $yvalue) {
 													echo '<li class="{{activeLink(\''. $yvalue->url_modulo .'\')}}">';
 													echo 	'<a href="'. $yvalue->url_modulo .'">';
 													echo 		'<i class="'. $yvalue->icn_modulo .'"></i>'. $yvalue->nme_modulo;
